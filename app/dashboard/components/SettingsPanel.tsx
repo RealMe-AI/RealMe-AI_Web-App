@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Bell, Trash2, Edit2, Key, Shield } from "lucide-react";
-import Image from "next/image";
 
 // Types
 interface SettingsPanelProps {
