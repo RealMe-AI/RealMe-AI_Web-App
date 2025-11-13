@@ -3,14 +3,15 @@
 import { useState, useRef, useEffect } from "react";
 import { useChatStore } from "../../zustand/useChatStore";
 import ChatMessage from "./ChatMessage";
-import VoiceInput from "./VoiceInput"; 
-import FileUploadPopup from "./FileUploadPopup"; 
+import VoiceInput from "./VoiceInput";
+import FileUploadPopup from "./FileUploadPopup";
 import { Plus, Mic } from "lucide-react";
 
 export default function ChatWindow() {
   const { messages, sendMessage, isLoading } = useChatStore();
   const [input, setInput] = useState("");
   const [showUploadPopup, setShowUploadPopup] = useState(false);
+  const [showVoicePopup, setShowVoicePopup] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,14 +32,14 @@ export default function ChatWindow() {
         e.preventDefault();
         handleSend();
       }
-      // shift + enter on large screen -> newline
+      // shift+enter → new line on larger screens
     }
   };
 
   return (
-    <div className="flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 transition max-w-full">
+    <div className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 transition max-w-full">
       {/* Messages */}
-      <div className="flex-1 space-y-5 pb-4 scrollbar-thin scrollbar-thumb-indigo-400/40 overflow-y-auto">
+      <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />
         ))}
@@ -52,7 +53,7 @@ export default function ChatWindow() {
         </div>
       )}
 
-      {/* Input Area */}
+      {/* Input Row */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -60,7 +61,7 @@ export default function ChatWindow() {
         }}
         className="flex items-center gap-2 mt-2"
       >
-        {/* Left Plus Icon */}
+        {/* ➕ Upload Icon */}
         <div
           className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-700/30 cursor-pointer transition relative"
           onClick={() => setShowUploadPopup(true)}
@@ -71,24 +72,30 @@ export default function ChatWindow() {
           )}
         </div>
 
-        {/* Input */}
+        {/* ✏️ Textarea */}
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your message..."
+          rows={1}
           className="flex-1 px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base rounded-xl bg-white/60 dark:bg-slate-700/60 
                      placeholder:text-slate-400 focus:outline-none focus:ring-2 
                      focus:ring-indigo-500 transition resize-none"
-          rows={1}
         />
 
-        {/* Voice Icon */}
-        <div className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-700/30 cursor-pointer transition">
-          <VoiceInput />
+        {/* 🎤 Voice Icon */}
+        <div
+          className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-700/30 cursor-pointer transition relative"
+          onClick={() => setShowVoicePopup(true)}
+        >
+          <Mic size={20} />
+          {showVoicePopup && (
+            <VoiceInput close={() => setShowVoicePopup(false)} />
+          )}
         </div>
 
-        {/* Send Button */}
+        {/* 📨 Send Button */}
         <button
           type="submit"
           disabled={isLoading}

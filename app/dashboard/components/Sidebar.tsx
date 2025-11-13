@@ -18,7 +18,11 @@ export interface Chat {
   lastMessage: string;
 }
 
-export default function Sidebar({ isOpen, setIsOpen, onSelectChat }: SidebarProps) {
+export default function Sidebar({
+  isOpen,
+  setIsOpen,
+  onSelectChat,
+}: SidebarProps) {
   const [chats, setChats] = useState<Chat[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
@@ -56,11 +60,15 @@ export default function Sidebar({ isOpen, setIsOpen, onSelectChat }: SidebarProp
 
   // Error handling
   useEffect(() => {
-    if (searchTerm && filteredChats.length === 0) {
-      setError(`No chat found with the title "${searchTerm}"`);
-    } else {
-      setError("");
-    }
+    const timeout = setTimeout(() => {
+      if (searchTerm && filteredChats.length === 0) {
+        setError(`No chat found with the title "${searchTerm}"`);
+      } else {
+        setError("");
+      }
+    }, 200); // 200ms delay
+
+    return () => clearTimeout(timeout);
   }, [searchTerm, filteredChats]);
 
   // Select a chat
@@ -140,31 +148,27 @@ export default function Sidebar({ isOpen, setIsOpen, onSelectChat }: SidebarProp
         transition={{ delay: 0.2 }}
         className="flex-1 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-indigo-400/40"
       >
-        {filteredChats.length > 0 ? (
-          filteredChats.map((chat) => (
-            <div
-              key={chat.id}
-              onClick={() => handleSelectChat(chat)}
-              className={`p-3 rounded-xl cursor-pointer transition 
-                          ${activeChatId === chat.id
-                            ? "bg-indigo-500 text-white"
-                            : "bg-white/40 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"}`}
-            >
-              <p className="text-sm font-medium">
-                {chat.title}
+        {filteredChats.length > 0
+          ? filteredChats.map((chat) => (
+              <div
+                key={chat.id}
+                onClick={() => handleSelectChat(chat)}
+                className={`p-3 rounded-xl cursor-pointer transition 
+                          ${
+                            activeChatId === chat.id
+                              ? "bg-indigo-500 text-white"
+                              : "bg-white/40 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
+                          }`}
+              >
+                <p className="text-sm font-medium">{chat.title}</p>
+                <p className="text-xs truncate">{chat.lastMessage}</p>
+              </div>
+            ))
+          : !error && (
+              <p className="text-sm text-slate-500 dark:text-slate-400 italic text-center">
+                No chats yet — start one!
               </p>
-              <p className="text-xs truncate">
-                {chat.lastMessage}
-              </p>
-            </div>
-          ))
-        ) : (
-          !error && (
-            <p className="text-sm text-slate-500 dark:text-slate-400 italic text-center">
-              No chats yet — start one!
-            </p>
-          )
-        )}
+            )}
       </motion.div>
 
       {/* Footer */}

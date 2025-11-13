@@ -48,7 +48,13 @@ export default function Page() {
       </motion.div>
 
       {/* Sidebar (now takes props) */}
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        setIsOpen={setIsSidebarOpen}
+        onSelectChat={(chatId) => {
+          console.log("Selected chat:", chatId);
+        }}
+      />
     </div>
   );
 }
