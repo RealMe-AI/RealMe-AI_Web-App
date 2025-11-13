@@ -1,18 +1,7 @@
 import { create } from "zustand";
+import { ModalState } from "../types/type";
 
 // zustand/dashboard
-interface ModalState {
-  isProfileOpen: boolean;
-  isAccountInfoOpen: boolean;
-  isSettingsOpen: boolean;
-  openProfile: () => void;
-  closeProfile: () => void;
-  openAccountInfo: () => void;
-  closeAccountInfo: () => void;
-  openSettings: () => void;
-  closeSettings: () => void;
-  closeAll: () => void;
-}
 
 const useModalStore = create<ModalState>((set) => ({
   isProfileOpen: false,
@@ -29,7 +18,7 @@ const useModalStore = create<ModalState>((set) => ({
 
   openAccountInfo: () =>
     set(() => ({
-        isAccountInfoOpen: true,
+      isAccountInfoOpen: true,
       isProfileOpen: false,
       isSettingsOpen: false,
     })),

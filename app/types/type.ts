@@ -46,7 +46,6 @@ export type ChatMessageProps = {
   };
 }
 
-
 export type SidebarProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
@@ -56,4 +55,17 @@ export type Chat = {
   id: number;
   title: string;
   lastMessage: string;
+}
+
+export type ModalState = {
+  isProfileOpen: boolean;
+  isAccountInfoOpen: boolean;
+  isSettingsOpen: boolean;
+  openProfile: () => void;
+  closeProfile: () => void;
+  openAccountInfo: () => void;
+  closeAccountInfo: () => void;
+  openSettings: () => void;
+  closeSettings: () => void;
+  closeAll: () => void;
 }
