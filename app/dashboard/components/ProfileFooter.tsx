@@ -1,20 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User } from "lucide-react";
 import Image from "next/image";
-import AccountInfoModal from "./AccountInfoModal"; 
+import AccountInfoModal from "./AccountInfoModal";
+import SettingsPanel from "./SettingsPanel";
+import useModalStore from "../../zustand/modalStore"; // centralized modal store
 
 export default function ProfileFooter() {
-  const [open, setOpen] = useState(false);
-  const [showAccountInfo, setShowAccountInfo] = useState(false); // modal state
+  const {
+    isProfileOpen,
+    openProfile,
+    isSettingsOpen,
+    isAccountInfoOpen,
+    openAccountInfo,
+    openSettings,
+    closeAll,
+  } = useModalStore();
 
   return (
     <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
       {/* Profile Header */}
       <div
-        onClick={() => setOpen(!open)}
+        onClick={() => (isProfileOpen ? closeAll() : openProfile())}
         className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/30 
                    dark:hover:bg-slate-700/40 cursor-pointer transition"
       >
@@ -37,7 +45,7 @@ export default function ProfileFooter() {
 
       {/* Popover Menu */}
       <AnimatePresence>
-        {open && (
+        {isProfileOpen && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,8 +56,8 @@ export default function ProfileFooter() {
           >
             <button
               onClick={() => {
-                setShowAccountInfo(true);
-                setOpen(false);
+                openAccountInfo();
+                // closeAll(); // close profile popover while opening modal
               }}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
@@ -58,7 +66,15 @@ export default function ProfileFooter() {
               <User size={16} /> View Account Info
             </button>
 
-            <button className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+            <button
+              onClick={() => {
+                openSettings();
+                // closeAll();
+              }}
+              className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
+                         text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
+                         dark:hover:bg-slate-700/60 transition"
+            >
               <Settings size={16} /> Settings
             </button>
 
@@ -75,7 +91,10 @@ export default function ProfileFooter() {
       </p>
 
       {/* Account Info Modal */}
-      <AccountInfoModal open={showAccountInfo} close={() => setShowAccountInfo(false)} />
+      <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />
+
+      {/* Settings Panel */}
+      <SettingsPanel open={isSettingsOpen} close={closeAll} />
     </div>
   );
 }

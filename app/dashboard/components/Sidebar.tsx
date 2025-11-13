@@ -5,11 +5,12 @@ import { Search, X } from "lucide-react";
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import useModalStore from "../../zustand/modalStore";
 
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  onSelectChat: (chat: Chat) => void; // Callback to notify parent of active chat
+  onSelectChat: (chat: Chat) => void;
 }
 
 export interface Chat {
@@ -28,10 +29,13 @@ export default function Sidebar({
   const [error, setError] = useState("");
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
 
-  // Load chats from localStorage
+  const { closeAll } = useModalStore(); // close all open modals
+
+  // Load chats from localStorage safely
   useEffect(() => {
     const saved = localStorage.getItem("realme_chats");
     if (saved) {
+      // defer state update to avoid synchronous setState in effect
       Promise.resolve().then(() => setChats(JSON.parse(saved)));
     }
   }, []);
@@ -43,6 +47,7 @@ export default function Sidebar({
 
   // Add new chat
   const handleNewChat = () => {
+    closeAll(); // close popovers/modals first
     const newChat: Chat = {
       id: Date.now(),
       title: `Chat ${chats.length + 1}`,
@@ -66,13 +71,13 @@ export default function Sidebar({
       } else {
         setError("");
       }
-    }, 200); // 200ms delay
-
+    }, 200);
     return () => clearTimeout(timeout);
   }, [searchTerm, filteredChats]);
 
   // Select a chat
   const handleSelectChat = (chat: Chat) => {
+    closeAll(); // close popovers when selecting a chat
     setActiveChatId(chat.id);
     onSelectChat(chat);
   };
@@ -126,7 +131,11 @@ export default function Sidebar({
         <input
           type="text"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            closeAll(); // close modals on typing
+            setSearchTerm(e.target.value);
+          }}
+          onFocus={() => closeAll()} // close modals when focusing
           placeholder="Search chats..."
           className="w-full pl-9 pr-3 py-2 text-sm rounded-lg 
                      bg-white/40 dark:bg-slate-700/50 placeholder:text-slate-400 
