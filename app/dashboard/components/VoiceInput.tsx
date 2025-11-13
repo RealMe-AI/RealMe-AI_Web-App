@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Mic, Square, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface VoiceInputProps {
   close: () => void;
@@ -10,60 +10,75 @@ interface VoiceInputProps {
 
 export default function VoiceInput({ close }: VoiceInputProps) {
   const [isRecording, setIsRecording] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  // Close when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        close();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [close]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md"
-    >
-      <div className="relative w-[90%] sm:w-[400px] p-6 rounded-3xl bg-white/30 dark:bg-slate-800/40 backdrop-blur-2xl border border-white/20 shadow-2xl flex flex-col items-center">
-        {/* Close Button */}
+    <AnimatePresence>
+      <motion.div
+        ref={popupRef}
+        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 10, scale: 0.9 }}
+        transition={{ duration: 0.25 }}
+        className="absolute bottom-full right-0 mb-3 w-64 sm:w-72 rounded-2xl p-4
+                   bg-white/30 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 
+                   shadow-xl flex flex-col items-center z-50"
+      >
+        {/* Arrow pointer */}
+        <div className="absolute -bottom-2 right-6 w-3 h-3 rotate-45 bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20"></div>
+
+        {/* Close button */}
         <button
           onClick={close}
-          className="absolute top-3 right-3 p-2 rounded-full hover:bg-white/20 transition"
+          className="absolute top-2 right-2 p-1 rounded-full hover:bg-white/20 transition"
         >
-          <X size={18} />
+          <X size={16} />
         </button>
 
-        <div className="flex flex-col items-center mt-4">
-          <motion.div
-            animate={
-              isRecording
-                ? { scale: [1, 1.2, 1], opacity: [1, 0.8, 1] }
-                : {}
-            }
-            transition={{ duration: 1.2, repeat: Infinity }}
-            className="p-6 rounded-full bg-indigo-500/30 border border-indigo-400/40"
-          >
-            <Mic size={42} className="text-indigo-600 dark:text-indigo-400" />
-          </motion.div>
+        <motion.div
+          animate={
+            isRecording ? { scale: [1, 1.2, 1], opacity: [1, 0.8, 1] } : {}
+          }
+          transition={{ duration: 1.2, repeat: Infinity }}
+          className="p-5 rounded-full bg-indigo-500/30 border border-indigo-400/40 mt-3"
+        >
+          <Mic size={36} className="text-indigo-600 dark:text-indigo-400" />
+        </motion.div>
 
-          <p className="mt-4 text-slate-700 dark:text-slate-300 text-sm">
-            {isRecording ? "Recording..." : "Tap mic to start recording"}
-          </p>
+        <p className="mt-3 text-xs text-slate-700 dark:text-slate-300">
+          {isRecording ? "Recording..." : "Tap mic to start recording"}
+        </p>
 
-          <button
-            onClick={() => setIsRecording(!isRecording)}
-            className={`mt-6 px-5 py-2.5 rounded-xl font-medium transition ${
-              isRecording
-                ? "bg-red-500 hover:bg-red-600 text-white"
-                : "bg-indigo-500 hover:bg-indigo-600 text-white"
-            }`}
-          >
-            {isRecording ? (
-              <>
-                <Square size={16} className="inline mr-1" /> Stop
-              </>
-            ) : (
-              <>
-                <Mic size={16} className="inline mr-1" /> Start
-              </>
-            )}
-          </button>
-        </div>
-      </div>
-    </motion.div>
+        <button
+          onClick={() => setIsRecording(!isRecording)}
+          className={`mt-4 px-4 py-2 rounded-lg font-medium text-white transition text-sm ${
+            isRecording
+              ? "bg-red-500 hover:bg-red-600"
+              : "bg-indigo-500 hover:bg-indigo-600"
+          }`}
+        >
+          {isRecording ? (
+            <>
+              <Square size={14} className="inline mr-1" /> Stop
+            </>
+          ) : (
+            <>
+              <Mic size={14} className="inline mr-1" /> Start
+            </>
+          )}
+        </button>
+      </motion.div>
+    </AnimatePresence>
   );
 }

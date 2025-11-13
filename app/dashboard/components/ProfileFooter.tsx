@@ -4,12 +4,15 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User } from "lucide-react";
 import Image from "next/image";
+import AccountInfoModal from "./AccountInfoModal"; 
 
 export default function ProfileFooter() {
   const [open, setOpen] = useState(false);
+  const [showAccountInfo, setShowAccountInfo] = useState(false); // modal state
 
   return (
     <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
+      {/* Profile Header */}
       <div
         onClick={() => setOpen(!open)}
         className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/30 
@@ -43,12 +46,22 @@ export default function ProfileFooter() {
             className="absolute bottom-16 left-0 w-full bg-white/60 dark:bg-slate-800/90 
                        backdrop-blur-xl shadow-lg rounded-xl p-2"
           >
-            <button className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+            <button
+              onClick={() => {
+                setShowAccountInfo(true);
+                setOpen(false);
+              }}
+              className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
+                         text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
+                         dark:hover:bg-slate-700/60 transition"
+            >
               <User size={16} /> View Account Info
             </button>
+
             <button className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
               <Settings size={16} /> Settings
             </button>
+
             <button className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/60 transition">
               <LogOut size={16} /> Log Out
             </button>
@@ -60,6 +73,9 @@ export default function ProfileFooter() {
       <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-3">
         © OwenVisuels — All Rights Reserved
       </p>
+
+      {/* Account Info Modal */}
+      <AccountInfoModal open={showAccountInfo} close={() => setShowAccountInfo(false)} />
     </div>
   );
 }

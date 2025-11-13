@@ -166,7 +166,7 @@ export default function Sidebar({
             ))
           : !error && (
               <p className="text-sm text-slate-500 dark:text-slate-400 italic text-center">
-                No chats yet — start one!
+                No chats yet start one!
               </p>
             )}
       </motion.div>
