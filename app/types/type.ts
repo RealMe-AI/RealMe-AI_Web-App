@@ -29,6 +29,8 @@ export type Message = {
   sender: "user" | "ai";
   text: string;
   time: string;
+  fileName?: string;
+  fileUrl?: string;
 };
 
 export type ChatState = {
@@ -44,18 +46,18 @@ export type ChatMessageProps = {
     text: string;
     time: string;
   };
-}
+};
 
 export type SidebarProps = {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-}
+};
 
 export type Chat = {
   id: number;
   title: string;
   lastMessage: string;
-}
+};
 
 export type ModalState = {
   isProfileOpen: boolean;
@@ -68,4 +70,4 @@ export type ModalState = {
   openSettings: () => void;
   closeSettings: () => void;
   closeAll: () => void;
-}
+};
