@@ -109,7 +109,7 @@ export default function PricingPlans() {
                     aria-pressed={isYearly}
                     onClick={() => setIsYearly((s) => !s)}
                     className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors focus:outline-none ${
-                      isYearly ? "bg-white/90" : "bg-white/30"
+                      isYearly ? "bg-white/30" : "bg-white/30"
                     }`}
                     title="Toggle billing cycle"
                   >

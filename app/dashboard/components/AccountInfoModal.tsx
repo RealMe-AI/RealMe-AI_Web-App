@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CreditCard } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 // You can replace this hook with your real auth provider, e.g. useSession() or useUser()
@@ -24,8 +25,12 @@ interface UserData {
   lastLogin: string;
 }
 
-export default function AccountInfoModal({ open, close }: AccountInfoModalProps) {
+export default function AccountInfoModal({
+  open,
+  close,
+}: AccountInfoModalProps) {
   const [user, setUser] = useState<UserData | null>(null);
+  const router = useRouter();
 
   // Example dynamic mock — replace with your real data fetch or session context
   useEffect(() => {
@@ -128,6 +133,7 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
 
             {/* Billing / Manage Subscription */}
             <button
+              onClick={() => router.push("/pricingplans")}
               className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg 
                          text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 
                          dark:bg-indigo-700 dark:hover:bg-indigo-800 transition"
@@ -146,8 +152,12 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
 function InfoItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
-      <span className="font-medium text-slate-600 dark:text-slate-400">{label}</span>
-      <span className="text-right text-slate-800 dark:text-slate-100">{value}</span>
+      <span className="font-medium text-slate-600 dark:text-slate-400">
+        {label}
+      </span>
+      <span className="text-right text-slate-800 dark:text-slate-100">
+        {value}
+      </span>
     </div>
   );
 }
