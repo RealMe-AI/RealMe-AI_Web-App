@@ -71,3 +71,5 @@ export type ModalState = {
   closeSettings: () => void;
   closeAll: () => void;
 };
+
+
