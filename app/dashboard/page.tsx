@@ -1,30 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { LayoutDashboard } from "lucide-react";
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
+import { useSidebarStore } from "../zustand/useSidebarStore";
 
 export default function Page() {
-  // Sidebar state (persistent)
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("sidebarOpen");
-      return saved ? JSON.parse(saved) : false;
-    }
-    return false;
-  });
-
-  // Save sidebar visibility in localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("sidebarOpen", JSON.stringify(isSidebarOpen));
-    }
-  }, [isSidebarOpen]);
+  const isSidebarOpen = useSidebarStore((s) => s.isOpen);
+  const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
 
   return (
     <div className="min-h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
+      
       {/* Toggle Button */}
       {!isSidebarOpen && (
         <button
@@ -47,7 +35,7 @@ export default function Page() {
         <ChatWindow />
       </motion.div>
 
-      {/* Sidebar (now takes props) */}
+      {/* Sidebar */}
       <Sidebar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
