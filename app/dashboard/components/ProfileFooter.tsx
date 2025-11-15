@@ -1,7 +1,10 @@
+// Updated ProfileFooter with Upgrade button added between View Account Info and Settings
+
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AccountInfoModal from "./AccountInfoModal";
 import SettingsPanel from "./SettingsPanel";
@@ -17,6 +20,8 @@ export default function ProfileFooter() {
     openSettings,
     closeAll,
   } = useModalStore();
+
+  const router = useRouter();
 
   return (
     <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
@@ -57,7 +62,6 @@ export default function ProfileFooter() {
             <button
               onClick={() => {
                 openAccountInfo();
-                // closeAll(); // close profile popover while opening modal
               }}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
@@ -67,9 +71,17 @@ export default function ProfileFooter() {
             </button>
 
             <button
+              onClick={() => router.push("/pricingplans")}
+              className="flex items-center gap-2 w-full px-3 py-2 mt-1 rounded-md text-sm font-medium
+                         text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100/50 
+                         dark:hover:bg-slate-700/60 transition"
+            >
+              <ArrowUpCircle size={16} /> Upgrade
+            </button>
+
+            <button
               onClick={() => {
                 openSettings();
-                // closeAll();
               }}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
