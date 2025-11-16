@@ -26,7 +26,8 @@ export default function PricingPlans() {
 
       {/* Toggle + container */}
       <div className="flex flex-col gap-6 md:gap-8 md:flex-row items-stretch">
-        {/* ------------------ FREE PLAN ------------------ */}
+        
+        {/*  FREE PLAN */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,7 +62,7 @@ export default function PricingPlans() {
               </ul>
             </div>
 
-            {/* Button aligned bottom */}
+           
             <div className="mt-auto pt-6">
               <button
                 className="w-full px-4 py-3 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium shadow-sm"
@@ -73,7 +74,7 @@ export default function PricingPlans() {
           </div>
         </motion.div>
 
-        {/* ------------------ PRO PLAN ------------------ */}
+        {/* PRO PLAN  */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
