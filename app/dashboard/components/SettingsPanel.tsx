@@ -25,10 +25,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const [language, setLanguage] = useState<string>("en");
   const [notifications, setNotifications] = useState({
     email: true,
-    push: true,
-    inApp: true,
   });
-  const [twoFA, setTwoFA] = useState(false);
 
   // Simulate fetching user data dynamically
   useEffect(() => {
@@ -85,18 +82,6 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               <button className="flex items-center gap-2 p-2 rounded-lg w-full hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
                 <Edit2 size={16} /> Edit Profile
               </button>
-              <button className="flex items-center gap-2 p-2 rounded-lg w-full hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
-                <Key size={16} /> Change Email / Auth Method
-              </button>
-              <button className="flex items-center gap-2 p-2 rounded-lg w-full hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
-                <Key size={16} /> Password Change
-              </button>
-              <Toggle
-                label="Two-Factor Authentication (2FA)"
-                enabled={twoFA}
-                onChange={() => setTwoFA(!twoFA)}
-                icon={<Shield size={16} />}
-              />
             </Section>
 
             {/* 2. Preferences */}
@@ -140,28 +125,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                 }
                 icon={<Bell size={16} />}
               />
-              <Toggle
-                label="Push Notifications"
-                enabled={notifications.push}
-                onChange={() =>
-                  setNotifications({
-                    ...notifications,
-                    push: !notifications.push,
-                  })
-                }
-                icon={<Bell size={16} />}
-              />
-              <Toggle
-                label="In-App Notifications"
-                enabled={notifications.inApp}
-                onChange={() =>
-                  setNotifications({
-                    ...notifications,
-                    inApp: !notifications.inApp,
-                  })
-                }
-                icon={<Bell size={16} />}
-              />
+              
             </Section>
 
             {/* 5. Support & Help */}
