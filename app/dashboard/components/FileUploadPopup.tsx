@@ -14,11 +14,15 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
 
   const addPendingFile = useSendFileMessage((state) => state.addPendingFile);
+  const dailyUploadCount = useSendFileMessage((state) => state.dailyUploadCount);
+  const plan = useSendFileMessage((state) => state.plan);
+
+  const freeLimitReached = plan === "free" && dailyUploadCount >= 3;
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      addPendingFile(file); // Add to pending files instead of sending immediately
+      addPendingFile(file);
       close();
     }
   };
@@ -54,12 +58,25 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
           Upload a File
         </h3>
 
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="px-4 py-1 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm transition"
-        >
-          <Upload size={14} className="inline" /> Choose File
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => !freeLimitReached && fileInputRef.current?.click()}
+            disabled={freeLimitReached}
+            className={`px-4 py-1 rounded-lg font-medium text-sm transition flex items-center justify-center gap-1
+                        ${freeLimitReached 
+                          ? "bg-gray-400 cursor-not-allowed" 
+                          : "bg-indigo-500 hover:bg-indigo-600 text-white"}`}
+          >
+            <Upload size={14} className="inline" /> Choose File
+          </button>
+
+          {/* Tooltip */}
+          {freeLimitReached && (
+            <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs bg-black/80 text-white px-2 py-1 rounded">
+              Upgrade to Pro for more uploads
+            </span>
+          )}
+        </div>
 
         <input
           type="file"
