@@ -87,6 +87,8 @@ export default function ChatWindow() {
                     <Image
                       src={URL.createObjectURL(file)}
                       alt={file.name}
+                      width={50}
+                      height={50}
                       className="w-10 h-10 object-cover rounded"
                     />
                   ) : (
