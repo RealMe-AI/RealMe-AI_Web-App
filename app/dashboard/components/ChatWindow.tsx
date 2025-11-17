@@ -10,8 +10,8 @@ import { Plus, Mic, FileIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function ChatWindow() {
-  const { messages: chatMessages, sendMessage, isLoading } = useChatStore();
-  const { pendingFiles, addPendingFile, removePendingFile, sendFilesWithText } = useSendFileMessage();
+  const { messages: chatMessages, isLoading } = useChatStore();
+  const { pendingFiles, removePendingFile, sendFilesWithText } = useSendFileMessage();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -45,12 +45,13 @@ export default function ChatWindow() {
 
   // Merge messages (chat + files already sent)
   const { messages: fileMessages } = useSendFileMessage();
-  const allMessages = [...chatMessages, ...fileMessages.messages]
-    .sort((a, b) => Number(a.id) - Number(b.id));
+  const allMessages = [...chatMessages, ...fileMessages].sort(
+    (a, b) => Number(a.id) - Number(b.id)
+  );
 
   return (
     <div className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 transition max-w-full">
-      
+
       {/* Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
         {allMessages.map((msg) => (
@@ -68,9 +69,9 @@ export default function ChatWindow() {
 
       {/* Input Container */}
       <div
-        className="flex flex-col gap-1 mt-2 bg-white/60 dark:bg-slate-700/60 
-                   rounded-xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl
-                   focus-within:ring-2 focus-within:ring-indigo-500 transition"
+        className={`flex flex-col gap-1 mt-2 bg-white/60 dark:bg-slate-700/60 
+                    rounded-xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl
+                    transition ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
       >
         {/* Pending Files Preview */}
         {pendingFiles.length > 0 && (
@@ -82,7 +83,7 @@ export default function ChatWindow() {
                   key={index}
                   className="flex items-center gap-1 px-2 py-1 bg-white/40 dark:bg-slate-700/40 rounded-lg shadow"
                 >
-                  {["png","jpg","jpeg","webp"].includes(ext || "") ? (
+                  {["png", "jpg", "jpeg", "webp"].includes(ext || "") ? (
                     <Image
                       src={URL.createObjectURL(file)}
                       alt={file.name}
@@ -114,7 +115,9 @@ export default function ChatWindow() {
             onClick={() => setShowUploadPopup(true)}
           >
             <Plus size={22} className="text-indigo-500 dark:text-white/40" />
-            {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
+            {showUploadPopup && (
+              <FileUploadPopup close={() => setShowUploadPopup(false)} />
+            )}
           </div>
 
           {/* Editable Input */}
