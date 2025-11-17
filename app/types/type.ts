@@ -43,7 +43,21 @@ export type ChatMessageProps = {
   message: {
     id: string;
     sender: "user" | "ai";
-    text: string;
+    type: "text" | "file" | "image" | "audio"; // NEW
+    // optional because file/image may have no text
+    text?: string;
+    // NEW – for uploaded file
+    fileUrl?: string;
+    // NEW – original filename
+    fileName?: string;
+    // NEW – in bytes
+    fileSize?: number;
+    // NEW – e.g. "application/pdf"
+    mimeType?: string;
+    // NEW – for image messages
+    imageUrl?: string;
+    // NEW – for voice messages
+    audioUrl?: string;
     time: string;
   };
 };
@@ -71,5 +85,3 @@ export type ModalState = {
   closeSettings: () => void;
   closeAll: () => void;
 };
-
-

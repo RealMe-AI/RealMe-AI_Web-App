@@ -5,7 +5,7 @@ import MessageActions from "../components/MessageActions";
 import { ChatMessageProps } from "../../types/type";
 import { cn } from "../../lib/utils";
 import Image from "next/image";
-import { FileIcon, ImageIcon, Mic, FileText } from "lucide-react";
+import { FileIcon, Mic, FileText } from "lucide-react";
 import { useState } from "react";
 
 export default function ChatMessage({ message }: ChatMessageProps) {
