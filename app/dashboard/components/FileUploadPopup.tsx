@@ -51,24 +51,24 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
                    shadow-xl text-center z-50 left-0"
       >
         {/* Arrow pointer */}
+        <div className="flex flex-col justify-center">
         <div className="absolute -bottom-2 left-6 w-3 h-3 rotate-45 bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20"></div>
 
         <File size={36} className="mx-auto text-indigo-500 mb-2" />
         
         {freeLimitReached ? 
-            <span className="text-sm text-slate-800 dark:text-white px-2 py-1 rounded">
-              Upgrade to Pro for more uploads
+            <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+              Upgrade to Pro
             </span>
        : <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
           Upload a ile
         </h3>
           }
-
-        <div className="relative">
+        
           <button
             onClick={() => !freeLimitReached && fileInputRef.current?.click()}
             disabled={freeLimitReached}
-            className={`px-4 py-1 rounded-lg font-medium text-sm transition flex items-center justify-center gap-1
+            className={`px-2 py-1 rounded-lg font-medium text-sm transition flex items-center justify-center gap-2
                         ${freeLimitReached 
                           ? "bg-gray-400 cursor-not-allowed" 
                           : "bg-indigo-500 hover:bg-indigo-600 text-white"}`}
@@ -76,12 +76,6 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
             <Upload size={14} className="inline" /> Choose File
           </button>
 
-          {/* Tooltip
-          {freeLimitReached && (
-            <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs bg-black/80 text-white px-2 py-1 rounded">
-              Upgrade to Pro for more uploads
-            </span>
-          )} */}
         </div>
 
         <input
