@@ -11,12 +11,17 @@ import { Plus, Mic } from "lucide-react";
 export default function ChatWindow() {
   const { messages: chatMessages, sendMessage, isLoading } = useChatStore();
   const { messages: fileMessages } = useSendFileMessage();
+
   const [input, setInput] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [showVoicePopup, setShowVoicePopup] = useState(false);
+
+  const inputRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom on new messages
+  // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages, fileMessages]);
@@ -25,22 +30,14 @@ export default function ChatWindow() {
     if (!input.trim()) return;
     await sendMessage(input);
     setInput("");
+    if (inputRef.current) inputRef.current.textContent = "";
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const isSmallScreen = window.innerWidth < 768;
-    if (e.key === "Enter" && (!e.shiftKey || isSmallScreen)) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  // Merge and normalize messages for ChatMessage
+  // Merge and normalize messages
   const allMessages = [...chatMessages, ...fileMessages]
     .map((msg) => {
-      // If it's a regular chat message
       if ("text" in msg) return msg;
-      // If it's a file message, normalize to chat shape
+
       if (msg.type === "file") {
         return {
           id: String(msg.id),
@@ -49,12 +46,14 @@ export default function ChatWindow() {
           time: new Date(msg.id).toLocaleTimeString(),
         };
       }
-      return msg; // fallback
+
+      return msg;
     })
     .sort((a, b) => Number(a.id) - Number(b.id));
 
   return (
     <div className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 transition max-w-full">
+      
       {/* Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
         {allMessages.map((msg) => (
@@ -70,58 +69,55 @@ export default function ChatWindow() {
         </div>
       )}
 
-      {/* Input Row */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSend();
-        }}
-        className="flex items-center gap-2 mt-2"
+      {/* Input Container */}
+      <div
+        className="flex items-center gap-2 mt-2 bg-white/60 dark:bg-slate-700/60 
+                   rounded-xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl 
+                   focus-within:ring-2 focus-within:ring-indigo-500 transition"
       >
-        {/* ➕ Upload Icon */}
+
+        {/* ➕ Upload Icon inside */}
         <div
-          className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-700/30 cursor-pointer transition relative"
+          className="mr-2 p-1 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
           onClick={() => setShowUploadPopup(true)}
         >
-          <Plus size={20} />
-          {showUploadPopup && (
-            <FileUploadPopup close={() => setShowUploadPopup(false)} />
-          )}
+          <Plus size={22} className="text-indigo-500 dark:text-white/40" />
+          {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
         </div>
 
-        {/* Textarea */}
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
-          rows={1}
-          className="flex-1 px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base rounded-xl bg-white/60 dark:bg-slate-700/60 
-                     placeholder:text-slate-400 focus:outline-none focus:ring-2 
-                     focus:ring-indigo-500 transition resize-none"
+        {/* Editable Input */}
+        <div
+          ref={inputRef}
+          contentEditable
+          onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className="flex-1 outline-none text-sm sm:text-base text-slate-800 dark:text-slate-100 min-h-[22px]"
+          suppressContentEditableWarning
         />
 
-        {/* 🎤 Voice Icon */}
-        <div
-          className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-700/30 cursor-pointer transition relative"
-          onClick={() => setShowVoicePopup(true)}
-        >
-          <Mic size={20} />
-          {showVoicePopup && (
-            <VoiceInput close={() => setShowVoicePopup(false)} />
-          )}
-        </div>
-
-        {/* Send Button */}
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="px-3 py-2 sm:px-4 sm:py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 
-                     text-white text-sm sm:text-base font-medium transition disabled:opacity-50"
-        >
-          {isLoading ? "..." : "Send"}
-        </button>
-      </form>
+        {/* Mic OR Send (dynamic inside input bar) */}
+        {input.trim().length === 0 ? (
+          // 📢 Show MIC when no text
+          <div
+            className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
+            onClick={() => setShowVoicePopup(true)}
+          >
+            <Mic size={22} className="text-indigo-500 dark:text-white/40" />
+            {showVoicePopup && <VoiceInput close={() => setShowVoicePopup(false)} />}
+          </div>
+        ) : (
+          // 📨 Show SEND when typing
+          <button
+            onClick={handleSend}
+            disabled={isLoading}
+            className="px-4 py-2 sm:px-4 sm:py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 
+                       text-white font-medium text-sm transition disabled:opacity-50"
+          >
+            {isLoading ? "..." : "Send"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
