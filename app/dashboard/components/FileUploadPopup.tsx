@@ -54,9 +54,15 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
         <div className="absolute -bottom-2 left-6 w-3 h-3 rotate-45 bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20"></div>
 
         <File size={36} className="mx-auto text-indigo-500 mb-2" />
-        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
-          Upload a File
+        
+        {freeLimitReached ? 
+            <span className="text-sm text-slate-800 dark:text-white px-2 py-1 rounded">
+              Upgrade to Pro for more uploads
+            </span>
+       : <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+          Upload a ile
         </h3>
+          }
 
         <div className="relative">
           <button
@@ -70,12 +76,12 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
             <Upload size={14} className="inline" /> Choose File
           </button>
 
-          {/* Tooltip */}
+          {/* Tooltip
           {freeLimitReached && (
             <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs bg-black/80 text-white px-2 py-1 rounded">
               Upgrade to Pro for more uploads
             </span>
-          )}
+          )} */}
         </div>
 
         <input

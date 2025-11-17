@@ -11,7 +11,8 @@ import Image from "next/image";
 
 export default function ChatWindow() {
   const { messages: chatMessages, isLoading } = useChatStore();
-  const { pendingFiles, removePendingFile, sendFilesWithText } = useSendFileMessage();
+  const { pendingFiles, removePendingFile, sendFilesWithText } =
+    useSendFileMessage();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -51,7 +52,6 @@ export default function ChatWindow() {
 
   return (
     <div className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 transition max-w-full">
-
       {/* Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
         {allMessages.map((msg) => (
@@ -81,28 +81,30 @@ export default function ChatWindow() {
               return (
                 <div
                   key={index}
-                  className="flex items-center gap-1 px-2 py-1 bg-white/40 dark:bg-slate-700/40 rounded-lg shadow"
+                  className="relative shrink-0 w-12 h-12 bg-white/40 dark:bg-slate-700/40 rounded-lg shadow"
                 >
-                  {["png", "jpg", "jpeg", "webp"].includes(ext || "") ? (
-                    <Image
-                      src={URL.createObjectURL(file)}
-                      alt={file.name}
-                      width={50}
-                      height={50}
-                      className="w-10 h-10 object-cover rounded"
-                    />
-                  ) : (
-                    <FileIcon className="w-6 h-6 text-indigo-500" />
-                  )}
-
-                  <span className="text-xs truncate max-w-[80px]">{file.name}</span>
-
+                  {/* Cancel Button */}
                   <button
                     onClick={() => removePendingFile(index)}
-                    className="text-red-500 hover:text-red-600 font-bold"
+                    className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-red-500 text-white text-xs hover:bg-red-600"
                   >
                     ×
                   </button>
+
+                  {/* File / Image */}
+                  {["png", "jpg", "jpeg", "webp"].includes(ext || "") ? (
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <FileIcon className="w-6 h-6 text-indigo-500" />
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -141,7 +143,9 @@ export default function ChatWindow() {
               onClick={() => setShowVoicePopup(true)}
             >
               <Mic size={22} className="text-indigo-500 dark:text-white/40" />
-              {showVoicePopup && <VoiceInput close={() => setShowVoicePopup(false)} />}
+              {showVoicePopup && (
+                <VoiceInput close={() => setShowVoicePopup(false)} />
+              )}
             </div>
           ) : (
             <button
