@@ -73,16 +73,14 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 10, scale: 0.9 }}
         transition={{ duration: 0.25 }}
-        className={`absolute bottom-full mb-3 w-54 sm:w-40 rounded-2xl p-4
+        className={`absolute bottom-full mb-3 w-40 sm:w-40 rounded-2xl p-4
           bg-white/30 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 
-          shadow-xl text-center z-50 ${
-            position === "right" ? "right-0" : "left-0"
+          shadow-xl text-center z-50 left-0"
           }`}
       >
         {/* Arrow pointer */}
         <div
-          className={`absolute -bottom-2 w-3 h-3 rotate-45 bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20 ${
-            position === "right" ? "right-6" : "left-6"
+          className={`absolute -bottom-2 left-6 w-3 h-3 rotate-45 bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20 "
           }`}
         ></div>
 

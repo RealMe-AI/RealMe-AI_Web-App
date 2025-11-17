@@ -31,7 +31,7 @@ export default function VoiceInput({ close }: VoiceInputProps) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 10, scale: 0.9 }}
         transition={{ duration: 0.25 }}
-        className="absolute bottom-full right-0 mb-3 w-54 sm:w-40 rounded-2xl p-4
+        className="absolute bottom-full right-0 mb-3 w-40 sm:w-40 rounded-2xl p-4
                    bg-white/30 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 
                    shadow-xl flex flex-col items-center z-50"
       >
