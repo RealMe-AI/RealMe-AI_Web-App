@@ -6,11 +6,12 @@ import { useSendFileMessage } from "../../zustand/sendFileMessage";
 import ChatMessage from "./ChatMessage";
 import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
-import { Plus, Mic } from "lucide-react";
+import { Plus, Mic, FileIcon } from "lucide-react";
+import Image from "next/image";
 
 export default function ChatWindow() {
   const { messages: chatMessages, sendMessage, isLoading } = useChatStore();
-  const { messages: fileMessages } = useSendFileMessage();
+  const { pendingFiles, addPendingFile, removePendingFile, sendFilesWithText } = useSendFileMessage();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -24,31 +25,27 @@ export default function ChatWindow() {
   // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages, fileMessages]);
+  }, [chatMessages, pendingFiles]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
-    await sendMessage(input);
+    if (!input.trim() && pendingFiles.length === 0) return;
+
+    sendFilesWithText(input.trim() || undefined);
     setInput("");
     if (inputRef.current) inputRef.current.textContent = "";
   };
 
-  // Merge and normalize messages
-  const allMessages = [...chatMessages, ...fileMessages]
-    .map((msg) => {
-      if ("text" in msg) return msg;
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const isSmallScreen = window.innerWidth < 768;
+    if (e.key === "Enter" && (!e.shiftKey || isSmallScreen)) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
-      if (msg.type === "file") {
-        return {
-          id: String(msg.id),
-          sender: msg.sender,
-          text: `📎 ${msg.fileName} (${Math.round(msg.fileSize / 1024)} KB)`,
-          time: new Date(msg.id).toLocaleTimeString(),
-        };
-      }
-
-      return msg;
-    })
+  // Merge messages (chat + files already sent)
+  const { messages: fileMessages } = useSendFileMessage();
+  const allMessages = [...chatMessages, ...fileMessages.messages]
     .sort((a, b) => Number(a.id) - Number(b.id));
 
   return (
@@ -71,52 +68,87 @@ export default function ChatWindow() {
 
       {/* Input Container */}
       <div
-        className="flex items-center gap-2 mt-2 bg-white/60 dark:bg-slate-700/60 
-                   rounded-xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl 
+        className="flex flex-col gap-1 mt-2 bg-white/60 dark:bg-slate-700/60 
+                   rounded-xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl
                    focus-within:ring-2 focus-within:ring-indigo-500 transition"
       >
+        {/* Pending Files Preview */}
+        {pendingFiles.length > 0 && (
+          <div className="flex gap-2 overflow-x-auto py-1">
+            {pendingFiles.map((file, index) => {
+              const ext = file.name.split(".").pop()?.toLowerCase();
+              return (
+                <div
+                  key={index}
+                  className="flex items-center gap-1 px-2 py-1 bg-white/40 dark:bg-slate-700/40 rounded-lg shadow"
+                >
+                  {["png","jpg","jpeg","webp"].includes(ext || "") ? (
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      className="w-10 h-10 object-cover rounded"
+                    />
+                  ) : (
+                    <FileIcon className="w-6 h-6 text-indigo-500" />
+                  )}
 
-        {/* ➕ Upload Icon inside */}
-        <div
-          className="mr-2 p-1 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
-          onClick={() => setShowUploadPopup(true)}
-        >
-          <Plus size={22} className="text-indigo-500 dark:text-white/40" />
-          {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
-        </div>
+                  <span className="text-xs truncate max-w-[80px]">{file.name}</span>
 
-        {/* Editable Input */}
-        <div
-          ref={inputRef}
-          contentEditable
-          onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className="flex-1 outline-none text-sm sm:text-base text-slate-800 dark:text-slate-100 min-h-[22px]"
-          suppressContentEditableWarning
-        />
-
-        {/* Mic OR Send (dynamic inside input bar) */}
-        {input.trim().length === 0 ? (
-          // 📢 Show MIC when no text
-          <div
-            className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
-            onClick={() => setShowVoicePopup(true)}
-          >
-            <Mic size={22} className="text-indigo-500 dark:text-white/40" />
-            {showVoicePopup && <VoiceInput close={() => setShowVoicePopup(false)} />}
+                  <button
+                    onClick={() => removePendingFile(index)}
+                    className="text-red-500 hover:text-red-600 font-bold"
+                  >
+                    ×
+                  </button>
+                </div>
+              );
+            })}
           </div>
-        ) : (
-          // 📨 Show SEND when typing
-          <button
-            onClick={handleSend}
-            disabled={isLoading}
-            className="px-4 py-2 sm:px-4 sm:py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 
-                       text-white font-medium text-sm transition disabled:opacity-50"
-          >
-            {isLoading ? "..." : "Send"}
-          </button>
         )}
+
+        {/* Input Row */}
+        <div className="flex items-center gap-2">
+          {/* ➕ Upload Icon */}
+          <div
+            className="mr-2 p-1 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
+            onClick={() => setShowUploadPopup(true)}
+          >
+            <Plus size={22} className="text-indigo-500 dark:text-white/40" />
+            {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
+          </div>
+
+          {/* Editable Input */}
+          <div
+            ref={inputRef}
+            contentEditable
+            onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            onKeyDown={handleKeyDown}
+            className="flex-1 outline-none text-sm sm:text-base text-slate-800 dark:text-slate-100 min-h-[22px]"
+            suppressContentEditableWarning
+          />
+
+          {/* Mic OR Send */}
+          {input.trim().length === 0 && pendingFiles.length === 0 ? (
+            <div
+              className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
+              onClick={() => setShowVoicePopup(true)}
+            >
+              <Mic size={22} className="text-indigo-500 dark:text-white/40" />
+              {showVoicePopup && <VoiceInput close={() => setShowVoicePopup(false)} />}
+            </div>
+          ) : (
+            <button
+              onClick={handleSend}
+              disabled={isLoading}
+              className="px-4 py-2 sm:px-4 sm:py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 
+                         text-white font-medium text-sm transition disabled:opacity-50"
+            >
+              {isLoading ? "..." : "Send"}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

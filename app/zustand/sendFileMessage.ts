@@ -12,26 +12,54 @@ interface FileMessage {
 
 interface SendFileMessageStore {
   messages: FileMessage[];
-  sendFileMessage: (file: File) => void;
+  pendingFiles: File[];
+  addPendingFile: (file: File) => void;
+  removePendingFile: (index: number) => void;
+  clearPendingFiles: () => void;
+  sendFilesWithText: (text?: string) => void;
 }
 
 export const useSendFileMessage = create<SendFileMessageStore>((set) => ({
   messages: [],
+  pendingFiles: [],
 
-  sendFileMessage: (file) => {
+  addPendingFile: (file) =>
+    set((state) => ({
+      pendingFiles: [...state.pendingFiles, file],
+    })),
+
+  removePendingFile: (index) =>
+    set((state) => ({
+      pendingFiles: state.pendingFiles.filter((_, i) => i !== index),
+    })),
+
+  clearPendingFiles: () => set({ pendingFiles: [] }),
+
+  sendFilesWithText: (text) =>
     set((state) => ({
       messages: [
         ...state.messages,
-        {
-          id: Date.now(),
-          type: "file",
+        ...state.pendingFiles.map((file) => ({
+          id: Date.now() + Math.random(),
+          type: "file" as const,
           fileName: file.name,
           fileSize: file.size,
           fileType: file.type,
           fileObject: file,
-          sender: "user",
-        },
+          sender: "user" as const,
+        })),
+        ...(text
+          ? [
+              {
+                id: Date.now() + Math.random(),
+                type: "text" as const,
+                text,
+                sender: "user" as const,
+                time: new Date().toLocaleTimeString(),
+              },
+            ]
+          : []),
       ],
-    }));
-  },
+      pendingFiles: [],
+    })),
 }));
