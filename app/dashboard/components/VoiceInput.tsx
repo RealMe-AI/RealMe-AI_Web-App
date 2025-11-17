@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, Square, X } from "lucide-react";
+import { Mic, Square,} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface VoiceInputProps {
