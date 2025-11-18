@@ -144,7 +144,14 @@ export default function ChatWindow() {
             >
               <Mic size={22} className="text-indigo-500 dark:text-white/40" />
               {showVoicePopup && (
-                <VoiceInput close={() => setShowVoicePopup(false)} />
+                <VoiceInput
+                  close={() => setShowVoicePopup(false)}
+                  onTranscript={(text) => {
+                    setInput(text);
+                    if (inputRef.current) inputRef.current.textContent = text;
+                    setShowVoicePopup(false);
+                  }}
+                />
               )}
             </div>
           ) : (

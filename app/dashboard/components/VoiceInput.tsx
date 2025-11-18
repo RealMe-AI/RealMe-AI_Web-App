@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mic, Square, Send } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useVoiceInput } from "../../hooks/useVoiceInput";
 
 interface VoiceInputProps {
@@ -23,6 +23,18 @@ export default function VoiceInput({ close }: VoiceInputProps) {
     cleanup,
     formatTime,
   } = useVoiceInput();
+
+  // 🔹 Close popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        cleanup();
+        close();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [cleanup, close]);
 
   return (
     <AnimatePresence>
