@@ -36,12 +36,15 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [cleanup, close]);
 
-  // 🔹 Whenever transcription is ready, send it to ChatWindow input
+  // 🔹 Whenever transcription is ready and valid, send it to ChatWindow input
   useEffect(() => {
-    if (!isRecording && transcript && !isTranscribing) {
-      onTranscript(transcript);
+    if (!isRecording && transcript && !isTranscribing && !error) {
+      const safeText = transcript.trim();
+      if (safeText.length > 0) {
+        onTranscript(safeText);
+      }
     }
-  }, [isRecording, transcript, isTranscribing, onTranscript]);
+  }, [isRecording, transcript, isTranscribing, error, onTranscript]);
 
   return (
     <AnimatePresence>
@@ -74,7 +77,7 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
             : "Start recording"}
         </p>
 
-        {/* error */}
+        {/* Error */}
         {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
 
         {/* Buttons */}
