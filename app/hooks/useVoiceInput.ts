@@ -6,18 +6,17 @@ interface TranscriptionResponse {
 }
 
 export const useVoiceInput = () => {
-  const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [seconds, setSeconds] = useState<number>(0);
+  const [isRecording, setIsRecording] = useState(false);
+  const [seconds, setSeconds] = useState(0);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [chunks, setChunks] = useState<Blob[]>([]);
-  const [isTranscribing, setIsTranscribing] = useState<boolean>(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [transcript, setTranscript] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const timerRef = useRef<number | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Timer
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
@@ -30,7 +29,6 @@ export const useVoiceInput = () => {
     }
   };
 
-  // Start Recording
   const startRecording = async () => {
     setError(null);
     setTranscript(null);
@@ -60,11 +58,8 @@ export const useVoiceInput = () => {
     }
   };
 
-  // Stop Recording
   const stopRecording = () => {
-    if (mediaRecorder && mediaRecorder.state !== "inactive") {
-      mediaRecorder.stop();
-    }
+    if (mediaRecorder && mediaRecorder.state !== "inactive") mediaRecorder.stop();
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((t) => t.stop());
       streamRef.current = null;
@@ -73,7 +68,6 @@ export const useVoiceInput = () => {
     stopTimer();
   };
 
-  // Transcription
   const transcribe = async () => {
     if (chunks.length === 0) {
       setError("Nothing recorded.");
@@ -90,13 +84,19 @@ export const useVoiceInput = () => {
 
       const res = await fetch("/api/transcribe", { method: "POST", body: fd });
 
-      if (!res.ok) {
+      const contentType = res.headers.get("content-type") || "";
+      if (!res.ok || !contentType.includes("application/json")) {
         const txt = await res.text();
-        throw new Error(txt || "Transcription failed");
+        throw new Error(txt || `Transcription failed with status ${res.status}`);
       }
 
       const data: TranscriptionResponse = await res.json();
-      setTranscript(data.text ?? "");
+
+      if (!data?.text || typeof data.text !== "string") {
+        throw new Error("Invalid transcription result.");
+      }
+
+      setTranscript(data.text.trim());
     } catch (err) {
       const e = err instanceof Error ? err.message : "Transcription failed.";
       console.error("Transcribe error:", e);
@@ -106,7 +106,6 @@ export const useVoiceInput = () => {
     }
   };
 
-  // Cleanup
   const cleanup = () => {
     stopTimer();
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
@@ -127,7 +126,6 @@ export const useVoiceInput = () => {
     setError(null);
   };
 
-  // Auto-transcribe when recording stops
   useEffect(() => {
     if (!isRecording && chunks.length > 0 && !isTranscribing && !transcript) {
       transcribe();
@@ -135,7 +133,6 @@ export const useVoiceInput = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chunks]);
 
-  // Format timer
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
     const sec = s % 60;
@@ -146,7 +143,7 @@ export const useVoiceInput = () => {
     isRecording,
     seconds,
     isTranscribing,
-    transcript, // this can now be sent to ChatWindow automatically
+    transcript,
     error,
     startRecording,
     stopRecording,
