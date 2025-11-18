@@ -1,14 +1,15 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, Square, Send } from "lucide-react";
+import { Mic, Square } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { useVoiceInput } from "../../hooks/useVoiceInput";
 
 interface VoiceInputProps {
   close: () => void;
+  onTranscript: (text: string) => void; // callback to send text to ChatWindow input
 }
 
-export default function VoiceInput({ close }: VoiceInputProps) {
+export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
   const popupRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -19,7 +20,6 @@ export default function VoiceInput({ close }: VoiceInputProps) {
     error,
     startRecording,
     stopRecording,
-    handleSendTranscript,
     cleanup,
     formatTime,
   } = useVoiceInput();
@@ -35,6 +35,13 @@ export default function VoiceInput({ close }: VoiceInputProps) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [cleanup, close]);
+
+  // 🔹 Whenever transcription is ready, send it to ChatWindow input
+  useEffect(() => {
+    if (!isRecording && transcript && !isTranscribing) {
+      onTranscript(transcript);
+    }
+  }, [isRecording, transcript, isTranscribing, onTranscript]);
 
   return (
     <AnimatePresence>
@@ -76,7 +83,7 @@ export default function VoiceInput({ close }: VoiceInputProps) {
           <button
             onClick={async () => {
               if (isRecording) {
-                stopRecording();
+                await stopRecording();
               } else {
                 await startRecording();
               }
@@ -99,30 +106,14 @@ export default function VoiceInput({ close }: VoiceInputProps) {
             )}
           </button>
 
-          {/* If transcribing in progress */}
+          {/* Transcribing status */}
           {isTranscribing && (
             <div className="text-sm text-slate-600 dark:text-slate-300">
               Transcribing…
             </div>
           )}
 
-          {/* If transcript ready, show Send -> button and a small preview */}
-          {!isRecording && transcript && !isTranscribing && (
-            <div className="flex items-center gap-2">
-              <div className="text-sm text-slate-700 dark:text-slate-200 px-2 py-1 rounded bg-white/30 dark:bg-slate-700/40 max-w-[140px] truncate">
-                {transcript}
-              </div>
-
-              <button
-                onClick={handleSendTranscript}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm"
-              >
-                Send <Send size={14} />
-              </button>
-            </div>
-          )}
-
-          {/* If not recording and no transcript, show a Cancel/Close */}
+          {/* Close button if nothing recorded */}
           {!isRecording && !transcript && !isTranscribing && (
             <button
               onClick={() => {
