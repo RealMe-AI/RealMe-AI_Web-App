@@ -1,12 +1,10 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CreditCard } from "lucide-react";
+import { X, CreditCard, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
-// You can replace this hook with your real auth provider, e.g. useSession() or useUser()
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface AccountInfoModalProps {
   open: boolean;
@@ -30,11 +28,12 @@ export default function AccountInfoModal({
   close,
 }: AccountInfoModalProps) {
   const [user, setUser] = useState<UserData | null>(null);
+  const [preview, setPreview] = useState<string | null>(null); // for avatar preview
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const router = useRouter();
 
-  // Example dynamic mock — replace with your real data fetch or session context
   useEffect(() => {
-    // simulate async fetch
     const timeout = setTimeout(() => {
       setUser({
         fullName: "Owens Chikere",
@@ -51,6 +50,20 @@ export default function AccountInfoModal({
 
     return () => clearTimeout(timeout);
   }, []);
+
+  // Handle upload
+  const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+
+    // Later, you will upload to backend:
+    // const fd = new FormData();
+    // fd.append("avatar", file);
+    // await fetch("/api/user/avatar", { method: "POST", body: fd });
+  };
 
   return (
     <AnimatePresence>
@@ -78,14 +91,45 @@ export default function AccountInfoModal({
             </button>
 
             {/* Header */}
-            <div className="flex flex-col items-center text-center space-y-3">
-              <Image
-                src={user?.avatar || "/avatar.png"}
-                alt="User Avatar"
-                width={70}
-                height={70}
-                className="rounded-full border border-white/30 shadow-sm"
-              />
+            <div className="flex flex-col items-center text-center space-y-3 relative">
+              {/* Avatar Container with Hover Edit Button */}
+              <div className="relative group">
+                <Image
+                  src={preview || user?.avatar || "/avatar.png"}
+                  alt="User Avatar"
+                  width={80}
+                  height={80}
+                  className="rounded-full border border-white/30 shadow-sm object-cover"
+                />
+
+                {/* Edit Button */}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50 
+                            hover:bg-black/80 transition p-1.5 rounded-full opacity-0 
+                            group-hover:opacity-100 flex items-center justify-center"
+                >
+                  <Pencil size={14} className="text-white" />
+                </button>
+
+                {/* Tooltip */}
+                <div
+                  className="absolute -bottom-8 right-0 px-2 py-1 text-xs 
+                                rounded-md bg-black/70 text-white opacity-0 
+                                group-hover:opacity-100 transition"
+                >
+                  Edit image
+                </div>
+
+                {/* Hidden Input */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleAvatarUpload}
+                  className="hidden"
+                />
+              </div>
 
               <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                 {user?.fullName || "Loading..."}
@@ -110,7 +154,7 @@ export default function AccountInfoModal({
             {/* Divider */}
             <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
 
-            {/* Body Info Section */}
+            {/* Body Info */}
             {user ? (
               <div className="space-y-2 text-sm">
                 <InfoItem label="Full Name" value={user.fullName} />
@@ -129,7 +173,7 @@ export default function AccountInfoModal({
             {/* Divider */}
             <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
 
-            {/* Billing / Manage Subscription */}
+            {/* Manage Subscription */}
             <button
               onClick={() => router.push("/pricingplans")}
               className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg 
