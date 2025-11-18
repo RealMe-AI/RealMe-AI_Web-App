@@ -1,10 +1,9 @@
-// src/app/api/transcribe/route.ts
 import { NextResponse } from "next/server";
 
 interface OpenAITranscriptionResponse {
   text: string;
 }
-
+// for Voice input
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();

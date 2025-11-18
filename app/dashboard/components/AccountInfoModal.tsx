@@ -100,8 +100,6 @@ export default function AccountInfoModal({
                 ${
                   user?.accountType === "Pro"
                     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-700/30 dark:text-emerald-300 border-emerald-300/20"
-                    : user?.accountType === "Business"
-                    ? "bg-amber-100 text-amber-700 dark:bg-amber-700/30 dark:text-amber-300 border-amber-300/20"
                     : "bg-indigo-100 text-indigo-700 dark:bg-indigo-700/30 dark:text-indigo-300 border-indigo-300/20"
                 }`}
               >
