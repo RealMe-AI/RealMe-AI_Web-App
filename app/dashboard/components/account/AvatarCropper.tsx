@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
-import { getCroppedImg } from "./cropUtils";
+import { getCroppedImg } from "../../../utils/cropUtils";
 import { X } from "lucide-react";
 
 interface Props {
@@ -28,7 +28,6 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
   return (
     <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center">
       <div className="bg-white dark:bg-slate-800 rounded-xl p-4 w-[90%] max-w-sm relative">
-        
         {/* Close */}
         <button
           onClick={onClose}

@@ -91,10 +91,8 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
                 className={`px-3 py-1 text-xs rounded-full border
                 ${
                   user?.accountType === "Pro"
-                    ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-700/30 
-                       dark:text-emerald-300 border-emerald-300/20"
-                    : "bg-indigo-100 text-indigo-700 dark:bg-indigo-700/30 
-                       dark:text-indigo-300 border-indigo-300/20"
+                    ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-700/30 dark:text-emerald-300 border-emerald-300/20"
+                    : "bg-indigo-100 text-indigo-700 dark:bg-indigo-700/30 dark:text-indigo-300 border-indigo-300/20"
                 }`}
               >
                 {user?.plan || "—"}
