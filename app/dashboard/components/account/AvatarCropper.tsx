@@ -11,16 +11,32 @@ interface Props {
   onSave: (img: string) => void;
 }
 
-export default function AvatarCropper({ src, onClose, onSave }: Props) {
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+// Define types
+interface Area {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
-  const onCropComplete = useCallback((_a, areaPixels) => {
+interface PixelCrop {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export default function AvatarCropper({ src, onClose, onSave }: Props) {
+  const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState<number>(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(null);
+
+  const onCropComplete = useCallback((_: Area, areaPixels: PixelCrop) => {
     setCroppedAreaPixels(areaPixels);
   }, []);
 
   const handleSave = async () => {
+    if (!croppedAreaPixels) return;
     const img = await getCroppedImg(src, croppedAreaPixels);
     onSave(img);
   };
