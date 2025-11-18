@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import AccountInfoModal from "./AccountInfoModal";
+import AccountInfoModal from "./account/AccountInfoModal";
 import SettingsPanel from "./SettingsPanel";
 import useModalStore from "../../zustand/modalStore"; // centralized modal store
 
