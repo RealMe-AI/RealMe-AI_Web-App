@@ -1,6 +1,5 @@
 // src/hooks/useVoiceInput.ts
 import { useEffect, useRef, useState } from "react";
-import { useChatStore } from "../zustand/useChatStore";
 
 interface TranscriptionResponse {
   text: string;
@@ -18,8 +17,6 @@ export const useVoiceInput = () => {
   const timerRef = useRef<number | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  const sendMessage = useChatStore((s) => s.sendMessage);
-
   // Timer
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -33,7 +30,7 @@ export const useVoiceInput = () => {
     }
   };
 
-  // Recording
+  // Start Recording
   const startRecording = async () => {
     setError(null);
     setTranscript(null);
@@ -63,6 +60,7 @@ export const useVoiceInput = () => {
     }
   };
 
+  // Stop Recording
   const stopRecording = () => {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
       mediaRecorder.stop();
@@ -108,18 +106,7 @@ export const useVoiceInput = () => {
     }
   };
 
-  const handleSendTranscript = async () => {
-    if (!transcript?.trim()) return;
-
-    try {
-      await sendMessage(transcript.trim());
-    } catch (err) {
-      console.error("sendMessage error:", err);
-    } finally {
-      cleanup();
-    }
-  };
-
+  // Cleanup
   const cleanup = () => {
     stopTimer();
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
@@ -148,6 +135,7 @@ export const useVoiceInput = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chunks]);
 
+  // Format timer
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
     const sec = s % 60;
@@ -158,12 +146,10 @@ export const useVoiceInput = () => {
     isRecording,
     seconds,
     isTranscribing,
-    transcript,
+    transcript, // this can now be sent to ChatWindow automatically
     error,
     startRecording,
     stopRecording,
-    transcribe,
-    handleSendTranscript,
     cleanup,
     formatTime,
   };
