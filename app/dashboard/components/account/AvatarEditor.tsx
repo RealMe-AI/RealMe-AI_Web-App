@@ -7,12 +7,13 @@ import AvatarCropper from "./AvatarCropper";
 
 interface Props {
   src: string;
-  onChange: (img: string) => void;
+  onChange: (imgUrl: string) => void; // Backend URL
 }
 
 export default function AvatarEditor({ src, onChange }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const openFilePicker = () => fileRef.current?.click();
 
@@ -21,6 +22,32 @@ export default function AvatarEditor({ src, onChange }: Props) {
     if (!file) return;
 
     setImageToCrop(URL.createObjectURL(file));
+  };
+
+  const handleSaveCropped = async (croppedImg: string) => {
+    setLoading(true);
+
+    try {
+      const blob = await (await fetch(croppedImg)).blob();
+      const fd = new FormData();
+      fd.append("avatar", blob, "avatar.png");
+
+      const res = await fetch("/api/user/avatar", {
+        method: "POST",
+        body: fd,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+
+      const data = await res.json();
+      onChange(data.url); // backend URL of uploaded image
+    } catch (err) {
+      console.error(err);
+      alert("Failed to upload avatar.");
+    } finally {
+      setLoading(false);
+      setImageToCrop(null);
+    }
   };
 
   return (
@@ -33,7 +60,6 @@ export default function AvatarEditor({ src, onChange }: Props) {
         className="rounded-2xl object-cover shadow-sm"
       />
 
-      {/* Edit Icon */}
       <button
         onClick={openFilePicker}
         className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50 
@@ -43,7 +69,6 @@ export default function AvatarEditor({ src, onChange }: Props) {
         <Pencil size={14} className="text-white" />
       </button>
 
-      {/* Hidden File Input */}
       <input
         ref={fileRef}
         type="file"
@@ -52,16 +77,18 @@ export default function AvatarEditor({ src, onChange }: Props) {
         className="hidden"
       />
 
-      {/* Cropper */}
       {imageToCrop && (
         <AvatarCropper
           src={imageToCrop}
           onClose={() => setImageToCrop(null)}
-          onSave={(croppedImg) => {
-            onChange(croppedImg);
-            setImageToCrop(null);
-          }}
+          onSave={handleSaveCropped}
         />
+      )}
+
+      {loading && (
+        <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-2xl">
+          <span className="text-white text-sm">Uploading…</span>
+        </div>
       )}
     </div>
   );
