@@ -54,7 +54,7 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 10, scale: 0.96 }}
         transition={{ duration: 0.18 }}
-        className="absolute bottom-full right-0 mb-3 w-[260px] rounded-2xl p-4
+        className="absolute bottom-full right-0 mb-3 w-50 rounded-2xl p-4
                    bg-white/30 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 
                    shadow-xl flex flex-col items-center z-50"
       >

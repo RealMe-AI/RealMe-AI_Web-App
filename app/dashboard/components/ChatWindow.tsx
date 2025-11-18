@@ -70,7 +70,7 @@ export default function ChatWindow() {
       {/* Input Container */}
       <div
         className={`flex flex-col gap-1 mt-2 bg-white/60 dark:bg-slate-700/60 
-                    rounded-full px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl
+                    rounded-2xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl
                     transition ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
       >
         {/* Pending Files Preview */}
@@ -86,7 +86,7 @@ export default function ChatWindow() {
                   {/* Cancel Button */}
                   <button
                     onClick={() => removePendingFile(index)}
-                    className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-red-500 text-white text-xs hover:bg-red-600"
+                    className="absolute -top-1 -right-2 w-5 h-5 flex items-center justify-center rounded-full bg-red-500 text-white text-xs hover:bg-red-600"
                   >
                     ×
                   </button>
@@ -142,7 +142,7 @@ export default function ChatWindow() {
               className="p-2 rounded-full hover:bg-white/30 dark:hover:bg-slate-600/30 cursor-pointer relative"
               onClick={() => setShowVoicePopup(true)}
             >
-              <Mic size={22} className="text-indigo-500 dark:text-white/40" />
+              <Mic size={20} className="text-indigo-500 dark:text-white/40" />
               {showVoicePopup && (
                 <VoiceInput
                   close={() => setShowVoicePopup(false)}
