@@ -2,7 +2,7 @@
 
 const en = {
   // Landing Page
-  "landing.hero.title": "Welcome to RealMe AI",
+  "landing.hero.title": "Converse with AI That Understands Your Professional Needs",
   "landing.hero.subtitle": "Your AI-powered chat assistant",
   "landing.hero.cta": "Get Started",
   "landing.features.title": "Features",
