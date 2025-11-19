@@ -34,18 +34,22 @@ const en = {
   "landing.features.item6.title": "Customizable Experience",
   "landing.features.item6.subtitle":
     "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
-    "landing.get_started.title": "Get Started in 3 Simple Steps",
+  "landing.get_started.title": "Get Started in 3 Simple Steps",
   "landing.get_started.subtitle":
     "Experience professional AI conversations in minutes no technical setup required.",
-    "landing.get_started.step1.title": "Create Your Account",
-    "landing.get_started.step1.desc":" Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
+  "landing.get_started.step1.title": "Create Your Account",
+  "landing.get_started.step1.desc":
+    " Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
   "landing.get_started.step2.title": "Customize Your Preferences",
-  "landing.get_started.step2.desc":" Choose your language, AI tone, and interface theme. Enable voice features for hands-free conversations.",
+  "landing.get_started.step2.desc":
+    " Choose your language, AI tone, and interface theme. Enable voice features for hands-free conversations.",
   "landing.get_started.step3.title": "Start Conversing",
-  "landing.get_started.step3.desc":" Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
+  "landing.get_started.step3.desc":
+    " Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
   "landing.get_started.cta": "Get Started Now",
   "landing.get_started.image.title": "Start chatting in",
   "landing.get_started.image.desc": "Seconds",
+  "landing.footer.rights": "© {year} RealMe AI. All rights reserved.",
   "landing.footer.contact": "Contact Us",
   "landing.footer.privacy": "Privacy Policy",
   "landing.footer.terms": "Terms of Service",
