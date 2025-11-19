@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Bell, Trash2, Edit2 } from "lucide-react";
-import { useSettings } from "../hooks/useSettings";
+import { useSettings } from "../../hooks/useSettings";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -59,11 +59,11 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
             <Section title="Preferences">
               <Select
                 label="Theme Mode"
-                options=[
+                options={[
                   { label: "Light", value: "light" },
                   { label: "Dark", value: "dark" },
                   { label: "System", value: "system" },
-                ]
+                ]}
                 value={theme}
                 onChange={(v) => setTheme(v as "light" | "dark" | "system")}
                 icon={<Globe size={16} />}
@@ -71,12 +71,12 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               <Select
                 label="Language"
-                options=[
+                options={[
                   { label: "English", value: "en" },
                   { label: "Hausa", value: "ha" },
                   { label: "Igbo", value: "ig" },
                   { label: "Yoruba", value: "yo" },
-                ]
+                ]}
                 value={language}
                 onChange={setLanguage}
                 icon={<Globe size={16} />}
