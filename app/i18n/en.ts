@@ -2,9 +2,10 @@
 
 const en = {
   // Landing Page
+  "landing.hero.first": "Powered by",
   "landing.hero.title": "Converse with AI That Understands Your Professional Needs",
   "landing.hero.subtitle": "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
-  "landing.hero.cta": "Get Started",
+  "landing.hero.cta": "Experience RealMe AI",
   "landing.features.title": "Features",
   "landing.features.item1": "Real-time AI chat",
   "landing.features.item2": "Upload & analyze files",
