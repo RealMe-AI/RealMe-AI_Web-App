@@ -3,26 +3,36 @@
 const en = {
   // Landing Page
   "landing.hero.first": "Powered by GPT-5",
-  "landing.hero.title": "Converse with AI That Understands Your Professional Needs",
-  "landing.hero.subtitle": "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
+  "landing.hero.title":
+    "Converse with AI That Understands Your Professional Needs",
+  "landing.hero.subtitle":
+    "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
   "landing.hero.cta": "Experience RealMe AI",
   "landing.hero.offer1": "Real-time AI chat",
   "landing.hero.offer2": "Personalized settings",
   "landing.hero.offer3": "Voice input",
-  "landing.hero.badge1": "AI Model" ,
-  "landing.hero.badge2": "Languages" ,
+  "landing.hero.badge1": "AI Model",
+  "landing.hero.badge2": "Languages",
   "landing.features.title": "Why Choose RealMe AI?",
-  "landing.features.subtitle":"Experience professional AI conversations with features designed for excellence",
+  "landing.features.subtitle":
+    "Experience professional AI conversations with features designed for excellence",
   "landing.features.item1.title": "GPT-5 Intelligence",
-  "landing.features.item1.subtitle": "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
+  "landing.features.item1.subtitle":
+    "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
   "landing.features.item2.title": "Multilingual Support",
-  "landing.features.item2.subtitle": "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
+  "landing.features.item2.subtitle":
+    "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
   "landing.features.item3.title": "Personalized Settings",
-  "landing.features.item3.subtitle":"Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology." ,
+  "landing.features.item3.subtitle":
+    "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
   "landing.features.item4.title": "Persistent History",
-  "landing.features.item4.subtitle":"Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
+  "landing.features.item4.subtitle":
+    "Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
   "landing.features.item5.title": "Secure & Private",
-"landing.features.item5.subtitle":"Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
+  "landing.features.item5.subtitle":
+    "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
+    "landing.features.item6.title": "Customizable Experience",
+    "landing.features.item6.subtitle":"Personalize AI tone, theme, language preferences, and interface settings to match your workflow."
   "landing.footer.contact": "Contact Us",
   "landing.footer.privacy": "Privacy Policy",
   "landing.footer.terms": "Terms of Service",
@@ -72,7 +82,8 @@ const en = {
   "modal.edit_profile.email_placeholder": "Enter your email",
   "modal.edit_profile.save_button": "Save",
   "modal.edit_profile.cancel_button": "Cancel",
-  "modal.delete_account.confirm_message": "Are you sure you want to delete your account?",
+  "modal.delete_account.confirm_message":
+    "Are you sure you want to delete your account?",
   "modal.delete_account.confirm_button": "Delete",
   "modal.delete_account.cancel_button": "Cancel",
   "modal.upload_file.title": "Upload File",
