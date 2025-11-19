@@ -23,21 +23,16 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
     setNotifications,
   } = useSettings();
 
-  const applyTheme = useThemeStore((s) => s.setTheme); // ✅ global theme setter
+  const applyTheme = useThemeStore((s) => s.setTheme); 
   const openEditProfile = useUserStore((s) => s.openEditProfile);
 
   // Handle theme change (sync both)
-  const handleThemeChange = (selected: "light" | "dark" ) => {
+  const handleThemeChange = (selected: "light" | "dark") => {
     // Save preference
     setTheme(selected);
 
     // Apply real theme globally
-    if (selected === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      applyTheme(prefersDark ? "dark" : "light");
-    } else {
-      applyTheme(selected);
-    }
+    applyTheme(selected);
   };
 
   return (
@@ -87,7 +82,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                     { label: "Dark", value: "dark" },
                   ]}
                   value={theme}
-                  onChange={(v) => handleThemeChange(v as "light" | "dark")} 
+                  onChange={(v) => handleThemeChange(v as "light" | "dark")}
                   icon={<Globe size={16} />}
                 />
 
