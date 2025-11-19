@@ -12,11 +12,6 @@ interface SettingsPanelProps {
   close: () => void;
 }
 
-interface SelectOption {
-  label: string;
-  value: string;
-}
-
 export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const {
     theme,
@@ -184,39 +179,6 @@ function Toggle({
           }`}
         />
       </div>
-    </div>
-  );
-}
-
-function Select({
-  label,
-  options,
-  value,
-  onChange,
-  icon,
-}: {
-  label: string;
-  options: SelectOption[];
-  value: string;
-  onChange: (v: string) => void;
-  icon?: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center justify-between p-2 rounded-lg hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
-      <div className="flex items-center gap-2">
-        {icon} <span>{label}</span>
-      </div>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="bg-transparent border-none focus:ring-0 text-slate-800 dark:text-slate-100 cursor-pointer"
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
     </div>
   );
 }
