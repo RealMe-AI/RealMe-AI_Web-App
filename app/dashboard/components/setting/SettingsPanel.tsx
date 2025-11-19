@@ -17,8 +17,14 @@ interface SelectOption {
 }
 
 export default function SettingsPanel({ open, close }: SettingsPanelProps) {
-  const { theme, setTheme, language, setLanguage, notifications, setNotifications } =
-    useSettings();
+  const {
+    theme,
+    setTheme,
+    language,
+    setLanguage,
+    notifications,
+    setNotifications,
+  } = useSettings();
 
   const openEditProfile = useUserStore((s) => s.openEditProfile);
 
@@ -62,7 +68,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Preferences */}
               <Section title="Preferences">
-                <Select
+                <CustomSelect
                   label="Theme Mode"
                   options={[
                     { label: "Light", value: "light" },
@@ -74,7 +80,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   icon={<Globe size={16} />}
                 />
 
-                <Select
+                <CustomSelect
                   label="Language"
                   options={[
                     { label: "English", value: "en" },
@@ -91,7 +97,10 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   label="Email Notifications"
                   enabled={notifications.email}
                   onChange={() =>
-                    setNotifications({ ...notifications, email: !notifications.email })
+                    setNotifications({
+                      ...notifications,
+                      email: !notifications.email,
+                    })
                   }
                   icon={<Bell size={16} />}
                 />
@@ -127,10 +136,18 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 // Reusable UI Components
 // ----------------------------------------------------------------------
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="mb-4">
-      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{title}</h3>
+      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+        {title}
+      </h3>
       <div className="flex flex-col gap-2">{children}</div>
     </div>
   );
