@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLanguageStore, Language } from "@/zustand/useLanguageStore";
+import { useLanguageStore, Language } from "../zustand/useLanguageStore";
 
 export type Translations = Record<string, string>;
 
