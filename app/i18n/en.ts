@@ -31,8 +31,12 @@ const en = {
   "landing.features.item5.title": "Secure & Private",
   "landing.features.item5.subtitle":
     "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
-    "landing.features.item6.title": "Customizable Experience",
-    "landing.features.item6.subtitle":"Personalize AI tone, theme, language preferences, and interface settings to match your workflow."
+  "landing.features.item6.title": "Customizable Experience",
+  "landing.features.item6.subtitle":
+    "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
+    "landing.get_started.title": "Get Started in 3 Simple Steps",
+  "landing.get_started.subtitle":
+    "Experience professional AI conversations in minutes no technical setup required.",
   "landing.footer.contact": "Contact Us",
   "landing.footer.privacy": "Privacy Policy",
   "landing.footer.terms": "Terms of Service",
