@@ -106,7 +106,6 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             {user ? (
               <div className="space-y-2 text-sm">
                 <InfoItem label="Full Name" value={user.fullName} />
-                <InfoItem label="Username" value={user.username} />
                 <InfoItem label="Email Address" value={user.email} />
                 <InfoItem label="Account Type" value={user.accountType} />
                 <InfoItem label="Date Joined" value={user.dateJoined} />
