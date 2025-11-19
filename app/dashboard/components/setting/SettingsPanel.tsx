@@ -72,7 +72,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               <Section title="Account Settings">
                 <button
                   onClick={openEditProfile}
-                  className="flex items-center gap-2 p-2 rounded-lg w-full hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                  className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800  dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
                 >
                   <Edit2 size={16} /> Edit Profile
                 </button>
@@ -106,6 +106,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                 />
 
                 <Toggle
+                className="text-slate-800  dark:text-slate-100"
                   label="Email Notifications"
                   enabled={notifications.email}
                   onChange={() =>
@@ -120,10 +121,10 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Support */}
               <Section title="Support & Help">
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800  dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
                   <Globe size={16} /> Contact Support
                 </button>
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800  dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
                   <Globe size={16} /> FAQs / Help Center
                 </button>
               </Section>
