@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useUserStore } from "../../hooks/zustand/useUserStore";
+import { useUserStore } from "../../../zustand/useUserStore";
 
 export default function EditProfileModal() {
   const { user, setUser, isEditProfileOpen, closeEditProfile } = useUserStore();
