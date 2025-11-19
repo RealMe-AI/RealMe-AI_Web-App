@@ -7,7 +7,7 @@ import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AccountInfoModal from "./account/AccountInfoModal";
-import SettingsPanel from "./SettingsPanel";
+import SettingsPanel from "./setting/SettingsPanel";
 import useModalStore from "../../zustand/modalStore"; // centralized modal store
 
 export default function ProfileFooter() {

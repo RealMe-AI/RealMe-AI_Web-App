@@ -2,8 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Bell, Trash2, Edit2 } from "lucide-react";
-import { useSettings } from "../../hooks/useSettings";
-import { useUserStore } from "../../hooks/zustand/useUserStore";
+import { useSettings } from "../../../hooks/useSettings";
+import { useUserStore } from "../../../zustand/useUserStore";
 import EditProfileModal from "./EditProfileModal";
 
 interface SettingsPanelProps {
@@ -11,15 +11,14 @@ interface SettingsPanelProps {
   close: () => void;
 }
 
+interface SelectOption {
+  label: string;
+  value: string;
+}
+
 export default function SettingsPanel({ open, close }: SettingsPanelProps) {
-  const {
-    theme,
-    setTheme,
-    language,
-    setLanguage,
-    notifications,
-    setNotifications,
-  } = useSettings();
+  const { theme, setTheme, language, setLanguage, notifications, setNotifications } =
+    useSettings();
 
   const openEditProfile = useUserStore((s) => s.openEditProfile);
 
@@ -40,7 +39,6 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               transition={{ duration: 0.25 }}
               className="relative w-[95%] max-w-2xl bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto max-h-[90vh]"
             >
-              {/* Close */}
               <button
                 onClick={close}
                 className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition"
@@ -93,10 +91,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   label="Email Notifications"
                   enabled={notifications.email}
                   onChange={() =>
-                    setNotifications({
-                      ...notifications,
-                      email: !notifications.email,
-                    })
+                    setNotifications({ ...notifications, email: !notifications.email })
                   }
                   icon={<Bell size={16} />}
                 />
@@ -121,7 +116,6 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
             </motion.div>
           </motion.div>
 
-          {/* EDIT PROFILE MODAL */}
           <EditProfileModal />
         </>
       )}
@@ -130,21 +124,29 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 }
 
 // ----------------------------------------------------------------------
-// Reusable UI components (unchanged)
+// Reusable UI Components
 // ----------------------------------------------------------------------
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="mb-4">
-      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-        {title}
-      </h3>
+      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{title}</h3>
       <div className="flex flex-col gap-2">{children}</div>
     </div>
   );
 }
 
-function Toggle({ label, enabled, onChange, icon }: any) {
+function Toggle({
+  label,
+  enabled,
+  onChange,
+  icon,
+}: {
+  label: string;
+  enabled: boolean;
+  onChange: () => void;
+  icon?: React.ReactNode;
+}) {
   return (
     <div
       onClick={onChange}
@@ -168,7 +170,19 @@ function Toggle({ label, enabled, onChange, icon }: any) {
   );
 }
 
-function Select({ label, options, value, onChange, icon }: any) {
+function Select({
+  label,
+  options,
+  value,
+  onChange,
+  icon,
+}: {
+  label: string;
+  options: SelectOption[];
+  value: string;
+  onChange: (v: string) => void;
+  icon?: React.ReactNode;
+}) {
   return (
     <div className="flex items-center justify-between p-2 rounded-lg hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
       <div className="flex items-center gap-2">
@@ -179,7 +193,7 @@ function Select({ label, options, value, onChange, icon }: any) {
         onChange={(e) => onChange(e.target.value)}
         className="bg-transparent border-none focus:ring-0 text-slate-800 dark:text-slate-100 cursor-pointer"
       >
-        {options.map((opt: any) => (
+        {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
