@@ -7,12 +7,13 @@ import { motion } from "framer-motion";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { useActiveSection } from "../../hooks/useActiveSection";
-import { useThemeToggle } from "../../hooks/useThemeToggle";
+import { useThemeStore } from "../../zustand/useThemeStore";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const active = useActiveSection();
-  const { theme, toggleTheme } = useThemeToggle();
+  
+  const { theme, toggleTheme } = useThemeStore();
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg shadow-sm transition-colors duration-300">
