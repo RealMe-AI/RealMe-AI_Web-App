@@ -1,12 +1,13 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Globe, Bell, Trash2, Edit2 } from "lucide-react";
+import { X, Globe, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../../hooks/useSettings";
 import { useUserStore } from "../../../zustand/useUserStore";
-import { useThemeStore } from "../../../zustand/useThemeStore"; 
+import { useThemeStore } from "../../../zustand/useThemeStore";
 import EditProfileModal from "./EditProfileModal";
 import CustomSelect from "./CustomSelect";
+import EmailToggle from "./EmailToggle";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -23,7 +24,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
     setNotifications,
   } = useSettings();
 
-  const applyTheme = useThemeStore((s) => s.setTheme); 
+  const applyTheme = useThemeStore((s) => s.setTheme);
   const openEditProfile = useUserStore((s) => s.openEditProfile);
 
   // Handle theme change (sync both)
@@ -33,7 +34,9 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
     // Apply real theme globally
     if (selected === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
       applyTheme(prefersDark ? "dark" : "light");
     } else {
       applyTheme(selected);
@@ -88,7 +91,9 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                     { label: "System", value: "system" },
                   ]}
                   value={theme}
-                  onChange={(v) => handleThemeChange(v as "light" | "dark" | "system")} 
+                  onChange={(v) =>
+                    handleThemeChange(v as "light" | "dark" | "system")
+                  }
                   icon={<Globe size={16} />}
                 />
 
@@ -105,17 +110,15 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   icon={<Globe size={16} />}
                 />
 
-                <Toggle
-                className="text-slate-800  dark:text-slate-100"
-                  label="Email Notifications"
+                <EmailToggle
                   enabled={notifications.email}
-                  onChange={() =>
+                  onToggle={() =>
                     setNotifications({
                       ...notifications,
                       email: !notifications.email,
                     })
                   }
-                  icon={<Bell size={16} />}
+                  className="text-slate-800 dark:text-slate-100"
                 />
               </Section>
 
