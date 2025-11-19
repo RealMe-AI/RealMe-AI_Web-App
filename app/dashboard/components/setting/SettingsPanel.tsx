@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Bell, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../../hooks/useSettings";
 import { useUserStore } from "../../../zustand/useUserStore";
+import { useThemeStore } from "../../../zustand/useThemeStore"; // ✅ added
 import EditProfileModal from "./EditProfileModal";
 import CustomSelect from "./CustomSelect";
 
@@ -22,7 +23,22 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
     setNotifications,
   } = useSettings();
 
+  const applyTheme = useThemeStore((s) => s.setTheme); // ✅ global theme setter
   const openEditProfile = useUserStore((s) => s.openEditProfile);
+
+  // Handle theme change (sync both)
+  const handleThemeChange = (selected: "light" | "dark" | "system") => {
+    // Save preference
+    setTheme(selected);
+
+    // Apply real theme globally
+    if (selected === "system") {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      applyTheme(prefersDark ? "dark" : "light");
+    } else {
+      applyTheme(selected);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -72,7 +88,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                     { label: "System", value: "system" },
                   ]}
                   value={theme}
-                  onChange={(v) => setTheme(v as "light" | "dark" | "system")}
+                  onChange={(v) => handleThemeChange(v as "light" | "dark" | "system")} // ✅ updated
                   icon={<Globe size={16} />}
                 />
 
