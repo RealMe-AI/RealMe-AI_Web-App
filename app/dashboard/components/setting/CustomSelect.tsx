@@ -40,7 +40,7 @@ export default function CustomSelect({
       <Listbox value={value} onChange={onChange}>
         <div className="relative mt-1">
           <ListboxButton
-            className="relative w-full cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
+            className="relative w-30 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
                        border border-slate-300 dark:border-slate-600 py-2 pl-3 pr-10 text-left
                        shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
                        focus:ring-opacity-50"
@@ -60,7 +60,7 @@ export default function CustomSelect({
             leaveTo="opacity-0"
           >
             <ListboxOptions
-              className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md 
+              className="absolute mt-1 max-h-60 w-30 overflow-auto rounded-md 
                          bg-white dark:bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black/10 dark:ring-white/20
                          focus:outline-none sm:text-sm z-50"
             >
