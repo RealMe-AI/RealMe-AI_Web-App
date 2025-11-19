@@ -5,6 +5,7 @@ import { X, Globe, Bell, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../../hooks/useSettings";
 import { useUserStore } from "../../../zustand/useUserStore";
 import EditProfileModal from "./EditProfileModal";
+import CustomSelect from "./CustomSelect";
 
 interface SettingsPanelProps {
   open: boolean;
