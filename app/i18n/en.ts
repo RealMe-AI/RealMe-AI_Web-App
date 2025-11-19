@@ -56,9 +56,9 @@ const en = {
   "landing.footer.terms": "Terms of Service",
 
   // Authentication Pages
-  "auth.login.title": "Login to Your Account",
-  "auth.login.email_placeholder": "Enter your email",
-  "auth.login.password_placeholder": "Enter your password",
+  "auth.login.title": "Welcome to RealMe AI",
+  "auth.login.email_placeholder": "Email address...",
+  "auth.login.password_placeholder": "Password...",
   "auth.login.submit_button": "Login",
   "auth.login.forgot_password": "Forgot password?",
   "auth.register.title": "Create a New Account",
