@@ -14,10 +14,9 @@ interface AccountInfoModalProps {
 
 interface UserData {
   fullName: string;
-  username: string;
   email: string;
-  accountType: "Free" | "Pro" | "Business";
-  plan: "Free Plan" | "Pro User" | "Business Suite";
+  accountType: "Free" | "Pro";
+  plan: "Free Plan" | "Pro User";
   provider: "Google" | "Email" | "Phone";
   avatar?: string;
   dateJoined: string;
@@ -32,7 +31,6 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
     const timeout = setTimeout(() => {
       setUser({
         fullName: "Owens Chikere",
-        username: "@owensvisuels",
         email: "owensvisuels@gmail.com",
         accountType: "Free",
         plan: "Free Plan",
