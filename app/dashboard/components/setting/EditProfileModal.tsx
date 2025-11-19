@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useUserStore, UserData } from "../../../zustand/useUserStore";
+import { useUserStore } from "../../../zustand/useUserStore";
 
 interface UpdateProfileResponse {
   success: boolean;
