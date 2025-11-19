@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Bell, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../../hooks/useSettings";
 import { useUserStore } from "../../../zustand/useUserStore";
-import { useThemeStore } from "../../../zustand/useThemeStore"; // ✅ added
+import { useThemeStore } from "../../../zustand/useThemeStore";
 import EditProfileModal from "./EditProfileModal";
 import CustomSelect from "./CustomSelect";
 
