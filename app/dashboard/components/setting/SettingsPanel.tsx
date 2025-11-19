@@ -27,7 +27,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const openEditProfile = useUserStore((s) => s.openEditProfile);
 
   // Handle theme change (sync both)
-  const handleThemeChange = (selected: "light" | "dark" | "system") => {
+  const handleThemeChange = (selected: "light" | "dark" ) => {
     // Save preference
     setTheme(selected);
 
@@ -85,10 +85,9 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   options={[
                     { label: "Light", value: "light" },
                     { label: "Dark", value: "dark" },
-                    { label: "System", value: "system" },
                   ]}
                   value={theme}
-                  onChange={(v) => handleThemeChange(v as "light" | "dark" | "system")} // ✅ updated
+                  onChange={(v) => handleThemeChange(v as "light" | "dark")} 
                   icon={<Globe size={16} />}
                 />
 
