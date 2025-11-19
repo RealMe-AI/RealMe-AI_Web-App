@@ -15,37 +15,6 @@ export default function Footer() {
             Converse. Learn. Evolve. Professionally with AI-powered multilingual
             conversations.
           </p>
-          <div className="flex gap-3 mt-6">
-            <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center">
-              T
-            </div>
-            <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center">
-              F
-            </div>
-            <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center">
-              L
-            </div>
-            <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center">
-              I
-            </div>
-          </div>
-        </div>
-        <div>
-          <h4 className="font-semibold mb-4">Product</h4>
-          <ul className="text-slate-400 space-y-2">
-            <li>Home</li>
-            <li>Dashboard</li>
-            <li>Pricing</li>
-            <li>Settings</li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-semibold mb-4">Get Started</h4>
-          <ul className="text-slate-400 space-y-2">
-            <li>Sign Up</li>
-            <li>Sign In</li>
-            <li>Try Free Now</li>
-          </ul>
         </div>
       </div>
 
