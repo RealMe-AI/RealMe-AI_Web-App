@@ -2,7 +2,7 @@
 
 const en = {
   // Landing Page
-  "landing.hero.first": "Powered by",
+  "landing.hero.first": "Powered by GPT-5",
   "landing.hero.title": "Converse with AI That Understands Your Professional Needs",
   "landing.hero.subtitle": "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
   "landing.hero.cta": "Experience RealMe AI",
@@ -13,8 +13,10 @@ const en = {
   "landing.hero.badge2": "Languages" ,
   "landing.features.title": "Why Choose RealMe AI?",
   "landing.features.subtitle":"Experience professional AI conversations with features designed for excellence",
-  "landing.features.item1": "Real-time AI chat",
-  "landing.features.item2": "Upload & analyze files",
+  "landing.features.item1.title": "GPT-5 Intelligence",
+  "landing.features.item1.subtitle": "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
+  "landing.features.item2.title": "Multilingual Support",
+  "landing.features.item2.subtitle": "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
   "landing.features.item3": "Personalized settings",
   "landing.footer.contact": "Contact Us",
   "landing.footer.privacy": "Privacy Policy",
