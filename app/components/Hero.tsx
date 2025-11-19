@@ -47,7 +47,7 @@ export default function Hero() {
           <p className="sm:text-xl text-lg text-slate-600 dark:text-slate-300 max-w-xl">
             Get instant, intelligent responses with multilingual support. RealMe
             AI adapts to your communication style for truly professional
-            conversations — in English, Hausa, Igbo, and Yoruba.
+            conversations in English, Hausa, Igbo, and Yoruba.
           </p>
 
           <div className="mt-8">
