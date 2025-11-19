@@ -4,14 +4,14 @@ import Link from "next/link";
 
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
-import { useThemeToggle } from "../../hooks/useThemeToggle";
+import { useThemeStore } from "../../zustand/useThemeStore";
 import { navItems } from "../../data/desktopNavData";
 import { Active } from "../../types/type";
 
 import useNavigateToAuth from "../../hooks/useNavigateToAuth";
 
 export default function DesktopNav({ active }: Active) {
-  const { theme, toggleTheme } = useThemeToggle();
+  const { theme, toggleTheme } = useThemeStore();
 
   const goToAuth = useNavigateToAuth();
 
