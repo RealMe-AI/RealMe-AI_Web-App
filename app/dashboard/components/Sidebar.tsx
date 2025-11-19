@@ -95,7 +95,8 @@ export default function Sidebar({
       <div className="flex justify-between mb-10">
         <button
           onClick={() => setIsOpen(false)}
-          className="p-1 rounded-lg bg-red-500 hover:bg-red-400 text-white transition"
+          className="p-1 rounded-lg text-slate-500 hover:text-slate-700 
+              dark:hover:text-slate-300 transition"
         >
           <X size={20} />
         </button>
@@ -145,7 +146,7 @@ export default function Sidebar({
 
       {/* Error Message */}
       {error && (
-        <p className="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition mb-3 text-center animate-pulse">
+        <p className="text-sm text-red-500 dark:text-red-400 mb-3 text-center animate-pulse">
           {error}
         </p>
       )}
