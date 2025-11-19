@@ -69,8 +69,8 @@ export default function ChatWindow() {
 
       {/* Input Container */}
       <div
-        className={`flex flex-col gap-1 mt-2 bg-white/60 dark:bg-slate-700/60 
-                    rounded-2xl px-3 py-2 sm:px-4 sm:py-3 backdrop-blur-xl
+        className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
+                    rounded-2xl px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 dark:border-0 backdrop-blur-xl
                     transition ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
       >
         {/* Pending Files Preview */}
