@@ -44,6 +44,8 @@ const en = {
   "landing.get_started.step3.title": "Start Conversing",
   "landing.get_started.step3.desc":" Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
   "landing.get_started.cta": "Get Started Now",
+  "langing.get_started.image.title": "Start chatting in",
+  "langing.get_started.image.desc": "Seconds",
   "landing.footer.contact": "Contact Us",
   "landing.footer.privacy": "Privacy Policy",
   "landing.footer.terms": "Terms of Service",
