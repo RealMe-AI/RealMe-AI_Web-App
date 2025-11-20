@@ -139,7 +139,7 @@ const en = {
  // Free Plan
   "plan.free.title": "Free Plan",
   "plan.free.subtitle": "Perfect for getting started",
-  "plan.free.price": "₦0/month",
+  "plan.free.price": "/month",
 
   // AI Integration
   "ai.response.placeholder": "AI response will appear here",

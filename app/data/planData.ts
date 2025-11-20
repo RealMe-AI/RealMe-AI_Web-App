@@ -1,8 +1,8 @@
 // ------------------ FEATURES ARRAYS ------------------
   export const freeFeatures = [
-    "20 prompts per day",
+    "10 prompts per day",
     "GPT-5 access",
-    "Voice input & output",
+    "Voice input",
     "4 language support",
     "Chat history",
   ];
