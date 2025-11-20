@@ -2,6 +2,7 @@ export type Features = {
   icon: string;
   title: string;
   desc: string;
+   key: string;
 };
 
 export type Props = {
