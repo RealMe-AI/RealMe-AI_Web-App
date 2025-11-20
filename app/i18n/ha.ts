@@ -108,9 +108,9 @@ const ha = {
   "settings.notifications.label": "",
   "settings.support.label": "  ",
   "settings.support.contact": "",
-  "settings.support.faq": "FAQs / Help Center",
-  "settings.danger_zone.label": "Danger Zone",
-  "settings.delete_account": "Delete Account",
+  "settings.support.faq": "",
+  "settings.danger_zone.label": " ",
+  "settings.delete_account": " ",
 
   // Modals
   "modal.edit_profile.title": "Edit Profile",
