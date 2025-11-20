@@ -89,12 +89,12 @@ const ha = {
   "account_info.account_type": "",
   "account_info.date_joined": "",
   "account_info.last_login": "",
-  "account_info.manage_subscription": "Manage Subscription",
+  "account_info.manage_subscription": "",
 
   // Settings Panel
-  "settings.title": "Settings",
-  "settings.account.label": "Account Settings",
-  "settings.account.sync": "Edit Profile",
+  "settings.title": "",
+  "settings.account.label": "",
+  "settings.account.sync": " ",
   "settings.preferences.label": "Preferences",
   "settings.theme.label": "Theme Mode",
   "settings.theme.Light": "Light",
