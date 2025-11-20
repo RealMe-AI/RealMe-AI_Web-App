@@ -81,10 +81,10 @@ const ha = {
 
   //account info modal
   "account_info.title": " ",
-  "account_info.loading": "Loading account info...",
-  "account_info.signed_in_with": "Signed in with",
-  "account_info.plan": "Plan",
-  "account_info.full_name": "Full Name",
+  "account_info.loading": "",
+  "account_info.signed_in_with": " ",
+  "account_info.plan": "",
+  "account_info.full_name": " ",
   "account_info.email": "Email",
   "account_info.account_type": "Account Type",
   "account_info.date_joined": "Date Joined",
