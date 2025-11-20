@@ -8,20 +8,24 @@ import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { useActiveSection } from "../../hooks/useActiveSection";
 import { useThemeStore } from "../../zustand/useThemeStore";
+import { useTranslate } from "@/hooks/useTranslate";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const active = useActiveSection();
-  
   const { theme, toggleTheme } = useThemeStore();
+
+  const { t } = useTranslate();
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg shadow-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        
+        {/* Logo + Brand */}
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="RealMe logo" width={40} height={40} />
           <span className="hidden md:block font-bold text-lg text-slate-800 dark:text-gray-100">
-            RealMe AI
+            {t("navbar.brand")}
           </span>
         </div>
 

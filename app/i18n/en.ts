@@ -1,49 +1,53 @@
 const en = {
+  //navbar
+  "navbar.brand": "RealMe AI",
+
   // Landing Page
   "landing.hero.first": "Powered by GPT-5",
   "landing.hero.title":
     "Converse with AI That Understands Your Professional Needs",
   "landing.hero.subtitle":
     "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
-  "cta_primary": "Experience RealMe AI",
-  "cta_secondary": "View Pricing",
+  cta_primary: "Experience RealMe AI",
+  cta_secondary: "View Pricing",
   "landing.hero.offer1": "Real-time AI chat",
   "landing.hero.offer2": "Personalized settings",
   "landing.hero.offer3": "Voice input",
   "landing.hero.badge1": "AI Model",
   "landing.hero.badge2": "Languages",
- landing: {
-  features: {
-    title: "Why Choose",
-    subtitle: "Experience professional AI conversations with features designed for excellence",
-    items: {
-      intelligence: {
-        title: "GPT-5 Intelligence",
-        desc: "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
-      },
-      languages: {
-        title: "Multilingual Support",
-        desc: "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
-      },
-      voice: {
-        title: "Voice Interaction",
-        desc: "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
-      },
-      history: {
-        title: "Persistent History",
-        desc: "Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
-      },
-      privacy: {
-        title: "Secure & Private",
-        desc: "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
-      },
-      customization: {
-        title: "Customizable Experience",
-        desc: "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
+  landing: {
+    features: {
+      title: "Why Choose",
+      subtitle:
+        "Experience professional AI conversations with features designed for excellence",
+      items: {
+        intelligence: {
+          title: "GPT-5 Intelligence",
+          desc: "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
+        },
+        languages: {
+          title: "Multilingual Support",
+          desc: "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
+        },
+        voice: {
+          title: "Voice Interaction",
+          desc: "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
+        },
+        history: {
+          title: "Persistent History",
+          desc: "Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
+        },
+        privacy: {
+          title: "Secure & Private",
+          desc: "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
+        },
+        customization: {
+          title: "Customizable Experience",
+          desc: "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
+        },
       },
     },
   },
-},
 
   "landing.get_started.title": "Get Started in 3 Simple Steps",
   "landing.get_started.subtitle":
