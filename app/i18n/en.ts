@@ -95,7 +95,9 @@ const en = {
   //account info modal
   "account_info.title": "View Account Info",
   "account_info.loading": "Loading account info...",
-  "account_info.name": "Name",
+  "account_info.signed_in_with": "Signed in with",
+  "account_info.plan": "Plan",
+  "account_info.full_name": "Full Name",
   "account_info.email": "Email",
   "account_info.account_type": "Account Type",
   "account_info.date_joined": "Date Joined",
@@ -105,6 +107,11 @@ const en = {
 
   // Settings Panel
   "settings.title": "Settings",
+  "settings.account.label": "Account Settings",
+  "settings.account.sync": "Edit Profile",
+  "settings.preferences.label": "Preferences",
+  "settings.preferences_section.label": "General",
+  "settings.preferences_section.1": "Sync Settings",
   "settings.language.label": "Language",
   "settings.theme.label": "Theme",
   "settings.notifications.label": "Notifications",
