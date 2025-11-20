@@ -43,35 +43,23 @@ export default function AuthPage() {
             alt="RealMe AI logo"
             width={64}
             height={64}
-            className="animate-pulse"<h2 className="text-2xl font-bold text-center text-slate-700 dark:text-white">
-  {(() => {
-    const raw = t("auth.page.hero_title"); // returns "Welcome to {appName}"
-    const [before, after] = raw.split("{appName}");
-    return (
-      <>
-        {before}
-        <span className="text-indigo-500">{appName}</span>
-        {after}
-      </>
-    );
-  })()}
-</h2>
+            className="animate-pulse"
           />
         </div>
 
-       <h2 className="text-2xl font-bold text-center text-slate-700 dark:text-white">
-  {(() => {
-    const raw = t("auth.page.hero_title"); // returns "Welcome to {appName}"
-    const [before, after] = raw.split("{appName}");
-    return (
-      <>
-        {before}
-        <span className="text-indigo-500">{appName}</span>
-        {after}
-      </>
-    );
-  })()}
-</h2>
+        <h2 className="text-2xl font-bold text-center text-slate-700 dark:text-white">
+          {(() => {
+            const raw = t("auth.page.hero_title"); // returns "Welcome to {appName}"
+            const [before, after] = raw.split("{appName}");
+            return (
+              <>
+                {before}
+                <span className="text-indigo-500">{appName}</span>
+                {after}
+              </>
+            );
+          })()}
+        </h2>
 
         {/* Auth Form */}
         <AuthForm />
