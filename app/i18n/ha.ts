@@ -61,9 +61,9 @@ const ha = {
   "error.sign_up.email_number":" ",
   "error.sign_in.password.required": "",
   "error.sign_up.password.min_length":"",
-  "error.sign_up.full_name.required": "Full name is required for sign up.",
-  "error.sign_up.full_name": "Enter your full name.",
-  "auth.Authentication_failed": "Authentication failed.",
+  "error.sign_up.full_name.required": "",
+  "error.sign_up.full_name": "",
+  "auth.Authentication_failed": "",
 
   // Dashboard / Sidebar
   "dashboard.sidebar.chat_button": " New Chat",
