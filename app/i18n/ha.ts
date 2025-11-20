@@ -2,12 +2,12 @@
 
 const ha = {
   // Landing Page
-  "landing.hero.first": "Powered by GPT-5",
+  "landing.hero.first": "",
   "landing.hero.title":
-    "Converse with AI That Understands Your Professional Needs",
+    "",
   "landing.hero.subtitle":
-    "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
-  "landing.hero.cta": "Experience RealMe AI",
+    "",
+  "landing.hero.cta": "",
   "landing.hero.cta_secondary": "View Pricing",
   "landing.hero.offer1": "Real-time AI chat",
   "landing.hero.offer2": "Personalized settings",
