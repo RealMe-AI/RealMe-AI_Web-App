@@ -140,6 +140,25 @@ const en = {
   "plan.free.title": "Free Plan",
   "plan.free.subtitle": "Perfect for getting started",
   "plan.free.price": "/month",
+  "plan.free.features1": "10 prompts per day",
+  "plan.free.features2": "GPT-5 access",
+  "plan.free.features3": "Voice input",
+  "plan.free.features4": "4 language support",
+  "plan.free.features5": "Chat history",
+  "plan.free.cta": "Get Started Free",
+
+  // Pro Plan
+  "plan.pro.title": "RealMe AI Pro",
+  "plan.pro.subtitle": "For professionals who need more",
+  "plan.pro.price_monthly": "₦5,000",
+  "plan.pro.price_yearly": "₦45,000",
+  "plan.pro.features1": "Unlimited prompts per day",
+  "plan.pro.features2": "Advanced voice features",
+  "plan.pro.features3": "Faster GPT-5 Turbo responses",
+  "plan.pro.features4": "Custom themes",
+  "plan.pro.features5": "Priority support",
+  "plan.pro.features6": "Export conversations",
+  "plan.pro.cta": "Upgrade to Pro",
 
   // AI Integration
   "ai.response.placeholder": "AI response will appear here",
