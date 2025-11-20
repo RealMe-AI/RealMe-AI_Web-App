@@ -66,8 +66,8 @@ const ha = {
   "auth.Authentication_failed": "",
 
   // Dashboard / Sidebar
-  "dashboard.sidebar.chat_button": " New Chat",
-  "dashboard.search.chats_placeholder": "Search chats...",
+  "dashboard.sidebar.chat_button": " ",
+  "dashboard.search.chats_placeholder": "",
   "dashboard.sidebar.footer": "All Rights Reserved",
   "dashboard.no_chat": "No chats yet start one!",
   "dashboard.sidebar.upgrade": "Upgrade",
