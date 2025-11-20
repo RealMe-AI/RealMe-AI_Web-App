@@ -8,12 +8,12 @@ import { proFeatures } from "../data/planData";
 
 export default function PricingPlans() {
   const [isYearly, setIsYearly] = useState(false);
-
+// 
   return (
-    <section className="w-full max-w-6xl mx-auto px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+    <section className="w-full px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
 
       {/* Toggle + container */}
-      <div className="flex flex-col gap-6 md:gap-8 md:flex-row justify-center">
+      <div className="flex flex-col max-w-5xl mx-aut gap-6 md:gap-8 md:flex-row justify-center">
         
         {/*  FREE PLAN */}
         <motion.div
@@ -69,7 +69,7 @@ export default function PricingPlans() {
           className="flex-1"
         >
           <div className="relative h-full rounded-2xl p-6 bg-linear-to-br from-indigo-600 to-violet-500 dark:from-indigo-700 dark:to-violet-600 text-white flex flex-col">
-            <div className="absolute -top-3 sm:left-50 inline-block bg-neutral-900/90 dark:bg-neutral-100/10 text-white text-xs font-semibold px-3 py-1 rounded-full">
+            <div className="absolute -top-3 sm:left-48 inline-block bg-neutral-900/90 dark:bg-neutral-100/10 text-white text-xs font-semibold px-3 py-1 rounded-full">
               MOST POPULAR
             </div>
 
