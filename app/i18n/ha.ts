@@ -33,10 +33,9 @@ const ha = {
   "landing.get_started.step2.title": "",
   "landing.get_started.step2.desc":"",
   "landing.get_started.step3.title": "",
-  "landing.get_started.step3.desc":
-    " Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
-  "landing.get_started.cta": "Get Started Now",
-  "landing.get_started.image.title": "Start chatting in",
+  "landing.get_started.step3.desc":"",
+  "landing.get_started.cta": "",
+  "landing.get_started.image.title": "",
   "landing.get_started.image.desc": "Seconds",
   "landing.footer.rights": "© {year} RealMe AI. All rights reserved.",
   "landing.footer.contact": "Contact Us",
