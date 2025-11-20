@@ -138,10 +138,10 @@ const ha = {
   "plan.pro.price_yearly": "",
   "plan.pro.features1": " ",
   "plan.pro.features2": " ",
-  "plan.pro.features3": "Faster GPT-5 Turbo responses",
-  "plan.pro.features4": "Custom themes",
-  "plan.pro.features5": "Priority support",
-  "plan.pro.features6": "Export conversations",
+  "plan.pro.features3": "",
+  "plan.pro.features4": "",
+  "plan.pro.features5": " ",
+  "plan.pro.features6": "",
   "plan.pro.cta": "Upgrade to Pro",
 
   //pricing footer
