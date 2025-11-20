@@ -71,18 +71,19 @@ const en = {
   "auth.register.sign_in": "Sign In",
   "auth.sign_up.already_have_account": "Already have an account?",
   "error.sign_in.email_number": "Email or phone is required.",
-  "error.sign_up.email_number": "Enter a valid email or E.164 phone number (e.g. +123456789).",
+  "error.sign_up.email_number":
+    "Enter a valid email or E.164 phone number (e.g. +123456789).",
   "error.sign_in.password.required": "Password is required.",
-  "error.sign_up.password.min_length": "Password must be at least 6 characters.",
+  "error.sign_up.password.min_length":
+    "Password must be at least 6 characters.",
   "error.sign_up.full_name.required": "Full name is required for sign up.",
   "error.sign_up.full_name": "Enter your full name.",
   "auth.Authentication_failed": "Authentication failed.",
-  
 
   // Dashboard / Sidebar
   "dashboard.sidebar.chat_button": " New Chat",
   "dashboard.search.chats_placeholder": "Search chats...",
-  "dashboard.no_chat":"No chats yet start one!",
+  "dashboard.no_chat": "No chats yet start one!",
   "dashboard.sidebar.upgrade": "Upgrade",
   "dashboard.sidebar.logout": "Log out",
   "dashboard.RealMe is thinking": "RealMe is thinking",
@@ -104,7 +105,6 @@ const en = {
   "account_info.last_login": "Last Login",
   "account_info.manage_subscription": "Manage Subscription",
 
-
   // Settings Panel
   "settings.title": "Settings",
   "settings.account.label": "Account Settings",
@@ -125,7 +125,6 @@ const en = {
   "settings.support.faq": "FAQs / Help Center",
   "settings.danger_zone.label": "Danger Zone",
   "settings.delete_account": "Delete Account",
- 
 
   // Modals
   "modal.edit_profile.title": "Edit Profile",
@@ -134,12 +133,11 @@ const en = {
   "modal_edit.no_data.success": "Failed to update profile",
   "modal.edit_profile.save_button": "Save",
   "modal.saving": "Saving...",
-  
 
- // Free Plan
+  // Free Plan
   "plan.free.title": "Free Plan",
   "plan.free.subtitle": "Perfect for getting started",
-  "plan.free.price": "/month",
+  "plan.free.price": "month",
   "plan.free.features1": "10 prompts per day",
   "plan.free.features2": "GPT-5 access",
   "plan.free.features3": "Voice input",
@@ -150,8 +148,8 @@ const en = {
   // Pro Plan
   "plan.pro.title": "RealMe AI Pro",
   "plan.pro.subtitle": "For professionals who need more",
-  "plan.pro.price_monthly": "₦5,000",
-  "plan.pro.price_yearly": "₦45,000",
+  "plan.pro.price_monthly": "month",
+  "plan.pro.price_yearly": "year",
   "plan.pro.features1": "Unlimited prompts per day",
   "plan.pro.features2": "Advanced voice features",
   "plan.pro.features3": "Faster GPT-5 Turbo responses",
@@ -159,6 +157,10 @@ const en = {
   "plan.pro.features5": "Priority support",
   "plan.pro.features6": "Export conversations",
   "plan.pro.cta": "Upgrade to Pro",
+
+  //pricing footer
+  "plan.pricing_footer.billing_note":
+    "All plans include secure authentication, persistent chat history, and multilingual support.",
 
   // AI Integration
   "ai.response.placeholder": "AI response will appear here",
