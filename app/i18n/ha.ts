@@ -30,10 +30,9 @@ const ha = {
   "landing.get_started.subtitle":"",
   "landing.get_started.step1.title": "",
   "landing.get_started.step1.desc":"",
-  "landing.get_started.step2.title": "Customize Your Preferences",
-  "landing.get_started.step2.desc":
-    " Choose your language, AI tone, and interface theme. Enable voice features for hands-free conversations.",
-  "landing.get_started.step3.title": "Start Conversing",
+  "landing.get_started.step2.title": "",
+  "landing.get_started.step2.desc":"",
+  "landing.get_started.step3.title": "",
   "landing.get_started.step3.desc":
     " Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
   "landing.get_started.cta": "Get Started Now",
