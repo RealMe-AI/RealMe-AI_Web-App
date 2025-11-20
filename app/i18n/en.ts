@@ -74,7 +74,8 @@ const en = {
   "landing.footer.terms": "Terms of Service",
 
   // Authentication Pages
-"auth.login.title": "Welcome to RealMe AI",
+"auth.page.hero_title": "Welcome to {appName}",
+"auth.page.back_button": "Back",
 
 // Placeholders
 "auth.login.email_placeholder": "Email address or phone number...",
