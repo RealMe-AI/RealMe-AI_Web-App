@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslate } from "../../hooks/useTranslate"; // make sure path is correct
 
 interface TabsProps {
   isSignUp: boolean;
@@ -8,14 +9,21 @@ interface TabsProps {
 }
 
 export default function Tabs({ isSignUp, setIsSignUp }: TabsProps) {
+  const { t } = useTranslate();
+
+  const tabs = [
+    { labelKey: "auth.toggle.sign_in", isSignUpTab: false },
+    { labelKey: "auth.toggle.sign_up", isSignUpTab: true },
+  ];
+
   return (
     <div className="flex items-center justify-center bg-white/30 dark:bg-slate-700/40 p-1 rounded-xl">
-      {["Sign In", "Sign Up"].map((label, idx) => {
-        const active = isSignUp ? idx === 1 : idx === 0;
+      {tabs.map((tab) => {
+        const active = isSignUp ? tab.isSignUpTab : !tab.isSignUpTab;
         return (
           <button
-            key={label}
-            onClick={() => setIsSignUp(idx === 1)}
+            key={tab.labelKey}
+            onClick={() => setIsSignUp(tab.isSignUpTab)}
             className="relative w-1/2 py-2 font-semibold text-sm text-slate-600 dark:text-gray-300"
           >
             {active && (
@@ -25,7 +33,7 @@ export default function Tabs({ isSignUp, setIsSignUp }: TabsProps) {
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}
-            <span className="relative z-10">{label}</span>
+            <span className="relative z-10">{t(tab.labelKey)}</span>
           </button>
         );
       })}
