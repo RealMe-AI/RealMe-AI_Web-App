@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export default function Hero() {
-  const {t} = useTranslations();
+  const t = useTranslations();
 
   return (
     <section className="relative overflow-hidden pt-10 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
@@ -36,7 +36,7 @@ export default function Hero() {
           className="text-center lg:text-left space-y-8"
         >
           {/* Badge */}
-          <div className="flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-4 font-semibold">
+          <div className="flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-4">
             <Brain className="w-5 h-5" />
             <span>{t("landing.hero.first")}</span>
           </div>
