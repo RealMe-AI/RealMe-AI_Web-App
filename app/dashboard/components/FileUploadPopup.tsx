@@ -61,19 +61,19 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
               Upgrade to Pro
             </span>
        : <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
-          Upload a ile
+          Upload a file
         </h3>
           }
         
           <button
             onClick={() => !freeLimitReached && fileInputRef.current?.click()}
             disabled={freeLimitReached}
-            className={`px-2 py-1 rounded-lg font-medium text-sm transition flex items-center justify-center gap-2
+            className={`p-1 rounded-lg text-sm transition 
                         ${freeLimitReached 
                           ? "bg-gray-400 cursor-not-allowed" 
                           : "bg-indigo-500 hover:bg-indigo-600 text-white"}`}
           >
-            <Upload size={14} className="inline" /> Choose File
+            <Upload size={14} className="inline" /> 
           </button>
 
         </div>
