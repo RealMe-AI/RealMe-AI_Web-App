@@ -125,9 +125,9 @@ const ha = {
   "plan.free.subtitle": " ",
   "plan.free.price": "",
   "plan.free.features1": " ",
-  "plan.free.features2": "GPT-5 access",
-  "plan.free.features3": "Voice input",
-  "plan.free.features4": "4 language support",
+  "plan.free.features2": "",
+  "plan.free.features3": "",
+  "plan.free.features4": "4  support",
   "plan.free.features5": "Chat history",
   "plan.free.cta": "Get Started Free",
 
