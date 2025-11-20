@@ -16,7 +16,7 @@ export type Active = {
 
 export type NavItem = {
   href: string;
-  label: string;
+  key: string;
 };
 
 export type Toggle = {
