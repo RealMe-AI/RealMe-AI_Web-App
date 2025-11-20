@@ -81,7 +81,6 @@ export default function AuthForm() {
 
     try {
       const body = {
-        mode,
         identifier: identifier.trim(),
         password,
         fullName: isSignUp ? fullName.trim() : undefined,
