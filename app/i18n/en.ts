@@ -136,8 +136,10 @@ const en = {
   "modal.saving": "Saving...",
   
 
- // plan upgrade modal
-  "modal.upgrade_plan.title": "Upgrade Your Plan",
+ // Free Plan
+  "plan.free.title": "Free Plan",
+  "plan.free.subtitle": "Perfect for getting started",
+  "plan.free.price": "₦0/month",
 
   // AI Integration
   "ai.response.placeholder": "AI response will appear here",
