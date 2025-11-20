@@ -75,12 +75,12 @@ const ha = {
   "dashboard.RealMe is thinking": "",
   "dashboard.voice_input.start_recording": "",
   "dashboard.record_voice.in_process": "",
-  "dashboard.voice.button.start": "Start",
-  "dashboard.voice.button.stop": "Stop",
-  "dashboard.transcribing": "Transcribing…",
+  "dashboard.voice.button.start": "",
+  "dashboard.voice.button.stop": "",
+  "dashboard.transcribing": "",
 
   //account info modal
-  "account_info.title": "View Account Info",
+  "account_info.title": " ",
   "account_info.loading": "Loading account info...",
   "account_info.signed_in_with": "Signed in with",
   "account_info.plan": "Plan",
