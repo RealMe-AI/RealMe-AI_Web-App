@@ -132,10 +132,10 @@ const ha = {
   "plan.free.cta": "",
 
   // Pro Plan
-  "plan.pro.title": "RealMe AI Pro",
-  "plan.pro.subtitle": "For professionals who need more",
-  "plan.pro.price_monthly": "month",
-  "plan.pro.price_yearly": "year",
+  "plan.pro.title": " ",
+  "plan.pro.subtitle": " ",
+  "plan.pro.price_monthly": "",
+  "plan.pro.price_yearly": "",
   "plan.pro.features1": "Unlimited prompts per day",
   "plan.pro.features2": "Advanced voice features",
   "plan.pro.features3": "Faster GPT-5 Turbo responses",
