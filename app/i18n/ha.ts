@@ -3,10 +3,8 @@
 const ha = {
   // Landing Page
   "landing.hero.first": "",
-  "landing.hero.title":
-    "",
-  "landing.hero.subtitle":
-    "",
+  "landing.hero.title":"",
+  "landing.hero.subtitle":"",
   "landing.hero.cta": "",
   "landing.hero.cta_secondary": "",
   "landing.hero.offer1": "",
@@ -14,9 +12,8 @@ const ha = {
   "landing.hero.offer3": "",
   "landing.hero.badge1": "",
   "landing.hero.badge2": "",
-  "landing.features.title": "Why Choose RealMe AI?",
-  "landing.features.subtitle":
-    "Experience professional AI conversations with features designed for excellence",
+  "landing.features.title": "",
+  "landing.features.subtitle":"",
   "landing.features.item1.title": "GPT-5 Intelligence",
   "landing.features.item1.subtitle":
     "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
