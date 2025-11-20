@@ -27,7 +27,10 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
   // 🔹 Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
         cleanup();
         close();
       }
@@ -114,19 +117,6 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
             <div className="text-sm text-slate-600 dark:text-slate-300">
               Transcribing…
             </div>
-          )}
-
-          {/* Close button if nothing recorded */}
-          {!isRecording && !transcript && !isTranscribing && (
-            <button
-              onClick={() => {
-                cleanup();
-                close();
-              }}
-              className="px-3 py-2 rounded-lg text-sm bg-gray-200 dark:bg-slate-700/40"
-            >
-              Close
-            </button>
           )}
         </div>
       </motion.div>
