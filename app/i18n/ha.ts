@@ -19,14 +19,11 @@ const ha = {
   "landing.features.item2.title": "",
   "landing.features.item2.subtitle":"",
   "landing.features.item3.title": "",
-  "landing.features.item3.subtitle":
-    "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
-  "landing.features.item4.title": "Persistent History",
-  "landing.features.item4.subtitle":
-    "Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
-  "landing.features.item5.title": "Secure & Private",
-  "landing.features.item5.subtitle":
-    "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
+  "landing.features.item3.subtitle":"",
+  "landing.features.item4.title": "",
+  "landing.features.item4.subtitle":"",
+  "landing.features.item5.title": "",
+  "landing.features.item5.subtitle":"",
   "landing.features.item6.title": "Customizable Experience",
   "landing.features.item6.subtitle":
     "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
