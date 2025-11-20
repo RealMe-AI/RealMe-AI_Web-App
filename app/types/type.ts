@@ -1,9 +1,8 @@
 export type Features = {
-  icon: string;
-  title: string;
-  desc: string;
-   key: string;
+  key: string;   
+  icon: string;  
 };
+
 
 export type Props = {
   isOpen: boolean;
