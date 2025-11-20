@@ -130,6 +130,7 @@ const en = {
   // Modals
   "modal.edit_profile.title": "Edit Profile",
   "modal.edit_profile.name_placeholder": "Enter full name",
+  "model_edit_profile.error_empty_name": "Full name cannot be empty",
   "modal.edit_profile.save_button": "Save",
   
 
