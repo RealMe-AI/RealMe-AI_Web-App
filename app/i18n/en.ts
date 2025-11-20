@@ -81,9 +81,11 @@ const en = {
 
   // Dashboard / Sidebar
   "dashboard.sidebar.chat_button": " New Chat",
-  
+  "dashboard.search.chats_placeholder": "Search chats...",
+  "dashboard.no_chat":"No chats yet start one!",
+  "dashboard.sidebar.profile": "Profile",
   "dashboard.sidebar.settings": "Settings",
-  "dashboard.sidebar.logout": "Logout",
+  "dashboard.sidebar.logout": "Log out",
   "dashboard.chat.send_button": "Send",
   "dashboard.chat.empty": "No messages yet",
   "dashboard.chat.error": "Failed to load messages",
