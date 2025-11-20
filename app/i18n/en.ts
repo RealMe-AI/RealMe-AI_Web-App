@@ -91,6 +91,7 @@ const en = {
   "dashboard.upload.button": "Upload",
   "dashboard.upload.drag_here": "Drag files here or click to upload",
   "dashboard.upload.error": "File upload failed",
+  "dashboard.RealMe is thinking": "RealMe is thinking",
 
   // Settings Panel
   "settings.title": "Settings",
