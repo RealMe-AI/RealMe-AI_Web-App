@@ -1,6 +1,11 @@
 const en = {
   //navbar
   "navbar.brand": "RealMe AI",
+   mobileNav: {
+    help: "Help & Support",
+    about: "About RealMe AI",
+    experience: "Experience AI",
+  },
 
   // Landing Page
   "landing.hero.first": "Powered by GPT-5",
