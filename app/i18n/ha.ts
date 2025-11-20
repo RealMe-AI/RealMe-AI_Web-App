@@ -148,8 +148,8 @@ const ha = {
   "plan.pricing_footer.billing_note":"",
 
   // AI Integration
-  "ai.response.placeholder": "  will appear here",
-  "ai.response.error": "Failed to get AI response",
+  "ai.response.placeholder": " ",
+  "ai.response.error": " to get AI response",
   "ai.response.loading": "AI is thinking...",
   "ai.prompt.placeholder": "Type your message here...",
   "ai.prompt.send_button": "Send",
