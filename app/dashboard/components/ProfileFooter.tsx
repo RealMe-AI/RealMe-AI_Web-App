@@ -71,7 +71,7 @@ export default function ProfileFooter() {
             </button>
 
             <button
-              onClick={() => router.push("/pricingplans")}
+              onClick={() => router.push("../pricingplans")}
               className="flex items-center gap-2 w-full px-3 py-2 mt-1 rounded-md text-sm font-medium
                          text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
