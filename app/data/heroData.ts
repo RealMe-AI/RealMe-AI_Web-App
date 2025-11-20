@@ -1,6 +1,5 @@
-
 export const offers: string[] = [
-  "Real-time AI chat",
-  "Personalized settings",
-  "Voice input",
+  "landing.hero.offer1",
+  "landing.hero.offer2",
+  "landing.hero.offer3",
 ];
