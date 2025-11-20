@@ -5,7 +5,6 @@ const en = {
     help: "Help & Support",
     about: "About RealMe AI",
   },
-  cta_primary: "Experience RealMe AI",
 
   // Landing Page
   "landing.hero.first": "Powered by GPT-5",

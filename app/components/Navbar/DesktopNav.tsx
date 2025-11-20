@@ -1,19 +1,19 @@
 "use client";
 
 import Link from "next/link";
-
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
+
 import { useThemeStore } from "../../zustand/useThemeStore";
 import { navItems } from "../../data/desktopNavData";
 import { Active } from "../../types/type";
-
 import useNavigateToAuth from "../../hooks/useNavigateToAuth";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export default function DesktopNav({ active }: Active) {
   const { theme, toggleTheme } = useThemeStore();
-
   const goToAuth = useNavigateToAuth();
+  const { t } = useTranslate();
 
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
@@ -27,10 +27,11 @@ export default function DesktopNav({ active }: Active) {
               : "text-slate-800 dark:text-gray-300 hover:text-indigo-400"
           }`}
         >
-          {item.label}
+          {t(item.key)}
         </Link>
       ))}
 
+      {/* CTA Button */}
       <motion.button
         onClick={() => goToAuth()}
         whileHover={{ scale: 1.07, y: -2 }}
@@ -38,9 +39,10 @@ export default function DesktopNav({ active }: Active) {
         transition={{ type: "spring", stiffness: 200, damping: 10 }}
         className="ml-4 bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
       >
-        Experience RealMe AI
+        {t("cta_primary")}
       </motion.button>
 
+      {/* Theme Toggle */}
       <motion.button
         onClick={toggleTheme}
         whileTap={{ rotate: 180 }}
