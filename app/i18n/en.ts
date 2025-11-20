@@ -74,6 +74,8 @@ const en = {
   "error.sign_up.email_number": "Enter a valid email or E.164 phone number (e.g. +123456789).",
   "error.sign_in.password.required": "Password is required.",
   "error.sign_up.password.min_length": "Password must be at least 6 characters.",
+  "error.sign_up.full_name.required": "Full name is required for sign up.",
+  "error.sign_up.full_name": "Enter your full name.",
   "auth.Authentication_failed": "Authentication failed.",
   
 
