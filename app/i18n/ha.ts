@@ -113,9 +113,9 @@ const ha = {
   "settings.delete_account": " ",
 
   // Modals
-  "modal.edit_profile.title": "Edit Profile",
-  "modal.edit_profile.name_placeholder": "Enter full name",
-  "modal_edit_profile.error_empty_name": "Full name cannot be empty",
+  "modal.edit_profile.title": " ",
+  "modal.edit_profile.name_placeholder": " ",
+  "modal_edit_profile.error_empty_name": "  ",
   "modal_edit.no_data.success": "Failed to update profile",
   "modal.edit_profile.save_button": "Save",
   "modal.saving": "Saving...",
