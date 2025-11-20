@@ -14,12 +14,10 @@ const ha = {
   "landing.hero.badge2": "",
   "landing.features.title": "",
   "landing.features.subtitle":"",
-  "landing.features.item1.title": "GPT-5 Intelligence",
-  "landing.features.item1.subtitle":
-    "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
-  "landing.features.item2.title": "Multilingual Support",
-  "landing.features.item2.subtitle":
-    "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
+  "landing.features.item1.title": "",
+  "landing.features.item1.subtitle":"",
+  "landing.features.item2.title": "",
+  "landing.features.item2.subtitle":"",
   "landing.features.item3.title": "Personalized Settings",
   "landing.features.item3.subtitle":
     "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
