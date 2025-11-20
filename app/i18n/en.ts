@@ -136,14 +136,8 @@ const en = {
   "modal.saving": "Saving...",
   
 
-  // Errors / Alerts / Toasts
-  "error.network": "Network error, please try again",
-  "error.permission": "You do not have permission",
-  "error.file_too_large": "File is too large",
-  "toast.upload_success": "File uploaded successfully",
-  "toast.upload_failed": "File upload failed",
-  "toast.profile_updated": "Profile updated successfully",
-  "toast.language_changed": "Language changed",
+ // plan upgrade modal
+  "modal.upgrade_plan.title": "Upgrade Your Plan",
 
   // AI Integration
   "ai.response.placeholder": "AI response will appear here",
