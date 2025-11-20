@@ -12,8 +12,8 @@ const ha = {
   "landing.hero.offer1": "",
   "landing.hero.offer2": "",
   "landing.hero.offer3": "",
-  "landing.hero.badge1": "AI Model",
-  "landing.hero.badge2": "Languages",
+  "landing.hero.badge1": "",
+  "landing.hero.badge2": "",
   "landing.features.title": "Why Choose RealMe AI?",
   "landing.features.subtitle":
     "Experience professional AI conversations with features designed for excellence",
