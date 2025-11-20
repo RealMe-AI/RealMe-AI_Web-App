@@ -145,11 +145,10 @@ const ha = {
   "plan.pro.cta": " ",
 
   //pricing footer
-  "plan.pricing_footer.billing_note":
-    "All plans include secure authentication, persistent chat history, and multilingual support.",
+  "plan.pricing_footer.billing_note":"",
 
   // AI Integration
-  "ai.response.placeholder": "AI response will appear here",
+  "ai.response.placeholder": "  will appear here",
   "ai.response.error": "Failed to get AI response",
   "ai.response.loading": "AI is thinking...",
   "ai.prompt.placeholder": "Type your message here...",
