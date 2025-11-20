@@ -11,18 +11,6 @@ export default function PricingPlans() {
 
   return (
     <section className="w-full max-w-6xl mx-auto px-4 py-12">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-neutral-100">
-          Choose Your{" "}
-          <span className="text-indigo-600 dark:text-indigo-400">
-            Perfect Plan
-          </span>
-        </h2>
-        <p className="text-sm md:text-lg text-neutral-600 dark:text-neutral-300 mt-2">
-          Start free and upgrade when you&apos;re ready for unlimited
-          conversations
-        </p>
-      </div>
 
       {/* Toggle + container */}
       <div className="flex flex-col gap-6 md:gap-8 md:flex-row items-stretch">
