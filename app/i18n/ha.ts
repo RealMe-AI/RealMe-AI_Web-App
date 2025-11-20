@@ -142,7 +142,7 @@ const ha = {
   "plan.pro.features4": "",
   "plan.pro.features5": " ",
   "plan.pro.features6": "",
-  "plan.pro.cta": "Upgrade to Pro",
+  "plan.pro.cta": " ",
 
   //pricing footer
   "plan.pricing_footer.billing_note":
