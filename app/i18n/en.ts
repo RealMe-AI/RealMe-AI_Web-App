@@ -130,8 +130,10 @@ const en = {
   // Modals
   "modal.edit_profile.title": "Edit Profile",
   "modal.edit_profile.name_placeholder": "Enter full name",
-  "model_edit_profile.error_empty_name": "Full name cannot be empty",
+  "modal_edit_profile.error_empty_name": "Full name cannot be empty",
+  "modal_edit.no_data.success": "Failed to update profile",
   "modal.edit_profile.save_button": "Save",
+  "modal.saving": "Saving...",
   
 
   // Errors / Alerts / Toasts

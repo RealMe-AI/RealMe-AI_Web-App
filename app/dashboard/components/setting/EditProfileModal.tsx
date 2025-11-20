@@ -106,7 +106,7 @@ export default function EditProfileModal() {
                     : "bg-indigo-600 hover:bg-indigo-700"
                 }`}
               >
-                {loading ? "Saving..." : "Save Changes"}
+                {loading ? "Saving..." : "Save"}
               </button>
             </div>
           </motion.div>
