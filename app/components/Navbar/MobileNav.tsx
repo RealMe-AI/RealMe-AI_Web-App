@@ -1,21 +1,23 @@
 "use client";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useBackdrop } from "../../hooks/useBackdrop";
 import { navItems } from "../../data/mobilNavData";
 import { Props } from "../../types/type";
-
 import Link from "next/link";
 import useNavigateToAuth from "../../hooks/useNavigateToAuth";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
   const goToAuth = useNavigateToAuth();
+  const { t } = useTranslate();
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/*  Backdrop */}
+          {/* Backdrop */}
           <motion.div
             key="backdrop"
             initial={{ opacity: 0 }}
@@ -27,7 +29,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
             aria-hidden="true"
           />
 
-          {/*  Dropdown */}
+          {/* Mobile Dropdown */}
           <motion.nav
             key="mobile-menu"
             initial={{ y: -20, opacity: 0 }}
@@ -37,6 +39,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
             className="absolute top-20 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-t border-gray-200 dark:border-slate-700 z-50 md:hidden"
           >
             <div className="px-6 py-4 flex flex-col space-y-4">
+              {/* Navigation Links */}
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -48,10 +51,11 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  {item.label}
+                  {t(item.key)} {/* translated label */}
                 </Link>
               ))}
 
+              {/* CTA Button */}
               <motion.button
                 onClick={() => goToAuth()}
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -59,7 +63,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
               >
-                Experience AI
+                {t("cta_primary")}
               </motion.button>
             </div>
           </motion.nav>
