@@ -65,15 +65,13 @@ const en = {
   "auth.login.sign_up": "Sign Up",
   "auth.login.full_name": "Full name...",
   "auth.sign_up.submit_button": "Create Account",
-  "auth.sign_up.already_have_account": "Already have an account?",
+  "auth.OR": "OR",
   "auth.sign_up.continue_with_google": "Continue with Google",
-  "auth.sign_up.continue_with_facebook": "Continue with Facebook",
   "auth.register.submit_button": "Sign Up",
-  "auth.register.have_account": "Already have an account?",
   "auth.register.sign_in": "Sign In",
-  "auth.forgot_password.title": "Reset Your Password",
-  "auth.forgot_password.email_placeholder": "Enter your email",
-  "auth.forgot_password.submit_button": "Send Reset Link",
+  "auth.sign_up.already_have_account": "Already have an account?",
+  "auth.Authentication_failed": "Authentication failed.",
+  
 
   // Dashboard / Sidebar
   "dashboard.sidebar.chat": "Chat",
