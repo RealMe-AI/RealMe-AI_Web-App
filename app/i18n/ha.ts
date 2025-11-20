@@ -36,11 +36,11 @@ const ha = {
   "landing.get_started.step3.desc":"",
   "landing.get_started.cta": "",
   "landing.get_started.image.title": "",
-  "landing.get_started.image.desc": "Seconds",
-  "landing.footer.rights": "© {year} RealMe AI. All rights reserved.",
-  "landing.footer.contact": "Contact Us",
-  "landing.footer.privacy": "Privacy Policy",
-  "landing.footer.terms": "Terms of Service",
+  "landing.get_started.image.desc": "",
+  "landing.footer.rights": "",
+  "landing.footer.contact": "",
+  "landing.footer.privacy": "",
+  "landing.footer.terms": " ",
 
   // Authentication Pages
   "auth.login.title": "Welcome to RealMe AI",
