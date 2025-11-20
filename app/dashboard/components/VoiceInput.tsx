@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mic, Square } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { useVoiceInput } from "../../hooks/useVoiceInput";
+import { useTranslations } from "next-intl";
 
 interface VoiceInputProps {
   close: () => void;
@@ -49,6 +50,8 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
     }
   }, [isRecording, transcript, isTranscribing, error, onTranscript]);
 
+  const t = useTranslations();
+
   return (
     <AnimatePresence>
       <motion.div
@@ -76,8 +79,10 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
 
         <p className="mt-3 text-sm text-slate-700 dark:text-slate-300">
           {isRecording
-            ? `Recording… (${formatTime(seconds)})`
-            : "Start recording"}
+            ? `${t("dashboard.record_voice.in_process")} (${formatTime(
+                seconds
+              )})`
+            : t("dashboard.voice_input.start_recording")}
         </p>
 
         {/* Error */}
@@ -104,11 +109,13 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
             >
               {isRecording ? (
                 <>
-                  <Square size={14} className="inline mr-2" /> Stop
+                  <Square size={14} className="inline mr-2" />{" "}
+                  {t("dashboard.voice.button.stop")}
                 </>
               ) : (
                 <>
-                  <Mic size={14} className="inline mr-2" /> Start
+                  <Mic size={14} className="inline mr-2" />{" "}
+                  {t("dashboard.voice.button.start")}
                 </>
               )}
             </button>
@@ -117,7 +124,7 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
           {/* Transcribing Status */}
           {isTranscribing && (
             <div className="text-sm text-slate-600 dark:text-slate-300">
-              Transcribing…
+              {t("dashboard.transcribing")}
             </div>
           )}
         </div>
