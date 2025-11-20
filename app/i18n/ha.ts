@@ -43,9 +43,9 @@ const ha = {
   "landing.footer.terms": " ",
 
   // Authentication Pages
-  "auth.login.title": "Welcome to RealMe AI",
-  "auth.login.email_placeholder": "Email address or phone number...",
-  "auth.login.password_placeholder": "Password...",
+  "auth.login.title": "",
+  "auth.login.email_placeholder": "",
+  "auth.login.password_placeholder": "",
   "auth.login.submit_button": "Sign In",
   "auth.login.no_account": "Don't have an account?",
   "auth.login.sign_in": "Sign In",
