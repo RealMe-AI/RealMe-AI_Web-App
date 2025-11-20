@@ -123,6 +123,7 @@ const en = {
   "dashboard.search.chats_placeholder": "Search chats...",
   "dashboard.sidebar.footer": "All Rights Reserved",
   "dashboard.no_chat": "No chats yet start one!",
+  "dashboard.search.no_results": "No chat found with the title \"{searchTerm}\"",
   "dashboard.sidebar.upgrade": "Upgrade",
   "dashboard.sidebar.logout": "Log out",
   "dashboard.RealMe is thinking": "RealMe is thinking",
