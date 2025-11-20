@@ -92,6 +92,9 @@ const en = {
   "dashboard.upload.drag_here": "Drag files here or click to upload",
   "dashboard.upload.error": "File upload failed",
   "dashboard.RealMe is thinking": "RealMe is thinking",
+  "dashboard.voice_input.start_recording": "Start recording",
+  "dashboard.record_voice.in_process": "Recording…",
+
 
   // Settings Panel
   "settings.title": "Settings",
