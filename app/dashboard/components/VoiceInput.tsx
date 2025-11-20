@@ -84,35 +84,37 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
         {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
 
         {/* Buttons */}
-        <div className="mt-4 flex items-center gap-3">
-          {/* Start / Stop */}
-          <button
-            onClick={async () => {
-              if (isRecording) {
-                await stopRecording();
-              } else {
-                await startRecording();
-              }
-            }}
-            className={`px-3 py-2 rounded-lg font-medium text-white transition text-sm
-              ${
-                isRecording
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-indigo-500 hover:bg-indigo-600"
-              }`}
-          >
-            {isRecording ? (
-              <>
-                <Square size={14} className="inline mr-2" /> Stop
-              </>
-            ) : (
-              <>
-                <Mic size={14} className="inline mr-2" /> Start
-              </>
-            )}
-          </button>
+        <div className="mt-4 flex flex-col items-center gap-2">
+          {/* Start / Stop Button (hidden when transcribing) */}
+          {!isTranscribing && (
+            <button
+              onClick={async () => {
+                if (isRecording) {
+                  await stopRecording();
+                } else {
+                  await startRecording();
+                }
+              }}
+              className={`px-3 py-2 rounded-lg font-medium text-white transition text-sm
+        ${
+          isRecording
+            ? "bg-red-500 hover:bg-red-600"
+            : "bg-indigo-500 hover:bg-indigo-600"
+        }`}
+            >
+              {isRecording ? (
+                <>
+                  <Square size={14} className="inline mr-2" /> Stop
+                </>
+              ) : (
+                <>
+                  <Mic size={14} className="inline mr-2" /> Start
+                </>
+              )}
+            </button>
+          )}
 
-          {/* Transcribing status */}
+          {/* Transcribing Status */}
           {isTranscribing && (
             <div className="text-sm text-slate-600 dark:text-slate-300">
               Transcribing…
