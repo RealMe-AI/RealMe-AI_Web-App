@@ -13,7 +13,7 @@ export default function PricingPlans() {
     <section className="w-full px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
 
       {/* Toggle + container */}
-      <div className="flex flex-col max-w-5xl mx-aut gap-6 md:gap-8 md:flex-row justify-center">
+      <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
         
         {/*  FREE PLAN */}
         <motion.div
