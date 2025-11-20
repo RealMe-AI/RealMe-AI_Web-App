@@ -74,29 +74,48 @@ const en = {
   "landing.footer.terms": "Terms of Service",
 
   // Authentication Pages
-  "auth.login.title": "Welcome to RealMe AI",
-  "auth.login.email_placeholder": "Email address or phone number...",
-  "auth.login.password_placeholder": "Password...",
-  "auth.login.submit_button": "Sign In",
-  "auth.login.no_account": "Don't have an account?",
-  "auth.login.sign_in": "Sign In",
-  "auth.login.sign_up": "Sign Up",
-  "auth.login.full_name": "Full name...",
-  "auth.sign_up.submit_button": "Create Account",
-  "auth.OR": "OR",
-  "auth.sign_up.continue_with_google": "Continue with Google",
-  "auth.register.submit_button": "Sign Up",
-  "auth.register.sign_in": "Sign In",
-  "auth.sign_up.already_have_account": "Already have an account?",
-  "error.sign_in.email_number": "Email or phone is required.",
-  "error.sign_up.email_number":
-    "Enter a valid email or E.164 phone number (e.g. +123456789).",
-  "error.sign_in.password.required": "Password is required.",
-  "error.sign_up.password.min_length":
-    "Password must be at least 6 characters.",
-  "error.sign_up.full_name.required": "Full name is required for sign up.",
-  "error.sign_up.full_name": "Enter your full name.",
-  "auth.Authentication_failed": "Authentication failed.",
+"auth.login.title": "Welcome to RealMe AI",
+
+// Placeholders
+"auth.login.email_placeholder": "Email address or phone number...",
+"auth.login.password_placeholder": "Password...",
+"auth.login.full_name_placeholder": "Full name...",
+
+// Buttons
+"auth.button.sign_in": "Sign In",
+"auth.button.create_account": "Create Account",
+"auth.button.continue_email": "Continue with Email",
+"auth.button.creating": "Creating…",
+"auth.button.signing_in": "Signing in…",
+"auth.button.success": "Success",
+
+// Toggle Text
+"auth.toggle.no_account": "Don't have an account?",
+"auth.toggle.already_have_account": "Already have an account?",
+"auth.toggle.sign_in": "Sign In",
+"auth.toggle.sign_up": "Sign Up",
+
+// Password toggle
+"auth.toggle.show_password": "Show password",
+"auth.toggle.hide_password": "Hide password",
+
+// Divider
+"auth.divider.or": "OR",
+
+// Identifier hint
+"auth.identifier.email": "email",
+"auth.identifier.phone": "phone",
+
+// Error messages
+"error.sign_in.email_number": "Email or phone is required.",
+"error.sign_up.email_number": "Enter a valid email or E.164 phone number (e.g. +123456789).",
+"error.sign_in.password.required": "Password is required.",
+"error.sign_up.password.min_length": "Password must be at least 6 characters.",
+"error.sign_up.full_name.required": "Full name is required for sign up.",
+"error.sign_up.full_name": "Enter your full name.",
+"auth.authentication_failed": "Authentication failed.",
+"error.network": "Network error. Please try again.",
+
 
   // Dashboard / Sidebar
   "dashboard.sidebar.chat_button": " New Chat",
