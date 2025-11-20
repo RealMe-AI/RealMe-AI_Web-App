@@ -27,11 +27,9 @@ const ha = {
   "landing.features.item6.title": "",
   "landing.features.item6.subtitle":"",
   "landing.get_started.title": "",
-  "landing.get_started.subtitle":
-    "Experience professional AI conversations in minutes no technical setup required.",
-  "landing.get_started.step1.title": "Create Your Account",
-  "landing.get_started.step1.desc":
-    " Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
+  "landing.get_started.subtitle":"",
+  "landing.get_started.step1.title": "",
+  "landing.get_started.step1.desc":"",
   "landing.get_started.step2.title": "Customize Your Preferences",
   "landing.get_started.step2.desc":
     " Choose your language, AI tone, and interface theme. Enable voice features for hands-free conversations.",
