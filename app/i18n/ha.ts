@@ -24,10 +24,9 @@ const ha = {
   "landing.features.item4.subtitle":"",
   "landing.features.item5.title": "",
   "landing.features.item5.subtitle":"",
-  "landing.features.item6.title": "Customizable Experience",
-  "landing.features.item6.subtitle":
-    "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
-  "landing.get_started.title": "Get Started in 3 Simple Steps",
+  "landing.features.item6.title": "",
+  "landing.features.item6.subtitle":"",
+  "landing.get_started.title": "",
   "landing.get_started.subtitle":
     "Experience professional AI conversations in minutes no technical setup required.",
   "landing.get_started.step1.title": "Create Your Account",
