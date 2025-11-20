@@ -12,27 +12,39 @@ const en = {
   "landing.hero.offer3": "Voice input",
   "landing.hero.badge1": "AI Model",
   "landing.hero.badge2": "Languages",
-  "landing.features.title": "Why Choose RealMe AI?",
-  "landing.features.subtitle":
-    "Experience professional AI conversations with features designed for excellence",
-  "landing.features.item1.title": "GPT-5 Intelligence",
-  "landing.features.item1.subtitle":
-    "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
-  "landing.features.item2.title": "Multilingual Support",
-  "landing.features.item2.subtitle":
-    "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
-  "landing.features.item3.title": "Personalized Settings",
-  "landing.features.item3.subtitle":
-    "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
-  "landing.features.item4.title": "Persistent History",
-  "landing.features.item4.subtitle":
-    "Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
-  "landing.features.item5.title": "Secure & Private",
-  "landing.features.item5.subtitle":
-    "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
-  "landing.features.item6.title": "Customizable Experience",
-  "landing.features.item6.subtitle":
-    "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
+ landing: {
+  features: {
+    title: "Why Choose",
+    subtitle: "Experience professional AI conversations with features designed for excellence",
+    items: {
+      intelligence: {
+        title: "GPT-5 Intelligence",
+        desc: "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
+      },
+      languages: {
+        title: "Multilingual Support",
+        desc: "Converse seamlessly in English, Hausa, Igbo, and Yoruba with culturally-aware responses",
+      },
+      voice: {
+        title: "Voice Interaction",
+        desc: "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
+      },
+      history: {
+        title: "Persistent History",
+        desc: "Access your complete conversation history anytime, anywhere. Never lose important insights or discussions.",
+      },
+      privacy: {
+        title: "Secure & Private",
+        desc: "Enterprise-grade security with encrypted conversations. Your data stays private and protected.",
+      },
+      customization: {
+        title: "Customizable Experience",
+        desc: "Personalize AI tone, theme, language preferences, and interface settings to match your workflow.",
+      },
+    },
+  },
+},
+
   "landing.get_started.title": "Get Started in 3 Simple Steps",
   "landing.get_started.subtitle":
     "Experience professional AI conversations in minutes no technical setup required.",
