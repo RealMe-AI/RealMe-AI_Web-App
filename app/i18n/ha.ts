@@ -59,9 +59,8 @@ const ha = {
   "auth.sign_up.already_have_account": " ",
   "error.sign_in.email_number": " ",
   "error.sign_up.email_number":" ",
-  "error.sign_in.password.required": "Password is required.",
-  "error.sign_up.password.min_length":
-    "Password must be at least 6 characters.",
+  "error.sign_in.password.required": "",
+  "error.sign_up.password.min_length":"",
   "error.sign_up.full_name.required": "Full name is required for sign up.",
   "error.sign_up.full_name": "Enter your full name.",
   "auth.Authentication_failed": "Authentication failed.",
