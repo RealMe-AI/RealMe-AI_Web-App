@@ -4,7 +4,6 @@ import { items } from "../data/featuresData";
 import { JSX } from "react";
 import { Languages, Brain, Mic, History, Shield, Sliders } from "lucide-react";
 import { useTranslate } from "../hooks/useTranslate";
-import type { Features } from "../types/type";
 
 const iconMap: Record<string, JSX.Element> = {
   Languages: <Languages />,
@@ -16,7 +15,7 @@ const iconMap: Record<string, JSX.Element> = {
 };
 
 export default function Features(): JSX.Element {
-  const t = useTranslate();
+  const {t} = useTranslate();
 
   return (
     <section className="bg-white dark:bg-gray-800 max-w-full mx-auto px-6 py-12">

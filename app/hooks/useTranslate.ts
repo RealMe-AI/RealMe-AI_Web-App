@@ -8,7 +8,7 @@ export type Translations = Record<string, string>;
 const SUPPORTED_LANGS: Language[] = ["en", "ha", "ig", "yo"];
 
 // Cache already loaded translations to avoid repeated dynamic imports
-const translationCache: Record<Language, Translations> = {};
+const translationCache: Partial<Record<Language, Translations>> = {};
 
 interface UseTranslateReturn {
   t: (key: string) => string;
