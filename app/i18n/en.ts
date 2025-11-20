@@ -70,6 +70,8 @@ const en = {
   "auth.register.submit_button": "Sign Up",
   "auth.register.sign_in": "Sign In",
   "auth.sign_up.already_have_account": "Already have an account?",
+  "error.sign_in.email_number": "Email or phone is required.",
+  "error.sign_up.email_number": "Enter a valid email or E.164 phone number (e.g. +123456789).",
   "auth.Authentication_failed": "Authentication failed.",
   
 
