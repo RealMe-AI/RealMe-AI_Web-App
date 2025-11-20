@@ -116,9 +116,9 @@ const ha = {
   "modal.edit_profile.title": " ",
   "modal.edit_profile.name_placeholder": " ",
   "modal_edit_profile.error_empty_name": "  ",
-  "modal_edit.no_data.success": "Failed to update profile",
-  "modal.edit_profile.save_button": "Save",
-  "modal.saving": "Saving...",
+  "modal_edit.no_data.success": " ",
+  "modal.edit_profile.save_button": "",
+  "modal.saving": "",
 
   // Free Plan
   "plan.free.title": "Free Plan",
