@@ -10,10 +10,10 @@ export default function PricingPlans() {
   const [isYearly, setIsYearly] = useState(false);
 
   return (
-    <section className="w-full max-w-6xl mx-auto px-4 py-12">
+    <section className="w-full max-w-6xl mx-auto px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
 
       {/* Toggle + container */}
-      <div className="flex flex-col gap-6 md:gap-8 md:flex-row justify-center from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+      <div className="flex flex-col gap-6 md:gap-8 md:flex-row justify-center">
         
         {/*  FREE PLAN */}
         <motion.div
