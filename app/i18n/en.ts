@@ -94,6 +94,8 @@ const en = {
   "dashboard.RealMe is thinking": "RealMe is thinking",
   "dashboard.voice_input.start_recording": "Start recording",
   "dashboard.record_voice.in_process": "Recording…",
+  "dashboard.voice.button.start": "Start",
+  "dashboard.voice.button.stop": "Stop",
 
 
   // Settings Panel
