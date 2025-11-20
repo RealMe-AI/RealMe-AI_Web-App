@@ -1,5 +1,3 @@
-// /src/i18n/en.ts
-
 const en = {
   // Landing Page
   "landing.hero.first": "Powered by GPT-5",
