@@ -151,8 +151,8 @@ const ha = {
   "ai.response.placeholder": " ",
   "ai.response.error": "    ",
   "ai.response.loading": " ",
-  "ai.prompt.placeholder": "Type your message here...",
-  "ai.prompt.send_button": "Send",
+  "ai.prompt.placeholder": "",
+  "ai.prompt.send_button": "",
 };
 
 export default ha;
