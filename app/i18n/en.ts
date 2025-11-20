@@ -83,7 +83,6 @@ const en = {
   "dashboard.sidebar.chat_button": " New Chat",
   "dashboard.search.chats_placeholder": "Search chats...",
   "dashboard.no_chat":"No chats yet start one!",
-  "dashboard.sidebar.account": "View Account Info",
   "dashboard.sidebar.upgrade": "Upgrade",
   "dashboard.sidebar.logout": "Log out",
   "dashboard.RealMe is thinking": "RealMe is thinking",
@@ -92,6 +91,16 @@ const en = {
   "dashboard.voice.button.start": "Start",
   "dashboard.voice.button.stop": "Stop",
   "dashboard.transcribing": "Transcribing…",
+
+  //account info modal
+  "account_info.title": "View Account Info",
+  "account_info.loading": "Loading account info...",
+  "account_info.name": "Name",
+  "account_info.email": "Email",
+  "account_info.account_type": "Account Type",
+  "account_info.date_joined": "Date Joined",
+  "account_info.last_login": "Last Login",
+  "account_info.manage_subscription": "Manage Subscription",
 
 
   // Settings Panel
