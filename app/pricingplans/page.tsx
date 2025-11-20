@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import { freeFeatures } from "../../data/planData";
-import { proFeatures } from "../../data/planData";
+import { freeFeatures } from "../data/planData";
+import { proFeatures } from "../data/planData";
 
 export default function PricingPlans() {
   const [isYearly, setIsYearly] = useState(false);
