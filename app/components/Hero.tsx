@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export default function Hero() {
-  const t = useTranslations();
+  const {t} = useTranslations();
 
   return (
     <section className="relative overflow-hidden pt-10 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
