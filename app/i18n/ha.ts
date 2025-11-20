@@ -121,8 +121,8 @@ const ha = {
   "modal.saving": "",
 
   // Free Plan
-  "plan.free.title": "Free Plan",
-  "plan.free.subtitle": "Perfect for getting started",
+  "plan.free.title": " ",
+  "plan.free.subtitle": " ",
   "plan.free.price": "month",
   "plan.free.features1": "10 prompts per day",
   "plan.free.features2": "GPT-5 access",
