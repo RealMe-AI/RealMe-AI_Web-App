@@ -111,11 +111,7 @@ export default function Sidebar({
       </div>
 
       {/* Chats Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
-          Chats
-        </h2>
-
+      <div className="flex items-center justify-end mb-4">
         <button
           onClick={handleNewChat}
           className="text-sm font-medium px-3 py-1.5 rounded-lg 

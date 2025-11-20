@@ -80,10 +80,10 @@ const en = {
   
 
   // Dashboard / Sidebar
-  "dashboard.sidebar.chat": "Chat",
+  "dashboard.sidebar.chat_button": " New Chat",
+  
   "dashboard.sidebar.settings": "Settings",
   "dashboard.sidebar.logout": "Logout",
-  "dashboard.chat.placeholder": "Type your message here...",
   "dashboard.chat.send_button": "Send",
   "dashboard.chat.empty": "No messages yet",
   "dashboard.chat.error": "Failed to load messages",
@@ -96,6 +96,7 @@ const en = {
   "dashboard.record_voice.in_process": "Recording…",
   "dashboard.voice.button.start": "Start",
   "dashboard.voice.button.stop": "Stop",
+  "dashboard.transcribing": "Transcribing…",
 
 
   // Settings Panel
