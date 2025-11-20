@@ -85,10 +85,10 @@ const ha = {
   "account_info.signed_in_with": " ",
   "account_info.plan": "",
   "account_info.full_name": " ",
-  "account_info.email": "Email",
-  "account_info.account_type": "Account Type",
-  "account_info.date_joined": "Date Joined",
-  "account_info.last_login": "Last Login",
+  "account_info.email": "",
+  "account_info.account_type": "",
+  "account_info.date_joined": "",
+  "account_info.last_login": "",
   "account_info.manage_subscription": "Manage Subscription",
 
   // Settings Panel
