@@ -18,7 +18,7 @@ const ha = {
   "landing.features.item1.subtitle":"",
   "landing.features.item2.title": "",
   "landing.features.item2.subtitle":"",
-  "landing.features.item3.title": "Personalized Settings",
+  "landing.features.item3.title": "",
   "landing.features.item3.subtitle":
     "Speak naturally with voice input and listen to AI responses with advanced text-to-speech technology.",
   "landing.features.item4.title": "Persistent History",
