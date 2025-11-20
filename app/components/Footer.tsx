@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -9,9 +10,9 @@ export default function Footer() {
             @OwenVisuels
           </div>
           <div className="flex gap-4">
-            <a>Privacy Policy</a>
-            <a>Terms of Service</a>
-            <a>Contact</a>
+            <Link href={"/"}>Privacy Policy</Link>
+            <Link href={"/"}>Terms of Service</Link>
+            <Link href={"/"}>Contact</Link>
           </div>
         </div>
       </div>
