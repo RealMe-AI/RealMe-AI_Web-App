@@ -1,5 +1,3 @@
-// Updated ProfileFooter with Upgrade button added between View Account Info and Settings
-
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +6,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AccountInfoModal from "./account/AccountInfoModal";
 import SettingsPanel from "./setting/SettingsPanel";
-import useModalStore from "../../zustand/modalStore"; // centralized modal store
+import useModalStore from "../../zustand/modalStore";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export default function ProfileFooter() {
   const {
@@ -22,6 +21,7 @@ export default function ProfileFooter() {
   } = useModalStore();
 
   const router = useRouter();
+  const { t } = useTranslate();
 
   return (
     <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
@@ -33,7 +33,7 @@ export default function ProfileFooter() {
       >
         <Image
           src="/avatar.png"
-          alt="User Avatar"
+          alt={t("profile.avatar_alt")}
           width={50}
           height={50}
           className="w-10 h-10 rounded-full border border-white/20"
@@ -43,7 +43,7 @@ export default function ProfileFooter() {
             Owens Visuels
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Signed in with Google
+            {t("account_info.signed_in_with")} Google
           </p>
         </div>
       </div>
@@ -60,14 +60,12 @@ export default function ProfileFooter() {
                        backdrop-blur-xl shadow-lg rounded-xl p-2"
           >
             <button
-              onClick={() => {
-                openAccountInfo();
-              }}
+              onClick={openAccountInfo}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
             >
-              <User size={16} /> View Account Info
+              <User size={16} /> {t("account_info.title")}
             </button>
 
             <button
@@ -76,22 +74,23 @@ export default function ProfileFooter() {
                          text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
             >
-              <ArrowUpCircle size={16} /> Upgrade
+              <ArrowUpCircle size={16} /> {t("dashboard.sidebar.upgrade")}
             </button>
 
             <button
-              onClick={() => {
-                openSettings();
-              }}
+              onClick={openSettings}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
             >
-              <Settings size={16} /> Settings
+              <Settings size={16} /> {t("settings.title")}
             </button>
 
-            <button className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/60 transition">
-              <LogOut size={16} /> Log Out
+            <button
+              className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600 
+                         hover:bg-red-100/50 dark:hover:bg-red-800/60 transition"
+            >
+              <LogOut size={16} /> {t("dashboard.sidebar.logout")}
             </button>
           </motion.div>
         )}
@@ -99,7 +98,7 @@ export default function ProfileFooter() {
 
       {/* Footer Text */}
       <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-3">
-        © OwenVisuels — All Rights Reserved
+        {t("dashboard.sidebar.footer_full")}
       </p>
 
       {/* Account Info Modal */}
