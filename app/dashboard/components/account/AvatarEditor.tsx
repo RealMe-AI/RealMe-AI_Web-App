@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { Pencil } from "lucide-react";
 import AvatarCropper from "./AvatarCropper";
+import { useTranslations } from "next-intl";
 
 interface Props {
   src: string;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function AvatarEditor({ src, onChange }: Props) {
+  const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,13 +39,13 @@ export default function AvatarEditor({ src, onChange }: Props) {
         body: fd,
       });
 
-      if (!res.ok) throw new Error("Upload failed");
+      if (!res.ok) throw new Error(t("modal.avatar_upload_failed"));
 
       const data = await res.json();
       onChange(data.url); // backend URL of uploaded image
     } catch (err) {
       console.error(err);
-      alert("Failed to upload avatar.");
+      alert(t("modal.avatar_upload_failed"));
     } finally {
       setLoading(false);
       setImageToCrop(null);
@@ -54,7 +56,7 @@ export default function AvatarEditor({ src, onChange }: Props) {
     <div className="relative group">
       <Image
         src={src}
-        alt="Avatar"
+        alt={t("account_info.avatar_alt", { name: "User" })}
         width={70}
         height={70}
         className="rounded-2xl object-cover shadow-sm"
@@ -87,7 +89,7 @@ export default function AvatarEditor({ src, onChange }: Props) {
 
       {loading && (
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-2xl">
-          <span className="text-white text-sm">Uploading…</span>
+          <span className="text-white text-sm">{t("modal.uploading")}</span>
         </div>
       )}
     </div>
