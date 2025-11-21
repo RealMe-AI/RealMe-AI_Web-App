@@ -3,7 +3,8 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "../components/theme-provider";
-import { NextIntlProvider } from "next-intl";
+import { IntlProvider } from "next-intl";
+
 
 import type { Messages } from "../locales/en"; // typed import of your en.ts
 
@@ -33,9 +34,9 @@ export default function RootLayout({
     <html lang={params.locale || "en"} suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
         <ThemeProvider>
-          <NextIntlProvider locale={params.locale || "en"} messages={messages}>
+          <IntlProvider locale={params.locale || "en"} messages={messages}>
             {children}
-          </NextIntlProvider>
+          </IntlProvider>
         </ThemeProvider>
       </body>
     </html>
