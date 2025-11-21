@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useUserStore } from "../../../zustand/useUserStore";
+import { useTranslations } from "next-intl";
 
 interface UpdateProfileResponse {
   success: boolean;
@@ -12,6 +13,8 @@ interface UpdateProfileResponse {
 }
 
 export default function EditProfileModal() {
+  const t = useTranslations();
+
   const { user, setUser, isEditProfileOpen, closeEditProfile } = useUserStore();
   const [fullName, setFullName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +26,7 @@ export default function EditProfileModal() {
 
   const handleSave = async () => {
     if (!fullName.trim()) {
-      setError("Full name cannot be empty");
+      setError(t("modal_edit_profile.error_empty_name"));
       return;
     }
 
@@ -40,17 +43,16 @@ export default function EditProfileModal() {
       const data: UpdateProfileResponse = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Failed to update profile");
+        throw new Error(
+          data.message || t("modal_edit.no_data.success")
+        );
       }
 
-      // Update Zustand store
       setUser({ fullName });
-
-      // Close modal
       closeEditProfile();
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);
-      else setError("Something went wrong");
+      else setError(t("modal_edit.no_data.success"));
     } finally {
       setLoading(false);
     }
@@ -79,22 +81,28 @@ export default function EditProfileModal() {
             </button>
 
             <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4">
-              Edit Profile
+              {t("modal.edit_profile.title")}
             </h2>
 
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-1">
                 <label className="text-sm text-slate-600 dark:text-slate-300">
-                  Full Name
+                  {t("account_info.full_name")}
                 </label>
+
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="p-2 rounded-lg bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 focus:outline-none"
-                  placeholder="Enter full name"
+                  placeholder={t("modal.edit_profile.name_placeholder")}
                 />
-                {error && <p className="text-red-600 text-sm">{error}</p>}
+
+                {error && (
+                  <p className="text-red-600 text-sm">
+                    {error}
+                  </p>
+                )}
               </div>
 
               <button
@@ -106,7 +114,7 @@ export default function EditProfileModal() {
                     : "bg-indigo-600 hover:bg-indigo-700"
                 }`}
               >
-                {loading ? "Saving..." : "Save"}
+                {loading ? t("modal.saving") : t("modal.edit_profile.save_button")}
               </button>
             </div>
           </motion.div>
