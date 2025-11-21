@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { freeFeatures } from "../../data/planData";
+import { proFeatures } from "../../data/planData";
 
 export default function PricingPlans() {
   const t = useTranslations("Plans");
@@ -12,9 +14,7 @@ export default function PricingPlans() {
 
   return (
     <section className="w-full px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
-
       <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
-        
         {/* FREE PLAN */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
@@ -41,7 +41,10 @@ export default function PricingPlans() {
               {/* FEATURES */}
               <ul className="mt-6 space-y-4 text-sm text-neutral-600 dark:text-neutral-300">
                 {freeFeatures.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 leading-relaxed">
+                  <li
+                    key={index}
+                    className="flex items-start gap-3 leading-relaxed"
+                  >
                     <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     {item}
                   </li>
@@ -50,9 +53,7 @@ export default function PricingPlans() {
             </div>
 
             <div className="mt-auto pt-6">
-              <button
-                className="w-full px-4 py-3 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium shadow-sm"
-              >
+              <button className="w-full px-4 py-3 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium shadow-sm">
                 {t("plan.free.cta")}
               </button>
             </div>
@@ -72,7 +73,9 @@ export default function PricingPlans() {
 
             <div>
               <h3 className="text-lg font-semibold">{t("plan.pro.title")}</h3>
-              <p className="text-sm opacity-90 mt-1">{t("plan.pro.subtitle")}</p>
+              <p className="text-sm opacity-90 mt-1">
+                {t("plan.pro.subtitle")}
+              </p>
 
               {/* Billing */}
               <div className="mt-6 flex flex-col sm:flex-row sm:items-end sm:gap-6">
@@ -88,7 +91,9 @@ export default function PricingPlans() {
                 </div>
 
                 <div className="mt-4 sm:mt-0 flex items-center gap-3 ml-auto">
-                  <div className="text-sm opacity-90">Monthly</div>
+                  <div className="text-sm opacity-90">
+                    {t("plan.billing.monthly")}
+                  </div>
 
                   <button
                     aria-pressed={isYearly}
@@ -102,7 +107,9 @@ export default function PricingPlans() {
                     />
                   </button>
 
-                  <div className="text-sm opacity-90">Yearly</div>
+                  <div className="text-sm opacity-90">
+                    {t("plan.billing.yearly")}
+                  </div>
                 </div>
               </div>
 
@@ -115,7 +122,10 @@ export default function PricingPlans() {
               {/* Pro FEATURES */}
               <ul className="mt-6 space-y-4 text-sm opacity-95">
                 {proFeatures.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3 leading-relaxed">
+                  <li
+                    key={index}
+                    className="flex items-start gap-3 leading-relaxed"
+                  >
                     <CheckCircle2 className="w-4 h-4 text-white" />
                     {item}
                   </li>

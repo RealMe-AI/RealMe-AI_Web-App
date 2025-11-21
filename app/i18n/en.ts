@@ -181,7 +181,7 @@ const en = {
 
   //Avatar cropper
   "modal.avatar_cropper.save_button": "Save",
-   "modal.uploading": "Uploading…",
+  "modal.uploading": "Uploading…",
   "modal.avatar_upload_failed": "Failed to upload Image.",
   "account_info.avatar_alt": "Image",
 
@@ -212,7 +212,8 @@ const en = {
 
     "plan.pro.most_popular": "MOST POPULAR",
     "plan.pro.yearly_discount": "Save 25% when you pay yearly",
-
+    "plan.billing.monthly": "Monthly",
+    "plan.billing.yearly": "Yearly",
 
     // Footer
     "plan.pricing_footer.billing_note":
