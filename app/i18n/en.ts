@@ -181,6 +181,9 @@ const en = {
 
   //Avatar cropper
   "modal.avatar_cropper.save_button": "Save",
+   "modal.uploading": "Uploading…",
+  "modal.avatar_upload_failed": "Failed to upload Image.",
+  "account_info.avatar_alt": "Image",
 
   // Free Plan
   "plan.free.title": "Free Plan",
