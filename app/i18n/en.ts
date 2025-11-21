@@ -185,34 +185,35 @@ const en = {
   "modal.avatar_upload_failed": "Failed to upload Image.",
   "account_info.avatar_alt": "Image",
 
-  // Free Plan
-  "plan.free.title": "Free Plan",
-  "plan.free.subtitle": "Perfect for getting started",
-  "plan.free.price": "month",
-  "plan.free.features1": "10 prompts per day",
-  "plan.free.features2": "GPT-5 access",
-  "plan.free.features3": "Voice input",
-  "plan.free.features4": "4 language support",
-  "plan.free.features5": "Chat history",
-  "plan.free.cta": "Get Started Free",
+  Plans: {
+    // Free
+    "plan.free.title": "Free Plan",
+    "plan.free.subtitle": "Perfect for getting started",
+    "plan.free.price": "month",
+    "plan.free.features1": "10 prompts per day",
+    "plan.free.features2": "GPT-5 access",
+    "plan.free.features3": "Voice input",
+    "plan.free.features4": "4 language support",
+    "plan.free.features5": "Chat history",
+    "plan.free.cta": "Get Started Free",
 
-  // Pro Plan
-  "plan.pro.title": "RealMe AI Pro",
-  "plan.pro.subtitle": "For professionals who need more",
-  "plan.pro.price_monthly": "month",
-  "plan.pro.price_yearly": "year",
-  "plan.pro.features1": "Unlimited prompts per day",
-  "plan.pro.features2": "Advanced voice features",
-  "plan.pro.features3": "Faster GPT-5 Turbo responses",
-  "plan.pro.features4": "Custom themes",
-  "plan.pro.features5": "Priority support",
-  "plan.pro.features6": "Export conversations",
-  "plan.pro.cta": "Upgrade to Pro",
+    // Pro
+    "plan.pro.title": "RealMe AI Pro",
+    "plan.pro.subtitle": "For professionals who need more",
+    "plan.pro.price_monthly": "month",
+    "plan.pro.price_yearly": "year",
+    "plan.pro.features1": "Unlimited prompts per day",
+    "plan.pro.features2": "Advanced voice features",
+    "plan.pro.features3": "Faster GPT-5 Turbo responses",
+    "plan.pro.features4": "Custom themes",
+    "plan.pro.features5": "Priority support",
+    "plan.pro.features6": "Export conversations",
+    "plan.pro.cta": "Upgrade to Pro",
 
-  //pricing footer
-  "plan.pricing_footer.billing_note":
-    "All plans include secure authentication, persistent chat history, and multilingual support.",
-
+    // Footer
+    "plan.pricing_footer.billing_note":
+      "All plans include secure authentication, persistent chat history, and multilingual support.",
+  },
   // AI Integration
   "ai.response.placeholder": "AI response will appear here",
   "ai.response.error": "Failed to get AI response",

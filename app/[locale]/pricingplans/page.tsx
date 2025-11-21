@@ -3,19 +3,37 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import { freeFeatures } from "../data/planData";
-import { proFeatures } from "../data/planData";
+import { useTranslations } from "next-intl";
 
 export default function PricingPlans() {
+  const t = useTranslations("Plans");
+
   const [isYearly, setIsYearly] = useState(false);
-// 
+
+  // Features pulled from translations
+  const freeFeatures = [
+    t("plan.free.features1"),
+    t("plan.free.features2"),
+    t("plan.free.features3"),
+    t("plan.free.features4"),
+    t("plan.free.features5"),
+  ];
+
+  const proFeatures = [
+    t("plan.pro.features1"),
+    t("plan.pro.features2"),
+    t("plan.pro.features3"),
+    t("plan.pro.features4"),
+    t("plan.pro.features5"),
+    t("plan.pro.features6"),
+  ];
+
   return (
     <section className="w-full px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
 
-      {/* Toggle + container */}
       <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
         
-        {/*  FREE PLAN */}
+        {/* FREE PLAN */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
@@ -25,24 +43,23 @@ export default function PricingPlans() {
           <div className="h-full bg-linear-to-br from-indigo-100 to-white dark:from-neutral-900 dark:to-neutral-900 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-200">
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                Free Plan
+                {t("plan.free.title")}
               </h3>
               <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-                Perfect for getting started
+                {t("plan.free.subtitle")}
               </p>
 
               <div className="mt-6 text-3xl font-extrabold text-neutral-900 dark:text-neutral-100">
                 <span className="line-through text-neutral-400 mr-2">₦0</span>
-                <span className="text-2xl align-baseline">/month</span>
+                <span className="text-2xl align-baseline">
+                  /{t("plan.free.price")}
+                </span>
               </div>
 
               {/* FEATURES */}
               <ul className="mt-6 space-y-4 text-sm text-neutral-600 dark:text-neutral-300">
                 {freeFeatures.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 leading-relaxed"
-                  >
+                  <li key={index} className="flex items-start gap-3 leading-relaxed">
                     <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     {item}
                   </li>
@@ -50,19 +67,17 @@ export default function PricingPlans() {
               </ul>
             </div>
 
-           
             <div className="mt-auto pt-6">
               <button
                 className="w-full px-4 py-3 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium shadow-sm"
-                aria-label="Get started free"
               >
-                Get Started Free
+                {t("plan.free.cta")}
               </button>
             </div>
           </div>
         </motion.div>
 
-        {/* PRO PLAN  */}
+        {/* PRO PLAN */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,33 +89,29 @@ export default function PricingPlans() {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold">RealMe AI Pro</h3>
-              <p className="text-sm opacity-90 mt-1">
-                For professionals who need more
-              </p>
+              <h3 className="text-lg font-semibold">{t("plan.pro.title")}</h3>
+              <p className="text-sm opacity-90 mt-1">{t("plan.pro.subtitle")}</p>
 
-              {/* Billing Row */}
+              {/* Billing */}
               <div className="mt-6 flex flex-col sm:flex-row sm:items-end sm:gap-6">
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-extrabold">
                     {isYearly ? "₦45,000" : "₦5,000"}
                   </span>
                   <span className="text-sm mt-2 opacity-90">
-                    {isYearly ? "/year" : "/month"}
+                    {isYearly
+                      ? `/${t("plan.pro.price_yearly")}`
+                      : `/${t("plan.pro.price_monthly")}`}
                   </span>
                 </div>
 
                 <div className="mt-4 sm:mt-0 flex items-center gap-3 ml-auto">
                   <div className="text-sm opacity-90">Monthly</div>
 
-                  {/* Toggle */}
                   <button
                     aria-pressed={isYearly}
                     onClick={() => setIsYearly((s) => !s)}
-                    className={`relative inline-flex items-center h-6 w-11 rounded-full transition-colors focus:outline-none ${
-                      isYearly ? "bg-white/30" : "bg-white/30"
-                    }`}
-                    title="Toggle billing cycle"
+                    className="relative inline-flex items-center h-6 w-11 rounded-full transition-colors bg-white/30"
                   >
                     <span
                       className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
@@ -119,13 +130,10 @@ export default function PricingPlans() {
                 </div>
               )}
 
-              {/* FEATURES */}
+              {/* Pro FEATURES */}
               <ul className="mt-6 space-y-4 text-sm opacity-95">
                 {proFeatures.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 leading-relaxed"
-                  >
+                  <li key={index} className="flex items-start gap-3 leading-relaxed">
                     <CheckCircle2 className="w-4 h-4 text-white" />
                     {item}
                   </li>
@@ -133,10 +141,9 @@ export default function PricingPlans() {
               </ul>
             </div>
 
-            {/* Button aligned bottom */}
             <div className="mt-auto pt-6">
               <button className="w-full px-4 py-3 rounded-lg bg-white text-indigo-600 font-semibold shadow-sm">
-                Upgrade to Pro
+                {t("plan.pro.cta")}
               </button>
             </div>
           </div>
@@ -144,8 +151,7 @@ export default function PricingPlans() {
       </div>
 
       <p className="text-center text-xs text-neutral-500 dark:text-neutral-400 mt-6">
-        All plans include secure authentication, persistent chat history, and
-        multilingual support
+        {t("plan.pricing_footer.billing_note")}
       </p>
     </section>
   );
