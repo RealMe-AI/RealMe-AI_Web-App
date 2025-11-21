@@ -1,6 +1,6 @@
 // src/app/api/auth/route.ts
 import { NextResponse } from "next/server";
-import { getTranslator } from "next-intl/server"; // server-side i18n
+import { getTranslations } from "next-intl/server"; // server-side i18n
 
 type Mode = "signin" | "signup";
 
@@ -32,7 +32,7 @@ export async function POST(
   context: { params?: Record<string, string>; locale?: string }
 ) {
   // Get the translator for the "Auth" namespace
-  const t = getTranslator(context.locale, "Auth");
+  const t = await getTranslations(context.locale);
 
   try {
     const body = (await req.json()) as AuthRequest;
@@ -43,26 +43,26 @@ export async function POST(
     // Validate identifier
     if (!identifier || !(isEmail(identifier) || isPhone(identifier))) {
       fieldErrors.identifier =
-        mode === "signin" ? t("error.sign_in.email_number") : t("error.sign_up.email_number");
+        mode === "signin" ? t("Auth:error.sign_in.email_number") : t("Auth:error.sign_up.email_number");
     }
 
     // Validate password
     if (!password || (mode === "signup" && password.length < 6)) {
       fieldErrors.password =
         mode === "signin"
-          ? t("error.sign_in.password.required")
-          : t("error.sign_up.password.min_length");
+          ? t("Auth:error.sign_in.password.required")
+          : t("Auth:error.sign_up.password.min_length");
     }
 
     // Validate full name on signup
     if (mode === "signup" && (!fullName || fullName.trim().length < 2)) {
-      fieldErrors.fullName = t("error.sign_up.full_name.required");
+      fieldErrors.fullName = t("Auth:error.sign_up.full_name.required");
     }
 
     // Return validation errors if any
     if (Object.keys(fieldErrors).length > 0) {
       return NextResponse.json(
-        { error: t("auth.authentication_failed"), fieldErrors },
+        { error: t("Auth:auth.authentication_failed"), fieldErrors },
         { status: 400 }
       );
     }
@@ -70,22 +70,22 @@ export async function POST(
     // ----- Mock authentication logic -----
     if (mode === "signin") {
       if (identifier === "blocked@example.com") {
-        return NextResponse.json({ error: t("auth.authentication_failed") }, { status: 403 });
+        return NextResponse.json({ error: t("Auth:auth.authentication_failed") }, { status: 403 });
       }
 
       const user = { id: "user_123", identifier };
-      return NextResponse.json({ ok: true, user, message: t("auth.button.success") }, { status: 200 });
+      return NextResponse.json({ ok: true, user, message: t("Auth:auth.button.success") }, { status: 200 });
     } else {
       if (identifier === "exists@example.com") {
-        return NextResponse.json({ error: t("auth.authentication_failed") }, { status: 409 });
+        return NextResponse.json({ error: t("Auth:auth.authentication_failed") }, { status: 409 });
       }
 
       const newUser = { id: "user_new_456", identifier, fullName: fullName ?? null };
-      return NextResponse.json({ ok: true, user: newUser, message: t("auth.button.success") }, { status: 201 });
+      return NextResponse.json({ ok: true, user: newUser, message: t("Auth:auth.button.success") }, { status: 201 });
     }
     // --------------------------------------
   } catch (err) {
     console.error("Auth route error:", err);
-    return NextResponse.json({ error: t("error.network") }, { status: 500 });
+    return NextResponse.json({ error: t("Auth:error.network") }, { status: 500 });
   }
 }
