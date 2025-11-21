@@ -2,7 +2,7 @@ import "./globals.css";
 
 import { ReactNode } from "react";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "./components/theme-provider";
+import { ThemeProvider } from "../components/theme-provider";
 import { NextIntlProvider } from "next-intl";
 
 import type { Messages } from "../locales/en"; // typed import of your en.ts
@@ -24,7 +24,11 @@ interface RootLayoutProps {
   messages: Messages; // loaded locale messages
 }
 
-export default function RootLayout({ children, params, messages }: RootLayoutProps) {
+export default function RootLayout({
+  children,
+  params,
+  messages,
+}: RootLayoutProps) {
   return (
     <html lang={params.locale || "en"} suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
