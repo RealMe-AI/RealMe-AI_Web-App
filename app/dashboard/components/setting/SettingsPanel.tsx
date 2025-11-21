@@ -8,6 +8,7 @@ import { useThemeStore } from "../../../zustand/useThemeStore";
 import EditProfileModal from "./EditProfileModal";
 import CustomSelect from "./CustomSelect";
 import EmailToggle from "./EmailToggle";
+import { useTranslations } from "next-intl";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -15,6 +16,8 @@ interface SettingsPanelProps {
 }
 
 export default function SettingsPanel({ open, close }: SettingsPanelProps) {
+  const t = useTranslations();
+
   const {
     theme,
     setTheme,
@@ -27,12 +30,9 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const applyTheme = useThemeStore((s) => s.setTheme);
   const openEditProfile = useUserStore((s) => s.openEditProfile);
 
-  // Handle theme change (sync both)
   const handleThemeChange = (selected: "light" | "dark" | "system") => {
-    // Save preference
     setTheme(selected);
 
-    // Apply real theme globally
     if (selected === "system") {
       const prefersDark = window.matchMedia(
         "(prefers-color-scheme: dark)"
@@ -68,27 +68,27 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               </button>
 
               <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4">
-                Settings
+                {t("settings.title")}
               </h2>
 
               {/* Account */}
-              <Section title="Account Settings">
+              <Section title={t("settings.account.label")}>
                 <button
                   onClick={openEditProfile}
-                  className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800  dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                  className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
                 >
-                  <Edit2 size={16} /> Edit Profile
+                  <Edit2 size={16} /> {t("settings.account.sync")}
                 </button>
               </Section>
 
               {/* Preferences */}
-              <Section title="Preferences">
+              <Section title={t("settings.preferences.label")}>
                 <CustomSelect
-                  label="Theme Mode"
+                  label={t("settings.theme.label")}
                   options={[
-                    { label: "Light", value: "light" },
-                    { label: "Dark", value: "dark" },
-                    { label: "System", value: "system" },
+                    { label: t("settings.theme.Light"), value: "light" },
+                    { label: t("settings.theme.Dark"), value: "dark" },
+                    { label: t("settings.theme.System"), value: "system" },
                   ]}
                   value={theme}
                   onChange={(v) =>
@@ -98,12 +98,12 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                 />
 
                 <CustomSelect
-                  label="Language"
+                  label={t("settings.language.label")}
                   options={[
-                    { label: "English", value: "en" },
-                    { label: "Hausa", value: "ha" },
-                    { label: "Igbo", value: "ig" },
-                    { label: "Yoruba", value: "yo" },
+                    { label: t("settings.language.english"), value: "en" },
+                    { label: t("settings.language.hausa"), value: "ha" },
+                    { label: t("settings.language.igbo"), value: "ig" },
+                    { label: t("settings.language.yoruba"), value: "yo" },
                   ]}
                   value={language}
                   onChange={setLanguage}
@@ -123,19 +123,20 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               </Section>
 
               {/* Support */}
-              <Section title="Support & Help">
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800  dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
-                  <Globe size={16} /> Contact Support
+              <Section title={t("settings.support.label")}>
+                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                  <Globe size={16} /> {t("settings.support.contact")}
                 </button>
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800  dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
-                  <Globe size={16} /> FAQs / Help Center
+
+                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                  <Globe size={16} /> {t("settings.support.faq")}
                 </button>
               </Section>
 
               {/* Danger */}
-              <Section title="Danger Zone">
+              <Section title={t("settings.danger_zone.label")}>
                 <button className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/60 transition">
-                  <Trash2 size={16} /> Delete Account
+                  <Trash2 size={16} /> {t("settings.delete_account")}
                 </button>
               </Section>
             </motion.div>
@@ -148,10 +149,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   );
 }
 
-// ----------------------------------------------------------------------
-// Reusable UI Components
-// ----------------------------------------------------------------------
-
+// Reusable Section Component
 function Section({
   title,
   children,
@@ -168,4 +166,3 @@ function Section({
     </div>
   );
 }
-
