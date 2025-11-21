@@ -70,7 +70,7 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
           className="w-full mt-4 py-2 rounded-lg bg-indigo-600 text-white text-sm 
           hover:bg-indigo-700 transition"
         >
-          Save Image
+          Save
         </button>
       </div>
     </div>

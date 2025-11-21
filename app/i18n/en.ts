@@ -179,6 +179,9 @@ const en = {
   "modal.edit_profile.save_button": "Save",
   "modal.saving": "Saving...",
 
+  //Avatar cropper
+  "modal.avatar_cropper.save_button": "Save",
+
   // Free Plan
   "plan.free.title": "Free Plan",
   "plan.free.subtitle": "Perfect for getting started",
