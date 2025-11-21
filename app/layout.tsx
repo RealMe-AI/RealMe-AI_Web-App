@@ -3,6 +3,9 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "./components/theme-provider";
+import { NextIntlProvider } from "next-intl";
+
+import type { Messages } from "../locales/en"; // typed import of your en.ts
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,11 +18,21 @@ export const metadata = {
   description: "Converse. Learn. Evolve. Professionally.",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+interface RootLayoutProps {
+  children: ReactNode;
+  params: { locale: string }; // Next.js App Router param for locale
+  messages: Messages; // loaded locale messages
+}
+
+export default function RootLayout({ children, params, messages }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={params.locale || "en"} suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <NextIntlProvider locale={params.locale || "en"} messages={messages}>
+            {children}
+          </NextIntlProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
