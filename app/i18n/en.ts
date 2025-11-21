@@ -121,7 +121,7 @@ const en = {
   // Dashboard / Sidebar
   "dashboard.sidebar.chat_button": " New Chat",
   "dashboard.search.chats_placeholder": "Search chats...",
-  "dashboard.sidebar.footer": "All Rights Reserved",
+  "dashboard.sidebar.footer_full": "All Rights Reserved",
   "dashboard.no_chat": "No chats yet start one!",
   "dashboard.search.no_results": "No chat found with the title \"{searchTerm}\"",
   "dashboard.sidebar.upgrade": "Upgrade",
