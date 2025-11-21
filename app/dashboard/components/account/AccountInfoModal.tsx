@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, CreditCard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import AvatarEditor from "./AvatarEditor";
 
@@ -26,6 +27,7 @@ interface UserData {
 export default function AccountInfoModal({ open, close }: AccountInfoModalProps) {
   const [user, setUser] = useState<UserData | null>(null);
   const router = useRouter();
+  const t = useTranslations();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -74,15 +76,17 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             <div className="flex flex-col items-center text-center space-y-3">
               <AvatarEditor
                 src={user?.avatar || "/avatar.png"}
-                onChange={(newImg) => setUser((u) => u ? { ...u, avatar: newImg } : u)}
+                onChange={(newImg) =>
+                  setUser((u) => (u ? { ...u, avatar: newImg } : u))
+                }
               />
 
               <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
-                {user?.fullName || "Loading..."}
+                {user?.fullName || t("account_info.loading")}
               </h2>
 
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                Signed in with {user?.provider || "—"}
+                {t("account_info.signed_in_with")} {user?.provider || "—"}
               </p>
 
               <span
@@ -103,15 +107,15 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             {/* Body */}
             {user ? (
               <div className="space-y-2 text-sm">
-                <InfoItem label="Full Name" value={user.fullName} />
-                <InfoItem label="Email" value={user.email} />
-                <InfoItem label="Account Type" value={user.accountType} />
-                <InfoItem label="Date Joined" value={user.dateJoined} />
-                <InfoItem label="Last Login" value={user.lastLogin} />
+                <InfoItem label={t("account_info.full_name")} value={user.fullName} />
+                <InfoItem label={t("account_info.email")} value={user.email} />
+                <InfoItem label={t("account_info.account_type")} value={user.accountType} />
+                <InfoItem label={t("account_info.date_joined")} value={user.dateJoined} />
+                <InfoItem label={t("account_info.last_login")} value={user.lastLogin} />
               </div>
             ) : (
               <p className="text-center text-sm text-slate-500 dark:text-slate-400 py-6">
-                Loading account info...
+                {t("account_info.loading")}
               </p>
             )}
 
@@ -126,7 +130,7 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
                          dark:bg-indigo-700 dark:hover:bg-indigo-800 transition"
             >
               <CreditCard size={16} />
-              Manage Subscription
+              {t("account_info.manage_subscription")}
             </button>
           </motion.div>
         </motion.div>
@@ -138,12 +142,8 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
 function InfoItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
-      <span className="font-medium text-slate-600 dark:text-slate-400">
-        {label}
-      </span>
-      <span className="text-right text-slate-800 dark:text-slate-100">
-        {value}
-      </span>
+      <span className="font-medium text-slate-600 dark:text-slate-400">{label}</span>
+      <span className="text-right text-slate-800 dark:text-slate-100">{value}</span>
     </div>
   );
 }
