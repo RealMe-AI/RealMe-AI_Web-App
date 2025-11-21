@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../../utils/cropUtils";
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   src: string;
@@ -30,6 +31,8 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(null);
+
+  const t = useTranslations();
 
   const onCropComplete = useCallback((_: Area, areaPixels: PixelCrop) => {
     setCroppedAreaPixels(areaPixels);
@@ -70,7 +73,7 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
           className="w-full mt-4 py-2 rounded-lg bg-indigo-600 text-white text-sm 
           hover:bg-indigo-700 transition"
         >
-          Save
+          {t("modal.avatar_cropper.save_button")}
         </button>
       </div>
     </div>
