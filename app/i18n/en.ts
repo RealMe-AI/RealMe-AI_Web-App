@@ -74,59 +74,63 @@ const en = {
   "landing.footer.terms": "Terms of Service",
 
   // Authentication Pages
-"auth.page.hero_title": "Welcome to {appName}",
-"auth.page.back_button": "Back",
+  "auth.page.hero_title": "Welcome to {appName}",
+  "auth.page.back_button": "Back",
 
-// Placeholders
-"auth.login.email_placeholder": "Email address or phone number...",
-"auth.login.password_placeholder": "Password...",
-"auth.login.full_name_placeholder": "Full name...",
+  // Placeholders
+  "auth.login.email_placeholder": "Email address or phone number...",
+  "auth.login.password_placeholder": "Password...",
+  "auth.login.full_name_placeholder": "Full name...",
 
-// Buttons
-"auth.button.sign_in": "Sign In",
-"auth.button.create_account": "Create Account",
-"auth.button.continue_email": "Continue with Email",
-"auth.button.creating": "Creating…",
-"auth.button.signing_in": "Signing in…",
-"auth.button.success": "Success",
+  // Buttons
+  "auth.button.sign_in": "Sign In",
+  "auth.button.create_account": "Create Account",
+  "auth.button.continue_email": "Continue with Email",
+  "auth.button.creating": "Creating…",
+  "auth.button.signing_in": "Signing in…",
+  "auth.button.success": "Success",
 
-// Toggle Text
-"auth.toggle.no_account": "Don't have an account?",
-"auth.toggle.already_have_account": "Already have an account?",
-"auth.toggle.sign_in": "Sign In",
-"auth.toggle.sign_up": "Sign Up",
+  // Toggle Text
+  "auth.toggle.no_account": "Don't have an account?",
+  "auth.toggle.already_have_account": "Already have an account?",
+  "auth.toggle.sign_in": "Sign In",
+  "auth.toggle.sign_up": "Sign Up",
 
-// Password toggle
-"auth.toggle.show_password": "Show password",
-"auth.toggle.hide_password": "Hide password",
+  // Password toggle
+  "auth.toggle.show_password": "Show password",
+  "auth.toggle.hide_password": "Hide password",
 
-// Divider
-"auth.divider.or": "OR",
+  // Divider
+  "auth.divider.or": "OR",
 
-// Identifier hint
-"auth.identifier.email": "email",
-"auth.identifier.phone": "phone",
+  // Identifier hint
+  "auth.identifier.email": "email",
+  "auth.identifier.phone": "phone",
 
-// Error messages
-"error.sign_in.email_number": "Email or phone is required.",
-"error.sign_up.email_number": "Enter a valid email or E.164 phone number (e.g. +123456789).",
-"error.sign_in.password.required": "Password is required.",
-"error.sign_up.password.min_length": "Password must be at least 6 characters.",
-"error.sign_up.full_name.required": "Full name is required for sign up.",
-"error.sign_up.full_name": "Enter your full name.",
-"auth.authentication_failed": "Authentication failed.",
-"error.network": "Network error. Please try again.",
-
+  // Error messages
+  "error.sign_in.email_number": "Email or phone is required.",
+  "error.sign_up.email_number":
+    "Enter a valid email or E.164 phone number (e.g. +123456789).",
+  "error.sign_in.password.required": "Password is required.",
+  "error.sign_up.password.min_length":
+    "Password must be at least 6 characters.",
+  "error.sign_up.full_name.required": "Full name is required for sign up.",
+  "error.sign_up.full_name": "Enter your full name.",
+  "auth.authentication_failed": "Authentication failed.",
+  "error.network": "Network error. Please try again.",
 
   // Dashboard / Sidebar
   "dashboard.sidebar.chat_button": " New Chat",
   "dashboard.search.chats_placeholder": "Search chats...",
   "dashboard.sidebar.footer_full": "All Rights Reserved",
   "dashboard.no_chat": "No chats yet start one!",
-  "dashboard.search.no_results": "No chat found with the title \"{searchTerm}\"",
+  "dashboard.search.no_results": 'No chat found with the title "{searchTerm}"',
   "dashboard.sidebar.upgrade": "Upgrade",
   "dashboard.sidebar.logout": "Log out",
   "dashboard.RealMe is thinking": "RealMe is thinking",
+  "fileupload.upload_title": "Upload a file",
+  "fileupload.button_label": "Upload",
+  "fileupload.limit_reached": "Upgrade to Pro",
   "dashboard.voice_input.start_recording": "Start recording",
   "dashboard.record_voice.in_process": "Recording…",
   "dashboard.voice.button.start": "Start",
