@@ -1,6 +1,7 @@
 "use client";
 
 import { Bell } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface EmailToggleProps {
   enabled: boolean;
@@ -13,6 +14,8 @@ export default function EmailToggle({
   onToggle,
   className = "",
 }: EmailToggleProps) {
+  const t = useTranslations();
+
   return (
     <div
       onClick={onToggle}
@@ -20,7 +23,7 @@ export default function EmailToggle({
     >
       <div className="flex items-center gap-2">
         <Bell size={16} />
-        <span>Email Notifications</span>
+        <span>{t("settings.notifications.label")}</span>
       </div>
 
       <div
