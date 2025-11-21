@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import ProfileFooter from "./ProfileFooter";
-import Image from "next/image";
 import { useState, useEffect } from "react";
+
+import { useTranslations } from "use-intl";
+import Image from "next/image";
 import useModalStore from "../../zustand/modalStore";
 
 interface SidebarProps {
@@ -30,6 +32,7 @@ export default function Sidebar({
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
 
   const { closeAll } = useModalStore(); // close all open modals
+  const t = useTranslations();
 
   // Load chats from localStorage safely
   useEffect(() => {
@@ -118,7 +121,7 @@ export default function Sidebar({
                      bg-indigo-500 hover:bg-indigo-600 text-white 
                      transition gap-2"
         >
-          New Chat
+          {t("dashboard.sidebar.chat_button")}
         </button>
       </div>
 
@@ -133,7 +136,7 @@ export default function Sidebar({
             setSearchTerm(e.target.value);
           }}
           onFocus={() => closeAll()} // close modals when focusing
-          placeholder="Search chats..."
+          placeholder={t("dashboard.search.chats_placeholder")}
           className="w-full pl-9 pr-3 py-2 text-sm rounded-lg 
                      bg-white/40 dark:bg-slate-700/50 placeholder:text-slate-400 
                      focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
@@ -143,7 +146,7 @@ export default function Sidebar({
       {/* Error Message */}
       {error && (
         <p className="text-sm text-red-500 dark:text-red-400 mb-3 text-center animate-pulse">
-          {error}
+          {t("dashboard.search.no_results").replace("{searchTerm}", searchTerm)}
         </p>
       )}
 
@@ -172,7 +175,7 @@ export default function Sidebar({
             ))
           : !error && (
               <p className="text-sm text-slate-500 dark:text-slate-400 italic text-center">
-                No chats yet start one!
+                {t("dashboard.no_chat")}
               </p>
             )}
       </motion.div>
