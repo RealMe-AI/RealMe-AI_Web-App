@@ -11,6 +11,8 @@ import { useState } from "react";
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [active] = useState<string>("home");
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function Home() {
       />
       {!showSplash && (
         <div className="min-h-screen flex flex-col">
-          <Navbar />
+          <Navbar isOpen={isOpen} setIsOpen={setIsOpen} active={active} />
           <main className="flex-1">
             <Hero />
             <Features />
