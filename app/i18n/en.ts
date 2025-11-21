@@ -211,6 +211,8 @@ const en = {
     "plan.pro.cta": "Upgrade to Pro",
 
     "plan.pro.most_popular": "MOST POPULAR",
+    "plan.pro.yearly_discount": "Save 25% when you pay yearly",
+
 
     // Footer
     "plan.pricing_footer.billing_note":

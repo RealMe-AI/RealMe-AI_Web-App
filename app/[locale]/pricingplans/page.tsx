@@ -108,7 +108,7 @@ export default function PricingPlans() {
 
               {isYearly && (
                 <div className="mt-3 text-sm font-medium text-white/90">
-                  Save 25% when you pay yearly
+                  {t("plan.pro.yearly_discount")}
                 </div>
               )}
 
