@@ -210,6 +210,8 @@ const en = {
     "plan.pro.features6": "Export conversations",
     "plan.pro.cta": "Upgrade to Pro",
 
+    "plan.pro.most_popular": "MOST POPULAR",
+
     // Footer
     "plan.pricing_footer.billing_note":
       "All plans include secure authentication, persistent chat history, and multilingual support.",

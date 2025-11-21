@@ -10,24 +10,6 @@ export default function PricingPlans() {
 
   const [isYearly, setIsYearly] = useState(false);
 
-  // Features pulled from translations
-  const freeFeatures = [
-    t("plan.free.features1"),
-    t("plan.free.features2"),
-    t("plan.free.features3"),
-    t("plan.free.features4"),
-    t("plan.free.features5"),
-  ];
-
-  const proFeatures = [
-    t("plan.pro.features1"),
-    t("plan.pro.features2"),
-    t("plan.pro.features3"),
-    t("plan.pro.features4"),
-    t("plan.pro.features5"),
-    t("plan.pro.features6"),
-  ];
-
   return (
     <section className="w-full px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
 
@@ -85,7 +67,7 @@ export default function PricingPlans() {
         >
           <div className="relative h-full rounded-2xl p-6 bg-linear-to-br from-indigo-600 to-violet-500 dark:from-indigo-700 dark:to-violet-600 text-white flex flex-col">
             <div className="absolute -top-3 sm:left-48 inline-block bg-neutral-900/90 dark:bg-neutral-100/10 text-white text-xs font-semibold px-3 py-1 rounded-full">
-              MOST POPULAR
+              {t("plan.pro.most_popular")}
             </div>
 
             <div>
