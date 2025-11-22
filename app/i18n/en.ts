@@ -1,3 +1,5 @@
+//app/i18n/en.ts
+
 const en = {
   //navbar
   "navbar.brand": "RealMe AI",

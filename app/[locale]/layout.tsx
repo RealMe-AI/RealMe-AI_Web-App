@@ -2,11 +2,10 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
-import type { Messages } from "../../locales/en";
+import type { Messages } from "../../i18n/en";
 
 export function generateStaticParams() {
-  return [{ locale: "en" }];
+  return [{ locale: "en" }, { locale: "fr" }, { locale: "de" }, { locale: "ig" }];
 }
 
 interface LocaleLayoutProps {
@@ -16,11 +15,10 @@ interface LocaleLayoutProps {
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = params;
-  unstable_setRequestLocale(locale);
 
   let messages: Messages;
   try {
-    messages = (await import(`../../locales/${locale}.ts`)).default;
+    messages = (await import(`../../i18n/${locale}.ts`)).default;
   } catch {
     notFound();
   }
