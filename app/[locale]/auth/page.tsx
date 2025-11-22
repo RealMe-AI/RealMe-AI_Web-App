@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import AuthForm from "../components/auth/AuthForm";
-import { useTranslate } from "../hooks/useTranslate";
+import { useTranslate } from "../../hooks/useTranslate";
 import Link from "next/link";
 
 export default function AuthPage() {
