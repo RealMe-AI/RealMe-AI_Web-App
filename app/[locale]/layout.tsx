@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, use } from "react";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
@@ -14,18 +14,20 @@ export function generateStaticParams() {
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  params: { locale: string }; // <-- plain object, no Promise
+  params: { locale: string };
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const { locale } = params; // <-- no await needed
+export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
+  // Unwrap the locale from params using React.use()
+  const { locale } = params;
 
-  let messages: Messages;
+  // Unwrap the translation file at top level
+  const messagesModule = use(import(`../i18n/${locale}.ts`));
+  const messages: Messages = messagesModule?.default;
 
-  try {
-    messages = (await import(`../i18n/${locale}.ts`)).default;
-  } catch {
-    notFound(); // fallback to 404 if the locale file is missing
+  // If messages fail to load (undefined), fallback to 404
+  if (!messages) {
+    notFound();
   }
 
   return (
