@@ -3,14 +3,14 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import type { Messages } from "../i18n/en"; // <-- YOUR REAL PATH
+import type { Messages } from "../i18n/en";
 
 export function generateStaticParams() {
   return [
     { locale: "en" },
     { locale: "ha" },
     { locale: "ig" },
-    { locale: "yo" }
+    { locale: "yo" },
   ];
 }
 
@@ -19,7 +19,10 @@ interface LocaleLayoutProps {
   params: { locale: string };
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { locale } = params;
 
   let messages: Messages;
