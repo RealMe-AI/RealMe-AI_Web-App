@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-// specify the path to your request.ts explicitly
-const withNextIntl = createNextIntlPlugin("./app/i18n/request.ts");
+// Default path (looks for i18n.ts in root)
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   // your Next.js config options
