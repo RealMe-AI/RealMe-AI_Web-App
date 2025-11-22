@@ -14,18 +14,18 @@ export function generateStaticParams() {
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  params: Promise<{ locale: string }>; // <--- wrap params in Promise
+  params: { locale: string }; // <-- plain object, no Promise
 }
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const { locale } = await params; // <--- await here
+  const { locale } = params; // <-- no await needed
 
   let messages: Messages;
 
   try {
     messages = (await import(`../i18n/${locale}.ts`)).default;
   } catch {
-    notFound();
+    notFound(); // fallback to 404 if the locale file is missing
   }
 
   return (
