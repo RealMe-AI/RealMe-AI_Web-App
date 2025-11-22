@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import AccountInfoModal from "./account/AccountInfoModal";
-import SettingsPanel from "./setting/SettingsPanel";
-import useModalStore from "../../zustand/modalStore";
-import { useTranslate } from "../../hooks/useTranslate";
+import AccountInfoModal from "./../../account/AccountInfoModal";
+import SettingsPanel from "./../../setting/SettingsPanel";
+import useModalStore from "../../../zustand/modalStore";
+import { useTranslate } from "../../../hooks/useTranslate";
 
 export default function ProfileFooter() {
   const {

@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, File } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useSendFileMessage } from "../../zustand/sendFileMessage";
+import { useSendFileMessage } from "../../../zustand/sendFileMessage";
 import { useTranslations } from "next-intl";
 
 interface FileUploadPopupProps {

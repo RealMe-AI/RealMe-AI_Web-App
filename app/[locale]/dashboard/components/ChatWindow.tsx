@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useChatStore } from "../../zustand/useChatStore";
-import { useSendFileMessage } from "../../zustand/sendFileMessage";
+import { useChatStore } from "../../../zustand/useChatStore";
+import { useSendFileMessage } from "../../../zustand/sendFileMessage";
 import ChatMessage from "./ChatMessage";
 import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
