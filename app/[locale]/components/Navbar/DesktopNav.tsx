@@ -4,11 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 
-import { useThemeStore } from "../../zustand/useThemeStore";
-import { navItems } from "../../data/desktopNavData";
-import { Active } from "../../types/type";
-import useNavigateToAuth from "../../hooks/useNavigateToAuth";
-import { useTranslate } from "../../hooks/useTranslate";
+import { useThemeStore } from "../../../zustand/useThemeStore";
+import { navItems } from "../../../data/desktopNavData";
+import { Active } from "../../../types/type";
+import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
+import { useTranslate } from "../../../hooks/useTranslate";
 
 export default function DesktopNav({ active }: Active) {
   const { theme, toggleTheme } = useThemeStore();
