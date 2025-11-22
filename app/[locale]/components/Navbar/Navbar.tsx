@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useBackdrop } from "../../hooks/useBackdrop";
-import { navItems } from "../../data/mobilNavData";
-import { Props } from "../../types/type";
+import { useBackdrop } from "../../../hooks/useBackdrop";
+import { navItems } from "../../../data/mobilNavData";
+import { Props } from "../../../types/type";
 
 import Link from "next/link";
-import useNavigateToAuth from "../../hooks/useNavigateToAuth";
-import { useTranslate } from "../../hooks/useTranslate";
+import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
+import { useTranslate } from "../../../hooks/useTranslate";
 
 export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
