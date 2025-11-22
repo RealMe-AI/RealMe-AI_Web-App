@@ -5,7 +5,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogIn, UserPlus, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import Tabs from "./Tabs";
-import { useTranslate } from "../../hooks/useTranslate"; // <-- hook for t()
+import { useTranslate } from "../../../hooks/useTranslate"; // <-- hook for t()
 
 type Mode = "signin" | "signup";
 
