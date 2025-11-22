@@ -10,7 +10,7 @@ export default getRequestConfig(async ({ locale }) => {
   if (!locale || !locales.includes(locale)) notFound();
 
   // TypeScript now knows locale is a string
-  const messages = (await import(`./${locale}.ts`)).default;
+  const messages = (await import(`../app/i18n/${locale}.ts`)).default;
 
   return {
     locale,   // definitely a string here
