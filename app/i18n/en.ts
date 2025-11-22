@@ -229,4 +229,5 @@ const en = {
   "ai.prompt.send_button": "Send",
 };
 
+export type Messages = typeof en;
 export default en;

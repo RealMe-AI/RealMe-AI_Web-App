@@ -1,11 +1,17 @@
 // app/[locale]/layout.tsx
+
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import type { Messages } from "../../i18n/en";
+import type { Messages } from "../i18n/en"; // <-- YOUR REAL PATH
 
 export function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "fr" }, { locale: "de" }, { locale: "ig" }];
+  return [
+    { locale: "en" },
+    { locale: "ha" },
+    { locale: "ig" },
+    { locale: "yo" }
+  ];
 }
 
 interface LocaleLayoutProps {
@@ -17,8 +23,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const { locale } = params;
 
   let messages: Messages;
+
   try {
-    messages = (await import(`../../i18n/${locale}.ts`)).default;
+    messages = (await import(`../i18n/${locale}.ts`)).default;
   } catch {
     notFound();
   }
