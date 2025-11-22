@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Mic, Square } from "lucide-react";
 import { useRef, useEffect } from "react";
-import { useVoiceInput } from "../../hooks/useVoiceInput";
+import { useVoiceInput } from "../../../hooks/useVoiceInput";
 import { useTranslations } from "next-intl";
 
 interface VoiceInputProps {

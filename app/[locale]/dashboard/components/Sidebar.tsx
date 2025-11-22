@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 import { useTranslations } from "use-intl";
 import Image from "next/image";
-import useModalStore from "../../zustand/modalStore";
+import useModalStore from "../../../zustand/modalStore";
 
 interface SidebarProps {
   isOpen: boolean;
