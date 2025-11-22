@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useTranslate } from "../hooks/useTranslate";
+import { useTranslate } from "../../hooks/useTranslate";
 
 export default function CTAButtons() {
   const { t } = useTranslate();

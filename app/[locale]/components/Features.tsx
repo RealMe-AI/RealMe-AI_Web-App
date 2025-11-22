@@ -1,9 +1,9 @@
 "use client";
 
-import { items } from "../data/featuresData";
+import { items } from "../../data/featuresData";
 import { JSX } from "react";
 import { Languages, Brain, Mic, History, Shield, Sliders } from "lucide-react";
-import { useTranslate } from "../hooks/useTranslate";
+import { useTranslate } from "../../hooks/useTranslate";
 
 const iconMap: Record<string, JSX.Element> = {
   Languages: <Languages />,
