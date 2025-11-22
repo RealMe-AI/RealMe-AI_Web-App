@@ -1,14 +1,19 @@
-import {getRequestConfig} from 'next-intl/server';
-import {notFound} from 'next/navigation';
+// app/i18n/getRequestConfig.ts
+import { getRequestConfig } from "next-intl/server";
+import { notFound } from "next/navigation";
 
-// Can be imported from a shared config
-const locales = ['en', 'ha', 'ig', 'yo'];
+// Supported locales
+const locales = ["en", "ha", "ig", "yo"];
 
-export default getRequestConfig(async ({locale}) => {
-  // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as any)) notFound();
+export default getRequestConfig(async ({ locale }) => {
+  // Ensure locale is defined
+  if (!locale || !locales.includes(locale)) notFound();
+
+  // TypeScript now knows locale is a string
+  const messages = (await import(`./${locale}.ts`)).default;
 
   return {
-    messages: (await import(`./app/i18n/${locale}.json`)).default
+    locale,   // definitely a string here
+    messages, // translation messages
   };
 });
