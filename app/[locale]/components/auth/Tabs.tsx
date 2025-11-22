@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslate } from "../../hooks/useTranslate"; // make sure path is correct
+import { useTranslate } from "../../../hooks/useTranslate"; // make sure path is correct
 
 interface TabsProps {
   isSignUp: boolean;
