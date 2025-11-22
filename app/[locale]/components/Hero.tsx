@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { CheckCircle2, Languages, Brain } from "lucide-react";
-import { offers } from "../data/heroData";
+import { offers } from "../../data/heroData";
 
 import Image from "next/image";
 import CTAButtons from "./CTAButtons";

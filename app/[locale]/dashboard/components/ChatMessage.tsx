@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import MessageActions from "../components/MessageActions";
-import { ChatMessageProps } from "../../types/type";
-import { cn } from "../../lib/utils";
+import { ChatMessageProps } from "../../../types/type";
+import { cn } from "../../../lib/utils";
 import Image from "next/image";
 import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
