@@ -1,15 +1,13 @@
-import { ReactNode, use } from "react";
+import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 
+// Supported locales
+export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
+
 export function generateStaticParams() {
-  return [
-    { locale: "en" },
-    { locale: "ha" },
-    { locale: "ig" },
-    { locale: "yo" },
-  ];
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
 
 interface LocaleLayoutProps {
@@ -17,16 +15,20 @@ interface LocaleLayoutProps {
   params: { locale: string };
 }
 
-export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  // Unwrap the locale from params using React.use()
+// Layout must be a Server Component (async)
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = params;
 
-  // Unwrap the translation file at top level
-  const messagesModule = use(import(`../i18n/${locale}.ts`));
-  const messages: Messages = messagesModule?.default;
+  // Validate locale
+  if (!SUPPORTED_LOCALES.includes(locale as typeof SUPPORTED_LOCALES[number])) {
+    notFound();
+  }
 
-  // If messages fail to load (undefined), fallback to 404
-  if (!messages) {
+  // Dynamically import translation file
+  let messages: Messages;
+  try {
+    messages = (await import(`../i18n/${locale}.ts`)).default;
+  } catch {
     notFound();
   }
 
