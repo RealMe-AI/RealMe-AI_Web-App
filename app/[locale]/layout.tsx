@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "../../app/theme-provider/theme-provider";
+import { ThemeProvider } from "../theme-provider/theme-provider";
 import "../globals.css";
 
 const poppins = Poppins({
@@ -12,7 +12,6 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-// Supported locales
 export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 
 export function generateStaticParams() {
@@ -29,11 +28,19 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({ 
+  children, 
+  params 
+}: LocaleLayoutProps) {
   const { locale } = await params;
+
+  console.log("=== LAYOUT EXECUTING ===");
+  console.log("Locale:", locale);
+  console.log("Supported:", SUPPORTED_LOCALES);
 
   // Validate locale
   if (!SUPPORTED_LOCALES.includes(locale as typeof SUPPORTED_LOCALES[number])) {
+    console.log("LOCALE NOT FOUND - calling notFound()");
     notFound();
   }
 
@@ -41,7 +48,9 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   let messages: Messages;
   try {
     messages = (await import(`../i18n/${locale}.ts`)).default;
-  } catch {
+    console.log("Messages loaded successfully");
+  } catch (error) {
+    console.log("Failed to load messages:", error);
     notFound();
   }
 
