@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { notFound } from "next/navigation";
+// import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
@@ -28,9 +28,9 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
+export default async function LocaleLayout({ 
+  children, 
+  params 
 }: LocaleLayoutProps) {
   const { locale } = await params;
 
@@ -39,27 +39,20 @@ export default async function LocaleLayout({
   console.log("Supported:", SUPPORTED_LOCALES);
 
   // Validate locale
-  if (
-    !SUPPORTED_LOCALES.includes(locale as (typeof SUPPORTED_LOCALES)[number])
-  ) {
-    console.log("LOCALE NOT FOUND - calling notFound()");
-    notFound();
+  if (!SUPPORTED_LOCALES.includes(locale as typeof SUPPORTED_LOCALES[number])) {
+    console.log("LOCALE NOT SUPPORTED!");
+    // notFound(); // COMMENTED OUT FOR TESTING
   }
 
   // Dynamically import translation file
   let messages: Messages;
-  // In the layout, after loading messages:
   try {
     messages = (await import(`../i18n/${locale}.ts`)).default;
     console.log("Messages loaded successfully");
-    console.log("Messages keys:", Object.keys(messages));
-    console.log(
-      "Messages content:",
-      JSON.stringify(messages).substring(0, 200)
-    );
   } catch (error) {
     console.log("Failed to load messages:", error);
-    notFound();
+    // notFound(); // COMMENTED OUT FOR TESTING
+    messages = {} as Messages; // Fallback
   }
 
   return (
