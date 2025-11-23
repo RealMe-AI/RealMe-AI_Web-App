@@ -1,16 +1,13 @@
 import createMiddleware from 'next-intl/middleware';
-import { NextRequest } from 'next/server';
 
-const intlMiddleware = createMiddleware({
+export default createMiddleware({
   locales: ['en', 'ha', 'ig', 'yo'],
-  defaultLocale: 'en',
-  localePrefix: 'always'
+  defaultLocale: 'en'
 });
 
-export default function proxy(request: NextRequest) {
-  return intlMiddleware(request);
-}
-
 export const config = {
-  matcher: ['/', '/(ha|ig|yo|en)/:path*']
+  // Match all pathnames except for
+  // - … if they start with `/api`, `/_next` or `/_vercel`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };
