@@ -16,6 +16,8 @@ export default function Home() {
 
   console.log("=== HOME CLIENT RENDERING ===");
 
+  
+
   return (
     <>
       <SplashScreen
