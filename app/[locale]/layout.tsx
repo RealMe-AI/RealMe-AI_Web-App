@@ -14,9 +14,9 @@ const poppins = Poppins({
 
 export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 
-export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
-}
+// export function generateStaticParams() {
+//   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+// }
 
 export const metadata = {
   title: "RealMe AI",
