@@ -14,6 +14,8 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [active] = useState<string>("home");
 
+  console.log("=== HOME CLIENT RENDERING ===");
+
   return (
     <>
       <SplashScreen
