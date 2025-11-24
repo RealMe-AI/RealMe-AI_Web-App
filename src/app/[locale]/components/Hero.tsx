@@ -2,14 +2,16 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle2, Languages, Brain } from "lucide-react";
-import { offers } from "../../data/heroData";
-
 import Image from "next/image";
 import CTAButtons from "./CTAButtons";
 import { useTranslations } from "next-intl";
 
+// Define offers as nested keys from en.ts
+const offers: string[] = ["hero.offer1", "hero.offer2", "hero.offer3"];
+
 export default function Hero() {
-  const t = useTranslations();
+  // Scope translations to "landing" namespace
+  const t = useTranslations("landing");
 
   return (
     <section className="relative overflow-hidden pt-20 bg-linear-to-br from-indigo-100 via-white to-indigo-200/40 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 transition-colors duration-700">
@@ -32,17 +34,17 @@ export default function Hero() {
           {/* Badge */}
           <div className="flex items-center justify-center lg:justify-start gap-2 px-4 py-2 w-max mx-auto lg:mx-0 rounded-full text-sm font-semibold bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 shadow-sm border border-indigo-200/40 dark:border-indigo-900/20">
             <Brain className="w-5 h-5" />
-            <span>{t("landing.hero.first")}</span>
+            <span>{t("hero.first")}</span>
           </div>
 
           {/* Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-700 dark:text-white/90 leading-tight">
-            {t("landing.hero.title")}
+            {t("hero.title")}
           </h1>
 
           {/* Subtitle */}
           <p className="sm:text-xl text-lg text-slate-600 dark:text-slate-400 max-w-xl mx-auto lg:mx-0">
-            {t("landing.hero.subtitle")}
+            {t("hero.subtitle")}
           </p>
 
           {/* CTA Buttons */}
@@ -53,10 +55,7 @@ export default function Hero() {
           {/* Offer List */}
           <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-6 justify-center lg:justify-start text-sm text-slate-700 dark:text-slate-400">
             {offers.map((key) => (
-              <div
-                key={key}
-                className="flex items-center gap-2"
-              >
+              <div key={key} className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                 <span>{t(key)}</span>
               </div>
@@ -97,7 +96,7 @@ export default function Hero() {
                   4
                 </span>
                 <span className="text-xs text-gray-600 dark:text-gray-400">
-                  {t("landing.hero.badge2")}
+                  {t("hero.badge2")}
                 </span>
               </div>
             </div>
@@ -116,7 +115,7 @@ export default function Hero() {
                   GPT-5
                 </span>
                 <span className="text-xs text-gray-600 dark:text-gray-400">
-                  {t("landing.hero.badge1")}
+                  {t("hero.badge1")}
                 </span>
               </div>
             </div>
