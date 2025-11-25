@@ -7,12 +7,12 @@ import { Props } from "../../../types/type";
 
 import Link from "next/link";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
-import { useTranslate } from "../../../hooks/useTranslate";
+import  {useTranslations}  from "next-intl"
 
 export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
   const goToAuth = useNavigateToAuth();
-  const { t } = useTranslate();
+  const t  = useTranslations("navbar");
 
   return (
     <AnimatePresence>
@@ -51,7 +51,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  {t(`navbar.${item.key}`)}
+                  {t(item.key)}
                 </Link>
               ))}
 

@@ -22,8 +22,6 @@ export default function Home() {
       />
       {!showSplash && (
         <div className="min-h-screen flex flex-col">
-          <div className="bg-red-500 text-white p-4">NAV TEST</div>
-
           <Navbar isOpen={isOpen} setIsOpen={setIsOpen} active={active} />
           <main className="flex-1">
             <Hero />
