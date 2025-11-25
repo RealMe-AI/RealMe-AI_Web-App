@@ -2,7 +2,6 @@
 
 const en = {
   navbar: {
-    brand: "RealMe AI",
     help: "Help & Support",
     about: "About RealMe AI",
   },

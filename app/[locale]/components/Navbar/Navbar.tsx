@@ -1,9 +1,13 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useBackdrop } from "../../../hooks/useBackdrop";
 import DesktopNav from "./DesktopNav";
-import MobileNav from "./MobileNav";
+import { navItems } from "../../../data/mobilNavData";
+import { Props } from "../../../types/type";
+import Link from "next/link";
+import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 import { useTranslations } from "next-intl";
 
 interface NavbarProps {
@@ -13,6 +17,8 @@ interface NavbarProps {
 }
 
 export default function Navbar({ isOpen, setIsOpen, active }: NavbarProps) {
+  useBackdrop(isOpen);
+  const goToAuth = useNavigateToAuth();
   const t = useTranslations("navbar");
 
   return (
@@ -25,7 +31,7 @@ export default function Navbar({ isOpen, setIsOpen, active }: NavbarProps) {
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          {t("brand")}
+          RealMe AI
         </motion.a>
 
         {/* Desktop Navigation */}
@@ -46,7 +52,61 @@ export default function Navbar({ isOpen, setIsOpen, active }: NavbarProps) {
       </div>
 
       {/* Mobile Navigation */}
-      <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} active={active} />
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed top-20 left-0 right-0 bottom-0 bg-black/70 backdrop-blur-md z-40"
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
+
+            {/* Mobile Menu */}
+            <motion.nav
+              key="mobile-menu"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute top-20 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-t border-gray-200 dark:border-slate-700 z-50 md:hidden"
+            >
+              <div className="px-6 py-4 flex flex-col space-y-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`font-semibold ${
+                      active === item.href
+                        ? "text-indigo-500"
+                        : "text-slate-800 dark:text-gray-300 hover:text-indigo-400"
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {t(item.key)}
+                  </Link>
+                ))}
+
+                {/* CTA Button */}
+                <motion.button
+                  onClick={() => goToAuth()}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                  className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
+                >
+                  {t("landing.cta.primary")}
+                </motion.button>
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
