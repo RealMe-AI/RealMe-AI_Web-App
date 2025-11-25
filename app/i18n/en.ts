@@ -89,7 +89,7 @@ const en = {
 
   auth: {
     page: {
-      hero_title: "Welcome to {appName}",
+      hero_title: "Welcome to",
       back_button: "Back",
     },
     login: {

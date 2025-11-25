@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function AuthPage() {
   const { t } = useTranslate();
-  const appName = "RealMe AI";
+  const appName = "";
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-indigo-200 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
@@ -48,15 +48,13 @@ export default function AuthPage() {
         </div>
 
         <h2 className="text-2xl font-bold text-center text-slate-700 dark:text-white">
-          {t("auth.page.hero_title").replace(
-            "{appName}",
-            `<span class="text-indigo-500">${appName}</span>`
-          )}
+          {t("auth.page.hero_title")} <span className="text-indigo-500">RealMe AI</span>
         </h2>
 
         {/* Auth Form */}
         <AuthForm />
       </motion.div>
+      
     </div>
   );
 }
