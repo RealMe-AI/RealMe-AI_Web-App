@@ -4,12 +4,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { freeFeatures } from "../../data/planData";
-import { proFeatures } from "../../data/planData";
+import { freeFeatures, proFeatures } from "../../data/planData";
 
 export default function PricingPlans() {
-  const t = useTranslations("Plans");
-
+  const t = useTranslations();
   const [isYearly, setIsYearly] = useState(false);
 
   return (
@@ -22,7 +20,7 @@ export default function PricingPlans() {
           whileHover={{ scale: 1.01 }}
           className="flex-1 group"
         >
-          <div className="h-full bg-linear-to-br from-indigo-100 to-white dark:from-neutral-900 dark:to-neutral-900 dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-200">
+          <div className="h-full bg-linear-to-br from-indigo-100 to-white dark:from-neutral-900 dark:to-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-200">
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
                 {t("plan.free.title")}
@@ -40,13 +38,10 @@ export default function PricingPlans() {
 
               {/* FEATURES */}
               <ul className="mt-6 space-y-4 text-sm text-neutral-600 dark:text-neutral-300">
-                {freeFeatures.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 leading-relaxed"
-                  >
+                {freeFeatures.map((key) => (
+                  <li key={key} className="flex items-start gap-3 leading-relaxed">
                     <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                    {item}
+                    {t(key)}
                   </li>
                 ))}
               </ul>
@@ -73,9 +68,7 @@ export default function PricingPlans() {
 
             <div>
               <h3 className="text-lg font-semibold">{t("plan.pro.title")}</h3>
-              <p className="text-sm opacity-90 mt-1">
-                {t("plan.pro.subtitle")}
-              </p>
+              <p className="text-sm opacity-90 mt-1">{t("plan.pro.subtitle")}</p>
 
               {/* Billing */}
               <div className="mt-6 flex flex-col sm:flex-row sm:items-end sm:gap-6">
@@ -91,10 +84,7 @@ export default function PricingPlans() {
                 </div>
 
                 <div className="mt-4 sm:mt-0 flex items-center gap-3 ml-auto">
-                  <div className="text-sm opacity-90">
-                    {t("plan.billing.monthly")}
-                  </div>
-
+                  <div className="text-sm opacity-90">{t("plan.billing.monthly")}</div>
                   <button
                     aria-pressed={isYearly}
                     onClick={() => setIsYearly((s) => !s)}
@@ -106,10 +96,7 @@ export default function PricingPlans() {
                       }`}
                     />
                   </button>
-
-                  <div className="text-sm opacity-90">
-                    {t("plan.billing.yearly")}
-                  </div>
+                  <div className="text-sm opacity-90">{t("plan.billing.yearly")}</div>
                 </div>
               </div>
 
@@ -121,13 +108,10 @@ export default function PricingPlans() {
 
               {/* Pro FEATURES */}
               <ul className="mt-6 space-y-4 text-sm opacity-95">
-                {proFeatures.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 leading-relaxed"
-                  >
+                {proFeatures.map((key) => (
+                  <li key={key} className="flex items-start gap-3 leading-relaxed">
                     <CheckCircle2 className="w-4 h-4 text-white" />
-                    {item}
+                    {t(key)}
                   </li>
                 ))}
               </ul>
