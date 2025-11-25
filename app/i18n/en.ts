@@ -123,12 +123,24 @@ const en = {
   },
 
   error: {
+    generic: "An unexpected error occurred.",
+
+    required_identifier: "Email or phone is required.",
+    invalid_identifier: "Enter a valid email or E.164 phone number.",
+
+    required_password: "Password is required.",
+    short_password: "Password must be at least 6 characters.",
+
+    required_fullname: "Full name is required.",
+    invalid_fullname: "Enter a valid full name.",
+
     sign_in: {
       email_number: "Email or phone is required.",
       password: {
         required: "Password is required.",
       },
     },
+
     sign_up: {
       email_number:
         "Enter a valid email or E.164 phone number (e.g. +123456789).",
@@ -140,6 +152,7 @@ const en = {
         default: "Enter your full name.",
       },
     },
+
     network: "Network error. Please try again.",
   },
 

@@ -46,25 +46,28 @@ export default function AuthForm() {
     };
 
     const id = identifier.trim();
-    if (!id) {
-      errs.identifier = t("error.sign_in.email_number");
-    } else if (!isEmail(id) && !isPhone(id)) {
-      errs.identifier = t("error.sign_in.email_number");
-    }
+    // Identifier
+if (!id) {
+  errs.identifier = t("error.sign_in.email_number");
+} else if (!isEmail(id) && !isPhone(id)) {
+  errs.identifier = t("error.sign_up.email_number");
+}
 
-    if (!password) {
-      errs.password = t("error.sign_up.full_name.required");
-    } else if (password.length < 6) {
-      errs.password = t("auth.error.short_password");
-    }
+// Password
+if (!password) {
+  errs.password = t("error.sign_in.password.required");
+} else if (password.length < 6) {
+  errs.password = t("error.sign_up.password.min_length");
+}
 
-    if (isSignUp) {
-      if (!fullName.trim()) {
-        errs.fullName = t("auth.error.required_fullname");
-      } else if (fullName.trim().length < 2) {
-        errs.fullName = t("auth.error.invalid_fullname");
-      }
-    }
+// Full Name (only for sign up)
+if (isSignUp) {
+  if (!fullName.trim()) {
+    errs.fullName = t("error.sign_up.full_name.required");
+  } else if (fullName.trim().length < 2) {
+    errs.fullName = t("error.sign_up.full_name.default");
+  }
+}
 
     setFieldErrors(errs);
     return !Object.values(errs).some(Boolean);
@@ -108,7 +111,7 @@ export default function AuthForm() {
       setPassword("");
     } catch (err) {
       console.error("Auth request error:", err);
-      setError(t("auth.error.network"));
+      setError(t("error.network"));
     } finally {
       setLoading(false);
     }
