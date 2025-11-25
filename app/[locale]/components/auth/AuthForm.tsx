@@ -53,7 +53,7 @@ export default function AuthForm() {
     }
 
     if (!password) {
-      errs.password = t("error.sign_up.email_number");
+      errs.password = t("error.sign_up.full_name.required");
     } else if (password.length < 6) {
       errs.password = t("auth.error.short_password");
     }
@@ -98,7 +98,7 @@ export default function AuthForm() {
         if (json?.fieldErrors) {
           setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
         }
-        setError(json?.error || t("auth.error.generic"));
+        setError(json?.error || t("error.sign_up.email_number"));
         setLoading(false);
         return;
       }
