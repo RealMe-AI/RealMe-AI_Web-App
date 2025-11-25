@@ -48,17 +48,10 @@ export default function AuthPage() {
         </div>
 
         <h2 className="text-2xl font-bold text-center text-slate-700 dark:text-white">
-          {(() => {
-            const raw = t("auth.page.hero_title"); // returns "Welcome to {appName}"
-            const [before, after] = raw.split("{appName}");
-            return (
-              <>
-                {before}
-                <span className="text-indigo-500">{appName}</span>
-                {after}
-              </>
-            );
-          })()}
+          {t("auth.page.hero_title").replace(
+            "{appName}",
+            `<span class="text-indigo-500">${appName}</span>`
+          )}
         </h2>
 
         {/* Auth Form */}
