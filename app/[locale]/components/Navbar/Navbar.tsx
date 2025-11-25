@@ -10,13 +10,8 @@ import Link from "next/link";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 import { useTranslations } from "next-intl";
 
-interface NavbarProps {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  active: string;
-}
 
-export default function Navbar({ isOpen, setIsOpen, active }: NavbarProps) {
+export default function Navbar({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
   const goToAuth = useNavigateToAuth();
   const t = useTranslations("navbar");

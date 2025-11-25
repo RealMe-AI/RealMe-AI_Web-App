@@ -8,12 +8,15 @@ import { useThemeStore } from "../../../zustand/useThemeStore";
 import { navItems } from "../../../data/desktopNavData";
 import { Active } from "../../../types/type";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
-import { useTranslate } from "../../../hooks/useTranslate";
+import { useTranslations } from "next-intl";
 
 export default function DesktopNav({ active }: Active) {
   const { theme, toggleTheme } = useThemeStore();
   const goToAuth = useNavigateToAuth();
-  const { t } = useTranslate();
+
+  // Separate namespaces
+  const tNav = useTranslations("navbar");
+  const tCTA = useTranslations("landing.cta");
 
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
@@ -27,7 +30,7 @@ export default function DesktopNav({ active }: Active) {
               : "text-slate-800 dark:text-gray-300 hover:text-indigo-400"
           }`}
         >
-          {t(item.key)}
+          {tNav(item.key)}
         </Link>
       ))}
 
@@ -39,7 +42,7 @@ export default function DesktopNav({ active }: Active) {
         transition={{ type: "spring", stiffness: 200, damping: 10 }}
         className="ml-4 bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
       >
-        {t("cta_primary")}
+        {tCTA("primary")}
       </motion.button>
 
       {/* Theme Toggle */}

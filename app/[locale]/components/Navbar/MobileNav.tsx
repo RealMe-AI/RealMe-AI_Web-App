@@ -55,16 +55,6 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                 </Link>
               ))}
 
-              {/* CTA Button */}
-              <motion.button
-                onClick={() => goToAuth()}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
-              >
-                {t("cta_primary")}
-              </motion.button>
             </div>
           </motion.nav>
         </>
