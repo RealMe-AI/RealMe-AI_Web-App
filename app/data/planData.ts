@@ -1,17 +1,17 @@
 // ------------------ FEATURES ARRAYS ------------------
 export const freeFeatures: string[] = [
-  "plan.free.features1",
-  "plan.free.features2",
-  "plan.free.features3",
-  "plan.free.features4",
-  "plan.free.features5",
+  "free.features1",
+  "free.features2",
+  "free.features3",
+  "free.features4",
+  "free.features5",
 ];
 
 export const proFeatures: string[] = [
-  "plan.pro.features1",
-  "plan.pro.features2",
-  "plan.pro.features3",
-  "plan.pro.features4",
-  "plan.pro.features5",
-  "plan.pro.features6",
+  "pro.features1",
+  "pro.features2",
+  "pro.features3",
+  "pro.features4",
+  "pro.features5",
+  "pro.features6",
 ];
