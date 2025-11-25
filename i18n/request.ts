@@ -18,7 +18,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   console.log("Loading messages for locale:", locale);
   // TypeScript now knows locale is a string
-  const messages = (await import(`../app/i18n/${locale}.ts`)).default;
+  const messages = (await import(`../app/i18n/${locale}`)).default;
   console.log("Messages loaded successfully");
 
   return {

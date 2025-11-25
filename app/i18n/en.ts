@@ -1,27 +1,30 @@
-//app/i18n/en.ts
+// app/i18n/en.ts
 
 const en = {
-  //navbar
-  "navbar.brand": "RealMe AI",
   navbar: {
+    brand: "RealMe AI",
     help: "Help & Support",
     about: "About RealMe AI",
   },
 
-  // Landing Page
-  "landing.hero.first": "Powered by GPT-5",
-  "landing.hero.title":
-    "Converse with AI That Understands Your Professional Needs",
-  "landing.hero.subtitle":
-    "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
-  cta_primary: "Experience RealMe AI",
-  cta_secondary: "View Pricing",
-  "landing.hero.offer1": "Real-time AI chat",
-  "landing.hero.offer2": "Personalized settings",
-  "landing.hero.offer3": "Voice input",
-  "landing.hero.badge1": "AI Model",
-  "landing.hero.badge2": "Languages",
   landing: {
+    hero: {
+      first: "Powered by GPT-5",
+      title: "Converse with AI That Understands Your Professional Needs",
+      subtitle:
+        "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
+      offer1: "Real-time AI chat",
+      offer2: "Personalized settings",
+      offer3: "Voice input",
+      badge1: "AI Model",
+      badge2: "Languages",
+    },
+
+    cta: {
+      primary: "Experience RealMe AI",
+      secondary: "View Pricing",
+    },
+
     features: {
       title: "Why Choose",
       subtitle:
@@ -53,180 +56,250 @@ const en = {
         },
       },
     },
+
+    get_started: {
+      title: "Get Started in 3 Simple Steps",
+      subtitle:
+        "Experience professional AI conversations in minutes no technical setup required.",
+      step1: {
+        title: "Create Your Account",
+        desc: "Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
+      },
+      step2: {
+        title: "Customize Your Preferences",
+        desc: "Choose your language, AI tone, and interface theme. Enable voice features for hands-free conversations.",
+      },
+      step3: {
+        title: "Start Conversing",
+        desc: "Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
+      },
+      cta: "Get Started Now",
+      image: {
+        title: "Start chatting in",
+        desc: "Seconds",
+      },
+    },
+
+    footer: {
+      rights: "© {year} RealMe AI. All rights reserved.",
+      contact: "Contact Us",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+    },
   },
 
-  "landing.get_started.title": "Get Started in 3 Simple Steps",
-  "landing.get_started.subtitle":
-    "Experience professional AI conversations in minutes no technical setup required.",
-  "landing.get_started.step1.title": "Create Your Account",
-  "landing.get_started.step1.desc":
-    " Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
-  "landing.get_started.step2.title": "Customize Your Preferences",
-  "landing.get_started.step2.desc":
-    " Choose your language, AI tone, and interface theme. Enable voice features for hands-free conversations.",
-  "landing.get_started.step3.title": "Start Conversing",
-  "landing.get_started.step3.desc":
-    " Ask questions, get insights, and evolve professionally with AI that learns your communication style.",
-  "landing.get_started.cta": "Get Started Now",
-  "landing.get_started.image.title": "Start chatting in",
-  "landing.get_started.image.desc": "Seconds",
-  "landing.footer.rights": "© {year} RealMe AI. All rights reserved.",
-  "landing.footer.contact": "Contact Us",
-  "landing.footer.privacy": "Privacy Policy",
-  "landing.footer.terms": "Terms of Service",
-
-  // Authentication Pages
-  "auth.page.hero_title": "Welcome to {appName}",
-  "auth.page.back_button": "Back",
-
-  // Placeholders
-  "auth.login.email_placeholder": "Email address or phone number...",
-  "auth.login.password_placeholder": "Password...",
-  "auth.login.full_name_placeholder": "Full name...",
-
-  // Buttons
-  "auth.button.sign_in": "Sign In",
-  "auth.button.create_account": "Create Account",
-  "auth.button.continue_email": "Continue with Email",
-  "auth.button.creating": "Creating…",
-  "auth.button.signing_in": "Signing in…",
-  "auth.button.success": "Success",
-
-  // Toggle Text
-  "auth.toggle.no_account": "Don't have an account?",
-  "auth.toggle.already_have_account": "Already have an account?",
-  "auth.toggle.sign_in": "Sign In",
-  "auth.toggle.sign_up": "Sign Up",
-
-  // Password toggle
-  "auth.toggle.show_password": "Show password",
-  "auth.toggle.hide_password": "Hide password",
-
-  // Divider
-  "auth.divider.or": "OR",
-
-  // Identifier hint
-  "auth.identifier.email": "email",
-  "auth.identifier.phone": "phone",
-
-  // Error messages
-  "error.sign_in.email_number": "Email or phone is required.",
-  "error.sign_up.email_number":
-    "Enter a valid email or E.164 phone number (e.g. +123456789).",
-  "error.sign_in.password.required": "Password is required.",
-  "error.sign_up.password.min_length":
-    "Password must be at least 6 characters.",
-  "error.sign_up.full_name.required": "Full name is required for sign up.",
-  "error.sign_up.full_name": "Enter your full name.",
-  "auth.authentication_failed": "Authentication failed.",
-  "error.network": "Network error. Please try again.",
-
-  // Dashboard / Sidebar
-  "dashboard.sidebar.chat_button": " New Chat",
-  "dashboard.search.chats_placeholder": "Search chats...",
-  "dashboard.sidebar.footer_full": "All Rights Reserved",
-  "dashboard.no_chat": "No chats yet start one!",
-  "dashboard.search.no_results": 'No chat found with the title "{searchTerm}"',
-  "dashboard.sidebar.upgrade": "Upgrade",
-  "dashboard.sidebar.logout": "Log out",
-  "dashboard.RealMe is thinking": "RealMe is thinking...",
-  "fileupload.upload_title": "Upload a file",
-  "fileupload.button_label": "Upload",
-  "fileupload.limit_reached": "Upgrade to Pro",
-  "chat.send_button": "Send",
-  "dashboard.voice_input.start_recording": "Start recording",
-  "dashboard.record_voice.in_process": "Recording…",
-  "dashboard.voice.button.start": "Start",
-  "dashboard.voice.button.stop": "Stop",
-  "dashboard.transcribing": "Transcribing…",
-
-  //account info modal
-  "account_info.title": "View Account Info",
-  "account_info.loading": "Loading account info...",
-  "account_info.signed_in_with": "Signed in with",
-  "account_info.plan": "Plan",
-  "account_info.full_name": "Full Name",
-  "account_info.email": "Email",
-  "account_info.account_type": "Account Type",
-  "account_info.date_joined": "Date Joined",
-  "account_info.last_login": "Last Login",
-  "account_info.manage_subscription": "Manage Subscription",
-
-  // Settings Panel
-  "settings.title": "Settings",
-  "settings.account.label": "Account Settings",
-  "settings.account.sync": "Edit Profile",
-  "settings.preferences.label": "Preferences",
-  "settings.theme.label": "Theme Mode",
-  "settings.theme.Light": "Light",
-  "settings.theme.Dark": "Dark",
-  "settings.theme.System": "System",
-  "settings.language.label": "Language",
-  "settings.language.english": "English",
-  "settings.language.hausa": "Hausa",
-  "settings.language.igbo": "Igbo",
-  "settings.language.yoruba": "Yoruba",
-  "settings.notifications.label": "Email Notifications",
-  "settings.support.label": "Support & Help",
-  "settings.support.contact": "Contact Support",
-  "settings.support.faq": "FAQs / Help Center",
-  "settings.danger_zone.label": "Danger Zone",
-  "settings.delete_account": "Delete Account",
-
-  // Modals
-  "modal.edit_profile.title": "Edit Profile",
-  "modal.edit_profile.name_placeholder": "Enter full name",
-  "modal_edit_profile.error_empty_name": "Full name cannot be empty",
-  "modal_edit.no_data.success": "Failed to update profile",
-  "modal.edit_profile.save_button": "Save",
-  "modal.saving": "Saving...",
-
-  //Avatar cropper
-  "modal.avatar_cropper.save_button": "Save",
-  "modal.uploading": "Uploading…",
-  "modal.avatar_upload_failed": "Failed to upload Image.",
-  "account_info.avatar_alt": "Image",
-
-  Plans: {
-    // Free
-    "plan.free.title": "Free Plan",
-    "plan.free.subtitle": "Perfect for getting started",
-    "plan.free.price": "month",
-    "plan.free.features1": "10 prompts per day",
-    "plan.free.features2": "GPT-5 access",
-    "plan.free.features3": "Voice input",
-    "plan.free.features4": "4 language support",
-    "plan.free.features5": "Chat history",
-    "plan.free.cta": "Get Started Free",
-
-    // Pro
-    "plan.pro.title": "RealMe AI Pro",
-    "plan.pro.subtitle": "For professionals who need more",
-    "plan.pro.price_monthly": "month",
-    "plan.pro.price_yearly": "year",
-    "plan.pro.features1": "Unlimited prompts per day",
-    "plan.pro.features2": "Advanced voice features",
-    "plan.pro.features3": "Faster GPT-5 Turbo responses",
-    "plan.pro.features4": "Custom themes",
-    "plan.pro.features5": "Priority support",
-    "plan.pro.features6": "Export conversations",
-    "plan.pro.cta": "Upgrade to Pro",
-
-    "plan.pro.most_popular": "MOST POPULAR",
-    "plan.pro.yearly_discount": "Save 25% when you pay yearly",
-    "plan.billing.monthly": "Monthly",
-    "plan.billing.yearly": "Yearly",
-
-    // Footer
-    "plan.pricing_footer.billing_note":
-      "All plans include secure authentication, persistent chat history, and multilingual support.",
+  auth: {
+    page: {
+      hero_title: "Welcome to {appName}",
+      back_button: "Back",
+    },
+    login: {
+      email_placeholder: "Email address or phone number...",
+      password_placeholder: "Password...",
+      full_name_placeholder: "Full name...",
+    },
+    button: {
+      sign_in: "Sign In",
+      create_account: "Create Account",
+      continue_email: "Continue with Email",
+      creating: "Creating…",
+      signing_in: "Signing in…",
+      success: "Success",
+    },
+    toggle: {
+      no_account: "Don't have an account?",
+      already_have_account: "Already have an account?",
+      sign_in: "Sign In",
+      sign_up: "Sign Up",
+      show_password: "Show password",
+      hide_password: "Hide password",
+    },
+    divider: {
+      or: "OR",
+    },
+    identifier: {
+      email: "email",
+      phone: "phone",
+    },
   },
-  // AI Integration
-  "ai.response.placeholder": "AI response will appear here",
-  "ai.response.error": "Failed to get AI response",
-  "ai.response.loading": "AI is thinking...",
-  "ai.prompt.placeholder": "Type your message here...",
-  "ai.prompt.send_button": "Send",
+
+  error: {
+    sign_in: {
+      email_number: "Email or phone is required.",
+      password: {
+        required: "Password is required.",
+      },
+    },
+    sign_up: {
+      email_number:
+        "Enter a valid email or E.164 phone number (e.g. +123456789).",
+      password: {
+        min_length: "Password must be at least 6 characters.",
+      },
+      full_name: {
+        required: "Full name is required for sign up.",
+        default: "Enter your full name.",
+      },
+    },
+    network: "Network error. Please try again.",
+  },
+
+  dashboard: {
+    sidebar: {
+      chat_button: "New Chat",
+      footer_full: "All Rights Reserved",
+      upgrade: "Upgrade",
+      logout: "Log out",
+    },
+    search: {
+      chats_placeholder: "Search chats...",
+      no_results: 'No chat found with the title "{searchTerm}"',
+    },
+    no_chat: "No chats yet start one!",
+    thinking: "RealMe is thinking...",
+    voice_input: {
+      start_recording: "Start recording",
+    },
+    record_voice: {
+      in_process: "Recording…",
+    },
+    voice: {
+      button: {
+        start: "Start",
+        stop: "Stop",
+      },
+    },
+    transcribing: "Transcribing…",
+  },
+
+  fileupload: {
+    upload_title: "Upload a file",
+    button_label: "Upload",
+    limit_reached: "Upgrade to Pro",
+  },
+
+  chat: {
+    send_button: "Send",
+  },
+
+  account_info: {
+    title: "View Account Info",
+    loading: "Loading account info...",
+    signed_in_with: "Signed in with",
+    plan: "Plan",
+    full_name: "Full Name",
+    email: "Email",
+    account_type: "Account Type",
+    date_joined: "Date Joined",
+    last_login: "Last Login",
+    manage_subscription: "Manage Subscription",
+    avatar_alt: "Image",
+  },
+
+  settings: {
+    title: "Settings",
+    account: {
+      label: "Account Settings",
+      sync: "Edit Profile",
+    },
+    preferences: {
+      label: "Preferences",
+    },
+    theme: {
+      label: "Theme Mode",
+      Light: "Light",
+      Dark: "Dark",
+      System: "System",
+    },
+    language: {
+      label: "Language",
+      english: "English",
+      hausa: "Hausa",
+      igbo: "Igbo",
+      yoruba: "Yoruba",
+    },
+    notifications: {
+      label: "Email Notifications",
+    },
+    support: {
+      label: "Support & Help",
+      contact: "Contact Support",
+      faq: "FAQs / Help Center",
+    },
+    danger_zone: {
+      label: "Danger Zone",
+    },
+    delete_account: "Delete Account",
+  },
+
+  modal: {
+    edit_profile: {
+      title: "Edit Profile",
+      name_placeholder: "Enter full name",
+      error_empty_name: "Full name cannot be empty",
+      save_button: "Save",
+    },
+    edit: {
+      no_data: {
+        success: "Failed to update profile",
+      },
+    },
+    saving: "Saving...",
+    avatar_cropper: {
+      save_button: "Save",
+    },
+    uploading: "Uploading…",
+    avatar_upload_failed: "Failed to upload Image.",
+  },
+
+  plans: {
+    free: {
+      title: "Free Plan",
+      subtitle: "Perfect for getting started",
+      price: "month",
+      features1: "10 prompts per day",
+      features2: "GPT-5 access",
+      features3: "Voice input",
+      features4: "4 language support",
+      features5: "Chat history",
+      cta: "Get Started Free",
+    },
+    pro: {
+      title: "RealMe AI Pro",
+      subtitle: "For professionals who need more",
+      price_monthly: "month",
+      price_yearly: "year",
+      features1: "Unlimited prompts per day",
+      features2: "Advanced voice features",
+      features3: "Faster GPT-5 Turbo responses",
+      features4: "Custom themes",
+      features5: "Priority support",
+      features6: "Export conversations",
+      cta: "Upgrade to Pro",
+      most_popular: "MOST POPULAR",
+      yearly_discount: "Save 25% when you pay yearly",
+    },
+    billing: {
+      monthly: "Monthly",
+      yearly: "Yearly",
+    },
+    pricing_footer: {
+      billing_note:
+        "All plans include secure authentication, persistent chat history, and multilingual support.",
+    },
+  },
+
+  ai: {
+    response: {
+      placeholder: "AI response will appear here",
+      error: "Failed to get AI response",
+      loading: "AI is thinking...",
+    },
+    prompt: {
+      placeholder: "Type your message here...",
+      send_button: "Send",
+    },
+  },
 };
 
 export type Messages = typeof en;
