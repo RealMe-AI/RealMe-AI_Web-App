@@ -81,7 +81,7 @@ const en = {
     },
 
     footer: {
-      rights: "© {year} RealMe AI. All rights reserved.",
+      rights: "All rights reserved",
       contact: "Contact Us",
       privacy: "Privacy Policy",
       terms: "Terms of Service",

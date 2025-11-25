@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="border-t border-slate-800 text-slate-500 text-sm py-6">
         <div className="max-w-7xl mx-auto px-6 flex justify-between">
           <div>
-            © {new Date().getFullYear()} RealMe AI. {t("rights")}. @OwenVisuels
+            © {new Date().getFullYear()} RealMe AI. {t("rights")}. 
           </div>
 
           <div className="flex gap-4">
