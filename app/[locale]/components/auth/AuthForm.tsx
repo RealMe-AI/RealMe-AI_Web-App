@@ -142,7 +142,7 @@ export default function AuthForm() {
             <input
               type="text"
               inputMode="text"
-              placeholder={t("login.placeholder_identifier")}
+              placeholder={t("auth.login.email_placeholder")}
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               autoComplete="off"
@@ -173,7 +173,7 @@ export default function AuthForm() {
             <Lock className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
             <input
               type={showPassword ? "text" : "password"}
-              placeholder={t("login.placeholder_password")}
+              placeholder={t("auth.login.password_placeholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete={isSignUp ? "new-password" : "current-password"}
