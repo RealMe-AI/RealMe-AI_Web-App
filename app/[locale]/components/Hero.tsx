@@ -1,15 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import { CheckCircle2, Languages, Brain } from "lucide-react";
-import { offers } from "../../data/heroData";
-
 import Image from "next/image";
 import CTAButtons from "./CTAButtons";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export default function Hero() {
-  const t = useTranslations();
+  const t = useTranslations("landing.hero");
 
   return (
     <section className="relative overflow-hidden pt-10 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
@@ -38,26 +36,26 @@ export default function Hero() {
           {/* Badge */}
           <div className="flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-4">
             <Brain className="w-5 h-5" />
-            <span>{t("landing.hero.first")}</span>
+            <span>{t("first")}</span>
           </div>
 
           {/* Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-600 dark:text-white/80 leading-tight">
-            {t("landing.hero.title")}
+            {t("title")}
           </h1>
 
           {/* Subtitle */}
           <p className="sm:text-xl text-lg text-slate-600 dark:text-slate-300 max-w-xl">
-            {t("landing.hero.subtitle")}
+            {t("subtitle")}
           </p>
 
           <div className="mt-8">
             <CTAButtons />
           </div>
 
-          {/* Feature list (offers array uses translated values) */}
+          {/* Feature list */}
           <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start text-sm text-slate-700 dark:text-slate-400">
-            {offers.map((key) => (
+            {["offer1", "offer2", "offer3"].map((key) => (
               <div
                 key={key}
                 className="flex items-center gap-2 justify-center"
@@ -87,7 +85,7 @@ export default function Hero() {
             />
           </div>
 
-          {/* “Languages” badge */}
+          {/* "Languages" badge */}
           <motion.div
             whileHover={{ scale: 1.08, y: -4 }}
             transition={{ type: "spring", stiffness: 250 }}
@@ -96,18 +94,17 @@ export default function Hero() {
             <div className="flex items-center gap-3 bg-white/90 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-xl shadow-lg border border-indigo-100 dark:border-indigo-900/30">
               <Languages className="w-6 h-6 text-indigo-600" />
               <div className="flex flex-col leading-tight">
-                {/* Number stays as plaintext */}
                 <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                   4
                 </span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {t("landing.hero.badge2")}
+                  {t("badge2")}
                 </span>
               </div>
             </div>
           </motion.div>
 
-          {/* “GPT-5 AI Model” badge */}
+          {/* "GPT-5 AI Model" badge */}
           <motion.div
             whileHover={{ scale: 1.08, y: -4 }}
             transition={{ type: "spring", stiffness: 250 }}
@@ -120,7 +117,7 @@ export default function Hero() {
                   GPT-5
                 </span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {t("landing.hero.badge1")}
+                  {t("badge1")}
                 </span>
               </div>
             </div>
