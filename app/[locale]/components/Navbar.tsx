@@ -63,7 +63,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
               >
-                {t("cta_primary")}
+                {t("landing.cta.primary")}
               </motion.button>
             </div>
           </motion.nav>
