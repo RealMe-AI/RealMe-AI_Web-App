@@ -10,24 +10,25 @@ import Link from "next/link";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 import { useTranslations } from "next-intl";
 
-
 export default function Navbar({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
   const goToAuth = useNavigateToAuth();
   const t = useTranslations("navbar");
+  const tCTA = useTranslations("landing.cta");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <motion.a
-          href="/"
-          className="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          RealMe AI
-        </motion.a>
+        <Link href="/" legacyBehavior>
+          <motion.a
+            className="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            RealMe AI
+          </motion.a>
+        </Link>
 
         {/* Desktop Navigation */}
         <DesktopNav active={active} />
@@ -95,7 +96,7 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
                   transition={{ type: "spring", stiffness: 200, damping: 10 }}
                   className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
                 >
-                  {t("landing.cta.primary")}
+                  {tCTA("primary")}
                 </motion.button>
               </div>
             </motion.nav>
