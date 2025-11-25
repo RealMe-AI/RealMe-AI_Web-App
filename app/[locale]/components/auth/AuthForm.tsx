@@ -47,13 +47,13 @@ export default function AuthForm() {
 
     const id = identifier.trim();
     if (!id) {
-      errs.identifier = t("auth.error.required_identifier");
+      errs.identifier = t("error.sign_in.email_number");
     } else if (!isEmail(id) && !isPhone(id)) {
-      errs.identifier = t("auth.error.invalid_identifier");
+      errs.identifier = t("error.sign_in.email_number");
     }
 
     if (!password) {
-      errs.password = t("auth.error.required_password");
+      errs.password = t("error.sign_up.email_number");
     } else if (password.length < 6) {
       errs.password = t("auth.error.short_password");
     }
@@ -208,7 +208,7 @@ export default function AuthForm() {
               <User className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder={t("auth.placeholder.fullname")}
+                placeholder={t("auth.login.full_name_placeholder")}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 autoComplete="name"
