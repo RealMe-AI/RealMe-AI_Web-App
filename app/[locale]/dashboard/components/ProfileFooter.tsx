@@ -33,7 +33,7 @@ export default function ProfileFooter() {
       >
         <Image
           src="/avatar.png"
-          alt={t("profile.avatar_alt")}
+          alt={t("account_info.avatar_alt")}
           width={50}
           height={50}
           className="w-10 h-10 rounded-full border border-white/20"
