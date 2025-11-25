@@ -4,15 +4,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useBackdrop } from "../../../hooks/useBackdrop";
 import { navItems } from "../../../data/mobilNavData";
 import { Props } from "../../../types/type";
-
 import Link from "next/link";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
-import  {useTranslations}  from "next-intl"
+import { useTranslations } from "next-intl";
 
 export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
   const goToAuth = useNavigateToAuth();
-  const t  = useTranslations("navbar");
+
+  // Separate namespaces
+  const tNav = useTranslations("navbar");
+  const tCTA = useTranslations("landing.cta");
 
   return (
     <AnimatePresence>
@@ -30,7 +32,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
             aria-hidden="true"
           />
 
-          {/* Dropdown */}
+          {/* Mobile Dropdown */}
           <motion.nav
             key="mobile-menu"
             initial={{ y: -20, opacity: 0 }}
@@ -40,6 +42,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
             className="absolute top-20 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-t border-gray-200 dark:border-slate-700 z-50 md:hidden"
           >
             <div className="px-6 py-4 flex flex-col space-y-4">
+              {/* Navigation Links */}
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -51,7 +54,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  {t(item.key)}
+                  {tNav(item.key)}
                 </Link>
               ))}
 
@@ -63,7 +66,7 @@ export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
               >
-                {t("landing.cta.primary")}
+                {tCTA("primary")}
               </motion.button>
             </div>
           </motion.nav>
