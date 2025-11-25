@@ -1,77 +1,52 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useBackdrop } from "../../../hooks/useBackdrop";
-import { navItems } from "../../../data/mobilNavData";
-import { Props } from "../../../types/type";
-import Link from "next/link";
-import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
+import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import DesktopNav from "./DesktopNav";
+import MobileNav from "./MobileNav";
 import { useTranslations } from "next-intl";
 
-export default function MobileNav({ isOpen, setIsOpen, active }: Props) {
-  useBackdrop(isOpen);
-  const goToAuth = useNavigateToAuth();
+interface NavbarProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  active: string;
+}
 
-  // Separate namespaces
-  const tNav = useTranslations("navbar");
-  const tCTA = useTranslations("landing.cta");
+export default function Navbar({ isOpen, setIsOpen, active }: NavbarProps) {
+  const t = useTranslations("navbar");
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            key="backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/70 backdrop-blur-md z-40"
-            onClick={() => setIsOpen(false)}
-            aria-hidden="true"
-          />
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <motion.a
+          href="/"
+          className="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          {t("brand")}
+        </motion.a>
 
-          {/* Mobile Dropdown */}
-          <motion.nav
-            key="mobile-menu"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="absolute top-20 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-t border-gray-200 dark:border-slate-700 z-50 md:hidden"
-          >
-            <div className="px-6 py-4 flex flex-col space-y-4">
-              {/* Navigation Links */}
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`font-semibold ${
-                    active === item.href
-                      ? "text-indigo-500"
-                      : "text-slate-800 dark:text-gray-300 hover:text-indigo-400"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {tNav(item.key)}
-                </Link>
-              ))}
+        {/* Desktop Navigation */}
+        <DesktopNav active={active} />
 
-              {/* CTA Button */}
-              <motion.button
-                onClick={() => goToAuth()}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
-              >
-                {tCTA("primary")}
-              </motion.button>
-            </div>
-          </motion.nav>
-        </>
-      )}
-    </AnimatePresence>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+          aria-label="Toggle menu"
+        >
+          {isOpen ? (
+            <X className="w-6 h-6 text-slate-800 dark:text-gray-200" />
+          ) : (
+            <Menu className="w-6 h-6 text-slate-800 dark:text-gray-200" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Navigation */}
+      <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} active={active} />
+    </header>
   );
 }
