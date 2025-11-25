@@ -8,7 +8,6 @@ import Link from "next/link";
 
 export default function AuthPage() {
   const { t } = useTranslate();
-  const appName = "";
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-indigo-200 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
