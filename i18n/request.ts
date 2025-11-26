@@ -2,27 +2,40 @@
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  // This typically corresponds to the `[locale]` segment
-  let locale = await requestLocale;
+type SupportedLocale = typeof routing.locales[number];
 
-  console.log("=== i18n/request.ts getRequestConfig ===");
-  console.log("Received locale:", locale);
-  console.log("Valid locales:", routing.locales);
+export default getRequestConfig(
+  async ({
+    requestLocale,
+  }: {
+    requestLocale: Promise<string | undefined>;
+  }) => {
+    let locale = await requestLocale;
 
-  // Ensure that a valid locale is used
-  if (!locale || !routing.locales.includes(locale as any)) {
-    console.log("LOCALE NOT VALID - using default");
-    locale = routing.defaultLocale;
+    console.log("=== i18n/request.ts getRequestConfig ===");
+    console.log("Received locale:", locale);
+    console.log("Valid locales:", routing.locales);
+
+    // Validate locale strictly
+    if (!locale || !routing.locales.includes(locale as SupportedLocale)) {
+      console.log("LOCALE NOT VALID - using default");
+      locale = routing.defaultLocale;
+    }
+
+    const finalLocale = locale as SupportedLocale;
+
+    console.log("Loading messages for locale:", finalLocale);
+
+    // Dynamic import with full typing
+    const messages: Record<string, unknown> = (
+      await import(`../i18n/${finalLocale}.ts`)
+    ).default;
+
+    console.log("Messages loaded successfully");
+
+    return {
+      locale: finalLocale,
+      messages,
+    };
   }
-
-  console.log("Loading messages for locale:", locale);
-  // TypeScript now knows locale is a string
-  const messages = (await import(`../app/i18n/${locale}`)).default;
-  console.log("Messages loaded successfully");
-
-  return {
-    locale,
-    messages,
-  };
-});
+);
