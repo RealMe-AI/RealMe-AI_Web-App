@@ -105,7 +105,7 @@ export default function Sidebar({
         </button>
 
         <Image
-          src="/logo.png"
+          src="/"
           alt="RealMe AI"
           width={20}
           height={20}

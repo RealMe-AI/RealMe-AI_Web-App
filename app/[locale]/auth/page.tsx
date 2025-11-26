@@ -38,7 +38,7 @@ export default function AuthPage() {
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <Image
-            src="/logo.png"
+            src="/"
             alt="RealMe AI logo"
             width={64}
             height={64}
