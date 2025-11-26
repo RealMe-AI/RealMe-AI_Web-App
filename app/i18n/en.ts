@@ -167,6 +167,7 @@ const en = {
       chats_placeholder: "Search chats...",
       no_results: 'No chat found with the title "{searchTerm}"',
     },
+    
     no_chat: "No chats yet start one!",
     thinking: "RealMe is thinking...",
     voice_input: {
@@ -181,6 +182,8 @@ const en = {
         stop: "Stop",
       },
     },
+    new_conversation_title: "Chat {chatNumber}",
+    new_conversation_started: "New conversation started...",
     transcribing: "Transcribing…",
   },
 
