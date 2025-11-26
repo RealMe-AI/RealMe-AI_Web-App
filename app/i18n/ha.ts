@@ -1,156 +1,318 @@
+// app/i18n/ha.ts
+
 const ha = {
-  // Landing Page
-  "landing.hero.first": "",
-  "landing.hero.title": "",
-  "landing.hero.subtitle": "",
-  "landing.hero.cta": "",
-  "landing.hero.cta_secondary": "",
-  "landing.hero.offer1": "",
-  "landing.hero.offer2": "",
-  "landing.hero.offer3": "",
-  "landing.hero.badge1": "",
-  "landing.hero.badge2": "",
-  "landing.features.title": "",
-  "landing.features.subtitle": "",
-  "landing.features.item1.title": "",
-  "landing.features.item1.subtitle": "",
-  "landing.features.item2.title": "",
-  "landing.features.item2.subtitle": "",
-  "landing.features.item3.title": "",
-  "landing.features.item3.subtitle": "",
-  "landing.features.item4.title": "",
-  "landing.features.item4.subtitle": "",
-  "landing.features.item5.title": "",
-  "landing.features.item5.subtitle": "",
-  "landing.features.item6.title": "",
-  "landing.features.item6.subtitle": "",
-  "landing.get_started.title": "",
-  "landing.get_started.subtitle": "",
-  "landing.get_started.step1.title": "",
-  "landing.get_started.step1.desc": "",
-  "landing.get_started.step2.title": "",
-  "landing.get_started.step2.desc": "",
-  "landing.get_started.step3.title": "",
-  "landing.get_started.step3.desc": "",
-  "landing.get_started.cta": "",
-  "landing.get_started.image.title": "",
-  "landing.get_started.image.desc": "",
-  "landing.footer.rights": "",
-  "landing.footer.contact": "",
-  "landing.footer.privacy": "",
-  "landing.footer.terms": " ",
+  navbar: {
+    help: "Taimako & Tallafi",
+    about: "Game da RealMe AI",
+  },
 
-  // Authentication Pages
-  "auth.login.title": "",
-  "auth.login.email_placeholder": "",
-  "auth.login.password_placeholder": "",
-  "auth.login.submit_button": "",
-  "auth.login.no_account": "",
-  "auth.login.sign_in": "",
-  "auth.login.sign_up": "",
-  "auth.login.full_name": "",
-  "auth.sign_up.submit_button": "",
-  "auth.OR": "",
-  "auth.sign_up.continue_with_google": "",
-  "auth.register.submit_button": "",
-  "auth.register.sign_in": " ",
-  "auth.sign_up.already_have_account": " ",
-  "error.sign_in.email_number": " ",
-  "error.sign_up.email_number": " ",
-  "error.sign_in.password.required": "",
-  "error.sign_up.password.min_length": "",
-  "error.sign_up.full_name.required": "",
-  "error.sign_up.full_name": "",
-  "auth.Authentication_failed": "",
+  landing: {
+    hero: {
+      first: "Ɗauke da GPT-5",
+      title: "Yi magana da AI da ke fahimtar bukatunku na sana’a",
+      subtitle:
+        "Samu amsoshi cikin sauri da basira tare da goyon bayan harsuna da dama. RealMe AI na dacewa da salon sadarwarka don tattaunawa ta ƙwararru a Turanci, Hausa, Igbo, da Yarbanci.",
+      offer1: "Tattaunawa kai-tsaye da AI",
+      offer2: "Saituna na musamman",
+      offer3: "Shigar da murya",
+      badge1: "Samfurin AI",
+      badge2: "Harsuna",
+    },
 
-  // Dashboard / Sidebar
-  "dashboard.sidebar.chat_button": " ",
-  "dashboard.search.chats_placeholder": "",
-  "dashboard.sidebar.footer": "",
-  "dashboard.no_chat": "",
-  "dashboard.sidebar.upgrade": "",
-  "dashboard.sidebar.logout": "",
-  "dashboard.RealMe is thinking": "",
-  "dashboard.voice_input.start_recording": "",
-  "dashboard.record_voice.in_process": "",
-  "dashboard.voice.button.start": "",
-  "dashboard.voice.button.stop": "",
-  "dashboard.transcribing": "",
+    cta: {
+      primary: "Gwada RealMe AI",
+      secondary: "Duba Farashi",
+    },
 
-  //account info modal
-  "account_info.title": " ",
-  "account_info.loading": "",
-  "account_info.signed_in_with": " ",
-  "account_info.plan": "",
-  "account_info.full_name": " ",
-  "account_info.email": "",
-  "account_info.account_type": "",
-  "account_info.date_joined": "",
-  "account_info.last_login": "",
-  "account_info.manage_subscription": "",
+    features: {
+      title: "Dalilin Zaɓe",
+      subtitle:
+        "Gajiya da tattaunawar AI mai matuƙar ƙwarewa da fasaloli da aka tsara don haɓaka inganci",
+      items: {
+        intelligence: {
+          title: "Basirar GPT-5",
+          desc: "Ɗauke da sabon samfurin GPT-5 na OpenAI don madaidaicin amsawa, fahimtar mahallin magana, da martanin ƙwararru.",
+        },
+        languages: {
+          title: "Tallafin Harsuna da Dama",
+          desc: "Yi magana cikin sauƙi a Turanci, Hausa, Igbo, da Yarbanci tare da martani masu dacewa da al’ada.",
+        },
+        voice: {
+          title: "Mu'amala da Murya",
+          desc: "Yi magana cikin yanayi na halitta da shigar da murya kuma saurari amsar AI ta fasahar karanta rubutu zuwa murya.",
+        },
+        history: {
+          title: "Tarihin Tattaunawa Mai Dorewa",
+          desc: "Duba cikakken tarihin tattaunawarka a kowane lokaci, ko ina. Kada ka sake rasa muhimman bayanai.",
+        },
+        privacy: {
+          title: "Tsaro & Sirri",
+          desc: "Tsaron matakin kamfani tare da tattaunawa ɗauke da ɓoye-ɓoye. Bayananka na nan lafiya kuma a sirrance.",
+        },
+        customization: {
+          title: "Kwarewar da Za ka Iya Daidaitawa",
+          desc: "Daidaici sautun AI, jigo, zabin harsuna, da tsarin fuska don dacewa da salon aikinka.",
+        },
+      },
+    },
 
-  // Settings Panel
-  "settings.title": "",
-  "settings.account.label": "",
-  "settings.account.sync": " ",
-  "settings.preferences.label": "",
-  "settings.theme.label": "",
-  "settings.theme.Light": "",
-  "settings.theme.Dark": "",
-  "settings.theme.System": "",
-  "settings.language.label": "",
-  "settings.language.english": "",
-  "settings.language.hausa": "",
-  "settings.language.igbo": "",
-  "settings.language.yoruba": "",
-  "settings.notifications.label": "",
-  "settings.support.label": "  ",
-  "settings.support.contact": "",
-  "settings.support.faq": "",
-  "settings.danger_zone.label": " ",
-  "settings.delete_account": " ",
+    get_started: {
+      title: "Fara Amfani a Matakai 3 Masu Sauƙi",
+      subtitle:
+        "Kware tattaunawar AI ta ƙwararru cikin mintuna ba tare da kowace matsalar saitawa ba.",
+      step1: {
+        title: "Ƙirƙiri Asusunka",
+        desc: "Yi rajista da imel, lamba, ko asusun Google. Yana ɗaukar ƙasa da dakika 30 ba tare da katin bashi ba.",
+      },
+      step2: {
+        title: "Daidaici Zaɓinka",
+        desc: "Zaɓi harshenka, sautin AI, da jigogin fuska. Kunna fasalolin murya don tattaunawa ba tare da amfani da hannu ba.",
+      },
+      step3: {
+        title: "Fara Tattaunawa",
+        desc: "Yi tambaya, samo bayanai, kuma inganta sana’arka tare da AI da ke koyon salon sadarwarka.",
+      },
+      cta: "Fara Yanzu",
+      image: {
+        title: "Fara tattaunawa cikin",
+        desc: "Dakikoki",
+      },
+    },
 
-  // Modals
-  "modal.edit_profile.title": " ",
-  "modal.edit_profile.name_placeholder": " ",
-  "modal_edit_profile.error_empty_name": "  ",
-  "modal_edit.no_data.success": " ",
-  "modal.edit_profile.save_button": "",
-  "modal.saving": "",
+    footer: {
+      rights: "Duk haƙƙoƙi na ajiye",
+      contact: "Tuntube Mu",
+      privacy: "Manufar Sirri",
+      terms: "Ka’idojin Amfani",
+    },
+  },
 
-  // Free Plan
-  "plan.free.title": " ",
-  "plan.free.subtitle": " ",
-  "plan.free.price": "",
-  "plan.free.features1": " ",
-  "plan.free.features2": "",
-  "plan.free.features3": "",
-  "plan.free.features4": "",
-  "plan.free.features5": "",
-  "plan.free.cta": "",
+  auth: {
+    page: {
+      hero_title: "Barka da zuwa",
+      back_button: "Komawa",
+    },
+    login: {
+      email_placeholder: "Adireshin imel ko lambar waya...",
+      password_placeholder: "Kalmar sirri...",
+      full_name_placeholder: "Cikakken suna...",
+    },
+    button: {
+      sign_in: "Shiga",
+      create_account: "Ƙirƙiri Asusu",
+      continue_email: "Ci gaba da Imel",
+      creating: "Ana ƙirƙira…",
+      signing_in: "Ana shiga…",
+      success: "Nasara",
+    },
+    toggle: {
+      no_account: "Ba ka da asusu?",
+      already_have_account: "Kana da asusu?",
+      sign_in: "Shiga",
+      sign_up: "Yi Rajista",
+      show_password: "Nuna kalmar sirri",
+      hide_password: "Boye kalmar sirri",
+    },
+    divider: {
+      or: "KO",
+    },
+    identifier: {
+      email: "imel",
+      phone: "waya",
+    },
+  },
 
-  // Pro Plan
-  "plan.pro.title": " ",
-  "plan.pro.subtitle": " ",
-  "plan.pro.price_monthly": "",
-  "plan.pro.price_yearly": "",
-  "plan.pro.features1": " ",
-  "plan.pro.features2": " ",
-  "plan.pro.features3": "",
-  "plan.pro.features4": "",
-  "plan.pro.features5": " ",
-  "plan.pro.features6": "",
-  "plan.pro.cta": " ",
+  error: {
+    generic: "An sami kuskure ba zato ba tsammani.",
 
-  //pricing footer
-  "plan.pricing_footer.billing_note": "",
+    required_identifier: "Ana buƙatar imel ko lambar waya.",
+    invalid_identifier: "Shigar da ingantaccen imel ko lambar waya ta E.164.",
 
-  // AI Integration
-  "ai.response.placeholder": " ",
-  "ai.response.error": "    ",
-  "ai.response.loading": " ",
-  "ai.prompt.placeholder": "",
-  "ai.prompt.send_button": "",
+    required_password: "Ana buƙatar kalmar sirri.",
+    short_password: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
+
+    required_fullname: "Ana buƙatar cikakken suna.",
+    invalid_fullname: "Shigar da cikakken suna mai inganci.",
+
+    sign_in: {
+      email_number: "Ana buƙatar imel ko lambar waya.",
+      password: {
+        required: "Ana buƙatar kalmar sirri.",
+      },
+    },
+
+    sign_up: {
+      email_number:
+        "Shigar da ingantaccen imel ko lambar waya ta E.164 (misali +123456789).",
+      password: {
+        min_length: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
+      },
+      full_name: {
+        required: "Ana buƙatar cikakken suna don yin rajista.",
+        default: "Shigar da cikakken sunanka.",
+      },
+    },
+
+    network: "Kuskuren haɗin intanet. Sake gwadawa.",
+  },
+
+  dashboard: {
+    sidebar: {
+      chat_button: "Sabuwar Tattaunawa",
+      footer_full: "Duk haƙƙoƙi na ajiye",
+      upgrade: "Haɓakawa",
+      logout: "Fita",
+    },
+    search: {
+      chats_placeholder: "Bincika tattaunawa...",
+      no_results: 'Babu tattaunawa mai taken "{searchTerm}"',
+    },
+    no_chat: "Babu tattaunawa tukuna — fara daya!",
+    thinking: "RealMe na tunani...",
+    voice_input: {
+      start_recording: "Fara rikodi",
+    },
+    record_voice: {
+      in_process: "Ana rikodi…",
+    },
+    voice: {
+      button: {
+        start: "Fara",
+        stop: "Tsaya",
+      },
+    },
+    transcribing: "Ana rubuta abin da aka faɗa…",
+  },
+
+  fileupload: {
+    upload_title: "Loda fayil",
+    button_label: "Loda",
+    limit_reached: "Haɓaka zuwa Pro",
+  },
+
+  chat: {
+    send_button: "Aika",
+  },
+
+  account_info: {
+    title: "Duba Bayanan Asusu",
+    loading: "Ana ɗora bayanan asusu...",
+    signed_in_with: "An shiga ta",
+    plan: "Tsari",
+    full_name: "Cikakken Suna",
+    email: "Imel",
+    account_type: "Nau'in Asusu",
+    date_joined: "Ranar Shiga",
+    last_login: "Shiga Na Ƙarshe",
+    manage_subscription: "Sarrafa Biyan Kuɗi",
+    avatar_alt: "Hoto",
+  },
+
+  settings: {
+    title: "Saituna",
+    account: {
+      label: "Saitunan Asusu",
+      sync: "Gyara Bayanai",
+    },
+    preferences: {
+      label: "Zaɓuka",
+    },
+    theme: {
+      label: "Yanayin Jigo",
+      Light: "Haske",
+      Dark: "Duƙi",
+      System: "Tsarin Na'ura",
+    },
+    language: {
+      label: "Harshe",
+      english: "Turanci",
+      hausa: "Hausa",
+      igbo: "Igbo",
+      yoruba: "Yarbanci",
+    },
+    notifications: {
+      label: "Sanarwar Imel",
+    },
+    support: {
+      label: "Tallafi & Taimako",
+      contact: "Tuntuɓi Tallafi",
+      faq: "Tambayoyi & Cibiyar Taimako",
+    },
+    danger_zone: {
+      label: "Wurin Hadari",
+    },
+    delete_account: "Goge Asusu",
+  },
+
+  modal: {
+    edit_profile: {
+      title: "Gyara Bayanan Asusu",
+      name_placeholder: "Shigar da cikakken suna",
+      error_empty_name: "Cikakken suna ba zai zama fanko ba",
+      save_button: "Ajiye",
+    },
+    edit: {
+      no_data: {
+        success: "An kasa sabunta bayanai",
+      },
+    },
+    saving: "Ana ajiye...",
+    avatar_cropper: {
+      save_button: "Ajiye",
+    },
+    uploading: "Ana lodawa…",
+    avatar_upload_failed: "An kasa lodawa hoto.",
+  },
+
+  plans: {
+    free: {
+      title: "Tsarin Kyauta",
+      subtitle: "Mafi dacewa don farawa",
+      price: "wata",
+      features1: "Tambayoyi 10 a rana",
+      features2: "Samun damar GPT-5",
+      features3: "Shigar da murya",
+      features4: "Tallafin harsuna 4",
+      features5: "Tarihin tattaunawa",
+      cta: "Fara Kyauta",
+    },
+    pro: {
+      title: "RealMe AI Pro",
+      subtitle: "Ga ƙwararru da ke buƙatar ƙari",
+      price_monthly: "wata",
+      price_yearly: "shekara",
+      features1: "Tambayoyi marasa iyaka a rana",
+      features2: "Fasalolin murya na ci gaba",
+      features3: "Amsa mafi sauri ta GPT-5 Turbo",
+      features4: "Jigo na musamman",
+      features5: "Tallafi na fifiko",
+      features6: "Fitar da tattaunawa",
+      cta: "Haɓaka zuwa Pro",
+      most_popular: "Mafi Shahara",
+      yearly_discount: "Ajiye 25% idan ka biya na shekara",
+    },
+    billing: {
+      monthly: "Na Wata",
+      yearly: "Na Shekara",
+    },
+    pricing_footer: {
+      billing_note:
+        "Duk tsare-tsare suna ɗauke da tsaron shiga, tarihin tattaunawa mai dorewa, da tallafin harsuna da dama.",
+    },
+  },
+
+  ai: {
+    response: {
+      placeholder: "Amsar AI za ta bayyana a nan",
+      error: "An kasa samun amsar AI",
+      loading: "AI na tunani...",
+    },
+    prompt: {
+      placeholder: "Rubuta sakonka a nan...",
+      send_button: "Aika",
+    },
+  },
 };
 
+export type Messages = typeof ha;
 export default ha;
