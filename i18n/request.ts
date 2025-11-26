@@ -28,7 +28,8 @@ export default getRequestConfig(
 
     // Dynamic import with full typing
     const messages: Record<string, unknown> = (
-      await import(`../i18n/${finalLocale}.ts`)
+      await import(`../i18n/${finalLocale}`)
+
     ).default;
 
     console.log("Messages loaded successfully");
