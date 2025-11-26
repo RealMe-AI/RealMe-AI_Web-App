@@ -110,7 +110,8 @@ export default async function LocaleLayout({
 
   let messages: Messages;
   try {
-    messages = (await import(`../i18n/${locale}.ts`)).default;
+    // Remove the .ts extension - it's automatically resolved
+    messages = (await import(`../i18n/${locale}`)).default;
   } catch (error) {
     console.error("Failed to load messages:", error);
     messages = {} as Messages;
@@ -128,3 +129,4 @@ export default async function LocaleLayout({
     </html>
   );
 }
+

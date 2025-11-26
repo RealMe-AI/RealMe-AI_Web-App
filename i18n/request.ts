@@ -28,7 +28,7 @@ export default getRequestConfig(
 
     // Dynamic import with full typing
     const messages: Record<string, unknown> = (
-      await import(`../i18n/${finalLocale}`)
+      await import(`../i18n/${finalLocale}.ts`)
 
     ).default;
 
