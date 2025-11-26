@@ -90,11 +90,7 @@ const poppins = Poppins({
 
 export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export async function generateMetadata() {
   return {
     title: "RealMe AI",
     description: "Converse. Learn. Evolve. Professionally.",
