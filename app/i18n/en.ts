@@ -165,7 +165,7 @@ const en = {
     },
     search: {
       chats_placeholder: "Search chats...",
-      no_results: 'No chat found with the title "{searchTerm}"',
+      no_results: 'No chat found with the title',
       no_chat: "No chats yet start one!",
       thinking: "RealMe is thinking...",
       new_conversation_title: "Chat {chatNumber}",
