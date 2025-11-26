@@ -159,7 +159,7 @@ const yo = {
   dashboard: {
     sidebar: {
       chat_button: "Ijiroro Tuntun",
-      footer_full: "Gbogbo awọn ẹtọ wa ni ipamọ",
+      footer_full: "Nípa", 
       upgrade: "Mu dara si",
       logout: "Jade",
     },

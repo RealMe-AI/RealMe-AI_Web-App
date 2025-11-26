@@ -159,7 +159,7 @@ const ig = {
   dashboard: {
     sidebar: {
       chat_button: "Mkparịta ụka Ọhụrụ",
-      footer_full: "All Rights Reserved",
+       footer_full: "Site na",
       upgrade: "Melite",
       logout: "Pụọ",
     },

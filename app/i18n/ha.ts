@@ -159,7 +159,7 @@ const ha = {
   dashboard: {
     sidebar: {
       chat_button: "Sabuwar Tattaunawa",
-      footer_full: "Duk haƙƙoƙi na ajiye",
+      footer_full: "Ta",
       upgrade: "Haɓakawa",
       logout: "Fita",
     },
