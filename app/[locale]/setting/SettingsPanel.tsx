@@ -6,7 +6,12 @@ import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../zustand/useUserStore";
 import { useThemeStore } from "../../zustand/useThemeStore";
 import { useTranslations } from "next-intl";
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import {
+  useRouter,
+  usePathname,
+  useSearchParams,
+  useParams,
+} from "next/navigation";
 
 import EditProfileModal from "./EditProfileModal";
 import CustomSelect from "./CustomSelect";
@@ -32,8 +37,8 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const applyTheme = useThemeStore((s) => s.setTheme);
   const openEditProfile = useUserStore((s) => s.openEditProfile);
   const router = useRouter();
-const pathname = usePathname();
-const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const handleThemeChange = (selected: "light" | "dark" | "system") => {
     setTheme(selected);
 
