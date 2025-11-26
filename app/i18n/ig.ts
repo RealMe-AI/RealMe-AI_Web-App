@@ -165,10 +165,13 @@ const ig = {
     },
     search: {
       chats_placeholder: "Chọgharịa mkparịta ụka...",
-      no_results: 'Enweghị mkparịta ụka nke aha ya bụ "{searchTerm}"',
+      no_results: "Enweghị mkparịta ụka nke aha ya bụ ",
+      no_chat: "Enweghị mkparịta ụka ka malite otu!",
+      thinking: "RealMe na-eche echiche...",
+      new_conversation_title: "Mkparịta ụka {chatNumber}",
+      new_conversation_started: "Malitere mkparịta ụka ọhụrụ...",
     },
-    no_chat: "Enweghị mkparịta ụka ka malite otu!",
-    thinking: "RealMe na-eche echiche...",
+
     voice_input: {
       start_recording: "Malite idekọ",
     },
