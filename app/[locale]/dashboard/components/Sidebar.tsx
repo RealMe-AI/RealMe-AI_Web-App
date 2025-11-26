@@ -175,7 +175,7 @@ export default function Sidebar({
             ))
           : !error && (
               <p className="text-sm text-slate-500 dark:text-slate-400 italic text-center">
-                {t("dashboard.no_chat")}
+                {t("dashboard.search.no_chat")}
               </p>
             )}
       </motion.div>

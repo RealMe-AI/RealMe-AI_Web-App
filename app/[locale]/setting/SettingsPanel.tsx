@@ -39,6 +39,8 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const params = useParams();
+  const currentLocale = params.locale as string;
   const handleThemeChange = (selected: "light" | "dark" | "system") => {
     setTheme(selected);
 
@@ -114,19 +116,21 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                     { label: t("settings.language.igbo"), value: "ig" },
                     { label: t("settings.language.yoruba"), value: "yo" },
                   ]}
-                  value={language}
+                  value={currentLocale} // Use actual locale from URL instead of state
                   onChange={(value: string) => {
                     setLanguage(value);
 
-                    // Remove current locale and add new one
+                    const pathname = window.location.pathname;
+                    const searchParams = new URLSearchParams(
+                      window.location.search
+                    );
                     const pathnameWithoutLocale = pathname.replace(
                       /^\/[a-z]{2}/,
                       ""
                     );
                     const newPath = `/${value}${pathnameWithoutLocale}`;
-
-                    // Preserve query parameters
                     const query = searchParams.toString();
+
                     router.push(query ? `${newPath}?${query}` : newPath);
                   }}
                   icon={<Globe size={16} />}
