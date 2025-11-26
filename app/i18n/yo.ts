@@ -165,10 +165,13 @@ const yo = {
     },
     search: {
       chats_placeholder: "Ṣawari awọn ijiroro...",
-      no_results: 'Ko si ijiroro pẹlu akọle "{searchTerm}"',
+      no_results: "Ko si ijiroro pẹlu akọle ",
+      no_chat: "Ko si ijiroro sibẹsibẹ — bẹrẹ ọkan!",
+      thinking: "RealMe n ronu...",
+      new_conversation_title: "Ìbáraẹnisọrọ {chatNumber}",
+      new_conversation_started: "Bẹrẹ ìbáraẹnisọrọ tuntun...",
     },
-    no_chat: "Ko si ijiroro sibẹsibẹ — bẹrẹ ọkan!",
-    thinking: "RealMe n ronu...",
+
     voice_input: {
       start_recording: "Bẹrẹ gbigbasilẹ",
     },
