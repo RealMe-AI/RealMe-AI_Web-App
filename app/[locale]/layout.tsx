@@ -110,7 +110,7 @@ export default async function LocaleLayout({
 
   let messages: Messages;
   try {
-    messages = (await import(`../i18n/${locale}`)).default;
+    messages = (await import(`../i18n/${locale}.ts`)).default;
   } catch (error) {
     console.error("Failed to load messages:", error);
     messages = {} as Messages;
