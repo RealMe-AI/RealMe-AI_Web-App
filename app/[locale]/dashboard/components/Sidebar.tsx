@@ -53,8 +53,8 @@ export default function Sidebar({
     closeAll(); // close popovers/modals first
     const newChat: Chat = {
       id: Date.now(),
-      title: `Chat ${chats.length + 1}`,
-      lastMessage: "New conversation started...",
+      title: t("sidebar.new_conversation_title", { chatNumber: chats.length + 1 }),
+      lastMessage: t("sidebar.new_conversation_started"),
     };
     setChats((prev) => [newChat, ...prev]);
     setActiveChatId(newChat.id);
@@ -70,13 +70,13 @@ export default function Sidebar({
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (searchTerm && filteredChats.length === 0) {
-        setError(`No chat found with the title "${searchTerm}"`);
+        setError(t("dashboard.search.no_results", { searchTerm }));
       } else {
         setError("");
       }
     }, 200);
     return () => clearTimeout(timeout);
-  }, [searchTerm, filteredChats]);
+  }, [searchTerm, filteredChats, t]);
 
   // Select a chat
   const handleSelectChat = (chat: Chat) => {
