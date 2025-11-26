@@ -165,7 +165,7 @@ const ha = {
     },
     search: {
       chats_placeholder: "Bincika tattaunawa...",
-      no_results: 'Babu tattaunawa mai taken "{searchTerm}"',
+      no_results: 'Babu tattaunawa mai taken ',
     },
     no_chat: "Babu tattaunawa tukuna — fara daya!",
     thinking: "RealMe na tunani...",
