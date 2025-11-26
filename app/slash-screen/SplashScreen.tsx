@@ -12,7 +12,7 @@ export default function SplashScreen({
 }) {
   useEffect(() => {
     if (!visible) return;
-    const t = setTimeout(() => onFinish(), 3000); // 3 seconds
+    const t = setTimeout(() => onFinish(), 3000); 
     return () => clearTimeout(t);
   }, [visible, onFinish]);
 
@@ -33,7 +33,7 @@ export default function SplashScreen({
             {/* Replace /logo.png later */}
             <div className="w-32 h-32">
               <Image
-                src="/logo.png"
+                src="/"
                 alt="RealMe AI Logo"
                 width={128}
                 height={128}
