@@ -5,10 +5,12 @@ import { X, Globe, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../zustand/useUserStore";
 import { useThemeStore } from "../../zustand/useThemeStore";
+import { useTranslations } from "next-intl";
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+
 import EditProfileModal from "./EditProfileModal";
 import CustomSelect from "./CustomSelect";
 import EmailToggle from "./EmailToggle";
-import { useTranslations } from "next-intl";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -29,7 +31,9 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
   const applyTheme = useThemeStore((s) => s.setTheme);
   const openEditProfile = useUserStore((s) => s.openEditProfile);
-
+  const router = useRouter();
+const pathname = usePathname();
+const searchParams = useSearchParams();
   const handleThemeChange = (selected: "light" | "dark" | "system") => {
     setTheme(selected);
 
@@ -106,7 +110,20 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                     { label: t("settings.language.yoruba"), value: "yo" },
                   ]}
                   value={language}
-                  onChange={setLanguage}
+                  onChange={(value: string) => {
+                    setLanguage(value);
+
+                    // Remove current locale and add new one
+                    const pathnameWithoutLocale = pathname.replace(
+                      /^\/[a-z]{2}/,
+                      ""
+                    );
+                    const newPath = `/${value}${pathnameWithoutLocale}`;
+
+                    // Preserve query parameters
+                    const query = searchParams.toString();
+                    router.push(query ? `${newPath}?${query}` : newPath);
+                  }}
                   icon={<Globe size={16} />}
                 />
 
