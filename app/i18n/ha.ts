@@ -165,10 +165,13 @@ const ha = {
     },
     search: {
       chats_placeholder: "Bincika tattaunawa...",
-      no_results: 'Babu tattaunawa mai taken ',
+      no_results: "Babu tattaunawa mai taken ",
+      no_chat: "Babu tattaunawa tukuna — fara daya!",
+      thinking: "RealMe na tunani...",
+      new_conversation_title: "Tattaunawa {chatNumber}",
+      new_conversation_started: "An fara sabon tattaunawa...",
     },
-    no_chat: "Babu tattaunawa tukuna — fara daya!",
-    thinking: "RealMe na tunani...",
+
     voice_input: {
       start_recording: "Fara rikodi",
     },
