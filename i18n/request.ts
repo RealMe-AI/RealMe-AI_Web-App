@@ -2,7 +2,7 @@
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
-type SupportedLocale = typeof routing.locales[number];
+type SupportedLocale = (typeof routing.locales)[number];
 
 export default getRequestConfig(
   async ({
@@ -26,10 +26,9 @@ export default getRequestConfig(
 
     console.log("Loading messages for locale:", finalLocale);
 
-    // Dynamic import with full typing
+    // FIX: Use ./ instead of ../i18n/ since we're already in app/i18n/
     const messages: Record<string, unknown> = (
-      await import(`../i18n/${finalLocale}`)
-
+      await import(`./${finalLocale}`)
     ).default;
 
     console.log("Messages loaded successfully");
