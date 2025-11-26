@@ -133,4 +133,3 @@ export default async function LocaleLayout({
     </html>
   );
 }
-
