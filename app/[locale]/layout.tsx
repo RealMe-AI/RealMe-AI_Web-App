@@ -90,6 +90,11 @@ const poppins = Poppins({
 
 export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 
+// ADD THIS FUNCTION
+export function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+}
+
 export async function generateMetadata() {
   return {
     title: "RealMe AI",
@@ -110,7 +115,6 @@ export default async function LocaleLayout({
 
   let messages: Messages;
   try {
-    // Remove the .ts extension - it's automatically resolved
     messages = (await import(`../i18n/${locale}`)).default;
   } catch (error) {
     console.error("Failed to load messages:", error);
