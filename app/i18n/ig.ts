@@ -1,156 +1,318 @@
+// app/i18n/ig.ts
+
 const ig = {
-  // Landing Page
-  "landing.hero.first": "",
-  "landing.hero.title": "",
-  "landing.hero.subtitle": "",
-  "landing.hero.cta": "",
-  "landing.hero.cta_secondary": "",
-  "landing.hero.offer1": "",
-  "landing.hero.offer2": "",
-  "landing.hero.offer3": "",
-  "landing.hero.badge1": "",
-  "landing.hero.badge2": "",
-  "landing.features.title": "",
-  "landing.features.subtitle": "",
-  "landing.features.item1.title": "",
-  "landing.features.item1.subtitle": "",
-  "landing.features.item2.title": "",
-  "landing.features.item2.subtitle": "",
-  "landing.features.item3.title": "",
-  "landing.features.item3.subtitle": "",
-  "landing.features.item4.title": "",
-  "landing.features.item4.subtitle": "",
-  "landing.features.item5.title": "",
-  "landing.features.item5.subtitle": "",
-  "landing.features.item6.title": "",
-  "landing.features.item6.subtitle": "",
-  "landing.get_started.title": "",
-  "landing.get_started.subtitle": "",
-  "landing.get_started.step1.title": "",
-  "landing.get_started.step1.desc": "",
-  "landing.get_started.step2.title": "",
-  "landing.get_started.step2.desc": "",
-  "landing.get_started.step3.title": "",
-  "landing.get_started.step3.desc": "",
-  "landing.get_started.cta": "",
-  "landing.get_started.image.title": "",
-  "landing.get_started.image.desc": "",
-  "landing.footer.rights": "",
-  "landing.footer.contact": "",
-  "landing.footer.privacy": "",
-  "landing.footer.terms": " ",
+  navbar: {
+    help: "Enyemaka & Nkwado",
+    about: "Banyere RealMe AI",
+  },
 
-  // Authentication Pages
-  "auth.login.title": "",
-  "auth.login.email_placeholder": "",
-  "auth.login.password_placeholder": "",
-  "auth.login.submit_button": "",
-  "auth.login.no_account": "",
-  "auth.login.sign_in": "",
-  "auth.login.sign_up": "",
-  "auth.login.full_name": "",
-  "auth.sign_up.submit_button": "",
-  "auth.OR": "",
-  "auth.sign_up.continue_with_google": "",
-  "auth.register.submit_button": "",
-  "auth.register.sign_in": " ",
-  "auth.sign_up.already_have_account": " ",
-  "error.sign_in.email_number": " ",
-  "error.sign_up.email_number": " ",
-  "error.sign_in.password.required": "",
-  "error.sign_up.password.min_length": "",
-  "error.sign_up.full_name.required": "",
-  "error.sign_up.full_name": "",
-  "auth.Authentication_failed": "",
+  landing: {
+    hero: {
+      first: "Dị ike site na GPT-5",
+      title: "Kparịta ụka na AI nke na-aghọta mkpa ọrụ gị",
+      subtitle:
+        "Nweta azịza n’ụzọ ozugbo na amamihe yana nkwado ọtụtụ asụsụ. RealMe AI na-eme ka ụkpụrụ nkwurịta okwu gị nwee nhata maka mkparịta ụka nke ọkachamara n’English, Hausa, Igbo, na Yoruba.",
+      offer1: "Mkparịta ụka AI ozugbo",
+      offer2: "Nhazi ahaziri iche",
+      offer3: "Ntinye olu",
+      badge1: "Ụdị AI",
+      badge2: "Asụsụ",
+    },
 
-  // Dashboard / Sidebar
-  "dashboard.sidebar.chat_button": " ",
-  "dashboard.search.chats_placeholder": "",
-  "dashboard.sidebar.footer": "",
-  "dashboard.no_chat": "",
-  "dashboard.sidebar.upgrade": "",
-  "dashboard.sidebar.logout": "",
-  "dashboard.RealMe is thinking": "",
-  "dashboard.voice_input.start_recording": "",
-  "dashboard.record_voice.in_process": "",
-  "dashboard.voice.button.start": "",
-  "dashboard.voice.button.stop": "",
-  "dashboard.transcribing": "",
+    cta: {
+      primary: "Nwee ahụmịhe RealMe AI",
+      secondary: "Lee Ọnụahịa",
+    },
 
-  //account info modal
-  "account_info.title": " ",
-  "account_info.loading": "",
-  "account_info.signed_in_with": " ",
-  "account_info.plan": "",
-  "account_info.full_name": " ",
-  "account_info.email": "",
-  "account_info.account_type": "",
-  "account_info.date_joined": "",
-  "account_info.last_login": "",
-  "account_info.manage_subscription": "",
+    features: {
+      title: "Ihe Mere Ị Ga-eji Họrọ",
+      subtitle:
+        "Nwee mkparịta ụka AI nke ọkachamara na atụmatụ e mere maka ịdị mma",
+      items: {
+        intelligence: {
+          title: "Amamihe GPT-5",
+          desc: "Dị ike site na ụdị GPT-5 ọhụrụ nke OpenAI maka izi ezi kachasị elu, nghọta nke ọnọdụ, na azịza ọkachamara.",
+        },
+        languages: {
+          title: "Nkwado ọtụtụ asụsụ",
+          desc: "Kparịta ụka nke ọma n’English, Hausa, Igbo, na Yoruba na azịza kwesịrị ekwesị maka omenala.",
+        },
+        voice: {
+          title: "Nkwurịta okwu olu",
+          desc: "Kwuo n’ụdị okike site na ntinye olu ma gee azịza AI na teknụzụ ederede-na-olu dị elu.",
+        },
+        history: {
+          title: "Akụkọ Mkparịta ụka Na-adịgide adịgide",
+          desc: "Nweta akụkọ mkparịta ụka gị niile mgbe ọ bụla, ebe ọ bụla. Echela data dị mkpa ma ọ bụ mkparịta ụka efu.",
+        },
+        privacy: {
+          title: "Nche & Nzuzo",
+          desc: "Nche nke ụlọ ọrụ nwere mkparịta ụka echekwara. Data gị nọ na nzuzo ma chekwaa ya.",
+        },
+        customization: {
+          title: "Ahụmịhe Ahaziri",
+          desc: "Hazi ụda AI, isiokwu, asụsụ, na ntọala interface iji kwekọọ na usoro ọrụ gị.",
+        },
+      },
+    },
 
-  // Settings Panel
-  "settings.title": "",
-  "settings.account.label": "",
-  "settings.account.sync": " ",
-  "settings.preferences.label": "",
-  "settings.theme.label": "",
-  "settings.theme.Light": "",
-  "settings.theme.Dark": "",
-  "settings.theme.System": "",
-  "settings.language.label": "",
-  "settings.language.english": "",
-  "settings.language.hausa": "",
-  "settings.language.igbo": "",
-  "settings.language.yoruba": "",
-  "settings.notifications.label": "",
-  "settings.support.label": "  ",
-  "settings.support.contact": "",
-  "settings.support.faq": "",
-  "settings.danger_zone.label": " ",
-  "settings.delete_account": " ",
+    get_started: {
+      title: "Malite na Nzọụkwụ 3 Dị mfe",
+      subtitle:
+        "Nwee mkparịta ụka AI nke ọkachamara n'ime nkeji ole na ole, enweghị nhazi teknụzụ dị mkpa.",
+      step1: {
+        title: "Mepụta Akaụntụ Gị",
+        desc: "Debanye aha na email gị, ekwentị, ma ọ bụ akaụntụ Google. Ọ na-ewe obere karịa sekọnd 30, enweghị kaadị kredit achọrọ.",
+      },
+      step2: {
+        title: "Hazie Nhọrọ Gị",
+        desc: "Họrọ asụsụ gị, ụda AI, na isiokwu interface. Gbanye atụmatụ olu maka mkparịta ụka na-enweghị aka.",
+      },
+      step3: {
+        title: "Malite Kparịta ụka",
+        desc: "Jụọ ajụjụ, nweta nghọta, ma nwee mmụta ọrụ nke ọma na AI nke na-amụta ụkpụrụ nkwurịta okwu gị.",
+      },
+      cta: "Malite Ugbu a",
+      image: {
+        title: "Malite ikwu okwu na",
+        desc: "Sekọnd",
+      },
+    },
 
-  // Modals
-  "modal.edit_profile.title": " ",
-  "modal.edit_profile.name_placeholder": " ",
-  "modal_edit_profile.error_empty_name": "  ",
-  "modal_edit.no_data.success": " ",
-  "modal.edit_profile.save_button": "",
-  "modal.saving": "",
+    footer: {
+      rights: "All rights reserved",
+      contact: "Kpọtụrụ Anyị",
+      privacy: "Atụmatụ Nzuzo",
+      terms: "Okwu Ọrụ",
+    },
+  },
 
-  // Free Plan
-  "plan.free.title": " ",
-  "plan.free.subtitle": " ",
-  "plan.free.price": "",
-  "plan.free.features1": " ",
-  "plan.free.features2": "",
-  "plan.free.features3": "",
-  "plan.free.features4": "",
-  "plan.free.features5": "",
-  "plan.free.cta": "",
+  auth: {
+    page: {
+      hero_title: "Nabata na",
+      back_button: "Laghachi",
+    },
+    login: {
+      email_placeholder: "Adreesị email ma ọ bụ nọmba ekwentị...",
+      password_placeholder: "Okwuntughe...",
+      full_name_placeholder: "Aha zuru ezu...",
+    },
+    button: {
+      sign_in: "Banye",
+      create_account: "Mepụta Akaụntụ",
+      continue_email: "Gaa n’ihu na Email",
+      creating: "Na-emepụta…",
+      signing_in: "Na-abanye…",
+      success: "Mmeri",
+    },
+    toggle: {
+      no_account: "Enweghị akaụntụ?",
+      already_have_account: "Ị nwere akaụntụ?",
+      sign_in: "Banye",
+      sign_up: "Debanye",
+      show_password: "Gosi okwuntughe",
+      hide_password: "Zoo okwuntughe",
+    },
+    divider: {
+      or: "MA Ọ BỤ",
+    },
+    identifier: {
+      email: "email",
+      phone: "ekwentị",
+    },
+  },
 
-  // Pro Plan
-  "plan.pro.title": " ",
-  "plan.pro.subtitle": " ",
-  "plan.pro.price_monthly": "",
-  "plan.pro.price_yearly": "",
-  "plan.pro.features1": " ",
-  "plan.pro.features2": " ",
-  "plan.pro.features3": "",
-  "plan.pro.features4": "",
-  "plan.pro.features5": " ",
-  "plan.pro.features6": "",
-  "plan.pro.cta": " ",
+  error: {
+    generic: "Enweghi mmejọ a tụrụ anya ya.",
 
-  //pricing footer
-  "plan.pricing_footer.billing_note": "",
+    required_identifier: "Email ma ọ bụ ekwentị chọrọ.",
+    invalid_identifier: "Tinye email ziri ezi ma ọ bụ nọmba ekwentị E.164.",
 
-  // AI Integration
-  "ai.response.placeholder": " ",
-  "ai.response.error": "    ",
-  "ai.response.loading": " ",
-  "ai.prompt.placeholder": "",
-  "ai.prompt.send_button": "",
+    required_password: "Okwuntughe chọrọ.",
+    short_password: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
+
+    required_fullname: "Aha zuru ezu chọrọ.",
+    invalid_fullname: "Tinye aha zuru ezu ziri ezi.",
+
+    sign_in: {
+      email_number: "Email ma ọ bụ ekwentị chọrọ.",
+      password: {
+        required: "Okwuntughe chọrọ.",
+      },
+    },
+
+    sign_up: {
+      email_number:
+        "Tinye email ziri ezi ma ọ bụ nọmba ekwentị E.164 (dịka +123456789).",
+      password: {
+        min_length: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
+      },
+      full_name: {
+        required: "Aha zuru ezu chọrọ maka ndebanye.",
+        default: "Tinye aha zuru ezu gị.",
+      },
+    },
+
+    network: "Njehie netwọk. Biko nwaa ọzọ.",
+  },
+
+  dashboard: {
+    sidebar: {
+      chat_button: "Mkparịta ụka Ọhụrụ",
+      footer_full: "All Rights Reserved",
+      upgrade: "Melite",
+      logout: "Pụọ",
+    },
+    search: {
+      chats_placeholder: "Chọgharịa mkparịta ụka...",
+      no_results: 'Enweghị mkparịta ụka nke aha ya bụ "{searchTerm}"',
+    },
+    no_chat: "Enweghị mkparịta ụka ka malite otu!",
+    thinking: "RealMe na-eche echiche...",
+    voice_input: {
+      start_recording: "Malite idekọ",
+    },
+    record_voice: {
+      in_process: "Na-edekọ…",
+    },
+    voice: {
+      button: {
+        start: "Malite",
+        stop: "Kwụsị",
+      },
+    },
+    transcribing: "Na-ede ihe e kwuru…",
+  },
+
+  fileupload: {
+    upload_title: "Bulite faịlụ",
+    button_label: "Bulite",
+    limit_reached: "Melite gaa Pro",
+  },
+
+  chat: {
+    send_button: "Zipu",
+  },
+
+  account_info: {
+    title: "Lee Ozi Akaụntụ",
+    loading: "Na-ebunye ozi akaụntụ...",
+    signed_in_with: "Banyere nbanye na",
+    plan: "Atụmatụ",
+    full_name: "Aha Zuru Ezu",
+    email: "Email",
+    account_type: "Ụdị Akaụntụ",
+    date_joined: "Ụbọchị sonyere",
+    last_login: "Mbanye ikpeazụ",
+    manage_subscription: "Jikwaa Ndebanye",
+    avatar_alt: "Foto",
+  },
+
+  settings: {
+    title: "Ntọala",
+    account: {
+      label: "Ntọala Akaụntụ",
+      sync: "Hazie profaịlụ",
+    },
+    preferences: {
+      label: "Nhọrọ",
+    },
+    theme: {
+      label: "Ụdị isiokwu",
+      Light: "Ọma",
+      Dark: "Ojii",
+      System: "Sistemụ",
+    },
+    language: {
+      label: "Asụsụ",
+      english: "English",
+      hausa: "Hausa",
+      igbo: "Igbo",
+      yoruba: "Yoruba",
+    },
+    notifications: {
+      label: "Mgbasa ozi Email",
+    },
+    support: {
+      label: "Nkwado & Enyemaka",
+      contact: "Kpọtụrụ Nkwado",
+      faq: "Ajụjụ na Azịza / Ọdịmụ Enyemaka",
+    },
+    danger_zone: {
+      label: "Ebe ize ndụ",
+    },
+    delete_account: "Hichapụ Akaụntụ",
+  },
+
+  modal: {
+    edit_profile: {
+      title: "Hazie Profaịlụ",
+      name_placeholder: "Tinye aha zuru ezu",
+      error_empty_name: "Aha zuru ezu agaghị adị efu",
+      save_button: "Chekwaa",
+    },
+    edit: {
+      no_data: {
+        success: "E mebiela imezi profaịlụ",
+      },
+    },
+    saving: "Na-echekwa...",
+    avatar_cropper: {
+      save_button: "Chekwaa",
+    },
+    uploading: "Na-ebunye…",
+    avatar_upload_failed: "Enweghị ike bulite Foto.",
+  },
+
+  plans: {
+    free: {
+      title: "Atụmatụ Efụ",
+      subtitle: "Dabara adaba maka mmalite",
+      price: "ọnwa",
+      features1: "Ajụjụ 10 kwa ụbọchị",
+      features2: "Nweta GPT-5",
+      features3: "Ntinye olu",
+      features4: "Nkwado asụsụ 4",
+      features5: "Akụkọ mkparịta ụka",
+      cta: "Malite N’efu",
+    },
+    pro: {
+      title: "RealMe AI Pro",
+      subtitle: "Maka ọkachamara chọrọ ihe ndị ọzọ",
+      price_monthly: "ọnwa",
+      price_yearly: "afọ",
+      features1: "Ajụjụ na-enweghị njedebe kwa ụbọchị",
+      features2: "Atụmatụ olu dị elu",
+      features3: "Azịza GPT-5 Turbo ngwa ngwa",
+      features4: "Isiokwu ahaziri iche",
+      features5: "Nkwado nke mbu",
+      features6: "Mbupụ mkparịta ụka",
+      cta: "Melite gaa Pro",
+      most_popular: "NA-EJU ANYA KARỊ",
+      yearly_discount: "Zọpụta 25% mgbe ị na-akwụ kwa afọ",
+    },
+    billing: {
+      monthly: "Kwa ọnwa",
+      yearly: "Kwa afọ",
+    },
+    pricing_footer: {
+      billing_note:
+        "Atụmatụ niile gụnyere nbanye echekwara, akụkọ mkparịta ụka na-adịgide adịgide, na nkwado ọtụtụ asụsụ.",
+    },
+  },
+
+  ai: {
+    response: {
+      placeholder: "Azịza AI ga-apụta ebe a",
+      error: "Enweghị ike ịnweta azịza AI",
+      loading: "AI na-eche echiche...",
+    },
+    prompt: {
+      placeholder: "Tinye ozi gị ebe a...",
+      send_button: "Zipu",
+    },
+  },
 };
 
+export type Messages = typeof ig;
 export default ig;
