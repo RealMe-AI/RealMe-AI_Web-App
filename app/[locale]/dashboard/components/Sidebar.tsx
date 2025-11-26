@@ -53,8 +53,8 @@ export default function Sidebar({
     closeAll(); // close popovers/modals first
     const newChat: Chat = {
       id: Date.now(),
-      title: t("sidebar.new_conversation_title", { chatNumber: chats.length + 1 }),
-      lastMessage: t("sidebar.new_conversation_started"),
+      title: t("dashboard.new_conversation_title", { chatNumber: chats.length + 1 }),
+      lastMessage: t("dashboard.new_conversation_started"),
     };
     setChats((prev) => [newChat, ...prev]);
     setActiveChatId(newChat.id);
