@@ -1,6 +1,6 @@
 // app/i18n/getRequestConfig.ts
 import { getRequestConfig } from "next-intl/server";
-import { routing } from "./routing";
+import { routing } from "../i18n/routing";
 
 type SupportedLocale = (typeof routing.locales)[number];
 
