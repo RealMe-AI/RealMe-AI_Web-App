@@ -90,7 +90,11 @@ const poppins = Poppins({
 
 export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   return {
     title: "RealMe AI",
     description: "Converse. Learn. Evolve. Professionally.",
@@ -102,15 +106,15 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({ 
-  children, 
-  params 
+export default async function LocaleLayout({
+  children,
+  params,
 }: LocaleLayoutProps) {
   const { locale } = await params;
 
   let messages: Messages;
   try {
-    messages = (await import(`../i18n/${locale}.ts`)).default;
+    messages = (await import(`../i18n/${locale}`)).default;
   } catch (error) {
     console.error("Failed to load messages:", error);
     messages = {} as Messages;
