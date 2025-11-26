@@ -98,7 +98,7 @@ export default function ProfileFooter() {
 
       {/* Footer Text */}
       <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-3">
-        OwenVisuels {t("dashboard.sidebar.footer_full")}
+         {t("dashboard.sidebar.footer_full")} OwenVisuels
       </p>
 
       {/* Account Info Modal */}

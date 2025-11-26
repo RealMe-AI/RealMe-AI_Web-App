@@ -159,7 +159,7 @@ const en = {
   dashboard: {
     sidebar: {
       chat_button: "New Chat",
-      footer_full: "All Rights Reserved",
+      footer_full: "By",
       upgrade: "Upgrade",
       logout: "Log out",
     },
