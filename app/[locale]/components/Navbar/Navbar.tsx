@@ -17,17 +17,15 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        
         {/* Logo */}
         <Link href="/" className="font-bold text-lg">
           RealMe AI
         </Link>
+        <div className="flex items-center gap-6">
+          {/* Desktop Nav */}
+          <DesktopNav active={active} />
 
-        {/* Desktop Nav */}
-        <DesktopNav active={active} />
-
-        {/* Right controls (Theme toggle + Mobile Menu button) */}
-        <div className="flex items-center gap-3">
+          {/* Right controls (Theme toggle + Mobile Menu button) */}
 
           {/* ONE Theme Toggle (visible everywhere) */}
           <motion.button
@@ -35,8 +33,8 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
             whileTap={{ rotate: 180 }}
             transition={{ duration: 0.4 }}
             className="p-2 rounded-full bg-gray-100 dark:bg-slate-700
-                       hover:bg-gray-200 dark:hover:bg-slate-600
-                       text-slate-700 dark:text-gray-100"
+            hover:bg-gray-200 dark:hover:bg-slate-600
+            text-slate-700 dark:text-gray-100"
           >
             {theme === "light" ? <Sun size={16} /> : <Moon size={16} />}
           </motion.button>
