@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { navItems } from "../../../data/desktopNavData";
+import { navItems } from "../../../data/NavData";
 import { Active } from "../../../types/type";
 
 import Link from "next/link";
