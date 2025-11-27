@@ -64,7 +64,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               {/* Preferences */}
               <Section title={t("settings.preferences.label")}>
                 <ThemeSelect />
-
+                <div>{t("settings.language.label")}</div>
                 <LanguageSelect />
 
                 <EmailToggle

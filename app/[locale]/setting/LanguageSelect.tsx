@@ -34,7 +34,6 @@ export default function LanguageSelect() {
 
   return (
     <CustomSelect
-      label={t("settings.language.label")}
       options={[
         { label: t("settings.language.english"), value: "en" },
         { label: t("settings.language.hausa"), value: "ha" },
