@@ -2,7 +2,6 @@
 
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { useBackdrop } from "../../../hooks/useBackdrop";
 import { useThemeStore } from "../../../zustand/useThemeStore";
 import { Props } from "../../../types/type";
