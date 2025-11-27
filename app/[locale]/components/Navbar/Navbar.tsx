@@ -3,18 +3,22 @@
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBackdrop } from "../../../hooks/useBackdrop";
-import DesktopNav from "./DesktopNav";
 import { navItems } from "../../../data/mobilNavData";
 import { Props } from "../../../types/type";
-import Link from "next/link";
-import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 import { useTranslations } from "next-intl";
+import { useThemeStore } from "../../../zustand/useThemeStore";
+import { Sun, Moon } from "lucide-react";
+
+import Link from "next/link";
+import DesktopNav from "./DesktopNav";
+import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
 export default function Navbar({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
   const goToAuth = useNavigateToAuth();
   const t = useTranslations("navbar");
   const tCTA = useTranslations("landing.cta");
+  const { theme, toggleTheme } = useThemeStore();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-sm">
@@ -29,31 +33,33 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
             RealMe AI
           </motion.a>
         </Link>
-
         {/* Desktop Navigation */}
         <DesktopNav active={active} />
-        {/* Theme Toggle */}
-      <motion.button
-        onClick={toggleTheme}
-        whileTap={{ rotate: 180 }}
-        transition={{ duration: 0.4 }}
-        className="ml-4 p-2 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-slate-700 dark:text-gray-100"
-      >
-        {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
-      </motion.button>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? (
-            <X className="w-6 h-6 text-slate-800 dark:text-gray-200" />
-          ) : (
-            <Menu className="w-6 h-6 text-slate-800 dark:text-gray-200" />
-          )}
-        </button>
+        <div>
+          {/* Theme Toggle */}
+          <motion.button
+            onClick={toggleTheme}
+            whileTap={{ rotate: 180 }}
+            transition={{ duration: 0.4 }}
+            className="ml-4 p-2 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-slate-700 dark:text-gray-100"
+          >
+            {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+          </motion.button>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? (
+              <X className="w-6 h-6 text-slate-800 dark:text-gray-200" />
+            ) : (
+              <Menu className="w-6 h-6 text-slate-800 dark:text-gray-200" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}

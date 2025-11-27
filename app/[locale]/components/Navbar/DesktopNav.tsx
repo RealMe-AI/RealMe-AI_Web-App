@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
-
+import { useTranslations } from "next-intl";
 import { useThemeStore } from "../../../zustand/useThemeStore";
 import { navItems } from "../../../data/desktopNavData";
 import { Active } from "../../../types/type";
+
+import Link from "next/link";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
-import { useTranslations } from "next-intl";
 
 export default function DesktopNav({ active }: Active) {
   const { theme, toggleTheme } = useThemeStore();
