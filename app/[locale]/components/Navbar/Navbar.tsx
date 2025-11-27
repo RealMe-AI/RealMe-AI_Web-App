@@ -32,6 +32,15 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
 
         {/* Desktop Navigation */}
         <DesktopNav active={active} />
+        {/* Theme Toggle */}
+      <motion.button
+        onClick={toggleTheme}
+        whileTap={{ rotate: 180 }}
+        transition={{ duration: 0.4 }}
+        className="ml-4 p-2 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-slate-700 dark:text-gray-100"
+      >
+        {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
+      </motion.button>
 
         {/* Mobile Menu Button */}
         <button
@@ -58,7 +67,7 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed top-20 left-0 right-0 bottom-0 bg-black/70 backdrop-blur-md z-40"
+              className="fixed top-20 left-0 right-0 bottom-0 bg-red-700 backdrop-blur-md z-70"
               onClick={() => setIsOpen(false)}
               aria-hidden="true"
             />
