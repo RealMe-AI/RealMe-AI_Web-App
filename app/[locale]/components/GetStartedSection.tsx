@@ -71,7 +71,7 @@ export default function GetStarted() {
               },
             ].map((step) => (
               <div key={step.num} className="flex items-start gap-5">
-                <div className="shrink-0 w-14 h-14 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-lg transition-transform">
+                <div className="shrink-0 w-14 h-14 rounded-full  bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white flex items-center justify-center font-bold text-xl shadow-lg transition-transform">
                   {step.num}
                 </div>
                 <div>
@@ -86,7 +86,7 @@ export default function GetStarted() {
             ))}
           </div>
 
-          <button className="mt-10 inline-flex items-center text-lg gap-2 bg-linear-to-r from-indigo-600 to-indigo-500 text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group">
+          <button className="mt-10 inline-flex items-center text-lg gap-2  bg-indigo-300 text-slate-800 dark:bg-linear-to-r from-indigo-600 to-indigo-500 dark:text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group">
             {t("landing.get_started.cta")}
             <ArrowRight className="w-5 h-5" />
           </button>
