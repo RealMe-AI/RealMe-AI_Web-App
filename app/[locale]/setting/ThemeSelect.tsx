@@ -28,7 +28,7 @@ export default function ThemeSelect() {
 
   return (
     <CustomSelect
-      label={t("settings.theme.label")}
+      label={""}
       options={[
         { label: t("settings.theme.Light"), value: "light" },
         { label: t("settings.theme.Dark"), value: "dark" },
@@ -36,7 +36,7 @@ export default function ThemeSelect() {
       ]}
       value={theme}
       onChange={(v) => handleThemeChange(v as "light" | "dark" | "system")}
-      icon={<Globe size={16} />}
+      icon={''}
     />
   );
 }

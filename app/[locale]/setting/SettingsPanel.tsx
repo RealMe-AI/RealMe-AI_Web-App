@@ -63,6 +63,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Preferences */}
               <Section title={t("settings.preferences.label")}>
+                <Globe size={16} />{t("settings.theme.label")}
                 <ThemeSelect />
 
                 <span className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
