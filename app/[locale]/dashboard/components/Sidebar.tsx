@@ -172,7 +172,7 @@ export default function Sidebar({
                 <p className="text-sm font-medium">{chat.title}</p>
                 <p className="text-xs truncate">{chat.lastMessage}</p>
               </div>
-            ))
+            )) 
           : !error && (
               <p className="text-sm text-slate-500 dark:text-slate-400 italic text-center">
                 {t("dashboard.search.no_chat")}
