@@ -108,33 +108,8 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   icon={<Globe size={16} />}
                 />
 
-                <CustomSelect
-                  label={t("settings.language.label")}
-                  options={[
-                    { label: t("settings.language.english"), value: "en" },
-                    { label: t("settings.language.hausa"), value: "ha" },
-                    { label: t("settings.language.igbo"), value: "ig" },
-                    { label: t("settings.language.yoruba"), value: "yo" },
-                  ]}
-                  value={currentLocale} // Use actual locale from URL instead of state
-                  onChange={(value: string) => {
-                    setLanguage(value);
+                <LanguageSelect />
 
-                    const pathname = window.location.pathname;
-                    const searchParams = new URLSearchParams(
-                      window.location.search
-                    );
-                    const pathnameWithoutLocale = pathname.replace(
-                      /^\/[a-z]{2}/,
-                      ""
-                    );
-                    const newPath = `/${value}${pathnameWithoutLocale}`;
-                    const query = searchParams.toString();
-
-                    router.push(query ? `${newPath}?${query}` : newPath);
-                  }}
-                  icon={<Globe size={16} />}
-                />
 
                 <EmailToggle
                   enabled={notifications.email}
