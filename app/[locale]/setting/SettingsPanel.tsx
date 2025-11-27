@@ -94,19 +94,8 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Preferences */}
               <Section title={t("settings.preferences.label")}>
-                <CustomSelect
-                  label={t("settings.theme.label")}
-                  options={[
-                    { label: t("settings.theme.Light"), value: "light" },
-                    { label: t("settings.theme.Dark"), value: "dark" },
-                    { label: t("settings.theme.System"), value: "system" },
-                  ]}
-                  value={theme}
-                  onChange={(v) =>
-                    handleThemeChange(v as "light" | "dark" | "system")
-                  }
-                  icon={<Globe size={16} />}
-                />
+                <ThemeSelect />
+
 
                 <LanguageSelect />
 
