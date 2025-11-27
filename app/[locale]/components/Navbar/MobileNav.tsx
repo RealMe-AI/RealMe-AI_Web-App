@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/mobilNavData";
+
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
+import Link from "next/link";
 
 interface MobileNavProps {
   isOpen: boolean;

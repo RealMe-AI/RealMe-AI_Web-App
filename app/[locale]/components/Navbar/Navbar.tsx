@@ -1,19 +1,18 @@
 "use client";
 
 import { Menu, X, Sun, Moon } from "lucide-react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useBackdrop } from "../../../hooks/useBackdrop";
 import { useThemeStore } from "../../../zustand/useThemeStore";
+import { Props } from "../../../types/type";
 
+import Link from "next/link";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import { Props } from "../../../types/type";
 
 export default function Navbar({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
-  const t = useTranslations("navbar");
   const { theme, toggleTheme } = useThemeStore();
 
   return (
