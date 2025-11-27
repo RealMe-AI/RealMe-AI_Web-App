@@ -1,6 +1,5 @@
 "use client";
 
-import { Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSettings } from "../../hooks/useSettings";
@@ -34,6 +33,7 @@ export default function LanguageSelect() {
 
   return (
     <CustomSelect
+      label={""}
       options={[
         { label: t("settings.language.english"), value: "en" },
         { label: t("settings.language.hausa"), value: "ha" },
@@ -42,7 +42,7 @@ export default function LanguageSelect() {
       ]}
       value={currentLocale}
       onChange={handleChange}
-      icon={<Globe size={16} />}
+      icon={""}
     />
   );
 }
