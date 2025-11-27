@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslate } from "../../hooks/useTranslate";
 
-import LanguageSelect from "./LanguageSelect";
+import LanguageSelect from "../setting/LanguageSelect";
 import Link from "next/link";
 
 export default function CTAButtons() {
