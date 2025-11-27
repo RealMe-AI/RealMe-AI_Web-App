@@ -8,7 +8,7 @@ export default function GetStarted() {
   const t = useTranslations();
 
   return (
-    <section className="relative py-20 lg:py28 bg-linear-to-br from-white via-purple-50 to-purple-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden">
+    <section className="relative py-20 lg:py28 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden">
       <div className="container max-w-7xl mx-auto px-4 md:px-6 lg-px-8 grid lg:grid-cols-2 gap-12 items-center">
         
         {/* LEFT: IMAGE */}
@@ -25,7 +25,7 @@ export default function GetStarted() {
 
               {/* Image Badge */}
               <div className="absolute bottom-6 left-6 bg-white dark:bg-gray-900 px-4 py-3 rounded-xl shadow-lg flex items-center gap-3">
-                <div className="bg-purple-100 text-indigo-600 p-2 rounded-lg">
+                <div className="bg-indigo-100 dark:bg-gray-300 p-2 rounded-lg">
                   💬
                 </div>
                 <div>
