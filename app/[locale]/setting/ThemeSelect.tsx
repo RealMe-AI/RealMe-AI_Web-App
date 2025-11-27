@@ -1,6 +1,5 @@
 "use client";
 
-import { Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 import CustomSelect from "./CustomSelect";
 import { useSettings } from "../../hooks/useSettings";
