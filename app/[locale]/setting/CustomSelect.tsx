@@ -38,7 +38,7 @@ export default function CustomSelect({
         {icon} {label}
       </span>
       <Listbox value={value} onChange={onChange}>
-        <div className="relative mt-1">
+        <div className="relative">
           <ListboxButton
             className="relative w-30 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
                        border border-slate-300 dark:border-slate-600 py-2 pl-3 pr-10 text-left

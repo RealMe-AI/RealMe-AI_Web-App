@@ -13,6 +13,8 @@ export default function CTAButtons() {
     <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
 
       {/* Primary CTA */}
+      <div className="flex flex-col items-center sm:flex-row gap-4">
+
       <motion.div
         whileHover={{ scale: 1.07, y: -2 }}
         whileTap={{ scale: 0.95 }}
@@ -26,9 +28,10 @@ export default function CTAButtons() {
         </Link>
       </motion.div>
 
-      <div className="inline-flex items-center justify-center border-2 max-w-[235.938px] border-indigo-400 text-indigo-600 dark:text-indigo-300  px-2 py-4 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all">
+      <div className="inline-flex items-center justify-center border-2 max-w-[235.938px] border-indigo-400 text-indigo-600 dark:text-indigo-300 p-1 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all">
         <LanguageSelect />
       </div>
+        </div>
     </div>
   );
 }
