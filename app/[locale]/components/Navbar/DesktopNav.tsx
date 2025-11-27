@@ -46,14 +46,14 @@ export default function DesktopNav({ active }: Active) {
       </motion.button>
 
       {/* Theme Toggle */}
-      <motion.button
+      {/* <motion.button
         onClick={toggleTheme}
         whileTap={{ rotate: 180 }}
         transition={{ duration: 0.4 }}
         className="ml-4 p-2 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-slate-700 dark:text-gray-100"
       >
         {theme === "light" ? <Sun size={18} /> : <Moon size={18} />}
-      </motion.button>
+      </motion.button> */}
     </nav>
   );
 }
