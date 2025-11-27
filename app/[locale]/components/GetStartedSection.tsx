@@ -25,7 +25,7 @@ export default function GetStarted() {
 
               {/* Image Badge */}
               <div className="absolute bottom-6 left-6 bg-white dark:bg-gray-900 px-4 py-3 rounded-xl shadow-lg flex items-center gap-3">
-                <div className="bg-purple-100 text-purple-600 p-2 rounded-lg">
+                <div className="bg-purple-100 text-indigo-600 p-2 rounded-lg">
                   💬
                 </div>
                 <div>
@@ -45,7 +45,6 @@ export default function GetStarted() {
         <div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
             {t("landing.get_started.title")}{" "}
-            <span className="text-purple-600">3</span>
           </h2>
 
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-10">
@@ -72,7 +71,7 @@ export default function GetStarted() {
               },
             ].map((step) => (
               <div key={step.num} className="flex items-start gap-5">
-                <div className="shrink-0 w-14 h-14 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-xl shadow-lg transition-transform">
+                <div className="shrink-0 w-14 h-14 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-lg transition-transform">
                   {step.num}
                 </div>
                 <div>
@@ -87,7 +86,7 @@ export default function GetStarted() {
             ))}
           </div>
 
-          <button className="mt-10 inline-flex items-center text-lg gap-2 bg-linear-to-r from-purple-600 to-indigo-500 text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group">
+          <button className="mt-10 inline-flex items-center text-lg gap-2 bg-linear-to-r from-indigo-600 to-indigo-500 text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group">
             {t("landing.get_started.cta")}
             <ArrowRight className="w-5 h-5" />
           </button>
