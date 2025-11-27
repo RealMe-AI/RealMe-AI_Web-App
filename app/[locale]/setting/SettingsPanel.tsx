@@ -27,17 +27,11 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
   const {
     language,
-    setLanguage,
     notifications,
     setNotifications,
   } = useSettings();
 
   const openEditProfile = useUserStore((s) => s.openEditProfile);
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const params = useParams();
-  const currentLocale = params.locale as string;
   
 
   return (

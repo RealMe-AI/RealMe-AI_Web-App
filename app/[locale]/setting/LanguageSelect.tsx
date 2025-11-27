@@ -3,9 +3,10 @@
 import { Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import CustomSelect from "./CustomSelect";
-import { useSettings } from "../hooks/useSettings";
+import { useSettings } from "../../hooks/useSettings";
 import { useParams } from "next/navigation";
+
+import CustomSelect from "./CustomSelect";
 
 export default function LanguageSelect() {
   const t = useTranslations();
