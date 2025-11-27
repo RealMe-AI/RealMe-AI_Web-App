@@ -3,8 +3,8 @@
 import { Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 import CustomSelect from "./CustomSelect";
-import { useSettings } from "../hooks/useSettings";
-import { useThemeStore } from "../zustand/useThemeStore";
+import { useSettings } from "../../hooks/useSettings";
+import { useThemeStore } from "../../zustand/useThemeStore";
 
 export default function ThemeSelect() {
   const t = useTranslations();

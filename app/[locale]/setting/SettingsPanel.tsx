@@ -26,33 +26,19 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const t = useTranslations();
 
   const {
-    theme,
-    setTheme,
     language,
     setLanguage,
     notifications,
     setNotifications,
   } = useSettings();
 
-  const applyTheme = useThemeStore((s) => s.setTheme);
   const openEditProfile = useUserStore((s) => s.openEditProfile);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = useParams();
   const currentLocale = params.locale as string;
-  const handleThemeChange = (selected: "light" | "dark" | "system") => {
-    setTheme(selected);
-
-    if (selected === "system") {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      applyTheme(prefersDark ? "dark" : "light");
-    } else {
-      applyTheme(selected);
-    }
-  };
+  
 
   return (
     <AnimatePresence>
