@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
 import { Active } from "../../../types/type";
+import { useAboutStore } from "../../../zustand/useAboutStore";
 
 import Link from "next/link";
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
 export default function DesktopNav({ active }: Active) {
   const goToAuth = useNavigateToAuth();
+  const { openAbout } = useAboutStore();
 
   // Separate namespaces
   const tNav = useTranslations("navbar");
@@ -18,18 +20,21 @@ export default function DesktopNav({ active }: Active) {
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
       {navItems.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={`font-semibold transition-colors ${
-            active === item.href
-              ? "text-indigo-500"
-              : "text-slate-800 dark:text-gray-300 hover:text-indigo-400"
-          }`}
-        >
-          {tNav(item.key)}
-        </Link>
-      ))}
+  <button
+    key={item.key}
+    onClick={() => {
+      if (item.key === "about") {
+        openAbout();
+        return;
+      }
+      // fallback for other links
+      router.push(item.href);
+    }}
+    className="..."
+  >
+    {t(item.key)}
+  </button>
+))}
 
       {/* CTA Button */}
       <motion.button
