@@ -6,7 +6,8 @@ import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../zustand/useUserStore";
 import { useTranslations } from "next-intl";
 
-
+import ThemeSelect from "./ThemeSelect";
+import LanguageSelect from "./LanguageSelect";
 import EditProfileModal from "./EditProfileModal";
 import EmailToggle from "./EmailToggle";
 
@@ -18,13 +19,9 @@ interface SettingsPanelProps {
 export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const t = useTranslations();
 
-  const {
-    notifications,
-    setNotifications,
-  } = useSettings();
+  const { notifications, setNotifications } = useSettings();
 
   const openEditProfile = useUserStore((s) => s.openEditProfile);
-  
 
   return (
     <AnimatePresence>
@@ -68,9 +65,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               <Section title={t("settings.preferences.label")}>
                 <ThemeSelect />
 
-
                 <LanguageSelect />
-
 
                 <EmailToggle
                   enabled={notifications.email}

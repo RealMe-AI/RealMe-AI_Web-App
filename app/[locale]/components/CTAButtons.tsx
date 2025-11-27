@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useTranslate } from "../../hooks/useTranslate";
+
+import LanguageSelect from "./LanguageSelect";
+import Link from "next/link";
 
 export default function CTAButtons() {
   const { t } = useTranslate();
@@ -29,7 +31,7 @@ export default function CTAButtons() {
         href="#pricing"
         className="inline-flex items-center justify-center border-2 border-indigo-400 text-indigo-600 dark:text-indigo-300 px-8 py-4 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all"
       >
-        {t("landing.cta.secondary")}
+        <LanguageSelect />
       </Link>
     </div>
   );
