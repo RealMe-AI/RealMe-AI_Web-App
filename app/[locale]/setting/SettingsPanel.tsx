@@ -4,17 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../zustand/useUserStore";
-import { useThemeStore } from "../../zustand/useThemeStore";
 import { useTranslations } from "next-intl";
-import {
-  useRouter,
-  usePathname,
-  useSearchParams,
-  useParams,
-} from "next/navigation";
+
 
 import EditProfileModal from "./EditProfileModal";
-import CustomSelect from "./CustomSelect";
 import EmailToggle from "./EmailToggle";
 
 interface SettingsPanelProps {
@@ -26,7 +19,6 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const t = useTranslations();
 
   const {
-    language,
     notifications,
     setNotifications,
   } = useSettings();
