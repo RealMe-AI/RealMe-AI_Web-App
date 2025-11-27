@@ -36,9 +36,7 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
         {/* Desktop Navigation */}
         <DesktopNav active={active} />
 
-        <div className="flex items-center 
-        
-        ">
+        <div className="flex items-center">
           {/* Theme Toggle */}
           <motion.button
             onClick={toggleTheme}
