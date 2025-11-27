@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { navItems } from "../../../data/mobilNavData";
+import { navItems } from "../../../data/NavData";
 
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 import Link from "next/link";
