@@ -85,3 +85,9 @@ export type ModalState = {
   closeSettings: () => void;
   closeAll: () => void;
 };
+
+export type AboutStore = {
+  isOpen: boolean;
+  openAbout: () => void;
+  closeAbout: () => void;
+}
