@@ -28,7 +28,7 @@ export default function CTAButtons() {
         </Link>
       </motion.div>
 
-      <div className="inline-flex items-center justify-center max-w-[235.938px] bg-indigo-300 dark:bg-indigo-600 p-2 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all">
+      <div className="inline-flex items-center justify-center max-w-[235.938px] bg-indigo-300 dark:bg-indigo-500 p-2 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all">
         <LanguageSelect />
       </div>
         </div>
