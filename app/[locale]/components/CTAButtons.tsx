@@ -26,13 +26,9 @@ export default function CTAButtons() {
         </Link>
       </motion.div>
 
-      {/* Secondary CTA */}
-      <Link
-        href="#pricing"
-        className="inline-flex items-center justify-center border-2 border-indigo-400 text-indigo-600 dark:text-indigo-300 px-8 py-4 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all"
-      >
+      <div className="inline-flex items-center justify-center border-2 border-indigo-400 text-indigo-600 dark:text-indigo-300 px-8 py-4 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-800 transition-all">
         <LanguageSelect />
-      </Link>
+      </div>
     </div>
   );
 }

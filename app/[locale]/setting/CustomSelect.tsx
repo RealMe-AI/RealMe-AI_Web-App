@@ -34,7 +34,7 @@ export default function CustomSelect({
 
   return (
     <div className="flex flex-col gap-1">
-      <span>
+      <span className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
         {icon} {label}
       </span>
       <Listbox value={value} onChange={onChange}>
