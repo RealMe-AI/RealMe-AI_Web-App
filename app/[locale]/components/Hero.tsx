@@ -27,7 +27,7 @@ export default function Hero() {
           className="text-center lg:text-left space-y-8"
         >
           {/* Badge */}
-            <div className="p-3 rounded-full bg-indigo-100/50 dark:bg-gray-900/50 max-w-max mx-auto lg:mx-0 mb-4">
+            <div className="py-2 px-4 rounded-full bg-indigo-100 dark:bg-gray-900/50 max-w-max mx-auto lg:mx-0 mb-4">
           <div className="flex items-center justify-center md:justify-start gap-2 text-sm font-semibold text-indigo-400">
 
             <Brain className="w-5 h-5" />
