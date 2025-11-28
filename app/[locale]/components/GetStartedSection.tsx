@@ -88,7 +88,7 @@ export default function GetStarted() {
           </div>
 
           <Link
-            href="/auth/sign-up"
+            href="/auth"
             className="mt-10 inline-flex items-center text-lg gap-2  bg-indigo-300 text-slate-800 dark:bg-linear-to-r from-indigo-600 to-indigo-500 dark:text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group"
           >
             {t("landing.get_started.cta")}

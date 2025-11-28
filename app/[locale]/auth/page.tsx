@@ -14,7 +14,7 @@ export default function AuthPage() {
       {/* Fixed Back to Home Button */}
       <Link
         href="/"
-        className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 z-20 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-700 dark:hover:bg-slate-600/90 transition"
+        className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 z-20 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-200 dark:hover:bg-slate-600/90 transition"
       >
         <span className="text-xl">←</span> {t("auth.page.back_button")}
       </Link>
