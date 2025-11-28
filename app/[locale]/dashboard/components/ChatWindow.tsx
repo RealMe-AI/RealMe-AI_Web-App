@@ -3,12 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
+import { Plus, Mic, FileIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import Image from "next/image";
 import ChatMessage from "./ChatMessage";
 import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
-import { Plus, Mic, FileIcon } from "lucide-react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
 
 export default function ChatWindow() {
   const t = useTranslations();

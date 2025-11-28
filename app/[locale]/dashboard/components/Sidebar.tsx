@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Search, X } from "lucide-react";
-import ProfileFooter from "./ProfileFooter";
 import { useState, useEffect } from "react";
-
 import { useTranslations } from "use-intl";
+
+import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import useModalStore from "../../../zustand/modalStore";
 

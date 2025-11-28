@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MessageActions from "../components/MessageActions";
 import { ChatMessageProps } from "../../../types/type";
 import { cn } from "../../../lib/utils";
-import Image from "next/image";
 import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+
+import Image from "next/image";
+import MessageActions from "../components/MessageActions";
 
 export default function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.sender === "user";
