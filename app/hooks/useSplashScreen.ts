@@ -9,8 +9,11 @@ export function useSplashScreen() {
     const hasSeen = localStorage.getItem("hasSeenSplash");
 
     if (!hasSeen) {
-      setShowSplash(true);
-      localStorage.setItem("hasSeenSplash", "true");
+      // Defer setState to avoid synchronous update inside effect
+      requestAnimationFrame(() => {
+        setShowSplash(true);
+        localStorage.setItem("hasSeenSplash", "true");
+      });
     }
   }, []);
 
