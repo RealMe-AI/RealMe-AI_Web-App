@@ -4,51 +4,30 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
 import { useAboutStore } from "../../../zustand/useAboutStore";
-import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 import { useRouter } from "next/navigation";
+
+import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
 export default function DesktopNav() {
   const router = useRouter();
   const goToAuth = useNavigateToAuth();
-  // select the exact function from the store to avoid TS 'unknown' issues
-  const openAbout = useAboutStore((s) => s.openAbout);
+  const { openAbout } = useAboutStore();
 
   const tNav = useTranslations("navbar");
   const tCTA = useTranslations("landing.cta");
-
-  const handleNavClick = async (item: { href: string; key: string }) => {
-    // Open About overlay
-    if (item.key === "about") {
-      openAbout();
-      return;
-    }
-
-    // If the href is an in-page anchor like "#help", scroll to the element if it exists
-    if (item.href.startsWith("#")) {
-      const id = item.href.slice(1);
-      // Try to find element on the page
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        // Optionally update the hash in URL without reloading
-        history.replaceState(null, "", `${window.location.pathname}#${id}`);
-        return;
-      }
-      // if element isn't on the page, fallback to pushing URL with hash
-      router.push(`${window.location.pathname}${item.href}`);
-      return;
-    }
-
-    // Fallback for normal links
-    router.push(item.href);
-  };
 
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
       {navItems.map((item) => (
         <button
           key={item.key}
-          onClick={() => handleNavClick(item)}
+          onClick={() => {
+            if (item.key === "about") {
+              openAbout();
+              return;
+            }
+            router.push(item.href);
+          }}
           className="
             font-semibold 
             text-slate-800 dark:text-gray-300 
