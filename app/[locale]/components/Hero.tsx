@@ -63,15 +63,15 @@ export default function Hero() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
-          className="relative group"
+          className="relative group "
         >
           <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-indigo-100 dark:ring-indigo-900/30 transform transition duration-900 hover:scale-105 hover:shadow-indigo-100/30">
             <Image
-              src="/hero-image.png"
+              src="/hero-image"
               alt="hero-image"
-              width={900}
-              height={600}
-              className="object-cover w-full h-1/4 transition-transform duration-700 group-hover:scale-110"
+              width={50}
+              height={50}
+              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
           </div>
 
