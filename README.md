@@ -34,3 +34,114 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+```
+realme-ai
+├─ app
+│  ├─ api
+│  │  ├─ auth
+│  │  │  └─ route.ts
+│  │  └─ chat
+│  │     └─ route.ts
+│  ├─ data
+│  │  ├─ featuresData.ts
+│  │  ├─ heroData.ts
+│  │  ├─ NavData.ts
+│  │  └─ planData.ts
+│  ├─ favicon.ico
+│  ├─ globals.css
+│  ├─ hooks
+│  │  ├─ useActiveSection.ts
+│  │  ├─ useBackdrop.ts
+│  │  ├─ useNavigateToAuth.ts
+│  │  ├─ useSettings.ts
+│  │  ├─ useThemeToggle.ts
+│  │  ├─ useTranslate.ts
+│  │  └─ useVoiceInput.ts
+│  ├─ i18n
+│  │  ├─ en.ts
+│  │  ├─ ha.ts
+│  │  ├─ ig.ts
+│  │  └─ yo.ts
+│  ├─ lib
+│  │  └─ utils.ts
+│  ├─ slash-screen
+│  │  └─ SplashScreen.tsx
+│  ├─ theme-provider
+│  │  └─ theme-provider.tsx
+│  ├─ transcribe
+│  │  └─ route.ts
+│  ├─ types
+│  │  └─ type.ts
+│  ├─ utils
+│  │  └─ cropUtils.ts
+│  ├─ zustand
+│  │  ├─ modalStore.ts
+│  │  ├─ sendFileMessage.ts
+│  │  ├─ useAboutStore.ts
+│  │  ├─ useChatStore.ts
+│  │  ├─ useLanguageStore.ts
+│  │  ├─ useSidebarStore.ts
+│  │  ├─ useThemeStore.ts
+│  │  └─ useUserStore.ts
+│  └─ [locale]
+│     ├─ about
+│     │  └─ page.tsx
+│     ├─ account
+│     │  ├─ AccountInfoModal.tsx
+│     │  ├─ AvatarCropper.tsx
+│     │  └─ AvatarEditor.tsx
+│     ├─ auth
+│     │  └─ page.tsx
+│     ├─ components
+│     │  ├─ auth
+│     │  │  ├─ AuthForm.tsx
+│     │  │  └─ Tabs.tsx
+│     │  ├─ Badge.tsx
+│     │  ├─ CTAButtons.tsx
+│     │  ├─ Features.tsx
+│     │  ├─ Footer.tsx
+│     │  ├─ GetStartedSection.tsx
+│     │  ├─ Hero.tsx
+│     │  └─ Navbar
+│     │     ├─ DesktopNav.tsx
+│     │     ├─ MobileNav.tsx
+│     │     └─ Navbar.tsx
+│     ├─ dashboard
+│     │  ├─ components
+│     │  │  ├─ ChatMessage.tsx
+│     │  │  ├─ ChatWindow.tsx
+│     │  │  ├─ FileUploadPopup.tsx
+│     │  │  ├─ MessageActions.tsx
+│     │  │  ├─ ProfileFooter.tsx
+│     │  │  ├─ Sidebar.tsx
+│     │  │  └─ VoiceInput.tsx
+│     │  └─ page.tsx
+│     ├─ HomeClient.tsx
+│     ├─ layout.tsx
+│     ├─ page.tsx
+│     ├─ pricingplans
+│     │  └─ page.tsx
+│     └─ setting
+│        ├─ CustomSelect.tsx
+│        ├─ EditProfileModal.tsx
+│        ├─ EmailToggle.tsx
+│        ├─ LanguageSelect.tsx
+│        ├─ SettingsPanel.tsx
+│        └─ ThemeSelect.tsx
+├─ eslint.config.mjs
+├─ i18n
+│  ├─ request.ts
+│  └─ routing.ts
+├─ next.config.ts
+├─ package-lock.json
+├─ package.json
+├─ postcss.config.mjs
+├─ proxy.ts
+├─ public
+│  └─ avatar.png
+├─ README.md
+├─ structure.txt
+└─ tsconfig.json
+
+```
