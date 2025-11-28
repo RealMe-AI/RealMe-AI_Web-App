@@ -17,6 +17,7 @@ export type Active = {
 export type NavItem = {
   href: string;
   key: string;
+  action?: "navigate" | "modal";
 };
 
 export type Toggle = {
