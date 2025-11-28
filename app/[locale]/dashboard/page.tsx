@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { LayoutDashboard } from "lucide-react";
+import { useSidebarStore } from "../../zustand/useSidebarStore";
+
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
-import { useSidebarStore } from "../../zustand/useSidebarStore";
 
 export default function Page() {
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);

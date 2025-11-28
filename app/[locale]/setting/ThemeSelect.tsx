@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import CustomSelect from "./CustomSelect";
 import { useSettings } from "../../hooks/useSettings";
 import { useThemeStore } from "../../zustand/useThemeStore";
+
+import CustomSelect from "./CustomSelect";
 
 export default function ThemeSelect() {
   const t = useTranslations();
