@@ -3,13 +3,12 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
-import { useRouter, Link } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
 export default function DesktopNav() {
-  const router = useRouter();
   const goToAuth = useNavigateToAuth();
 
   const tNav = useTranslations("navbar");
@@ -20,7 +19,7 @@ export default function DesktopNav() {
       {navItems.map((item) => (
   <Link 
     key={item.key}
-    onClick={() => router.push(item.href)}
+    href={item.href}
     className="
       font-semibold 
       text-slate-800 dark:text-gray-300 
