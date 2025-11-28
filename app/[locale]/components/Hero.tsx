@@ -1,10 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import { CheckCircle2, Languages, Brain } from "lucide-react";
+import { useTranslations } from "next-intl";
+import {Link} from "@/i18n/routing";
+
 import Image from "next/image";
 import CTAButtons from "./CTAButtons";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
 
 export default function Hero() {
   const t = useTranslations("landing.hero");
