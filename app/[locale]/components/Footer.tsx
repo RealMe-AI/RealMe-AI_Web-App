@@ -7,7 +7,7 @@ export default function Footer() {
   const t = useTranslations("landing.footer");
 
   return (
-    <footer className="bg-slate-900 text-slate-200">
+    <footer className="w-full bg-slate-900 text-slate-200">
       <div className="border-t border-slate-800 text-slate-500 text-sm py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center md:items-start justify-between gap-4">
 

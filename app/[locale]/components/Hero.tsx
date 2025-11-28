@@ -81,13 +81,13 @@ export default function Hero() {
             transition={{ type: "spring", stiffness: 250 }}
             className="absolute -bottom-10 -left-6"
           >
-            <div className="flex items-center gap-3 bg-white/90 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-xl shadow-lg border border-indigo-100 dark:border-indigo-900/30">
-              <Languages className="w-6 h-6 text-indigo-400" />
+            <div className="max-sm:p-2 max-sm:gap-1 flex items-center gap-3 bg-white/90 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-xl shadow-lg border border-indigo-100 dark:border-indigo-900/30">
+              <Languages className="max-sm:w-4 w-6 h-6 text-indigo-400" />
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                   4
                 </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className=" text-xs text-gray-500 dark:text-gray-400">
                   {t("badge2")}
                 </span>
               </div>
@@ -100,8 +100,8 @@ export default function Hero() {
             transition={{ type: "spring", stiffness: 250 }}
             className="absolute -top-10 -right-6"
           >
-            <div className="flex items-center gap-3 bg-white/90 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-xl shadow-lg border border-indigo-100 dark:border-indigo-900/30">
-              <Brain className="w-6 h-6 text-indigo-400" />
+            <div className="max-sm:p-2 max-sm:gap-1 flex items-center gap-3 bg-white/90 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-xl shadow-lg border border-indigo-100 dark:border-indigo-900/30">
+              <Brain className="max-sm:w-4 w-6 h-6 text-indigo-400" />
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                   GPT-5
