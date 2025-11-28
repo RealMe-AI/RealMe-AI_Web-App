@@ -70,7 +70,7 @@ export default function Hero() {
               src="/hero-image.jpg"
               alt="AI visual"
               width={900}
-              height={600}
+              height={800}
               className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
           </div>
