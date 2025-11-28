@@ -27,10 +27,13 @@ export default function Hero() {
           className="text-center lg:text-left space-y-8"
         >
           {/* Badge */}
-          <div className="flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-400 mb-4">
+            <div className="p-3 rounded-full bg-indigo-100/50 dark:bg-gray-900/50 max-w-max mx-auto lg:mx-0 mb-4">
+          <div className="flex items-center justify-center md:justify-start gap-2 text-sm font-semibold text-indigo-400">
+
             <Brain className="w-5 h-5" />
             <span>{t("first")}</span>
           </div>
+            </div>
 
           {/* Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-600 dark:text-white/80 leading-tight">
