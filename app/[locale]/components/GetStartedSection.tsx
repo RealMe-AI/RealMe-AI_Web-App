@@ -21,7 +21,7 @@ export default function GetStarted() {
                 alt={t("landing.get_started.image.title")}
                 width={900}
                 height={900}
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-center"
               />
 
               {/* Image Badge */}

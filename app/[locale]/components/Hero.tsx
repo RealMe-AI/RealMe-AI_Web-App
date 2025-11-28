@@ -67,11 +67,11 @@ export default function Hero() {
         >
           <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-indigo-100 dark:ring-indigo-900/30 transform transition duration-900 hover:scale-105 hover:shadow-indigo-100/30">
             <Image
-              src="/hero-image"
+              src="/hero-image.png"
               alt="hero-image"
               width={50}
               height={50}
-              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+              className="object-center w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
           </div>
 
