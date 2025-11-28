@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Languages, Brain } from "lucide-react";
 import { useTranslations } from "next-intl";
-import {Link} from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 
 import Image from "next/image";
 import CTAButtons from "./CTAButtons";
@@ -35,7 +35,7 @@ export default function Hero() {
           className="text-center lg:text-left space-y-8"
         >
           {/* Badge */}
-          <div className="flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-600 dark:text-indigo-400 mb-4">
+          <div className="flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-300 dark:text-indigo-400 mb-4">
             <Brain className="w-5 h-5" />
             <span>{t("first")}</span>
           </div>
@@ -57,11 +57,8 @@ export default function Hero() {
           {/* Feature list */}
           <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start text-sm text-slate-700 dark:text-slate-400">
             {["offer1", "offer2", "offer3"].map((key) => (
-              <div
-                key={key}
-                className="flex items-center gap-2 justify-center"
-              >
-                <CheckCircle2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+              <div key={key} className="flex items-center gap-2 justify-center">
+                <CheckCircle2 className="w-5 h-5 text-indigo-400 dark:text-indigo-400" />
                 <span>{t(key)}</span>
               </div>
             ))}
@@ -112,7 +109,7 @@ export default function Hero() {
             className="absolute -top-10 -right-6"
           >
             <div className="flex items-center gap-3 bg-white/90 dark:bg-gray-900/80 backdrop-blur-md p-4 rounded-xl shadow-lg border border-indigo-100 dark:border-indigo-900/30">
-              <Brain className="w-6 h-6 text-indigo-600" />
+              <Brain className="w-6 h-6 text-indigo-400" />
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                   GPT-5
