@@ -71,7 +71,7 @@ export default function Hero() {
               alt="hero-image"
               width={900}
               height={600}
-              className="object-cover w-full h-auto transition-transform duration-700 group-hover:scale-110"
+              className="object-cover w-full h-1/4 transition-transform duration-700 group-hover:scale-110"
             />
           </div>
 

@@ -30,7 +30,7 @@ export default function Features(): JSX.Element {
         {t("landing.features.subtitle")}
       </p>
 
-      <div className="mt-8 grid md:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto mt-8 grid md:grid-cols-3 gap-6">
         {items.map((it) => (
           <div
             key={it.key}
