@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { useBackdrop } from "../../../hooks/useBackdrop";
 import { useThemeStore } from "../../../zustand/useThemeStore";
 import { Props } from "../../../types/type";
+import { Link } from "@/i18n/routing";
 
-import Link from "next/link";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 
@@ -23,7 +23,7 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
         </Link>
         <div className="flex items-center gap-6">
           {/* Desktop Nav */}
-          <DesktopNav active={active} />
+          <DesktopNav />
 
           {/* Right controls (Theme toggle + Mobile Menu button) */}
 

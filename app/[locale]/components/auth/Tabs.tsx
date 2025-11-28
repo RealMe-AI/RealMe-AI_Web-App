@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslate } from "../../../hooks/useTranslate"; 
+
 interface TabsProps {
   isSignUp: boolean;
   setIsSignUp: (v: boolean) => void;
