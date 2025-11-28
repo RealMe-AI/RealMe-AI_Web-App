@@ -3,21 +3,26 @@
 import { useEffect, useState } from "react";
 
 export function useSplashScreen() {
+  const [mounted, setMounted] = useState(false);
   const [showSplash, setShowSplash] = useState(false);
 
   useEffect(() => {
-    const hasSeen = localStorage.getItem("hasSeenSplash");
+    // Defer to avoid synchronous setState warning
+    const id = requestAnimationFrame(() => {
+      setMounted(true);
 
-    if (!hasSeen) {
-      // Defer setState to avoid synchronous update inside effect
-      requestAnimationFrame(() => {
+      const hasSeen = localStorage.getItem("hasSeenSplash");
+
+      if (!hasSeen) {
         setShowSplash(true);
         localStorage.setItem("hasSeenSplash", "true");
-      });
-    }
+      }
+    });
+
+    return () => cancelAnimationFrame(id);
   }, []);
 
   const finishSplash = () => setShowSplash(false);
 
-  return { showSplash, finishSplash };
+  return { mounted, showSplash, finishSplash };
 }

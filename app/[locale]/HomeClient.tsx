@@ -11,9 +11,12 @@ import { useState } from "react";
 import { useSplashScreen } from "../hooks/useSplashScreen";
 
 export default function Home() {
-  const { showSplash, finishSplash } = useSplashScreen();
+  const { mounted, showSplash, finishSplash } = useSplashScreen();
   const [isOpen, setIsOpen] = useState(false);
   const [active] = useState<string>("home");
+
+  // ❗ Prevent SSR/client mismatch
+  if (!mounted) return null;
 
   return (
     <>
