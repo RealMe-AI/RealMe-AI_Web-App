@@ -17,7 +17,7 @@ export default function GetStarted() {
           <div className="relative">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src={"/"}
+                src="/"
                 alt={t("landing.get_started.image.title")}
                 width={900}
                 height={900}

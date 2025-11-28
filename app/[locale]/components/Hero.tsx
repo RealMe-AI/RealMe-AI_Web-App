@@ -70,7 +70,7 @@ export default function Hero() {
               src="/hero-image.png"
               alt="hero-image"
               width={900}
-              height={800}
+              height={300}
               className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
           </div>
