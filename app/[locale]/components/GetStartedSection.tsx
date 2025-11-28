@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/routing";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -11,7 +12,6 @@ export default function GetStarted() {
   return (
     <section className="relative py-20 lg:py28 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden">
       <div className="container max-w-7xl mx-auto px-4 md:px-6 lg-px-8 grid lg:grid-cols-2 gap-12 items-center">
-        
         {/* LEFT: IMAGE */}
         <div className="order-2 lg:order-1">
           <div className="relative">
@@ -87,10 +87,13 @@ export default function GetStarted() {
             ))}
           </div>
 
-          <button className="mt-10 inline-flex items-center text-lg gap-2  bg-indigo-300 text-slate-800 dark:bg-linear-to-r from-indigo-600 to-indigo-500 dark:text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group">
+          <Link
+            href="/auth/sign-up"
+            className="mt-10 inline-flex items-center text-lg gap-2  bg-indigo-300 text-slate-800 dark:bg-linear-to-r from-indigo-600 to-indigo-500 dark:text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:opacity-90 transition-all transform hover:scale-105 group"
+          >
             {t("landing.get_started.cta")}
             <ArrowRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -15,7 +15,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [active] = useState<string>("home");
 
-  // ❗ Prevent SSR/client mismatch
+  // Prevent SSR/client mismatch
   if (!mounted) return null;
 
   return (
