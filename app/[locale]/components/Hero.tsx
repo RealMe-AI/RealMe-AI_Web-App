@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Languages, Brain } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 
 import Image from "next/image";
 import CTAButtons from "./CTAButtons";
