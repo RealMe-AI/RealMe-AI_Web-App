@@ -19,25 +19,25 @@ export default function DesktopNav() {
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
       {navItems.map((item) => (
-  <button
-    key={item.key}
-    onClick={() => {
-      if (item.action === "modal") {
-        openAbout();
-      } else {
-        router.push(item.href);
-      }
-    }}
-    className="
+        <button
+          key={item.key}
+          onClick={() => {
+            if (item.action === "modal") {
+              openAbout();
+            } else {
+              router.push(item.href);
+            }
+          }}
+          className="
       font-semibold 
       text-slate-800 dark:text-gray-300 
       hover:text-indigo-500 
       transition-colors
     "
-  >
-    {tNav(item.key)}
-  </button>
-))}
+        >
+          {tNav(item.key)}
+        </button>
+      ))}
 
       {/* CTA Button */}
       <motion.button

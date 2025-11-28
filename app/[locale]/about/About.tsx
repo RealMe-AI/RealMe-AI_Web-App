@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useAboutStore } from "../../zustand/useAboutStore";
+
 import Image from "next/image";
 
-export default function AboutOverlay() {
+export default function About() {
   const { isOpen, closeAbout } = useAboutStore();
 
   // Close on ESC key
