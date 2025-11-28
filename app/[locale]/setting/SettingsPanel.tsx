@@ -5,6 +5,7 @@ import { X, Globe, Trash2, Edit2 } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../zustand/useUserStore";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 import ThemeSelect from "./ThemeSelect";
 import LanguageSelect from "./LanguageSelect";
@@ -89,13 +90,19 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Support */}
               <Section title={t("settings.support.label")}>
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                <Link 
+                href={""}
+                className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                >
                   <Globe size={16} /> {t("settings.support.contact")}
-                </button>
+                </Link>
 
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                <Link 
+                href={""}
+                className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                >
                   <Globe size={16} /> {t("settings.support.faq")}
-                </button>
+                </Link>
               </Section>
 
               {/* Danger */}

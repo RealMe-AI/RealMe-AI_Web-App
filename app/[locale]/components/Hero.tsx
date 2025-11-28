@@ -69,9 +69,9 @@ export default function Hero() {
             <Image
               src="/hero-image.png"
               alt="hero-image"
-              width={50}
-              height={50}
-              className="object-center w-full h-full transition-transform duration-700 group-hover:scale-110"
+              width={900}
+              height={600}
+              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
           </div>
 
