@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import AuthForm from "../components/auth/AuthForm";
 import { useTranslate } from "../../hooks/useTranslate";
-import Link from "next/link";
+import {Link} from "@/i18n/routing";
 
 export default function AuthPage() {
   const { t } = useTranslate();
