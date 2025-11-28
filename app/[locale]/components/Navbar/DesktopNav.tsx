@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
-import { useAboutStore } from "../../../zustand/useAboutStore";
 import { useRouter } from "next/navigation";
 
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
@@ -11,7 +10,6 @@ import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 export default function DesktopNav() {
   const router = useRouter();
   const goToAuth = useNavigateToAuth();
-  const { openAbout } = useAboutStore();
 
   const tNav = useTranslations("navbar");
   const tCTA = useTranslations("landing.cta");
@@ -19,25 +17,19 @@ export default function DesktopNav() {
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
       {navItems.map((item) => (
-        <button
-          key={item.key}
-          onClick={() => {
-            if (item.action === "modal") {
-              openAbout();
-            } else {
-              router.push(item.href);
-            }
-          }}
-          className="
+  <button
+    key={item.key}
+    onClick={() => router.push(item.href)}
+    className="
       font-semibold 
       text-slate-800 dark:text-gray-300 
       hover:text-indigo-500 
       transition-colors
     "
-        >
-          {tNav(item.key)}
-        </button>
-      ))}
+  >
+    {tNav(item.key)}
+  </button>
+))}
 
       {/* CTA Button */}
       <motion.button
