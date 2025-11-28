@@ -21,6 +21,14 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
         <Link href="/" className="font-bold text-lg">
           RealMe AI
         </Link>
+        {/* 🧪 Dev shortcut to Dashboard (NOT translated) */}
+                <Link
+                  href="/dashboard"
+                  className="px-6 py-3 rounded-xl bg-slate-700 text-white hover:bg-slate-800 transition"
+                >
+                  Go to Dashboard (Dev Only)
+                </Link>
+        
         <div className="flex items-center gap-6">
           {/* Desktop Nav */}
           <DesktopNav />

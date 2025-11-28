@@ -18,13 +18,6 @@ export default function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-12 items-center">
-        {/* 🧪 Dev shortcut to Dashboard (NOT translated) */}
-        <Link
-          href="/dashboard"
-          className="px-6 py-3 rounded-xl bg-slate-700 text-white hover:bg-slate-800 transition"
-        >
-          Go to Dashboard (Dev Only)
-        </Link>
 
         {/* LEFT SECTION */}
         <motion.div
