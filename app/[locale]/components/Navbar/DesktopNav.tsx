@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
-import { useRouter } from "next/navigation";
+import { useRouter, Link } from "next-intl";
+
 
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
@@ -17,7 +18,7 @@ export default function DesktopNav() {
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
       {navItems.map((item) => (
-  <button
+  <Link 
     key={item.key}
     onClick={() => router.push(item.href)}
     className="
@@ -28,7 +29,7 @@ export default function DesktopNav() {
     "
   >
     {tNav(item.key)}
-  </button>
+  </Link>
 ))}
 
       {/* CTA Button */}
