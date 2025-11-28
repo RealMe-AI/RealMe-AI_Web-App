@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useTranslate } from "../../hooks/useTranslate";
+import {Link} from "@/i18n/routing";
 
 import LanguageSelect from "../setting/LanguageSelect";
-import Link from "next/link";
 
 export default function CTAButtons() {
   const { t } = useTranslate();
