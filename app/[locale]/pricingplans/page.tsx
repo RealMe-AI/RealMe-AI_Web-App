@@ -24,7 +24,7 @@ export default function PricingPlans() {
         className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back
+        {t("auth.page.back_button")}
       </button>
     </div>
       <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
@@ -33,7 +33,7 @@ export default function PricingPlans() {
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scale: 1.01 }}
+          
           className="flex-1 group"
         >
           <div className="h-full bg-linear-to-br from-indigo-100 to-white dark:from-neutral-900 dark:to-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-200">
@@ -75,6 +75,7 @@ export default function PricingPlans() {
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.01 }}
           className="flex-1"
         >
           <div className="relative h-full rounded-2xl p-6 bg-linear-to-br from-indigo-600 to-violet-500 dark:from-indigo-700 dark:to-violet-600 text-white flex flex-col">
