@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
-import {Link} from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
@@ -13,7 +13,7 @@ interface MobileNavProps {
   active: string;
 }
 
-export default function MobileNav({ isOpen, setIsOpen, active }: MobileNavProps) {
+export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
   const t = useTranslations("navbar");
   const tCTA = useTranslations("landing.cta");
   const goToAuth = useNavigateToAuth();
@@ -43,18 +43,17 @@ export default function MobileNav({ isOpen, setIsOpen, active }: MobileNavProps)
             className="absolute top-20 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-t border-gray-200 dark:border-slate-700 z-50 md:hidden"
           >
             <div className="px-6 py-6 flex flex-col space-y-5">
-
               {/* Navigation Links */}
               {navItems.map((item) => (
                 <Link
-                  key={item.href}
+                  key={item.key}
                   href={item.href}
-                  className={`font-semibold ${
-                    active === item.href
-                      ? "text-indigo-500"
-                      : "text-slate-800 dark:text-gray-300 hover:text-indigo-400"
-                  }`}
-                  onClick={() => setIsOpen(false)}
+                  className="
+      font-semibold 
+      text-slate-800 dark:text-gray-300 
+      hover:text-indigo-500 
+      transition-colors
+    "
                 >
                   {t(item.key)}
                 </Link>

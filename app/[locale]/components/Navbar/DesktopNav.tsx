@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { navItems } from "../../../data/NavData";
 import { Link } from "@/i18n/routing";
 
-
 import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
 
 export default function DesktopNav() {
@@ -17,19 +16,19 @@ export default function DesktopNav() {
   return (
     <nav className="hidden md:flex items-center gap-6 text-sm">
       {navItems.map((item) => (
-  <Link 
-    key={item.key}
-    href={item.href}
-    className="
+        <Link
+          key={item.key}
+          href={item.href}
+          className="
       font-semibold 
       text-slate-800 dark:text-gray-300 
       hover:text-indigo-500 
       transition-colors
     "
-  >
-    {tNav(item.key)}
-  </Link>
-))}
+        >
+          {tNav(item.key)}
+        </Link>
+      ))}
 
       {/* CTA Button */}
       <motion.button
