@@ -16,9 +16,9 @@ export default function PricingPlans() {
   const router = useRouter();
   
   return (
-    <section className="w-full+ py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+    <section className="w-full py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
         {/* BACK BUTTON */}
-    <div className="max-w-5xl mx-auto px-4 mt-6 mb-2">
+    <div className="max-w-5xl mx-auto px-4 mb-3">
       <button
         onClick={() => router.back()}
         className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
