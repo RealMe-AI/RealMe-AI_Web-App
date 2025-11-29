@@ -2,8 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useTranslate } from "../../../hooks/useTranslate";
+import { useRouter } from "@/i18n/routing";
 
 import Image from "next/image";
 import AccountInfoModal from "./../../account/AccountInfoModal";
