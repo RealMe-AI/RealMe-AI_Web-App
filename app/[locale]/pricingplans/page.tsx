@@ -2,17 +2,31 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ArrowLeft  } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { freeFeatures, proFeatures } from "../../data/planData";
+import { useRouter } from "@/i18n/routing";
+
 
 export default function PricingPlans() {
   // Use the correct namespace matching your en.ts root key "plans"
   const t = useTranslations("plans");
   const [isYearly, setIsYearly] = useState(false);
-
+  
+  const router = useRouter();
+  
   return (
-    <section className="w-full px-4 py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+    <section className="w-full+ py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+        {/* BACK BUTTON */}
+    <div className="max-w-5xl mx-auto px-4 mt-6 mb-2">
+      <button
+        onClick={() => router.back()}
+        className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </button>
+    </div>
       <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
 
         {/* FREE PLAN */}
