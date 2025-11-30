@@ -3,23 +3,26 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslate } from "../../hooks/useTranslate";
-import {Link} from "@/i18n/routing";
+import { useRouter } from "@/i18n/routing";
 import { ArrowLeft } from "lucide-react";
 
 import AuthForm from "../components/auth/AuthForm";
 
 export default function AuthPage() {
   const { t } = useTranslate();
+  const router = useRouter();
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-indigo-200 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Fixed Back to Home Button */}
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 px-3 py-1 z-20 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-200 dark:hover:bg-slate-600/90 transition"
-      >
-        <ArrowLeft className="w-4 h-4" /> {t("auth.page.back_button")}
-      </Link>
+      
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 px-3 py-1 z-20 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-200 dark:hover:bg-slate-600/90 transition"
+        >
+          <ArrowLeft className="w-4 h-4" /> {t("auth.page.back_button")}
+        </button>
+      
 
       {/* Animated background gradient */}
       <div
@@ -49,13 +52,13 @@ export default function AuthPage() {
         </div>
 
         <h2 className="text-2xl font-bold text-center text-slate-700 dark:text-white">
-          {t("auth.page.hero_title")} <span className="text-indigo-500">RealMe AI</span>
+          {t("auth.page.hero_title")}{" "}
+          <span className="text-indigo-500">RealMe AI</span>
         </h2>
 
         {/* Auth Form */}
         <AuthForm />
       </motion.div>
-      
     </div>
   );
 }

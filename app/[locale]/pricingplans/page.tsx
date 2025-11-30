@@ -2,39 +2,36 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowLeft  } from "lucide-react";
+import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { freeFeatures, proFeatures } from "../../data/planData";
 import { useRouter } from "@/i18n/routing";
-
 
 export default function PricingPlans() {
   // Use the correct namespace matching your en.ts root key "plans"
   const t = useTranslations("plans");
   const tBack = useTranslations("auth");
   const [isYearly, setIsYearly] = useState(false);
-  
+
   const router = useRouter();
-  
+
   return (
     <section className="w-full py-12 from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
-        {/* BACK BUTTON */}
-    <div className="max-w-5xl mx-auto px-4 mb-3">
-      <button
-        onClick={() => router.back()}
-        className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        {tBack("page.back_button")}
-      </button>
-    </div>
+      {/* BACK BUTTON */}
+      <div className="max-w-5xl mx-auto px-4 mb-3">
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          {tBack("page.back_button")}
+        </button>
+      </div>
       <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
-
         {/* FREE PLAN */}
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          
           className="flex-1 group"
         >
           <div className="h-full bg-linear-to-br from-indigo-100 to-white dark:from-neutral-900 dark:to-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-200">
@@ -56,7 +53,10 @@ export default function PricingPlans() {
               {/* FEATURES */}
               <ul className="mt-6 space-y-4 text-sm text-neutral-600 dark:text-neutral-300">
                 {freeFeatures.map((key) => (
-                  <li key={key} className="flex items-start gap-3 leading-relaxed">
+                  <li
+                    key={key}
+                    className="flex items-start gap-3 leading-relaxed"
+                  >
                     <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     {t(key)}
                   </li>
@@ -102,7 +102,9 @@ export default function PricingPlans() {
                 </div>
 
                 <div className="mt-4 sm:mt-0 flex items-center gap-3 ml-auto">
-                  <div className="text-sm opacity-90">{t("billing.monthly")}</div>
+                  <div className="text-sm opacity-90">
+                    {t("billing.monthly")}
+                  </div>
                   <button
                     aria-pressed={isYearly}
                     onClick={() => setIsYearly((s) => !s)}
@@ -114,7 +116,9 @@ export default function PricingPlans() {
                       }`}
                     />
                   </button>
-                  <div className="text-sm opacity-90">{t("billing.yearly")}</div>
+                  <div className="text-sm opacity-90">
+                    {t("billing.yearly")}
+                  </div>
                 </div>
               </div>
 
@@ -127,7 +131,10 @@ export default function PricingPlans() {
               {/* Pro FEATURES */}
               <ul className="mt-6 space-y-4 text-sm opacity-95">
                 {proFeatures.map((key) => (
-                  <li key={key} className="flex items-start gap-3 leading-relaxed">
+                  <li
+                    key={key}
+                    className="flex items-start gap-3 leading-relaxed"
+                  >
                     <CheckCircle2 className="w-4 h-4 text-white" />
                     {t(key)}
                   </li>
