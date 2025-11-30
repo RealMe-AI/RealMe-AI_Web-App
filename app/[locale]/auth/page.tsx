@@ -15,23 +15,21 @@ export default function AuthPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-indigo-200 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Fixed Back to Home Button */}
-      
-        <button
-          onClick={() => router.back()}
-          className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 z-20 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-200 dark:hover:bg-slate-600/90 transition"
-        >
-          <ArrowLeft className="w-4 h-4" /> {t("auth.page.back_button")}
-        </button>
-      
+
+      <button
+        onClick={() => router.back()}
+        className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 z-20 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-200 dark:hover:bg-slate-600/90 transition"
+      >
+        <ArrowLeft className="w-4 h-4" /> {t("auth.page.back_button")}
+      </button>
 
       {/* Animated background gradient */}
-      <div
+      {/* // <div/>
       // initial={{ opacity: 0 }}
       // animate={{ opacity: 1, scale: [1, 1.05, 1] }}
       // transition={{ duration: 10, repeat: 1, repeatType: "mirror" }}
       // className="absolute inset-0 bg-red-400 dark:bg-slate-800 blur-3xl"
-      // className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#c7d2fe_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_top_left,#312e81_0%,transparent_60%)] blur-3xl opacity-60"
-      />
+      // className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#c7d2fe_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_top_left,#312e81_0%,transparent_60%)] blur-3xl opacity-60" */}
 
       {/* Auth Card */}
       <motion.div
