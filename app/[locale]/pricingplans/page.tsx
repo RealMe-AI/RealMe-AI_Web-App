@@ -11,6 +11,7 @@ import { useRouter } from "@/i18n/routing";
 export default function PricingPlans() {
   // Use the correct namespace matching your en.ts root key "plans"
   const t = useTranslations("plans");
+  const tBack = useTranslations("auth");
   const [isYearly, setIsYearly] = useState(false);
   
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function PricingPlans() {
         className="inline-flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition"
       >
         <ArrowLeft className="w-4 h-4" />
-        {t("auth.page.back_button")}
+        {tBack("page.back_button")}
       </button>
     </div>
       <div className="flex flex-col max-w-5xl mx-auto gap-6 md:gap-8 md:flex-row justify-center">
