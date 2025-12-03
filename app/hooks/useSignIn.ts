@@ -73,7 +73,7 @@ export default function useSignIn() {
       setSuccess(true);
       setPassword("");
       setTimeout(() => setSuccess(false), 1500);
-    } catch (err) {
+    } catch {
       setError(t("error.network"));
     }
     setLoading(false);
