@@ -84,11 +84,9 @@ export default function useSignUp() {
       });
 
       const json = await res.json();
-console.log(json)
-console.log(res)
-console.log("its not working")
-      if (!res.ok) {
+      console.log(json);
 
+      if (!res.ok) {
         if (json.fieldErrors)
           setFieldErrors((prev) => ({
             ...prev,
@@ -100,11 +98,15 @@ console.log("its not working")
         return;
       }
 
+      // ✅ Success: clear inputs
       setSuccess(true);
+      setIdentifier("");
       setPassword("");
+      setFullName("");
+      setFieldErrors({ login: null, password: null, fullName: null });
+
       setTimeout(() => setSuccess(false), 1500);
     } catch {
-        console.log(error)
       setError(t("error.network"));
     }
 

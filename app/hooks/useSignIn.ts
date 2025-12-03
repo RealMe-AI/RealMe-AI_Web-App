@@ -53,7 +53,7 @@ export default function useSignIn() {
     setSuccess(false);
 
     try {
-      const res = await fetch("/https://realme-ai-jf2e.onrender.com/auth/login", {
+      const res = await fetch("https://realme-ai-jf2e.onrender.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ login: identifier.trim(), password }),
@@ -70,13 +70,17 @@ export default function useSignIn() {
         return;
       }
 
+      // ✅ Success: clear inputs
       setSuccess(true);
+      setIdentifier("");
       setPassword("");
+      setFieldErrors({ identifier: null, password: null });
+
       setTimeout(() => setSuccess(false), 1500);
     } catch {
-        console.log(error)
       setError(t("error.network"));
     }
+
     setLoading(false);
   };
 
