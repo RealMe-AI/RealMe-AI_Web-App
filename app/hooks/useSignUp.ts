@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
+import { useLocale } from "next-intl"; // <--- Import this
+import { redirect } from "@/i18n/routing";
 
 type FieldErrors = {
   login: string | null;
@@ -11,6 +13,7 @@ type FieldErrors = {
 
 export default function useSignUp() {
   const { t } = useTranslate();
+  const locale = useLocale(); // <--- Fix: Get the locale string here
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +43,6 @@ export default function useSignUp() {
     };
 
     const id = identifier.trim();
-
     if (!id) {
       errs.login = t("error.sign_in.email_number");
     } else if (!isEmail(id) && !isPhone(id)) {
@@ -84,14 +86,10 @@ export default function useSignUp() {
       });
 
       const json = await res.json();
-      console.log(json);
 
       if (!res.ok) {
         if (json.fieldErrors)
-          setFieldErrors((prev) => ({
-            ...prev,
-            ...json.fieldErrors,
-          }));
+          setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
 
         setError(json.error || t("error.sign_up.general"));
         setLoading(false);
@@ -105,7 +103,10 @@ export default function useSignUp() {
       setFullName("");
       setFieldErrors({ login: null, password: null, fullName: null });
 
-      setTimeout(() => setSuccess(false), 1500);
+      // ✅ Locale-aware redirect to dashboard
+      // The locale variable is now defined correctly
+      redirect({ href: "/dashboard", locale });
+
     } catch {
       setError(t("error.network"));
     }
