@@ -7,7 +7,7 @@ import useSignUp from "../../../hooks/useSignUp";
 export default function SignUpForm() {
   const {
     t,
-    login,
+    identifier,
     setIdentifier,
     password,
     setPassword,
@@ -40,7 +40,7 @@ export default function SignUpForm() {
         <input
           type="text"
           placeholder={t("auth.login.email_placeholder")}
-          value={login}
+          value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
           className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
@@ -48,10 +48,10 @@ export default function SignUpForm() {
         />
 
         <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400">
-          {login
-            ? isEmail(login)
+          {identifier
+            ? isEmail(identifier)
               ? t("auth.identifier.email")
-              : isPhone(login)
+              : isPhone(identifier)
               ? t("auth.identifier.phone")
               : ""
             : ""}
