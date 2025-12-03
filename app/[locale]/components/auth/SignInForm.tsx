@@ -1,83 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { useTranslate } from "../../../hooks/useTranslate";
+import useSignIn from "../../../hooks/useSignIn";
 
 export default function SignInForm() {
-  const { t } = useTranslate();
-
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-
-  const [fieldErrors, setFieldErrors] = useState({
-    identifier: null as string | null,
-    password: null as string | null,
-  });
-
-  // Helpers
-  const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
-  const isPhone = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v.trim());
-
-  const validate = () => {
-    const errs: any = { identifier: null, password: null };
-    const id = identifier.trim();
-
-    if (!id) {
-      errs.identifier = t("error.sign_in.email_number");
-    } else if (!isEmail(id) && !isPhone(id)) {
-      errs.identifier = t("error.sign_up.email_number");
-    }
-
-    if (!password) {
-      errs.password = t("error.sign_in.password.required");
-    } else if (password.length < 6) {
-      errs.password = t("error.sign_up.password.min_length");
-    }
-
-    setFieldErrors(errs);
-    return !Object.values(errs).some(Boolean);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
-
-    try {
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ identifier: identifier.trim(), password }),
-      });
-
-      const json = await res.json();
-
-      if (!res.ok) {
-        if (json.fieldErrors) setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
-        setError(json.error || t("error.sign_in.general"));
-        setLoading(false);
-        return;
-      }
-
-      setSuccess(true);
-      setPassword("");
-      setTimeout(() => setSuccess(false), 1500);
-    } catch (err) {
-      setError(t("error.network"));
-    }
-    setLoading(false);
-  };
+  const {
+    t,
+    identifier,
+    setIdentifier,
+    password,
+    setPassword,
+    showPassword,
+    setShowPassword,
+    loading,
+    success,
+    error,
+    fieldErrors,
+    handleSubmit,
+    isEmail,
+    isPhone,
+  } = useSignIn();
 
   return (
     <motion.form
@@ -121,6 +64,7 @@ export default function SignInForm() {
       {/* Password */}
       <div className="relative">
         <Lock className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
+
         <input
           type={showPassword ? "text" : "password"}
           placeholder={t("auth.login.password_placeholder")}
@@ -135,7 +79,6 @@ export default function SignInForm() {
           type="button"
           onClick={() => setShowPassword((s) => !s)}
           className="absolute right-3 top-3 p-1 text-gray-500"
-          aria-label={showPassword ? t("auth.toggle.hide_password") : t("auth.toggle.show_password")}
         >
           {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
         </button>
