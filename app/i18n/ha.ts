@@ -151,6 +151,7 @@ const ha = {
         required: "Ana buƙatar cikakken suna don yin rajista.",
         default: "Shigar da cikakken sunanka.",
       },
+      general: "Kun riga kuna da asusu!",
     },
 
     network: "Kuskuren haɗin intanet. Sake gwadawa.",

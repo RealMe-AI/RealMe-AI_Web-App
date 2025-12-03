@@ -151,6 +151,7 @@ const ig = {
         required: "Aha zuru ezu chọrọ maka ndebanye.",
         default: "Tinye aha zuru ezu gị.",
       },
+      general: "Ị nwere akaụntụ already!",
     },
 
     network: "Njehie netwọk. Biko nwaa ọzọ.",

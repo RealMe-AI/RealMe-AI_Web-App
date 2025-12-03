@@ -151,6 +151,7 @@ const yo = {
         required: "Orukọ kikun jẹ dandan fun forukọsilẹ.",
         default: "Tẹ orukọ kikun rẹ.",
       },
+      general: "O ti ni àkọọlẹ tẹlẹ!",
     },
 
     network: "Aṣiṣe nẹtiwọọki. Jọwọ gbiyanju lẹẹkansi.",

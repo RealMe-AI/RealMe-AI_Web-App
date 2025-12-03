@@ -151,6 +151,8 @@ const en = {
         required: "Full name is required for sign up.",
         default: "Enter your full name.",
       },
+      general: "Already have an account!",
+      
     },
 
     network: "Network error. Please try again.",
