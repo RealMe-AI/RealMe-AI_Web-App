@@ -3,11 +3,18 @@
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
 
-export default function useSignIn() {
+type FieldErrors = {
+  identifier: string | null;
+  password: string | null;
+  fullName: string | null;
+};
+
+export default function useSignUp() {
   const { t } = useTranslate();
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -15,9 +22,10 @@ export default function useSignIn() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const [fieldErrors, setFieldErrors] = useState({
-    identifier: null as string | null,
-    password: null as string | null,
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({
+    identifier: null,
+    password: null,
+    fullName: null,
   });
 
   // Helpers
@@ -25,7 +33,12 @@ export default function useSignIn() {
   const isPhone = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v.trim());
 
   const validate = () => {
-    const errs: { identifier: string | null; password: string | null } = { identifier: null, password: null };
+    const errs: FieldErrors = {
+      identifier: null,
+      password: null,
+      fullName: null,
+    };
+
     const id = identifier.trim();
 
     if (!id) {
@@ -40,8 +53,15 @@ export default function useSignIn() {
       errs.password = t("error.sign_up.password.min_length");
     }
 
+    const name = fullName.trim();
+    if (!name) {
+      errs.fullName = t("error.sign_up.full_name.required");
+    } else if (name.length < 2) {
+      errs.fullName = t("error.sign_up.full_name.default");
+    }
+
     setFieldErrors(errs);
-    return !Object.values(errs).some(Boolean);
+    return !Object.values(errs).some((v) => v !== null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,19 +73,26 @@ export default function useSignIn() {
     setSuccess(false);
 
     try {
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ identifier: identifier.trim(), password }),
+        body: JSON.stringify({
+          identifier: identifier.trim(),
+          password,
+          fullName: fullName.trim(),
+        }),
       });
 
       const json = await res.json();
 
       if (!res.ok) {
         if (json.fieldErrors)
-          setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
+          setFieldErrors((prev) => ({
+            ...prev,
+            ...json.fieldErrors,
+          }));
 
-        setError(json.error || t("error.sign_in.general"));
+        setError(json.error || t("error.sign_up.general"));
         setLoading(false);
         return;
       }
@@ -73,9 +100,10 @@ export default function useSignIn() {
       setSuccess(true);
       setPassword("");
       setTimeout(() => setSuccess(false), 1500);
-    } catch (err) {
+    } catch {
       setError(t("error.network"));
     }
+
     setLoading(false);
   };
 
@@ -85,12 +113,14 @@ export default function useSignIn() {
     setIdentifier,
     password,
     setPassword,
-    fieldErrors,
+    fullName,
+    setFullName,
     showPassword,
     setShowPassword,
     loading,
     success,
     error,
+    fieldErrors,
     handleSubmit,
     isEmail,
     isPhone,
