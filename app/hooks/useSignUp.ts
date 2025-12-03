@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslate } from "./useTranslate";
 
 type FieldErrors = {
-  identifier: string | null;
+  login: string | null;
   password: string | null;
   fullName: string | null;
 };
@@ -23,7 +23,7 @@ export default function useSignUp() {
   const [success, setSuccess] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({
-    identifier: null,
+    login: null,
     password: null,
     fullName: null,
   });
@@ -34,7 +34,7 @@ export default function useSignUp() {
 
   const validate = () => {
     const errs: FieldErrors = {
-      identifier: null,
+      login: null,
       password: null,
       fullName: null,
     };
@@ -42,9 +42,9 @@ export default function useSignUp() {
     const id = identifier.trim();
 
     if (!id) {
-      errs.identifier = t("error.sign_in.email_number");
+      errs.login = t("error.sign_in.email_number");
     } else if (!isEmail(id) && !isPhone(id)) {
-      errs.identifier = t("error.sign_up.email_number");
+      errs.login = t("error.sign_up.email_number");
     }
 
     if (!password) {
@@ -73,19 +73,22 @@ export default function useSignUp() {
     setSuccess(false);
 
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch("https://realme-ai-jf2e.onrender.com/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          identifier: identifier.trim(),
+          login: identifier.trim(),
           password,
           fullName: fullName.trim(),
         }),
       });
 
       const json = await res.json();
-
+console.log(json)
+console.log(res)
+console.log("its not working")
       if (!res.ok) {
+
         if (json.fieldErrors)
           setFieldErrors((prev) => ({
             ...prev,
@@ -101,6 +104,7 @@ export default function useSignUp() {
       setPassword("");
       setTimeout(() => setSuccess(false), 1500);
     } catch {
+        console.log(error)
       setError(t("error.network"));
     }
 
@@ -109,7 +113,7 @@ export default function useSignUp() {
 
   return {
     t,
-    identifier,
+    login,
     setIdentifier,
     password,
     setPassword,
