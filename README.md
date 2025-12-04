@@ -36,11 +36,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ```
-realme-ai
+RealMe-AI
 ├─ app
 │  ├─ api
 │  │  ├─ auth
 │  │  │  └─ route.ts
+│  │  ├─ baseUrl.ts
 │  │  └─ chat
 │  │     └─ route.ts
 │  ├─ data
@@ -55,6 +56,9 @@ realme-ai
 │  │  ├─ useBackdrop.ts
 │  │  ├─ useNavigateToAuth.ts
 │  │  ├─ useSettings.ts
+│  │  ├─ useSignIn.ts
+│  │  ├─ useSignUp.ts
+│  │  ├─ useSplashScreen.ts
 │  │  ├─ useThemeToggle.ts
 │  │  ├─ useTranslate.ts
 │  │  └─ useVoiceInput.ts
@@ -78,7 +82,6 @@ realme-ai
 │  ├─ zustand
 │  │  ├─ modalStore.ts
 │  │  ├─ sendFileMessage.ts
-│  │  ├─ useAboutStore.ts
 │  │  ├─ useChatStore.ts
 │  │  ├─ useLanguageStore.ts
 │  │  ├─ useSidebarStore.ts
@@ -92,10 +95,16 @@ realme-ai
 │     │  ├─ AvatarCropper.tsx
 │     │  └─ AvatarEditor.tsx
 │     ├─ auth
-│     │  └─ page.tsx
+│     │  ├─ page.tsx
+│     │  └─ verify
+│     │     ├─ OTPInput.tsx
+│     │     ├─ useOTPVerification.ts
+│     │     └─ VerifyPage.tsx
 │     ├─ components
 │     │  ├─ auth
 │     │  │  ├─ AuthForm.tsx
+│     │  │  ├─ SignInForm.tsx
+│     │  │  ├─ SignUpForm.tsx
 │     │  │  └─ Tabs.tsx
 │     │  ├─ Badge.tsx
 │     │  ├─ CTAButtons.tsx
@@ -117,6 +126,8 @@ realme-ai
 │     │  │  ├─ Sidebar.tsx
 │     │  │  └─ VoiceInput.tsx
 │     │  └─ page.tsx
+│     ├─ help
+│     │  └─ page.tsx
 │     ├─ HomeClient.tsx
 │     ├─ layout.tsx
 │     ├─ page.tsx
@@ -131,7 +142,7 @@ realme-ai
 │        └─ ThemeSelect.tsx
 ├─ eslint.config.mjs
 ├─ i18n
-│  ├─ request.ts
+│  ├─ -90request.ts
 │  └─ routing.ts
 ├─ next.config.ts
 ├─ package-lock.json
@@ -139,7 +150,9 @@ realme-ai
 ├─ postcss.config.mjs
 ├─ proxy.ts
 ├─ public
-│  └─ avatar.png
+│  ├─ avatar.png
+│  ├─ get-started.png
+│  └─ hero-image.png
 ├─ README.md
 ├─ structure.txt
 └─ tsconfig.json
