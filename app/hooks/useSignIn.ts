@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
+import {baseUrl} from "@/app/api/baseUrl";
 
 export default function useSignIn() {
   const { t } = useTranslate();
@@ -53,7 +54,7 @@ export default function useSignIn() {
     setSuccess(false);
 
     try {
-      const res = await fetch("https://realme-ai-jf2e.onrender.com/auth/login", {
+      const res = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ login: identifier.trim(), password }),

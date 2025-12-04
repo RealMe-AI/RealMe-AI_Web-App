@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslate } from "./useTranslate";
 import { useLocale } from "next-intl"; // <--- Import this
 import { redirect } from "@/i18n/routing";
+import {baseUrl} from "@/app/api/baseUrl";
 
 type FieldErrors = {
   login: string | null;
@@ -14,6 +15,7 @@ type FieldErrors = {
 export default function useSignUp() {
   const { t } = useTranslate();
   const locale = useLocale(); // <--- Fix: Get the locale string here
+  
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -75,7 +77,7 @@ export default function useSignUp() {
     setSuccess(false);
 
     try {
-      const res = await fetch("https://realme-ai-jf2e.onrender.com/auth/register", {
+      const res = await fetch(`${baseUrl}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
