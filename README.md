@@ -35,6 +35,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+
 ```
 RealMe-AI
 ├─ app
@@ -55,6 +56,7 @@ RealMe-AI
 │  │  ├─ useActiveSection.ts
 │  │  ├─ useBackdrop.ts
 │  │  ├─ useNavigateToAuth.ts
+│  │  ├─ useOTPVerification.ts
 │  │  ├─ useSettings.ts
 │  │  ├─ useSignIn.ts
 │  │  ├─ useSignUp.ts
@@ -95,11 +97,7 @@ RealMe-AI
 │     │  ├─ AvatarCropper.tsx
 │     │  └─ AvatarEditor.tsx
 │     ├─ auth
-│     │  ├─ page.tsx
-│     │  └─ verify
-│     │     ├─ OTPInput.tsx
-│     │     ├─ useOTPVerification.ts
-│     │     └─ VerifyPage.tsx
+│     │  └─ page.tsx
 │     ├─ components
 │     │  ├─ auth
 │     │  │  ├─ AuthForm.tsx
@@ -112,10 +110,11 @@ RealMe-AI
 │     │  ├─ Footer.tsx
 │     │  ├─ GetStartedSection.tsx
 │     │  ├─ Hero.tsx
-│     │  └─ Navbar
-│     │     ├─ DesktopNav.tsx
-│     │     ├─ MobileNav.tsx
-│     │     └─ Navbar.tsx
+│     │  ├─ Navbar
+│     │  │  ├─ DesktopNav.tsx
+│     │  │  ├─ MobileNav.tsx
+│     │  │  └─ Navbar.tsx
+│     │  └─ OTPInput.tsx
 │     ├─ dashboard
 │     │  ├─ components
 │     │  │  ├─ ChatMessage.tsx
@@ -133,16 +132,18 @@ RealMe-AI
 │     ├─ page.tsx
 │     ├─ pricingplans
 │     │  └─ page.tsx
-│     └─ setting
-│        ├─ CustomSelect.tsx
-│        ├─ EditProfileModal.tsx
-│        ├─ EmailToggle.tsx
-│        ├─ LanguageSelect.tsx
-│        ├─ SettingsPanel.tsx
-│        └─ ThemeSelect.tsx
+│     ├─ setting
+│     │  ├─ CustomSelect.tsx
+│     │  ├─ EditProfileModal.tsx
+│     │  ├─ EmailToggle.tsx
+│     │  ├─ LanguageSelect.tsx
+│     │  ├─ SettingsPanel.tsx
+│     │  └─ ThemeSelect.tsx
+│     └─ verify
+│        └─ Page.tsx
 ├─ eslint.config.mjs
 ├─ i18n
-│  ├─ -90request.ts
+│  ├─ request.ts
 │  └─ routing.ts
 ├─ next.config.ts
 ├─ package-lock.json
