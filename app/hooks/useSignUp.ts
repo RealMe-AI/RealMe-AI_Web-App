@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
-import { useLocale } from "next-intl"; // <--- Import this
-import { redirect } from "@/i18n/routing";
 import {baseUrl} from "@/app/api/baseUrl";
 
 type FieldErrors = {
@@ -14,7 +12,6 @@ type FieldErrors = {
 
 export default function useSignUp() {
   const { t } = useTranslate();
-  const locale = useLocale(); // <--- Fix: Get the locale string here
   
 
   const [identifier, setIdentifier] = useState("");
@@ -105,9 +102,6 @@ export default function useSignUp() {
       setFullName("");
       setFieldErrors({ login: null, password: null, fullName: null });
 
-      // ✅ Locale-aware redirect to dashboard
-      // The locale variable is now defined correctly
-      redirect({ href: "/dashboard", locale });
 
     } catch {
       setError(t("error.network"));
