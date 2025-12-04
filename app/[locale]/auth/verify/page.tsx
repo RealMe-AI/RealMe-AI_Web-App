@@ -44,13 +44,13 @@ export default function VerifyPage() {
           isError={invalidCode}
         />
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-4">
           {!expired ? (
-            <p className="text-indigo-600 dark:text-indigo-400 text-lg font-medium">
+            <p className="text-slate-500 dark:text-slate-400 text-sm font-light">
               Expires in <span className="font-bold">{timeLeft}s</span>
             </p>
           ) : (
-            <p className="text-red-500 dark:text-red-400 text-lg font-semibold">
+            <p className="text-red-500 dark:text-red-400 text-sm font-light">
               Code expired. Redirecting...
             </p>
           )}
@@ -62,9 +62,9 @@ export default function VerifyPage() {
           onClick={submitOTP}
           className={`
             w-full mt-6 py-3 rounded-xl font-semibold 
-            text-white 
-            bg-indigo-600 hover:bg-indigo-700 
-            dark:bg-indigo-500 dark:hover:bg-indigo-600
+            text-slate-800 dark:text-white
+            bg-indigo-300 hover:bg-indigo-200 
+            dark:bg-indigo-600 dark:hover:bg-indigo-500
             transition-colors disabled:opacity-50 disabled:cursor-not-allowed
           `}
         >

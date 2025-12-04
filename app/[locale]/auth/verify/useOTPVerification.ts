@@ -20,7 +20,7 @@ export function useOTPVerification() {
           clearInterval(interval);
           setExpired(true);
           setTimeout(() => {
-            router.push("/auth/signup");
+            router.push("/auth");
           }, 2000);
           return 0;
         }
