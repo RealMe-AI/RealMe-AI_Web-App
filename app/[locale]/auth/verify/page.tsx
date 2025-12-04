@@ -11,13 +11,15 @@ export default function VerifyPage() {
     timeLeft,
     expired,
     loading,
+    resending,
     invalidCode,
     handleChange,
     submitOTP,
+    resendOTP,
   } = useOTPVerification();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-200 to-indigo-100 px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-200 to-indigo-100 px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -44,6 +46,7 @@ export default function VerifyPage() {
           isError={invalidCode}
         />
 
+        {/* Timer or Expired Message */}
         <div className="text-center mt-4">
           {!expired ? (
             <p className="text-slate-500 text-sm font-light">
@@ -51,12 +54,33 @@ export default function VerifyPage() {
             </p>
           ) : (
             <p className="text-red-500 dark:text-red-400 text-sm font-light">
-              Code expired. Redirecting...
+              Code expired.
             </p>
           )}
         </div>
 
-        {/* Tailwind-only button */}
+        {/* RESEND SECTION – ONLY WHEN EXPIRED */}
+        {expired && (
+          <div className="text-center mt-4">
+            <p className="text-slate-600 dark:text-gray-300 text-sm">
+              Didn’t get a code?{" "}
+              <button
+                disabled={resending}
+                onClick={resendOTP}
+                className="
+                  text-indigo-600 dark:text-indigo-400
+                  font-semibold ml-1
+                  hover:underline
+                  disabled:opacity-50 disabled:cursor-not-allowed
+                "
+              >
+                {resending ? "Resending..." : "Resend"}
+              </button>
+            </p>
+          </div>
+        )}
+
+        {/* VERIFY BUTTON */}
         <button
           disabled={loading || expired}
           onClick={submitOTP}

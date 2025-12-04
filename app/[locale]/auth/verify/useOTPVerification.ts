@@ -2,26 +2,30 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
+import { useSignUp } from "@/app/zustand-store/useSignUp";
 
 export function useOTPVerification() {
   const router = useRouter();
 
+  // Zustand store: contains email/phone + method
+  const { contact, method } = useSignUp();
+
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [expired, setExpired] = useState(false);
   const [loading, setLoading] = useState(false);
   const [invalidCode, setInvalidCode] = useState(false);
+  const [resending, setResending] = useState(false);
 
-  // Countdown timer — run once on mount
+  // Countdown timer
   useEffect(() => {
+    if (expired) return; // stop timer after expire
+
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
           setExpired(true);
-          setTimeout(() => {
-            router.push("/auth");
-          }, 2000);
           return 0;
         }
         return prev - 1;
@@ -29,22 +33,22 @@ export function useOTPVerification() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [router]);
+  }, [expired]);
 
-  // Use useCallback to memoize handleChange and prevent it from changing on every render
+  // Handle OTP input change
   const handleChange = useCallback((value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
     setOtp((prev) => {
-      const newOtp = [...prev];
-      newOtp[index] = value;
-      return newOtp;
+      const arr = [...prev];
+      arr[index] = value;
+      return arr;
     });
 
-    // Clear invalidCode highlight on input change
     setInvalidCode(false);
-  }, []); // No dependencies needed since we use functional updates
+  }, []);
 
+  // Submit entered OTP
   const submitOTP = async () => {
     const code = otp.join("");
     if (code.length !== 6) return;
@@ -68,13 +72,43 @@ export function useOTPVerification() {
     }
   };
 
+  // RESEND OTP
+  const resendOTP = async () => {
+    setResending(true);
+
+    try {
+      const res = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        body: JSON.stringify({
+          contact,
+          method, // "email" | "phone"
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Failed to resend OTP");
+
+      // Reset UI
+      setOtp(["", "", "", "", "", ""]);
+      setInvalidCode(false);
+      setExpired(false);
+      setTimeLeft(60);
+    } catch (e) {
+      console.error("Resend failed:", e);
+    } finally {
+      setResending(false);
+    }
+  };
+
   return {
     otp,
     timeLeft,
     expired,
     loading,
     invalidCode,
+    resending,
     handleChange,
     submitOTP,
+    resendOTP,
   };
 }
