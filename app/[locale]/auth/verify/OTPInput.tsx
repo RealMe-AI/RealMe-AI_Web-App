@@ -62,11 +62,11 @@ export default function OTPInput({ otp, onChange, expired, isError }: Props) {
               handleBackspace((e.target as HTMLInputElement).value, i);
           }}
           className={`
-            w-10 sm:w-12 h-12 sm:h-14
+            w-7 sm:w-12 h-12 sm:h-14
             text-center text-xl sm:text-2xl font-semibold
             bg-white/20 dark:bg-gray-800/40
             border rounded-xl
-            focus:outline-none focus:ring-2 focus:ring-indigo-500
+            focus:outline-none focus:ring-2 focus:ring-indigo-300
             text-gray-900 dark:text-white
             placeholder:text-gray-400 dark:placeholder:text-gray-500
             transition-colors

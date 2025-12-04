@@ -29,7 +29,7 @@ export default function VerifyPage() {
           transition-colors
         "
       >
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white text-center">
           Enter Verification Code
         </h1>
 
@@ -46,7 +46,7 @@ export default function VerifyPage() {
 
         <div className="text-center mt-4">
           {!expired ? (
-            <p className="text-slate-500 dark:text-slate-400 text-sm font-light">
+            <p className="text-slate-500 text-sm font-light">
               Expires in <span className="font-bold">{timeLeft}s</span>
             </p>
           ) : (
