@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 
 export function useOTPVerification() {
@@ -31,7 +31,8 @@ export function useOTPVerification() {
     return () => clearInterval(interval);
   }, [router]);
 
-  const handleChange = (value: string, index: number) => {
+  // Use useCallback to memoize handleChange and prevent it from changing on every render
+  const handleChange = useCallback((value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
     setOtp((prev) => {
@@ -41,8 +42,8 @@ export function useOTPVerification() {
     });
 
     // Clear invalidCode highlight on input change
-    if (invalidCode) setInvalidCode(false);
-  };
+    setInvalidCode(false);
+  }, []); // No dependencies needed since we use functional updates
 
   const submitOTP = async () => {
     const code = otp.join("");

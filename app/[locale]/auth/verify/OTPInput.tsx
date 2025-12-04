@@ -11,17 +11,25 @@ interface Props {
 
 export default function OTPInput({ otp, onChange, expired, isError }: Props) {
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
+  const hasCleared = useRef(false);
 
-  // Clear OTP when expired
+  // Clear OTP when expired - run only once when expired becomes true
   useEffect(() => {
-    if (expired) {
+    if (expired && !hasCleared.current) {
+      hasCleared.current = true;
       inputs.current.forEach((input, i) => {
         if (input) input.value = "";
         onChange("", i);
       });
       inputs.current[0]?.focus();
     }
-  }, [expired, onChange]);
+    
+    // Reset the flag when expired becomes false again
+    if (!expired) {
+      hasCleared.current = false;
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expired]); // Remove onChange from dependencies
 
   const handleInput = (value: string, i: number) => {
     if (!/^\d?$/.test(value)) return; // only digits
