@@ -17,7 +17,7 @@ export default function VerifyPage() {
   } = useOTPVerification();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-600 to-black px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-200 to-indigo-100 px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
