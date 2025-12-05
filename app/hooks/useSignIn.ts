@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
-import {baseUrl} from "@/app/api/baseUrl";
+import {baseUrl} from "@/app/lib/baseUrl";
 
 export default function useSignIn() {
   const { t } = useTranslate();

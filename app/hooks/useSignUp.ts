@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
-import { baseUrl } from "@/app/api/baseUrl";
+import { baseUrl } from "@/app/lib/baseUrl";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
 
@@ -78,6 +78,7 @@ export default function useSignUp() {
     setError(null);
     setSuccess(false);
 
+    
     try {
       const res = await fetch(`${baseUrl}/auth/register`, {
         method: "POST",
@@ -90,6 +91,9 @@ export default function useSignUp() {
       });
 
       const json = await res.json();
+      console.log(json)
+
+
 
       if (!res.ok) {
         if (json.fieldErrors)
@@ -108,7 +112,7 @@ export default function useSignUp() {
       setFieldErrors({ login: null, password: null, fullName: null });
 
       // Save email OR phone for OTP
-setSignUpData({
+  setSignUpData({
   contact: identifier.trim(),
   method: isEmail(identifier) ? "email" : "phone",
 });
