@@ -2,13 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { useSignUp } from "@/app/zustand-store/useSignUp";
+import { useSignUpStore } from "@/app/zustand/useSignUpStore";
 
 export function useOTPVerification() {
   const router = useRouter();
 
-  // contains email/phone the user used
-  const { contact, method } = useSignUp();
+  // : use the correct zustand store
+  const { contact, method } = useSignUpStore();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -17,14 +17,14 @@ export function useOTPVerification() {
   const [invalidCode, setInvalidCode] = useState(false);
   const [resending, setResending] = useState(false);
 
-  // ❗ if user enters page without signup info → redirect back
+  //  Redirect user back if they enter verification without signup info
   useEffect(() => {
     if (!contact || !method) {
       router.push("/auth");
     }
   }, [contact, method, router]);
 
-  // Countdown timer
+  // Countdown
   useEffect(() => {
     if (expired) return;
 
@@ -42,7 +42,7 @@ export function useOTPVerification() {
     return () => clearInterval(interval);
   }, [expired]);
 
-  // OTP input
+  // Handle OTP input
   const handleChange = useCallback((value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
@@ -90,15 +90,15 @@ export function useOTPVerification() {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) throw new Error("Failed to resend");
+      if (!res.ok) throw new Error("Failed to resend OTP");
 
-      // Reset timer + UI
+      // Reset UI + timer
       setOtp(["", "", "", "", "", ""]);
       setInvalidCode(false);
       setExpired(false);
       setTimeLeft(60);
     } catch (e) {
-      console.error("Resend failed:", e);
+      console.error("Resend OTP failed:", e);
     } finally {
       setResending(false);
     }
