@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useTranslate } from "./useTranslate";
 import { baseUrl } from "@/app/api/baseUrl";
 import { useRouter } from "@/i18n/routing";
+import { useSignUpStore } from "@/app/zustand/useSignUpStore";
+
 
 type FieldErrors = {
   login: string | null;
@@ -14,6 +16,8 @@ type FieldErrors = {
 export default function useSignUp() {
   const { t } = useTranslate();
   const router = useRouter();
+  const { setSignUpData } = useSignUpStore();
+
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -103,8 +107,14 @@ export default function useSignUp() {
       setFullName("");
       setFieldErrors({ login: null, password: null, fullName: null });
 
-      // 🔹 Redirect to OTP verification page
-      router.push("/auth/verify"); // automatically maps to [locale]/auth/verify
+      // Save email OR phone for OTP
+setSignUpData({
+  contact: identifier.trim(),
+  method: isEmail(identifier) ? "email" : "phone",
+});
+
+// Redirect to OTP page
+router.push("/auth/verify");
 
     } catch {
       setError(t("error.network"));
