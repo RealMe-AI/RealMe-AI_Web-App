@@ -2,21 +2,29 @@
 
 import { create } from "zustand";
 
-interface SignUpData {
-  contact: string;          // the email OR phone number
-  method: "email" | "phone";  
-}
+type Method = "email" | "phone";
 
 interface SignUpStore {
-  data: SignUpData | null;
-  setSignUpData: (payload: SignUpData) => void;
+  contact: string | null;      // email OR phone (top-level)
+  method: Method | null;       // "email" or "phone"
+
+  setSignUpData: (payload: { contact: string; method: Method }) => void;
   clearSignUpData: () => void;
 }
 
 export const useSignUpStore = create<SignUpStore>((set) => ({
-  data: null,
+  contact: null,
+  method: null,
 
-  setSignUpData: (payload) => set({ data: payload }),
+  setSignUpData: ({ contact, method }) =>
+    set(() => ({
+      contact,
+      method,
+    })),
 
-  clearSignUpData: () => set({ data: null }),
+  clearSignUpData: () =>
+    set(() => ({
+      contact: null,
+      method: null,
+    })),
 }));

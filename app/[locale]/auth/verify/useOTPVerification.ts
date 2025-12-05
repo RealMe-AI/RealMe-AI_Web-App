@@ -7,19 +7,26 @@ import { useSignUp } from "@/app/zustand-store/useSignUp";
 export function useOTPVerification() {
   const router = useRouter();
 
-  // Zustand store: contains email/phone + method
+  // contains email/phone the user used
   const { contact, method } = useSignUp();
 
-  const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timeLeft, setTimeLeft] = useState(60);
   const [expired, setExpired] = useState(false);
   const [loading, setLoading] = useState(false);
   const [invalidCode, setInvalidCode] = useState(false);
   const [resending, setResending] = useState(false);
 
+  // ❗ if user enters page without signup info → redirect back
+  useEffect(() => {
+    if (!contact || !method) {
+      router.push("/auth");
+    }
+  }, [contact, method, router]);
+
   // Countdown timer
   useEffect(() => {
-    if (expired) return; // stop timer after expire
+    if (expired) return;
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
@@ -35,12 +42,12 @@ export function useOTPVerification() {
     return () => clearInterval(interval);
   }, [expired]);
 
-  // Handle OTP input change
+  // OTP input
   const handleChange = useCallback((value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
-    setOtp((prev) => {
-      const arr = [...prev];
+    setOtp((p) => {
+      const arr = [...p];
       arr[index] = value;
       return arr;
     });
@@ -48,7 +55,7 @@ export function useOTPVerification() {
     setInvalidCode(false);
   }, []);
 
-  // Submit entered OTP
+  // Submit OTP
   const submitOTP = async () => {
     const code = otp.join("");
     if (code.length !== 6) return;
@@ -79,16 +86,13 @@ export function useOTPVerification() {
     try {
       const res = await fetch("/api/auth/resend-otp", {
         method: "POST",
-        body: JSON.stringify({
-          contact,
-          method, // "email" | "phone"
-        }),
+        body: JSON.stringify({ contact, method }),
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) throw new Error("Failed to resend OTP");
+      if (!res.ok) throw new Error("Failed to resend");
 
-      // Reset UI
+      // Reset timer + UI
       setOtp(["", "", "", "", "", ""]);
       setInvalidCode(false);
       setExpired(false);
