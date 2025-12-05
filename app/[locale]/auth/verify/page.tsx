@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import OTPInput from "./OTPInput";
 import { useOTPVerification } from "./useOTPVerification";
+import { useSignUpStore } from "@/app/zustand/useSignUpStore";
 
 export default function VerifyPage() {
   const {
@@ -17,6 +18,8 @@ export default function VerifyPage() {
     submitOTP,
     resendOTP,
   } = useOTPVerification();
+
+  const { contact, method } = useSignUpStore();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-200 to-indigo-100 px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
@@ -36,7 +39,11 @@ export default function VerifyPage() {
         </h1>
 
         <p className="text-gray-700 dark:text-gray-300 text-center mt-2 text-sm sm:text-base">
-          We sent a 6-digit code to your email or phone number.
+          {method === "email"
+            ? `We sent a 6-digit code to ${contact || "your email"}.`
+            : method === "phone"
+            ? `We sent a 6-digit code to ${contact || "your phone number"}.`
+            : "We sent a 6-digit code to your email or phone number."}
         </p>
 
         <OTPInput
