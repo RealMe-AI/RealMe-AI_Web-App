@@ -76,11 +76,12 @@ export async function generateMetadata({ params }: { params: { locale: Locale } 
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  params: { locale: Locale } | Promise<{ locale: Locale }>;
+  // Next.js LayoutProps expects `params` to be a Promise or undefined at runtime
+  params?: Promise<{ locale: Locale }>;
 }
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const resolvedParams = params instanceof Promise ? await params : params;
+  const resolvedParams = params ? await params : { locale: "en" };
   const { locale } = resolvedParams;
 
   let messages: Messages;
