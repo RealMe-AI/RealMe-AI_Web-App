@@ -1,4 +1,4 @@
-import { SUPPORTED_LOCALES } from "../[locale]/layout";
+import { SUPPORTED_LOCALES } from "@/app/lib/locales";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 

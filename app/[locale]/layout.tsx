@@ -10,22 +10,20 @@ import StructuredData from "./components/StructuredData";
 
 import "../globals.css";
 
+import { SUPPORTED_LOCALES, type Locale } from "@/app/lib/locales";
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-poppins",
 });
 
-export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
-
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-
-  const { locale } = await params;
-
+export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
+  const locale = params.locale || "en";
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const pathname = locale === "en" ? "" : `/${locale}`;
@@ -43,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
   ];
 
-  const languages: Record<string, string> = {};
+  const languages: Record<Locale, string> = {} as Record<Locale, string>;
   SUPPORTED_LOCALES.forEach((l) => {
     const path = l === "en" ? "/" : `/${l}/`;
     languages[l] = `${SITE_URL}${path}`;
@@ -70,21 +68,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description,
       images: images.map((i) => i.url),
     },
-    other: {
-      ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-        ? { "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
-        : {}),
-    },
-  } as any;
+    other: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : {},
+  };
 }
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: Locale } | Promise<{ locale: Locale }>;
 }
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const { locale } = await params;
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const { locale } = resolvedParams;
 
   let messages: Messages;
   try {
