@@ -22,8 +22,12 @@ export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: { locale: Locale } }): Promise<Metadata> {
-  const locale = params.locale || "en";
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ locale: Locale }> 
+}): Promise<Metadata> {
+  const { locale } = await params; // Await the params Promise
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const pathname = locale === "en" ? "" : `/${locale}`;
@@ -76,13 +80,11 @@ export async function generateMetadata({ params }: { params: { locale: Locale } 
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  // Next.js LayoutProps expects `params` to be a Promise or undefined at runtime
-  params?: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: Locale }>; // Make this required and a Promise
 }
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const resolvedParams = params ? await params : { locale: "en" };
-  const { locale } = resolvedParams;
+  const { locale } = await params; // Await the params Promise directly
 
   let messages: Messages;
   try {
