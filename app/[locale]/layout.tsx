@@ -1,85 +1,11 @@
-// import { ReactNode } from "react";
-// import { notFound } from "next/navigation";
-// import { NextIntlClientProvider } from "next-intl";
-// import type { Messages } from "../i18n/en";
-// import { Poppins } from "next/font/google";
-// import { ThemeProvider } from "../theme-provider/theme-provider";
-// import "../globals.css";
-
-// const poppins = Poppins({
-//   subsets: ["latin"],
-//   weight: ["400", "600", "700"],
-//   variable: "--font-poppins",
-// });
-
-// export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
-
-// // export function generateStaticParams() {
-// //   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
-// // }
-
-// export const metadata = {
-//   title: "RealMe AI",
-//   description: "Converse. Learn. Evolve. Professionally.",
-// };
-
-// interface LocaleLayoutProps {
-//   children: ReactNode;
-//   params: Promise<{ locale: string }>;
-// }
-
-// export default async function LocaleLayout({
-//   children,
-//   params,
-// }: LocaleLayoutProps) {
-//   const { locale } = await params;
-
-//   console.log("=== LAYOUT EXECUTING ===");
-//   console.log("Locale:", locale);
-//   console.log("Supported:", SUPPORTED_LOCALES);
-
-//   // Validate locale
-//   if (
-//     !SUPPORTED_LOCALES.includes(locale as (typeof SUPPORTED_LOCALES)[number])
-//   ) {
-//     console.log("LOCALE NOT FOUND - calling notFound()");
-//     notFound();
-//   }
-
-//   // Dynamically import translation file
-//   let messages: Messages;
-//   // In the layout, after loading messages:
-//   try {
-//     messages = (await import(`../i18n/${locale}.ts`)).default;
-//     console.log("Messages loaded successfully");
-//     console.log("Messages keys:", Object.keys(messages));
-//     console.log(
-//       "Messages content:",
-//       JSON.stringify(messages).substring(0, 200)
-//     );
-//   } catch (error) {
-//     console.log("Failed to load messages:", error);
-//     notFound();
-//   }
-
-//   return (
-//     <html lang={locale} suppressHydrationWarning>
-//       <body className={`${poppins.className} antialiased`}>
-//         <ThemeProvider>
-//           <NextIntlClientProvider locale={locale} messages={messages}>
-//             {children}
-//           </NextIntlClientProvider>
-//         </ThemeProvider>
-//       </body>
-//     </html>
-//   );
-// }
-
 import { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "../theme-provider/theme-provider";
+import StructuredData from "./components/StructuredData";
+import { getStructuredData } from "../seo/structuredData";
+import { Metadata } from "next";
 import "../globals.css";
 
 const poppins = Poppins({
@@ -90,16 +16,62 @@ const poppins = Poppins({
 
 export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 
-// ADD THIS FUNCTION
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const locale = params?.locale ?? "en";
 
-export async function generateMetadata() {
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const pathname = locale === "en" ? "" : `/${locale}`;
+  const canonical = new URL(`${SITE_URL}${pathname}/`);
+
+  const title = "RealMe AI — Converse. Learn. Evolve.";
+  const description = "RealMe AI — Conversational AI for personal and professional growth.";
+
+  const images = [
+    {
+      url: `${SITE_URL}/og/og-default.png`,
+      width: 1200,
+      height: 630,
+      alt: "RealMe AI",
+    },
+  ];
+
+  const languages: Record<string, string> = {};
+  SUPPORTED_LOCALES.forEach((l) => {
+    const path = l === "en" ? "/" : `/${l}/`;
+    languages[l] = `${SITE_URL}${path}`;
+  });
+
   return {
-    title: "RealMe AI",
-    description: "Converse. Learn. Evolve. Professionally.",
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    alternates: {
+      canonical: canonical.toString(),
+      languages,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical.toString(),
+      images,
+      siteName: "RealMe AI",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: images.map((i) => i.url),
+    },
+    other: {
+      ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+        ? { "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+        : {}),
+    },
   };
+}
 }
 
 interface LocaleLayoutProps {
@@ -107,10 +79,7 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: LocaleLayoutProps) {
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = await params;
 
   let messages: Messages;
@@ -121,9 +90,13 @@ export default async function LocaleLayout({
     messages = {} as Messages;
   }
 
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const structuredData = getStructuredData(SITE_URL);
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
+        <StructuredData data={{ "@graph": structuredData }} />
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
