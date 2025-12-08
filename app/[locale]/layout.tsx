@@ -3,9 +3,11 @@ import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "../theme-provider/theme-provider";
-import StructuredData from "./components/StructuredData";
 import { getStructuredData } from "../seo/structuredData";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+
+import StructuredData from "./components/StructuredData";
+
 import "../globals.css";
 
 const poppins = Poppins({
@@ -19,8 +21,11 @@ export const SUPPORTED_LOCALES = ["en", "ha", "ig", "yo"] as const;
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const locale = params?.locale ?? "en";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+
+  const { locale } = await params;
+
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const pathname = locale === "en" ? "" : `/${locale}`;
@@ -70,8 +75,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         ? { "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
         : {}),
     },
-  };
-}
+  } as any;
 }
 
 interface LocaleLayoutProps {
