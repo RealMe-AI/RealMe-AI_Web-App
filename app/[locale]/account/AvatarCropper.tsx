@@ -12,7 +12,6 @@ interface Props {
   onSave: (img: string) => void;
 }
 
-// Define types
 interface Area {
   x: number;
   y: number;
