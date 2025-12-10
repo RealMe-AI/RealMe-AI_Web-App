@@ -63,7 +63,7 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             className="relative w-[90%] max-w-md bg-white/70 dark:bg-slate-800/80 
                        backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20"
           >
-            {/* Close Button */}
+
             <button
               onClick={close}
               className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 
