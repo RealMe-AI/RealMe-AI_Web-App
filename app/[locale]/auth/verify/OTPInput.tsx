@@ -6,7 +6,7 @@ interface Props {
   otp: string[];
   onChange: (value: string, index: number) => void;
   expired?: boolean;
-  isError?: boolean; // highlight when code is wrong
+  isError?: boolean; 
 }
 
 export default function OTPInput({ otp, onChange, expired, isError }: Props) {
