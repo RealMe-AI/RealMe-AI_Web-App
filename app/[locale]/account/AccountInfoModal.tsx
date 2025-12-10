@@ -103,7 +103,6 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             {/* Divider */}
             <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
 
-            {/* Body */}
             {user ? (
               <div className="space-y-2 text-sm">
                 <InfoItem label={t("account_info.full_name")} value={user.fullName} />
