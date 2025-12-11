@@ -29,7 +29,7 @@ export default function OTPInput({ otp, onChange, expired, isError }: Props) {
       hasCleared.current = false;
     }
      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expired]); // Remove onChange from dependencies
+  }, [expired]);
 
   const handleInput = (value: string, i: number) => {
     if (!/^\d?$/.test(value)) return; // only digits
