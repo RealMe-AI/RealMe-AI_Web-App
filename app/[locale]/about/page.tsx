@@ -24,6 +24,7 @@ export default function AboutPage() {
         className="relative max-w-4xl w-full bg-white dark:bg-slate-900 
                    rounded-2xl shadow-2xl p-8 md:p-12 text-center"
       >
+        {/* Close/Back Button */}
         <button
           onClick={() => router.back()}
           className="absolute right-4 top-4 p-2 rounded-full 
