@@ -42,7 +42,7 @@ export default function VerifyPage() {
           {method === "email"
             ? `We sent a 6-digit code to ${contact || "your email"}.`
             : method === "phone"
-            ? `We sent a 6-digit code to ${contact || "your phone number"}.`
+            ? `We sent a 6-digit code to ${contact || "your number"}.`
             : "We sent a 6-digit code to your email or phone number."}
         </p>
 
