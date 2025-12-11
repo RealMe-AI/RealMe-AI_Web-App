@@ -33,6 +33,7 @@ export default function AboutPage() {
           <X className="text-slate-800 dark:text-gray-200" size={18} />
         </button>
 
+        {/* Founder Photo */}
         <div className="flex justify-center">
           <Image
             src="/owen.jpg"
