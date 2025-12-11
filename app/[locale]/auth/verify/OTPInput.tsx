@@ -32,7 +32,7 @@ export default function OTPInput({ otp, onChange, expired, isError }: Props) {
   }, [expired]);
 
   const handleInput = (value: string, i: number) => {
-    if (!/^\d?$/.test(value)) return; // only digits
+    if (!/^\d?$/.test(value)) return; 
     onChange(value, i);
 
     if (value && i < otp.length - 1) {
