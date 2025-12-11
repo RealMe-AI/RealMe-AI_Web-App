@@ -72,6 +72,7 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
               <X size={18} />
             </button>
 
+            {/* Header */}
             <div className="flex flex-col items-center text-center space-y-3">
               <AvatarEditor
                 src={user?.avatar || "/avatar.png"}
