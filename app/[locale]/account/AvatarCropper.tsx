@@ -46,7 +46,7 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
   return (
     <div className="fixed inset-0 z-10 bg-black/60 backdrop-blur-sm flex items-center justify-center">
       <div className="bg-white dark:bg-slate-800 rounded-xl p-4 w-[90%] max-w-sm relative">
-  
+        {/* Close */}
         <button
           onClick={onClose}
           className="absolute right-3 top-3 z-20 text-slate-600 dark:text-slate-300"
