@@ -23,6 +23,7 @@ export default function AuthPage() {
           <ArrowLeft className="w-4 h-4" /> {t("auth.page.back_button")}
         </button>
 
+        {/* Auth Card */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
