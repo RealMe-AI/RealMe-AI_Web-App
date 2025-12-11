@@ -43,7 +43,7 @@ export default function VerifyPage() {
             ? `We sent a 6-digit code to ${contact || "your email"}.`
             : method === "phone"
             ? `We sent a 6-digit code to ${contact || "your number"}.`
-            : "We sent a 6-digit code to your email or phone number."}
+            : "We sent a 6-digit code to your email or number."}
         </p>
 
         <OTPInput
