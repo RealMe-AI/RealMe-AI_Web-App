@@ -55,7 +55,7 @@ export function useOTPVerification() {
     setInvalidCode(false);
   }, []);
 
-  // Submit OTP
+
   const submitOTP = async () => {
     const code = otp.join("");
     if (code.length !== 6) return;
