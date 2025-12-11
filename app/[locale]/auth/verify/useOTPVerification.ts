@@ -7,7 +7,7 @@ import { useSignUpStore } from "@/app/zustand/useSignUpStore";
 export function useOTPVerification() {
   const router = useRouter();
 
-  // : use the correct zustand store
+  //  use the correct zustand store
   const { contact, method } = useSignUpStore();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
