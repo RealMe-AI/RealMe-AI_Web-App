@@ -89,7 +89,7 @@ export default function SignUpForm() {
         )}
       </div>
 
-      {/* FULL NAME */}
+     
       <div className="relative">
         <User className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
 
