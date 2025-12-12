@@ -33,7 +33,7 @@ export default function SignUpForm() {
       onSubmit={handleSubmit}
       autoComplete="off"
     >
-      {/* Identifier */}
+     
       <div className="relative">
         <Mail className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
 
