@@ -8,7 +8,8 @@ import { useEffect } from "react";
  */
 export function useBackdrop(isOpen: boolean) {
   useEffect(() => {
-    if (typeof document === "undefined") return; // SSR safety check
+    // SSR safety check
+    if (typeof document === "undefined") return; 
 
     const body = document.body;
     const originalOverflow = body.style.overflow;
