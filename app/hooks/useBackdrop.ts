@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 /**
  * useBackdrop Hook
- * Locks body scroll and applies backdrop-safe behavior when active.
+
  *
  * @param isOpen - Whether the backdrop/modal is open
  */
