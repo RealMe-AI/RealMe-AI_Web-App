@@ -11,7 +11,7 @@ export default function useNavigateToAuth() {
       // replaces current history entry
       router.replace("/auth");
     } else {
-      // normal navigation
+      // normal 
       router.push("/auth");
     }
   };
