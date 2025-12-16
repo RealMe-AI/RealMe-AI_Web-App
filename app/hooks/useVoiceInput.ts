@@ -1,4 +1,4 @@
-// src/hooks/useVoiceInput.ts
+// src/hooks/use
 import { useEffect, useRef, useState } from "react";
 
 interface TranscriptionResponse {
