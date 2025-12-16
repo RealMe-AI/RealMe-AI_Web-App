@@ -27,7 +27,7 @@ export function useTranslate(): UseTranslateReturn {
   }, [setLanguage]);
 
   // Translation function using Next-Intl
-  // The key  
+ 
   const t = useTranslations();
 
   return { t, language, setLanguage };
