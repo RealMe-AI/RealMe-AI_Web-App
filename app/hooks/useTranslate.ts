@@ -27,7 +27,7 @@ export function useTranslate(): UseTranslateReturn {
   }, [setLanguage]);
 
   // Translation function using Next-Intl
-  // The key can be nested like "landing.hero.title"
+  // The key can be nested lik
   const t = useTranslations();
 
   return { t, language, setLanguage };
