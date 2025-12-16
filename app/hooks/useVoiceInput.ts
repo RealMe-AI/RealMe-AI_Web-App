@@ -1,4 +1,4 @@
-// src/hooks/use
+// src/hooks
 import { useEffect, useRef, useState } from "react";
 
 interface TranscriptionResponse {
