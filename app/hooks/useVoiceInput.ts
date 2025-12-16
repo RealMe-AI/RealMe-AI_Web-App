@@ -1,4 +1,4 @@
-// src/
+
 import { useEffect, useRef, useState } from "react";
 
 interface TranscriptionResponse {
