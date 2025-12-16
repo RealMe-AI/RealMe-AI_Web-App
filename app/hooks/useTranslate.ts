@@ -27,7 +27,7 @@ export function useTranslate(): UseTranslateReturn {
   }, [setLanguage]);
 
   // Translation function using Next-Intl
-  // The key can be nested
+  // The key can be 
   const t = useTranslations();
 
   return { t, language, setLanguage };
