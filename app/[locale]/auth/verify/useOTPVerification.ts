@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
+import {bseUrl} from @/a
 
 export function useOTPVerification() {
   const router = useRouter();
