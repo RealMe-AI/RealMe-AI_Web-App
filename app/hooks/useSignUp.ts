@@ -104,7 +104,7 @@ export default function useSignUp() {
         return;
       }
 
-      // ✅ Success: clear inputs
+      //  Success: clear inputs
       setSuccess(true);
       setIdentifier("");
       setPassword("");
