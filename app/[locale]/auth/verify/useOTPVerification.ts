@@ -85,7 +85,7 @@ export function useOTPVerification() {
     setResending(true);
 
     try {
-      const res = await fetch("/api/auth/resend-otp", {
+      const res = await fetch(`${baseUrl}/auth/resend`, {
         method: "POST",
         body: JSON.stringify({ contact, method }),
         headers: { "Content-Type": "application/json" },
