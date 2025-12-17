@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
-import {bseUrl} from @/a
+import { baseUrl } from "@/app/lip/baseUrl"
 
 export function useOTPVerification() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export function useOTPVerification() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/verify-otp", {
+      const res = await fetch(`${baseUrl}/auth/verify`, {
         method: "POST",
         body: JSON.stringify({ code }),
         headers: { "Content-Type": "application/json" },
