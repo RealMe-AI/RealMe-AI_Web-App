@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
-import { baseUrl } from "@/app/lip/baseUrl"
+import { baseUrl } from "@/app/lib/baseUrl"
 
 export function useOTPVerification() {
   const router = useRouter();
