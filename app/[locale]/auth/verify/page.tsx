@@ -54,7 +54,7 @@ export default function VerifyPage() {
           isError={invalidCode}
         />
 
-        {/* TIMER / EXPIRED 
+        {/* 
         <div className="text-center mt-4">
           {!expired ? (
             <p className={`text-sm font-light ${timerTextClass}`}>
