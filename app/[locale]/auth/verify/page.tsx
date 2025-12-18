@@ -9,11 +9,12 @@ import { useSignUpStore } from "@/app/zustand/useSignUpStore";
 export default function VerifyPage() {
   const {
     otp,
-    timeLeft,
     expired,
     loading,
     resending,
     invalidCode,
+    formattedTime,
+    timerTextClass,
     handleChange,
     submitOTP,
     resendOTP,
@@ -53,11 +54,11 @@ export default function VerifyPage() {
           isError={invalidCode}
         />
 
-        {/* Timer or Expired Message */}
+        {/* TIMER / EXPIRED MESSAGE */}
         <div className="text-center mt-4">
           {!expired ? (
-            <p className="text-slate-500 text-sm font-light">
-              Expires in <span className="font-bold">{timeLeft}s</span>
+            <p className={`text-sm font-light ${timerTextClass}`}>
+              Expires in <span className="font-semibold">{formattedTime}</span>
             </p>
           ) : (
             <p className="text-red-500 dark:text-red-400 text-sm font-light">
@@ -91,13 +92,13 @@ export default function VerifyPage() {
         <button
           disabled={loading || expired}
           onClick={submitOTP}
-          className={`
-            w-full mt-6 py-3 rounded-xl font-semibold 
+          className="
+            w-full mt-6 py-3 rounded-xl font-semibold
             text-slate-800 dark:text-white
-            bg-indigo-300 hover:bg-indigo-200 
+            bg-indigo-300 hover:bg-indigo-200
             dark:bg-indigo-600 dark:hover:bg-indigo-500
             transition-colors disabled:opacity-50 disabled:cursor-not-allowed
-          `}
+          "
         >
           {loading ? "Verifying..." : "Verify Code"}
         </button>
