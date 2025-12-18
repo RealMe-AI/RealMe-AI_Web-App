@@ -12,7 +12,7 @@ export function useOTPVerification() {
   const { contact, method } = useSignUpStore();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [expired, setExpired] = useState(false);
   const [loading, setLoading] = useState(false);
   const [invalidCode, setInvalidCode] = useState(false);
