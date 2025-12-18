@@ -8,7 +8,7 @@ import { baseUrl } from "@/app/lib/baseUrl";
 export function useOTPVerification() {
   const router = useRouter();
 
-  //  use the correct zustand store
+  // zustand store
   const { contact, method } = useSignUpStore();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -18,14 +18,14 @@ export function useOTPVerification() {
   const [invalidCode, setInvalidCode] = useState(false);
   const [resending, setResending] = useState(false);
 
-  //  Redirect user back if they enter verification without signup info
+  // Redirect if verification accessed incorrectly
   useEffect(() => {
     if (!contact || !method) {
       router.push("/auth");
     }
   }, [contact, method, router]);
 
-  // Countdown
+  // Countdown timer
   useEffect(() => {
     if (expired) return;
 
@@ -43,12 +43,25 @@ export function useOTPVerification() {
     return () => clearInterval(interval);
   }, [expired]);
 
+  // FORMAT TIME → mm:ss
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  // Warning color logic (Tailwind-ready)
+  const timerTextClass =
+    timeLeft <= 30 && !expired
+      ? "text-red-500 animate-pulse"
+      : "text-muted-foreground";
+
   // Handle OTP input
   const handleChange = useCallback((value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
-    setOtp((p) => {
-      const arr = [...p];
+    setOtp((prev) => {
+      const arr = [...prev];
       arr[index] = value;
       return arr;
     });
@@ -80,7 +93,7 @@ export function useOTPVerification() {
     }
   };
 
-  // RESEND OTP
+  // Resend OTP
   const resendOTP = async () => {
     setResending(true);
 
@@ -108,6 +121,8 @@ export function useOTPVerification() {
   return {
     otp,
     timeLeft,
+    formattedTime: formatTime(timeLeft),
+    timerTextClass,
     expired,
     loading,
     invalidCode,
