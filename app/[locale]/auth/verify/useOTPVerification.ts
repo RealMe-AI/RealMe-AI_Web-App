@@ -64,7 +64,7 @@ export function useOTPVerification() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/verify", {
+      const res = await fetch(`${baseUrl}/auth/verify`, {
         method: "POST",
         body: JSON.stringify({ code }),
         headers: { "Content-Type": "application/json" },
@@ -85,7 +85,7 @@ export function useOTPVerification() {
     setResending(true);
 
     try {
-      const res = await fetch("/api/auth/resend", {
+      const res = await fetch(`${baseUrl}/auth/resend`, {
         method: "POST",
         body: JSON.stringify({ contact, method }),
         headers: { "Content-Type": "application/json" },
