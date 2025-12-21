@@ -81,7 +81,10 @@ export function useOTPVerification() {
         method: "POST",
         body: JSON.stringify({ code }),
         headers: { "Content-Type": "application/json" },
+        
       });
+
+      console.log("body", res.body)
 
       if (!res.ok) throw new Error("Invalid code");
 
