@@ -106,7 +106,7 @@ export function useOTPVerification() {
 
       if (!res.ok) throw new Error("Failed to resend OTP");
 
-      // Reset UI 
+      // Reset UI + timer
       setOtp(["", "", "", "", "", ""]);
       setInvalidCode(false);
       setExpired(false);
