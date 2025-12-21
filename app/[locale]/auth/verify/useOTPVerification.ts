@@ -84,7 +84,7 @@ export function useOTPVerification() {
         
       });
 
-      console.log("body", res.body)
+      console.log("body", res)
 
       if (!res.ok) throw new Error("Invalid code");
 
