@@ -79,17 +79,21 @@ export function useOTPVerification() {
     try {
       const res = await fetch(`${baseUrl}/auth/verify`, {
         method: "POST",
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ code, contact, method }),
         headers: { "Content-Type": "application/json" },
-        
       });
 
-      console.log("body", res)
+      const data = await res.json();
+      console.log("Verification response:", data);
 
-      if (!res.ok) throw new Error("Invalid code");
+      if (!res.ok) {
+        console.error("Verification failed:", data);
+        throw new Error(data.error || "Invalid code");
+      }
 
       router.push("/dashboard");
-    } catch {
+    } catch (error) {
+      console.error("OTP verification error:", error);
       setInvalidCode(true);
     } finally {
       setLoading(false);
