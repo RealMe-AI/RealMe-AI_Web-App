@@ -18,14 +18,14 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-export function generateStaticParams() {
+export function generateStaticParams(): { locale: Locale }[] {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ locale: Locale }> 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params; // Await the params Promise
 
@@ -34,7 +34,8 @@ export async function generateMetadata({
   const canonical = new URL(`${SITE_URL}${pathname}/`);
 
   const title = "RealMe AI — Converse. Learn. Evolve.";
-  const description = "RealMe AI — Conversational AI for personal and professional growth.";
+  const description =
+    "RealMe AI — Conversational AI for personal and professional growth.";
 
   const images = [
     {
@@ -73,7 +74,10 @@ export async function generateMetadata({
       images: images.map((i) => i.url),
     },
     other: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-      ? { "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      ? {
+          "google-site-verification":
+            process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        }
       : {},
   };
 }
@@ -83,7 +87,10 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: Locale }>; // Make this required and a Promise
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { locale } = await params; // Await the params Promise directly
 
   let messages: Messages;
