@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useTranslate } from "../../hooks/useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { ArrowLeft } from "lucide-react";
 
+import Image from "next/image";
 import AuthForm from "../components/auth/AuthForm";
 
 export default function AuthPage() {
