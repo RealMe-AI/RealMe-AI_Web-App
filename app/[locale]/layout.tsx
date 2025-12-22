@@ -82,16 +82,15 @@ export async function generateMetadata({
   };
 }
 
-interface LocaleLayoutProps {
-  children: ReactNode;
-  params: Promise<{ locale: Locale }>; // Make this required and a Promise
-}
-
 export default async function LocaleLayout({
   children,
   params,
-}: LocaleLayoutProps) {
-  const { locale } = await params; // Await the params Promise directly
+}: {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: localeString } = await params;
+  const locale = localeString as Locale; // Type assertion to Locale
 
   let messages: Messages;
   try {
