@@ -77,20 +77,48 @@ export function useOTPVerification() {
     setLoading(true);
 
     try {
+      // Log what we're about to send
+      const payload = { code, contact, method };
+      console.log("=== OTP Verification Request ===");
+      console.log("Payload:", payload);
+      console.log("Contact:", contact);
+      console.log("Method:", method);
+      console.log("Code:", code);
+      console.log("Base URL:", baseUrl);
+
       const res = await fetch(`${baseUrl}/auth/verify`, {
         method: "POST",
-        body: JSON.stringify({ code, contact, method }),
+        body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Include cookies if backend uses sessions
       });
 
-      const data = await res.json();
-      console.log("Verification response:", data);
+      console.log("=== Response Details ===");
+      console.log("Status:", res.status);
+      console.log("Status Text:", res.statusText);
+      console.log("OK:", res.ok);
+      console.log("Headers:", Object.fromEntries(res.headers.entries()));
+
+      // Try to parse response
+      const contentType = res.headers.get("content-type");
+      let data;
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        console.log("Response text:", text);
+        data = { error: text || "Unknown error" };
+      }
+
+      console.log("Response data:", data);
 
       if (!res.ok) {
         console.error("Verification failed:", data);
-        throw new Error(data.error || "Invalid code");
+        throw new Error(data.error || data.message || "Invalid code");
       }
 
+      console.log("✅ Verification successful!");
       router.push("/dashboard");
     } catch (error) {
       console.error("OTP verification error:", error);
