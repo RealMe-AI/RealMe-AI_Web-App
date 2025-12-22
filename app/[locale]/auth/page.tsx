@@ -16,12 +16,12 @@ export default function AuthPage() {
     <div className=" min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-indigo-200 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Fixed Back to Home Button */}
       <div className=" w-3.5flex flex-col">
-        <button
+        {/* <button
           onClick={() => router.back()}
           className="flex items-center gap-2 px-3 py-1 mt-2 rounded-lg bg-white dark:bg-slate-700/80 text-slate-900 dark:text-white shadow-md hover:bg-slate-200 dark:hover:bg-slate-600/90 transition"
         >
           <ArrowLeft className="w-4 h-4" /> {t("auth.page.back_button")}
-        </button>
+        </button> */}
 
         {/* Auth Card */}
         <motion.div
