@@ -42,12 +42,12 @@ export default function SignUpForm() {
           placeholder={t("auth.login.email_placeholder")}
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
+          className="w-full pl-10 pr-4 py-3 rounded-lg text-white dark:bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
 
-        <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400">
+        <div className="absolute right-3 top-1 text-xs dark:text-slate-400">
           {identifier
             ? isEmail(identifier)
               ? t("auth.identifier.email")
