@@ -2,15 +2,15 @@
 
 import { motion } from "framer-motion";
 import { useTranslate } from "../../hooks/useTranslate";
-import { useRouter } from "@/i18n/routing";
-import { ArrowLeft } from "lucide-react";
+// import { useRouter } from "@/i18n/routing";
+// import { ArrowLeft } from "lucide-react";
 
 import Image from "next/image";
 import AuthForm from "../components/auth/AuthForm";
 
 export default function AuthPage() {
   const { t } = useTranslate();
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <div className=" min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-indigo-200 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
