@@ -113,9 +113,20 @@ export function useOTPVerification() {
 
       console.log("Response data:", data);
 
+      // If message is an array, log each validation error
+      if (Array.isArray(data.message)) {
+        console.error("❌ Validation errors from backend:");
+        data.message.forEach((msg: string, index: number) => {
+          console.error(`  ${index + 1}. ${msg}`);
+        });
+      }
+
       if (!res.ok) {
         console.error("Verification failed:", data);
-        throw new Error(data.error || data.message || "Invalid code");
+        const errorMessage = Array.isArray(data.message)
+          ? data.message.join(", ")
+          : data.error || data.message || "Invalid code";
+        throw new Error(errorMessage);
       }
 
       console.log("✅ Verification successful!");
