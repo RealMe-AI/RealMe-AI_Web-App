@@ -40,13 +40,13 @@ export default function SignInForm() {
           placeholder={t("auth.login.email_placeholder")}
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
+          className="w-full pl-10 pr-4 py-3 rounded-lg text-white bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
           aria-invalid={!!fieldErrors.identifier}
         />
 
-        <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400">
+        <div className="absolute right-3 top-1 text-xs text-slate-400">
           {identifier
             ? isEmail(identifier)
               ? t("auth.identifier.email")
@@ -70,7 +70,7 @@ export default function SignInForm() {
           placeholder={t("auth.login.password_placeholder")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full pl-10 pr-10 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
+          className="w-full pl-10 pr-10 py-3 rounded-lg text-white bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
@@ -94,7 +94,7 @@ export default function SignInForm() {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className={`mt-2 flex items-center justify-center gap-2 
-          bg-indigo-400 text-slate-800 dark:bg-indigo-600 dark:text-white 
+          bg-indigo-400  dark:bg-indigo-600 text-white 
           font-semibold py-3 rounded-lg shadow-md transition
           ${loading ? "opacity-70 pointer-events-none" : ""}
           ${success ? "bg-emerald-500 text-white" : ""}`}

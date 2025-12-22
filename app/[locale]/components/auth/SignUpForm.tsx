@@ -47,7 +47,7 @@ export default function SignUpForm() {
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
 
-        <div className="absolute right-3 top-1 text-xs dark:text-slate-400">
+        <div className="absolute right-3 top-1 text-xs text-slate-400">
           {identifier
             ? isEmail(identifier)
               ? t("auth.identifier.email")
