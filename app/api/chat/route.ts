@@ -2,9 +2,17 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
+// Lazy initialization to avoid build-time errors
+let openai: OpenAI | null = null;
+
+function getOpenAIClient() {
+  if (!openai) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY!,
+    });
+  }
+  return openai;
+}
 
 interface OpenAIStreamChunk {
   choices: Array<{
@@ -19,15 +27,12 @@ export async function POST(req: Request) {
     const { message } = await req.json();
 
     if (!message) {
-      return NextResponse.json(
-        { error: "Message required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
     // Create GPT-5 streaming response
-    const response = await openai.chat.completions.create({
-      model: "gpt-5", // replace with GPT-5 when available
+    const response = await getOpenAIClient().chat.completions.create({
+      model: "gpt-4", // Use gpt-4 for now
       messages: [{ role: "user", content: message }],
       stream: true,
     });
