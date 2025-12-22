@@ -42,7 +42,7 @@ export default function SignUpForm() {
           placeholder={t("auth.login.email_placeholder")}
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-lg text-whitebg-slate-700/50
+          className="w-full pl-10 pr-4 py-3 rounded-lg text-white bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
