@@ -42,7 +42,7 @@ export default function SignUpForm() {
           placeholder={t("auth.login.email_placeholder")}
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-lg text-white dark:bg-slate-700/50
+          className="w-full pl-10 pr-4 py-3 rounded-lg text-whitebg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
@@ -71,7 +71,7 @@ export default function SignUpForm() {
           placeholder={t("auth.login.password_placeholder")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full pl-10 pr-10 py-3 rounded-lg dark:bg-slate-700/50
+          className="w-full pl-10 pr-10 py-3 rounded-lg text-white bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-400
            focus:ring-2 focus:ring-indigo-400 outline-none"
         />
@@ -114,7 +114,7 @@ export default function SignUpForm() {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className={`mt-2 flex items-center justify-center gap-2 
-          bg-indigo-400 text-slate-800 dark:bg-indigo-600 dark:text-white 
+          bg-indigo-400 dark:bg-indigo-600 text-white 
           font-semibold py-3 rounded-lg shadow-md transition
           ${loading ? "opacity-70 pointer-events-none" : ""}
           ${success ? "bg-emerald-500 text-white" : ""}`}
