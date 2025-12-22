@@ -9,7 +9,7 @@ export function useOTPVerification() {
   const router = useRouter();
 
   // zustand store
-  const { contact, method } = useSignUpStore();
+  const { contact, method, userId } = useSignUpStore();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timeLeft, setTimeLeft] = useState(300);
@@ -20,10 +20,10 @@ export function useOTPVerification() {
 
   // Redirect if verification accessed incorrectly
   useEffect(() => {
-    if (!contact || !method) {
+    if (!contact || !method || !userId) {
       router.push("/auth");
     }
-  }, [contact, method, router]);
+  }, [contact, method, userId, router]);
 
   // Countdown timer
   useEffect(() => {
@@ -78,11 +78,10 @@ export function useOTPVerification() {
 
     try {
       // Log what we're about to send
-      const payload = { code, contact, method };
+      const payload = { code, userId };
       console.log("=== OTP Verification Request ===");
       console.log("Payload:", payload);
-      console.log("Contact:", contact);
-      console.log("Method:", method);
+      console.log("User ID:", userId);
       console.log("Code:", code);
       console.log("Base URL:", baseUrl);
 
