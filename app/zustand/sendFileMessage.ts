@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export type FileMessage = {
-  id: number;
+  id: string;
   type: "file";
   fileName: string;
   fileSize: number;
@@ -12,7 +12,7 @@ export type FileMessage = {
 };
 
 export type TextMessage = {
-  id: number;
+  id: string;
   type: "text";
   text: string;
   sender: "user";
@@ -88,21 +88,23 @@ export const useSendFileMessage = create<SendFileMessageStore>((set, get) => {
 
     sendFilesWithText: (text) =>
       set((state) => {
-        const newFileMessages: FileMessage[] = state.pendingFiles.map((file) => ({
-          id: Date.now() + Math.random(),
-          type: "file",
-          fileName: file.name,
-          fileSize: file.size,
-          fileType: file.type,
-          fileObject: file,
-          sender: "user",
-          time: new Date().toLocaleTimeString(),
-        }));
+        const newFileMessages: FileMessage[] = state.pendingFiles.map(
+          (file) => ({
+            id: Date.now().toString(),
+            type: "file",
+            fileName: file.name,
+            fileSize: file.size,
+            fileType: file.type,
+            fileObject: file,
+            sender: "user",
+            time: new Date().toLocaleTimeString(),
+          })
+        );
 
         const newTextMessage: TextMessage[] = text
           ? [
               {
-                id: Date.now() + Math.random(),
+                id: Date.now().toString(),
                 type: "text",
                 text,
                 sender: "user",
