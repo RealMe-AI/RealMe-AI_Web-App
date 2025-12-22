@@ -143,19 +143,46 @@ export function useOTPVerification() {
     setResending(true);
 
     try {
+      console.log("=== Resend OTP Request ===");
+      console.log("Contact (email/phone):", contact);
+
       const res = await fetch(`${baseUrl}/auth/resend-otp`, {
         method: "POST",
-        body: JSON.stringify({ userId }),
+        body: JSON.stringify({ login: contact }), // Backend expects 'login' field with email/phone
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) throw new Error("Failed to resend OTP");
+      console.log("Resend OTP Status:", res.status);
+
+      const contentType = res.headers.get("content-type");
+      let data;
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        data = { error: text || "Unknown error" };
+      }
+
+      console.log("Resend OTP Response:", data);
+
+      if (!res.ok) {
+        if (Array.isArray(data.message)) {
+          console.error("❌ Resend OTP validation errors:");
+          data.message.forEach((msg: string, index: number) => {
+            console.error(`  ${index + 1}. ${msg}`);
+          });
+        }
+        throw new Error(data.error || data.message || "Failed to resend OTP");
+      }
+
+      console.log("✅ OTP resent successfully!");
 
       // Reset UI + timer
       setOtp(["", "", "", "", "", ""]);
       setInvalidCode(false);
       setExpired(false);
-      setTimeLeft(60);
+      setTimeLeft(300); // Reset to 5 minutes
     } catch (e) {
       console.error("Resend OTP failed:", e);
     } finally {
