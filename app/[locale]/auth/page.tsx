@@ -59,7 +59,7 @@ export default function AuthPage() {
 
         <h2 className="text-2xl font-bold text-center text-slate-800 dark:text-white">
           {t("auth.page.hero_title")}{" "}
-          <span className="text-indigo-500">RealMe AI</span>
+          <span className="text-indigo-400">RealMe AI</span>
         </h2>
 
         {/* Auth Form */}
