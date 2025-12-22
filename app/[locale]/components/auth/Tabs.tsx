@@ -25,7 +25,7 @@ export default function Tabs({ isSignUp, setIsSignUp }: TabsProps) {
           <button
             key={tab.labelKey}
             onClick={() => setIsSignUp(tab.isSignUpTab)}
-            className="relative w-1/2 py-2 font-semibold text-sm text-slate-600 dark:text-gray-300"
+            className="relative w-1/2 py-2 font-semibold text-sm text-gray-300"
           >
             {active && (
               <motion.div

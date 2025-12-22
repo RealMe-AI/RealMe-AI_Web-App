@@ -40,8 +40,8 @@ export default function AuthPage() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="
           relative z-10 w-full max-w-md mx-4 p-8 rounded-2xl
-          bg-white/35 dark:bg-slate-900/40
-          backdrop-blur-2xl
+          bg-slate-900/40
+          backdrop-blur
           shadow-2xl
           border border-white/20 dark:border-white/10
         "
@@ -59,7 +59,7 @@ export default function AuthPage() {
 
         <h2 className="text-2xl font-bold text-center text-slate-800 dark:text-white">
           {t("auth.page.hero_title")}{" "}
-          <span className="text-indigo-400">RealMe AI</span>
+          <span className="text-indigo-500">RealMe AI</span>
         </h2>
 
         {/* Auth Form */}
