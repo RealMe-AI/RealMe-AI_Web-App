@@ -1,8 +1,7 @@
 export type Features = {
-  key: string;   
-  icon: string;  
+  key: string;
+  icon: string;
 };
-
 
 export type Props = {
   isOpen: boolean;
@@ -28,10 +27,15 @@ export type Toggle = {
 export type Message = {
   id: string;
   sender: "user" | "ai";
-  text: string;
+  type: "text" | "file" | "image" | "audio"; // Required for ChatMessageProps
+  text?: string; // Optional since file/image may have no text
   time: string;
   fileName?: string;
   fileUrl?: string;
+  fileSize?: number;
+  mimeType?: string;
+  imageUrl?: string;
+  audioUrl?: string;
 };
 
 export type ChatState = {
@@ -91,4 +95,4 @@ export type AboutStore = {
   isOpen: boolean;
   openAbout: () => void;
   closeAbout: () => void;
-}
+};

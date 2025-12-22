@@ -13,6 +13,7 @@ export const useChatStore = create<ChatState>((set) => ({
     const userMsg: Message = {
       id: Date.now().toString(),
       sender: "user",
+      type: "text",
       text: content,
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
@@ -56,7 +57,8 @@ export const useChatStore = create<ChatState>((set) => ({
                   ...state.messages,
                   {
                     id: "ai-temp",
-                    sender: "ai",
+                    sender: "ai" as const,
+                    type: "text" as const,
                     text: aiText,
                     time: new Date().toLocaleTimeString([], {
                       hour: "2-digit",
