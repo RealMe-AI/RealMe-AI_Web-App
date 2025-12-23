@@ -35,8 +35,9 @@ interface SendFileMessageStore {
 export const useSendFileMessage = create<SendFileMessageStore>((set, get) => {
   // Initialize daily count from localStorage
   const today = new Date().toISOString().split("T")[0];
-  const storedCount = Number(localStorage.getItem("dailyUploadCount") || "0");
-  const storedDate = localStorage.getItem("lastUploadDate") || today;
+  const isBrowser = typeof window !== "undefined";
+  const storedCount = isBrowser ? Number(localStorage.getItem("dailyUploadCount") || "0") : 0;
+  const storedDate = isBrowser ? localStorage.getItem("lastUploadDate") || today : null;
 
   return {
     messages: [],
