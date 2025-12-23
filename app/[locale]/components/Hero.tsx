@@ -74,6 +74,7 @@ export default function Hero() {
               alt="hero-image"
               width={900}
               height={600}
+              priority
               className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
             />
           </div>
