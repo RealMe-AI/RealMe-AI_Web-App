@@ -7,7 +7,7 @@ import { useTranslations } from "use-intl";
 
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
-import Link from "next/link";
+import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
 
 interface SidebarProps {
@@ -175,35 +175,12 @@ export default function Sidebar({
             <div className="flex-1 overflow-y-auto space-y-3">
               {filteredChats.length ? (
                 filteredChats.map((chat) => (
-                  <div
+                  <SidebarItem
                     key={chat.id}
-                    className={`relative flex items-center justify-between p-3 rounded-xl cursor-pointer transition group
-                  ${
-                    activeChatId === chat.id
-                      ? "bg-indigo-500 text-white"
-                      : "text-slate-700 dark:text-white bg-slate-100 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
-                  }`}
+                    chat={chat}
+                    isActive={activeChatId === chat.id}
                     onClick={() => handleSelectChat(chat)}
-                  >
-                    {/* Chat info */}
-                    <div className="flex flex-col">
-                      <p className="text-sm font-medium">{chat.title}</p>
-                      <p className="text-xs truncate">{chat.lastMessage}</p>
-                    </div>
-
-                    {/* Action button */}
-                    <Link
-                      href={`/chat-actions/${chat.id}`} 
-                      className="
-                      ml-2 text-slate-500 dark:text-slate-300
-                      opacity-100 md:opacity-0 md:group-hover:opacity-100
-                      transition-opacity duration-200 text-lg
-                      "
-                      onClick={(e) => e.stopPropagation()} // prevent chat select
-                    >
-                      ...
-                    </Link>
-                  </div>
+                  />
                 ))
               ) : (
                 <p className="text-sm text-slate-500 italic text-center">
