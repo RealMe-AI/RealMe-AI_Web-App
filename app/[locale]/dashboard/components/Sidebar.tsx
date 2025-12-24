@@ -181,7 +181,7 @@ export default function Sidebar({
                   ${
                     activeChatId === chat.id
                       ? "bg-indigo-500 text-white"
-                      : "text-slate-700 dark:text-white bg-white/10 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
+                      : "text-slate-700 dark:text-white bg-slate-100 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
                   }`}
                     onClick={() => handleSelectChat(chat)}
                   >
