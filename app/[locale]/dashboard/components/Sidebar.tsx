@@ -85,7 +85,6 @@ export default function Sidebar({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* 🔹 Mobile backdrop (ChatGPT-style, NOT blocking UI) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -99,7 +98,7 @@ export default function Sidebar({
             "
           />
 
-          {/* 🔹 Sidebar */}
+          {/* Sidebar */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
