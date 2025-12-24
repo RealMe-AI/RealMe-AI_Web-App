@@ -1,8 +1,8 @@
 "use client";
 
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share2, Edit2, Pin, Trash2 } from "lucide-react";
+import { Share, Edit2, Pin, Trash2 } from "lucide-react";
 
 interface ChatActionsModalProps {
   isOpen: boolean;
@@ -18,7 +18,6 @@ interface ChatActionsModalProps {
 const ChatActionsModal: FC<ChatActionsModalProps> = ({
   isOpen,
   onClose,
-  chatId,
   className,
   onShare,
   onRename,
@@ -64,7 +63,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
                 onClick={() => handleItemClick(onShare)}
                 className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
-                <Share2 size={16} /> <span>Share</span>
+                <Share size={16} /> <span>Share</span>
               </li>
 
               {/* Rename */}
