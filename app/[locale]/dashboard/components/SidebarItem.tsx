@@ -50,14 +50,13 @@ export default function SidebarItem({
       <button
         className={`
           ml-2 
-          text-slate-600 dark:text-slate-300
+           dark:text-slate-300
           opacity-100 md:opacity-0 md:group-hover:opacity-100
           transition-opacity duration-200 text-lg leading-none
           ${
-            isActive ?
-            "text-slate-300"
-            :
-           " text-slate-600"
+            isActive 
+            ?" text-slate-300"
+            :" text-slate-600"
           }
         `}
         onClick={(e) => {
