@@ -173,42 +173,39 @@ export default function Sidebar({
             {/* Chat List */}
             <div className="flex-1 overflow-y-auto space-y-3">
               {filteredChats.length ? (
-                filteredChats.map((chat) => (
-                  <div
-                    key={chat.id}
-                    className={`relative flex items-center justify-between p-3 rounded-xl cursor-pointer transition
+  filteredChats.map((chat) => (
+    <div
+      key={chat.id}
+      className={`relative flex items-center justify-between p-3 rounded-xl cursor-pointer transition group
         ${
           activeChatId === chat.id
             ? "bg-indigo-500 text-white"
             : "bg-white/40 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
         }`}
-                    onClick={() => handleSelectChat(chat)}
-                  >
-                    {/* Chat info */}
-                    <div className="flex flex-col">
-                      <p className="text-sm font-medium">{chat.title}</p>
-                      <p className="text-xs truncate">{chat.lastMessage}</p>
-                    </div>
+      onClick={() => handleSelectChat(chat)}
+    >
+      {/* Chat info */}
+      <div className="flex flex-col">
+        <p className="text-sm font-medium">{chat.title}</p>
+        <p className="text-xs truncate">{chat.lastMessage}</p>
+      </div>
 
-                    {/* Action button (only visible on hover) */}
-                    <a
-                      href={`/chat-actions/${chat.id}`} // 👈 path to your model, adjust later
-                      className="
-          ml-2 text-slate-400 dark:text-slate-300
-          opacity-0 hover:opacity-100
-          transition-opacity duration-200
-        "
-                      onClick={(e) => e.stopPropagation()} // prevent chat select
-                    >
-                      ...
-                    </a>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-slate-500 italic text-center">
-                  {t("dashboard.search.no_chat")}
-                </p>
-              )}
+      {/* Action button visible when chat item is hovered */}
+      <a
+        href={`/chat-actions/${chat.id}`} // path to your model
+        className="ml-2 text-slate-400 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        ...
+      </a>
+    </div>
+  ))
+) : (
+  <p className="text-sm text-slate-500 italic text-center">
+    {t("dashboard.search.no_chat")}
+  </p>
+)}
+
             </div>
 
             <ProfileFooter />
