@@ -132,7 +132,7 @@ export default function Sidebar({
           type="text"
           value={searchTerm}
           onChange={(e) => {
-            closeAll(); // close modals on typing
+            closeAll(); // close modals on 
             setSearchTerm(e.target.value);
           }}
           onFocus={() => closeAll()} // close modals when focusing
