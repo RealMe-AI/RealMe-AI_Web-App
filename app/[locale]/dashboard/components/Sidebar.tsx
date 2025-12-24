@@ -136,7 +136,7 @@ export default function Sidebar({
             <div className="flex justify-end mb-3">
               <button
                 onClick={handleNewChat}
-                className="text-xs font-medium px-2 py-1.5 rounded-lg  text-slate-700 dark:text-white transition"
+                className=" flex items-center text-xs font-medium px-2 py-1.5 rounded-lg  text-slate-700 dark:text-white transition"
               >
                <SquarePen size={20} /> {t("dashboard.sidebar.chat_button")}
               </button>
