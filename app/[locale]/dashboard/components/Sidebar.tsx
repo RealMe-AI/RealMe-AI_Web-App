@@ -107,7 +107,7 @@ export default function Sidebar({
             transition={{ type: "spring", stiffness: 260, damping: 30 }}
             className="
               fixed top-0 right-0 z-40 h-full
-              w-[85vw] max-w-[360px]   /* 👈 KEY FIX */
+              w-[85vw] max-w-[360px]  
               bg-white/90 dark:bg-slate-800/95
               backdrop-blur-xl shadow-2xl
               flex flex-col p-4
