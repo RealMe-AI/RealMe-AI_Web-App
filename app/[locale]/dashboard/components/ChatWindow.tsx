@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
-import { Plus, Mic, FileIcon } from "lucide-react";
+import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import Image from "next/image";
@@ -176,7 +176,7 @@ export default function ChatWindow() {
               className="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 
                          text-white font-medium text-sm transition disabled:opacity-50"
             >
-              {isLoading ? "…" : t("chat.send_button")}
+              {isLoading ? "…" : <ArrowUp size={20} />}
             </button>
           )}
         </div>
