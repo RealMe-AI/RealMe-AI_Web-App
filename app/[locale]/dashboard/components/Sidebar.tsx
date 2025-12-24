@@ -195,9 +195,9 @@ export default function Sidebar({
                     <Link
                       href={`/chat-actions/${chat.id}`} 
                       className="
-                      ml-2 text-slate-400 dark:text-slate-300
+                      ml-2 text-slate-500 dark:text-slate-300
                       opacity-100 md:opacity-0 md:group-hover:opacity-100
-                      transition-opacity duration-200
+                      transition-opacity duration-200 text-lg
                       "
                       onClick={(e) => e.stopPropagation()} // prevent chat select
                     >
