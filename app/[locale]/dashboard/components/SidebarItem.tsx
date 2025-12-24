@@ -49,8 +49,8 @@ export default function SidebarItem({
       {/* Action button */}
       <button
         className="
-          ml-2 p-1 rounded hover:bg-black/10 dark:hover:bg-white/10
-          text-slate-400 dark:text-slate-300
+          ml-2 
+          text-slate-600 dark:text-slate-300
           opacity-100 md:opacity-0 md:group-hover:opacity-100
           transition-opacity duration-200 text-lg leading-none
         "
