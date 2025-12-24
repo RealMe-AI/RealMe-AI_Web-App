@@ -90,7 +90,7 @@ export default function Sidebar({
       initial={false}
       animate={{ x: isOpen ? 0 : "100%" }}
       transition={{ type: "spring", stiffness: 260, damping: 30 }}
-      className="fixed top-0 right-0 z-40 h-full w-full sm:w-[360px] 
+      className="fixed top-0 right-0 z-40 h-full w-[85%] max-w-[360px] 
                  bg-white/90 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl 
                  flex flex-col p-4"
     >
