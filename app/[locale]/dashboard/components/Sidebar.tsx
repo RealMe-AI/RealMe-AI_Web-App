@@ -193,7 +193,7 @@ export default function Sidebar({
 
                     {/* Action button */}
                     <Link
-                      href={`/chat-actions/${chat.id}`} // path to your future model
+                      href={`/chat-actions/${chat.id}`} 
                       className="
                       ml-2 text-slate-400 dark:text-slate-300
                       opacity-100 md:opacity-0 md:group-hover:opacity-100
