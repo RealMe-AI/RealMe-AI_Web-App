@@ -31,7 +31,7 @@ export default function SidebarItem({
   return (
     <div
       className={`
-        relative flex items-center justify-between p-3 rounded-xl cursor-pointer transition group
+        relative w-75 flex items-center justify-between p-3 rounded-xl cursor-pointer transition group
         ${
           isActive
             ? "bg-indigo-500 text-white"
