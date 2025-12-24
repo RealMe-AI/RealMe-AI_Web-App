@@ -79,7 +79,7 @@ export default function Sidebar({
     setActiveChatId(chat.id);
     onSelectChat(chat);
     // close sidebar on mobile after selecting chat
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   return (
@@ -138,13 +138,16 @@ export default function Sidebar({
                 onClick={handleNewChat}
                 className=" flex items-center gap-1 text-xs font-medium px-2 py-1.5 rounded-lg text-slate-700 hover:bg-slate-300 dark:text-white dark:hover:bg-slate-500 transition"
               >
-               <SquarePen size={13} /> {t("dashboard.sidebar.chat_button")}
+                <SquarePen size={13} /> {t("dashboard.sidebar.chat_button")}
               </button>
             </div>
 
             {/* Search */}
             <div className="relative mb-2">
-              <Search className="absolute left-3 top-2.5 text-slate-400" size={16} />
+              <Search
+                className="absolute left-3 top-2.5 text-slate-400"
+                size={16}
+              />
               <input
                 type="text"
                 value={searchTerm}
@@ -173,16 +176,32 @@ export default function Sidebar({
                 filteredChats.map((chat) => (
                   <div
                     key={chat.id}
+                    className={`relative flex items-center justify-between p-3 rounded-xl cursor-pointer transition
+        ${
+          activeChatId === chat.id
+            ? "bg-indigo-500 text-white"
+            : "bg-white/40 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
+        }`}
                     onClick={() => handleSelectChat(chat)}
-                    className={`p-3 rounded-xl cursor-pointer transition
-                      ${
-                        activeChatId === chat.id
-                          ? "bg-indigo-500 text-white"
-                          : "bg-white/40 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
-                      }`}
                   >
-                    <p className="text-sm font-medium">{chat.title}</p>
-                    <p className="text-xs truncate">{chat.lastMessage}</p>
+                    {/* Chat info */}
+                    <div className="flex flex-col">
+                      <p className="text-sm font-medium">{chat.title}</p>
+                      <p className="text-xs truncate">{chat.lastMessage}</p>
+                    </div>
+
+                    {/* Action button (only visible on hover) */}
+                    <a
+                      href={`/chat-actions/${chat.id}`} // 👈 path to your model, adjust later
+                      className="
+          ml-2 text-slate-400 dark:text-slate-300
+          opacity-0 hover:opacity-100
+          transition-opacity duration-200
+        "
+                      onClick={(e) => e.stopPropagation()} // prevent chat select
+                    >
+                      ...
+                    </a>
                   </div>
                 ))
               ) : (
