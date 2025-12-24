@@ -18,7 +18,7 @@ export default function Page() {
       {!isSidebarOpen && (
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="fixed top-4 right-4 z-50  hover:bg-indigo-600 text-slate-500 shadow-lg transition"
+          className="fixed top-4 right-4 z-50  hover:text-slate-700 text-slate-500 shadow-lg transition"
         >
           <PanelLeft size={20} />
         </button>

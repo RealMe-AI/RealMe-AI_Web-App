@@ -78,7 +78,8 @@ export default function Sidebar({
     closeAll();
     setActiveChatId(chat.id);
     onSelectChat(chat);
-    setIsOpen(false); // 👈 close sidebar on mobile after selecting chat
+    // close sidebar on mobile after selecting chat
+    setIsOpen(false); 
   };
 
   return (
@@ -132,11 +133,10 @@ export default function Sidebar({
             </div>
 
             {/* New Chat */}
-            <div className="flex justify-end mb-4">
+            <div className="flex justify-end mb-3">
               <button
                 onClick={handleNewChat}
-                className="text-sm font-medium px-3 py-1.5 rounded-lg 
-                           bg-indigo-500 hover:bg-indigo-600 text-white transition"
+                className="text-xs font-medium px-2 py-1.5 rounded-lg  text-slate-700 dark:text-white transition"
               >
                 {t("dashboard.sidebar.chat_button")}
               </button>
