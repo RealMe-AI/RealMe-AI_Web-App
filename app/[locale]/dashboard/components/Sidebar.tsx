@@ -7,6 +7,7 @@ import { useTranslations } from "use-intl";
 
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
+import Link from "next/link";
 import useModalStore from "../../../zustand/modalStore";
 
 interface SidebarProps {
@@ -180,7 +181,7 @@ export default function Sidebar({
                   ${
                     activeChatId === chat.id
                       ? "bg-indigo-500 text-white"
-                      : "bg-white/40 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
+                      : "bg-white/10 dark:bg-slate-700/40 hover:bg-white/60 dark:hover:bg-slate-600/50"
                   }`}
                     onClick={() => handleSelectChat(chat)}
                   >
@@ -191,7 +192,7 @@ export default function Sidebar({
                     </div>
 
                     {/* Action button */}
-                    <button
+                    <Link
                       href={`/chat-actions/${chat.id}`} // path to your future model
                       className="
                       ml-2 text-slate-400 dark:text-slate-300
@@ -201,7 +202,7 @@ export default function Sidebar({
                       onClick={(e) => e.stopPropagation()} // prevent chat select
                     >
                       ...
-                    </button>
+                    </Link>
                   </div>
                 ))
               ) : (
