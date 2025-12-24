@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X } from "lucide-react";
+import { Search, X, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "use-intl";
 
@@ -138,7 +138,7 @@ export default function Sidebar({
                 onClick={handleNewChat}
                 className="text-xs font-medium px-2 py-1.5 rounded-lg  text-slate-700 dark:text-white transition"
               >
-                {t("dashboard.sidebar.chat_button")}
+               <SquarePen size={20} /> {t("dashboard.sidebar.chat_button")}
               </button>
             </div>
 
