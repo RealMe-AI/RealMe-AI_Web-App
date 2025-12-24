@@ -191,7 +191,7 @@ export default function Sidebar({
                     </div>
 
                     {/* Action button */}
-                    <a
+                    <button
                       href={`/chat-actions/${chat.id}`} // path to your future model
                       className="
                       ml-2 text-slate-400 dark:text-slate-300
@@ -201,7 +201,7 @@ export default function Sidebar({
                       onClick={(e) => e.stopPropagation()} // prevent chat select
                     >
                       ...
-                    </a>
+                    </button>
                   </div>
                 ))
               ) : (
