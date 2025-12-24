@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LayoutDashboard } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
 
 import Sidebar from "./components/Sidebar";
@@ -20,7 +20,7 @@ export default function Page() {
           onClick={() => setIsSidebarOpen(true)}
           className="fixed top-4 right-4 z-50 p-3 rounded-full bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg transition"
         >
-          <LayoutDashboard size={22} />
+          <PanelLeft size={22} />
         </button>
       )}
 
