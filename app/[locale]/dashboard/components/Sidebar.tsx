@@ -153,6 +153,7 @@ export default function Sidebar({
                 placeholder={t("dashboard.search.chats_placeholder")}
                 className="
                   w-full pl-9 pr-3 py-2 text-sm rounded-lg
+                  text-slate-700 dark:text-white
                   bg-white/40 dark:bg-slate-700/50
                   placeholder:text-slate-400
                   focus:outline-none focus:ring-2 focus:ring-indigo-500
