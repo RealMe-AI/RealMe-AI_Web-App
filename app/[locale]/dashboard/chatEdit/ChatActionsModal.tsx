@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Share, Edit2, Pin, Trash2 } from "lucide-react";
 
@@ -26,15 +26,19 @@ export default function ChatActionsModal({
   const modalRef = useRef<HTMLDivElement>(null);
   const [openUpwards, setOpenUpwards] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isOpen || !modalRef.current) return;
 
     const rect = modalRef.current.getBoundingClientRect();
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
 
-    // If not enough space below, flip upwards
-    setOpenUpwards(spaceBelow < 160 && spaceAbove > spaceBelow);
+    const shouldOpenUpwards = spaceBelow < 160 && spaceAbove > spaceBelow;
+
+    // ✅ prevent cascading renders
+    setOpenUpwards((prev) =>
+      prev !== shouldOpenUpwards ? shouldOpenUpwards : prev
+    );
   }, [isOpen]);
 
   const handleItemClick = (action?: () => void) => {
