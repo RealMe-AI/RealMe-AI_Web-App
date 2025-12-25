@@ -9,6 +9,7 @@ interface ChatActionsModalProps {
   onClose: () => void;
   className?: string;
   onShare?: () => void;
+  chatId?: number;
   onRename?: () => void;
   onPin?: () => void;
   onDelete?: () => void;
@@ -35,7 +36,7 @@ export default function ChatActionsModal({
 
     const shouldOpenUpwards = spaceBelow < 160 && spaceAbove > spaceBelow;
 
-    // ✅ prevent cascading renders
+     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpenUpwards((prev) =>
       prev !== shouldOpenUpwards ? shouldOpenUpwards : prev
     );
