@@ -13,6 +13,7 @@ interface ChatActionsModalProps {
   onRename?: () => void;
   onPin?: () => void;
   onDelete?: () => void;
+  triggerRef?: React.RefObject<any>;
 }
 
 export default function ChatActionsModal({
@@ -23,18 +24,22 @@ export default function ChatActionsModal({
   onRename,
   onPin,
   onDelete,
+  triggerRef,
 }: ChatActionsModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [openUpwards, setOpenUpwards] = useState(false);
-  const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
   useLayoutEffect(() => {
-    if (!isOpen || !modalRef.current) return;
+    // If triggerRef is provided, use it. Otherwise, fallback to parentElement (legacy behavior if needed, or just return)
+    const triggerEl = triggerRef?.current || modalRef.current?.parentElement;
 
-    const trigger = modalRef.current.parentElement;
-    if (!trigger) return;
+    if (!isOpen || !triggerEl) return;
 
-    const triggerRect = trigger.getBoundingClientRect();
+    const triggerRect = triggerEl.getBoundingClientRect();
     const menuHeight = 160;
     const spaceBelow = window.innerHeight - triggerRect.bottom;
     const shouldOpenUpwards = spaceBelow < menuHeight;
@@ -46,7 +51,7 @@ export default function ChatActionsModal({
         : triggerRect.bottom + 8,
       left: triggerRect.right - 192,
     });
-  }, [isOpen]);
+  }, [isOpen, triggerRef]);
 
   const handleItemClick = (action?: () => void) => {
     action?.();
