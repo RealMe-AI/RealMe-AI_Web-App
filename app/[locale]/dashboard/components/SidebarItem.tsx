@@ -78,42 +78,7 @@ export default function SidebarItem({
             onDelete={() => handleAction("Delete")}
             triggerRef={buttonRef}
           />
-          {/* 
-              Note: ChatActionsModal internal implementation has a fixed backdrop. 
-              We might need an invisible fixed backdrop here to handle "click outside" globally 
-              if ChatActionsModal's backdrop styling interferes.
-              
-              However, ChatActionsModal has:
-              className="fixed inset-0 z-40 bg-black/10..." for backdrop.
-              
-              If we render it here, that backdrop will cover the screen.
-              That is actually FINE for a modal/popover behavior (click outside to close).
-              BUT we typically want the backdrop to be invisible for a small popover.
-              
-              The ChatActionsModal component is hardcoded with "bg-black/10".
-              We can't easily override the backdrop style via `className` prop because 
-              `className` prop in `ChatActionsModal` is applied to the **Modal Content** div, NOT the backdrop.
-              (See step 28 code).
-              
-              Wait, looking at Step 28:
-              Backdrop div: `className="fixed inset-0 z-40 bg-black/10 dark:bg-black/30"` -> No prop allows changing this.
-              Modal div: `className={'... ' + className}` -> Prop applies here.
-              
-              So the backdrop will ALWAYS be visible and dark.
-              This might not be exactly "like ChatGPT's popover" (which usually has no dark backdrop, just click-outside).
-              But the user asked for "like a model just like the one of ChatGPT".
-              Maybe they meant the POSITION/STYLE of the menu, not necessarily the backdrop.
-              
-              If the backdrop is annoying, we might need to modify `ChatActionsModal` to accept `backdropClassName` or `isPopover`.
-              For now, I will use it as is. The dark backdrop is a safe default for "Modal".
-              
-              One adjustments: `className` prop overrides positioning in Modal div.
-              Default was `absolute right-0 top-1/2`.
-              I am passing `absolute right-8 top-8`.
-              This will place it relative to the `SidebarItem` (which is `relative`).
-              So `top-8` is 2rem down from top of item.
-              `right-8` is 2rem left from right of item.
-           */}
+          
         </div>
       )}
     </div>
