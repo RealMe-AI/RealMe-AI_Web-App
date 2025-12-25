@@ -1,13 +1,12 @@
 "use client";
 
-import { FC } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Share, Edit2, Pin, Trash2 } from "lucide-react";
 
 interface ChatActionsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  chatId: number;
   className?: string;
   onShare?: () => void;
   onRename?: () => void;
@@ -15,7 +14,7 @@ interface ChatActionsModalProps {
   onDelete?: () => void;
 }
 
-const ChatActionsModal: FC<ChatActionsModalProps> = ({
+export default function ChatActionsModal({
   isOpen,
   onClose,
   className,
@@ -23,7 +22,21 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
   onRename,
   onPin,
   onDelete,
-}) => {
+}: ChatActionsModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [openUpwards, setOpenUpwards] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return;
+
+    const rect = modalRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    // If not enough space below, flip upwards
+    setOpenUpwards(spaceBelow < 160 && spaceAbove > spaceBelow);
+  }, [isOpen]);
+
   const handleItemClick = (action?: () => void) => {
     action?.();
     onClose();
@@ -44,12 +57,14 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
+            ref={modalRef}
+            initial={{ opacity: 0, y: openUpwards ? 10 : -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: openUpwards ? 10 : -10 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`
-              absolute right-0 top-1/2 z-50 w-48
+              absolute right-8 z-50 w-48
+              ${openUpwards ? "bottom-full mb-2" : "top-full mt-2"}
               bg-white dark:bg-slate-800
               shadow-lg rounded-lg
               border border-slate-200 dark:border-slate-700
@@ -58,34 +73,30 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
             `}
           >
             <ul className="flex flex-col">
-              {/* Share */}
               <li
                 onClick={() => handleItemClick(onShare)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
               >
                 <Share size={16} /> <span>Share</span>
               </li>
 
-              {/* Rename */}
               <li
                 onClick={() => handleItemClick(onRename)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
               >
                 <Edit2 size={16} /> <span>Rename</span>
               </li>
 
-              {/* Pin */}
               <li
                 onClick={() => handleItemClick(onPin)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
               >
                 <Pin size={16} /> <span>Pin</span>
               </li>
 
-              {/* Delete */}
               <li
                 onClick={() => handleItemClick(onDelete)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-red-100 dark:hover:bg-red-700 text-red-600 dark:text-red-400 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-red-100 dark:hover:bg-red-700 text-red-600 dark:text-red-400 cursor-pointer"
               >
                 <Trash2 size={16} /> <span>Delete</span>
               </li>
@@ -95,6 +106,4 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
       )}
     </AnimatePresence>
   );
-};
-
-export default ChatActionsModal;
+}
