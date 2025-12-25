@@ -26,20 +26,26 @@ export default function ChatActionsModal({
 }: ChatActionsModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [openUpwards, setOpenUpwards] = useState(false);
+  const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
 
   useLayoutEffect(() => {
     if (!isOpen || !modalRef.current) return;
 
-    const rect = modalRef.current.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - rect.bottom;
-    const spaceAbove = rect.top;
+    const trigger = modalRef.current.parentElement;
+    if (!trigger) return;
 
-    const shouldOpenUpwards = spaceBelow < 160 && spaceAbove > spaceBelow;
+    const triggerRect = trigger.getBoundingClientRect();
+    const menuHeight = 160;
+    const spaceBelow = window.innerHeight - triggerRect.bottom;
+    const shouldOpenUpwards = spaceBelow < menuHeight;
 
-     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpenUpwards((prev) =>
-      prev !== shouldOpenUpwards ? shouldOpenUpwards : prev
-    );
+    setOpenUpwards(shouldOpenUpwards);
+    setPosition({
+      top: shouldOpenUpwards
+        ? triggerRect.top - menuHeight - 8
+        : triggerRect.bottom + 8,
+      left: triggerRect.right - 192,
+    });
   }, [isOpen]);
 
   const handleItemClick = (action?: () => void) => {
@@ -49,7 +55,7 @@ export default function ChatActionsModal({
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isOpen && position && (
         <>
           {/* Backdrop */}
           <motion.div
@@ -63,15 +69,18 @@ export default function ChatActionsModal({
           {/* Modal */}
           <motion.div
             ref={modalRef}
-            initial={{ opacity: 0, y: openUpwards ? 10 : -10 }}
+            initial={{ opacity: 0, y: openUpwards ? 8 : -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: openUpwards ? 10 : -10 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            exit={{ opacity: 0, y: openUpwards ? 8 : -8 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28 }}
+            style={{
+              top: position.top,
+              left: position.left,
+            }}
             className={`
-              absolute right-8 z-50 w-48
-              ${openUpwards ? "bottom-full mb-2" : "top-full mt-2"}
+              fixed z-50 w-48
               bg-white dark:bg-slate-800
-              shadow-lg rounded-lg
+              shadow-xl rounded-lg
               border border-slate-200 dark:border-slate-700
               overflow-hidden
               ${className || ""}
