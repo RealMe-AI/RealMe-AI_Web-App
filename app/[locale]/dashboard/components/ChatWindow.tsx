@@ -14,27 +14,27 @@ import FileUploadPopup from "./FileUploadPopup";
 export default function ChatWindow() {
   const t = useTranslations();
 
-  const { messages: chatMessages, isLoading } = useChatStore();
-  const { pendingFiles, removePendingFile, sendFilesWithText, messages: fileMessages } =
-    useSendFileMessage();
+  const { messages: chatMessages, isLoading, sendMessage } = useChatStore();
+  const {
+    pendingFiles,
+    removePendingFile,
+    sendFilesWithText,
+    messages: fileMessages,
+  } = useSendFileMessage();
 
-  const [input, setInput] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [showUploadPopup, setShowUploadPopup] = useState(false);
-  const [showVoicePopup, setShowVoicePopup] = useState(false);
+  const handleSend = async () => {
+    const textContent = input.trim();
+    if (!textContent && pendingFiles.length === 0) return;
 
-  const inputRef = useRef<HTMLDivElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+    // Send text message via API
+    if (textContent) {
+      await sendMessage(textContent);
+    }
 
-  // Auto-scroll
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages, pendingFiles]);
-
-  const handleSend = () => {
-    if (!input.trim() && pendingFiles.length === 0) return;
-
-    sendFilesWithText(input.trim() || undefined);
+    // Handle file uploads (separately for now)
+    if (pendingFiles.length > 0) {
+      sendFilesWithText(undefined); // Don't duplicate text in file store
+    }
 
     setInput("");
     if (inputRef.current) inputRef.current.textContent = "";
@@ -55,8 +55,10 @@ export default function ChatWindow() {
   );
 
   return (
-    <div className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
-                    backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full">
+    <div
+      className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
+                    backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
+    >
       {/* Chat Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
         {allMessages.map((msg) => (
@@ -85,7 +87,9 @@ export default function ChatWindow() {
           <div className="flex gap-2 overflow-x-auto py-1">
             {pendingFiles.map((file, index) => {
               const ext = file.name.split(".").pop()?.toLowerCase();
-              const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
+              const isImage = ["png", "jpg", "jpeg", "webp"].includes(
+                ext || ""
+              );
 
               return (
                 <div

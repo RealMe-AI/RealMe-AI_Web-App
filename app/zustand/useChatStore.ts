@@ -9,6 +9,7 @@ export const useChatStore = create<ChatState>((set) => ({
   isLoading: false,
 
   sendMessage: async (content: string) => {
+    console.log("sendMessage called with:", content, "baseUrl:", baseUrl);
     if (!content.trim()) return;
 
     const userMsg: Message = {
@@ -36,6 +37,18 @@ export const useChatStore = create<ChatState>((set) => ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }), // Adjust body payload based on backend requirements
       });
+
+      if (!res.ok) {
+        let errorMsg = `API Error ${res.status}`;
+        try {
+          const json = await res.json();
+          errorMsg += `: ${json.error || JSON.stringify(json)}`;
+        } catch {
+          const text = await res.text();
+          errorMsg += `: ${text}`;
+        }
+        throw new Error(errorMsg);
+      }
 
       if (!res.body) throw new Error("No stream received");
 
