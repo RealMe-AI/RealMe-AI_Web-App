@@ -14,6 +14,17 @@ import FileUploadPopup from "./FileUploadPopup";
 export default function ChatWindow() {
   const t = useTranslations();
 
+  /* -------------------- STATE -------------------- */
+  const [input, setInput] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [showUploadPopup, setShowUploadPopup] = useState(false);
+  const [showVoicePopup, setShowVoicePopup] = useState(false);
+
+  /* -------------------- REFS -------------------- */
+  const inputRef = useRef<HTMLDivElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  /* -------------------- STORES -------------------- */
   const { messages: chatMessages, isLoading, sendMessage } = useChatStore();
   const {
     pendingFiles,
@@ -22,18 +33,17 @@ export default function ChatWindow() {
     messages: fileMessages,
   } = useSendFileMessage();
 
+  /* -------------------- HANDLERS -------------------- */
   const handleSend = async () => {
     const textContent = input.trim();
     if (!textContent && pendingFiles.length === 0) return;
 
-    // Send text message via API
     if (textContent) {
       await sendMessage(textContent);
     }
 
-    // Handle file uploads (separately for now)
     if (pendingFiles.length > 0) {
-      sendFilesWithText(undefined); // Don't duplicate text in file store
+      sendFilesWithText(undefined);
     }
 
     setInput("");
@@ -49,15 +59,21 @@ export default function ChatWindow() {
     }
   };
 
-  // Merge all message types
+  /* -------------------- MERGE MESSAGES -------------------- */
   const allMessages = [...chatMessages, ...fileMessages].sort(
     (a, b) => Number(a.id) - Number(b.id)
   );
 
+  /* -------------------- AUTO SCROLL -------------------- */
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [allMessages.length]);
+
+  /* -------------------- UI -------------------- */
   return (
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
-                    backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
+                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
     >
       {/* Chat Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
@@ -87,9 +103,7 @@ export default function ChatWindow() {
           <div className="flex gap-2 overflow-x-auto py-1">
             {pendingFiles.map((file, index) => {
               const ext = file.name.split(".").pop()?.toLowerCase();
-              const isImage = ["png", "jpg", "jpeg", "webp"].includes(
-                ext || ""
-              );
+              const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
 
               return (
                 <div
@@ -97,7 +111,6 @@ export default function ChatWindow() {
                   className="relative shrink-0 w-12 h-12 bg-white/40 dark:bg-slate-700/40 
                              rounded-lg shadow"
                 >
-                  {/* Cancel Button */}
                   <button
                     onClick={() => removePendingFile(index)}
                     className="absolute -top-1 -right-2 w-5 h-5 flex items-center 
@@ -107,7 +120,6 @@ export default function ChatWindow() {
                     ×
                   </button>
 
-                  {/* Preview */}
                   {isImage ? (
                     <Image
                       src={URL.createObjectURL(file)}
@@ -167,7 +179,8 @@ export default function ChatWindow() {
                   close={() => setShowVoicePopup(false)}
                   onTranscript={(text) => {
                     setInput(text);
-                    if (inputRef.current) inputRef.current.textContent = text;
+                    if (inputRef.current)
+                      inputRef.current.textContent = text;
                     setShowVoicePopup(false);
                   }}
                 />
