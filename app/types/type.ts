@@ -75,7 +75,7 @@ export type SidebarProps = {
 export type Chat = {
   id: number;
   title: string;
-  lastMessage: string;
+  lastMessage?: string;
 };
 
 export type ModalState = {

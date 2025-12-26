@@ -5,16 +5,12 @@ import { Search, X, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "use-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { Chat } from "@/app/types/type";
 
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
-
-export interface Chat {
-  id: number;
-  title: string;
-}
 
 interface SidebarProps {
   isOpen: boolean;
@@ -35,18 +31,26 @@ export default function Sidebar({
   const { closeAll } = useModalStore();
   const t = useTranslations();
 
-  /* Load chats from localStorage */
+  /* Load chats from API */
   useEffect(() => {
-    const saved = localStorage.getItem("realme_chats");
-    if (saved) {
-      setChats(JSON.parse(saved));
-    }
-  }, []);
+    const fetchChats = async () => {
+      try {
+        const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`);
+        if (!res.ok) throw new Error("Failed to fetch conversations");
+        const data = await res.json();
+        // Handle array or object with items/conversations property
+        const loadedChats = Array.isArray(data)
+          ? data
+          : data.items || data.conversations || [];
+        setChats(loadedChats);
+      } catch (err) {
+        console.error("Error fetching chats:", err);
+        // Optional: setChats([]) or setError
+      }
+    };
 
-  /* Persist chats */
-  useEffect(() => {
-    localStorage.setItem("realme_chats", JSON.stringify(chats));
-  }, [chats]);
+    fetchChats();
+  }, [baseUrl]);
 
   const handleNewChat = async () => {
     closeAll();
