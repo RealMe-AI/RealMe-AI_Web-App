@@ -56,8 +56,8 @@ export default function SidebarItem({
           const rect = buttonRef.current?.getBoundingClientRect();
           if (rect) {
             const spaceBelow = window.innerHeight - rect.bottom;
-            // 220px is a safe estimate for the menu height + margin
-            setOpenUpwards(spaceBelow < 220);
+            // 280px is a safer estimate to prevent overlap with footer
+            setOpenUpwards(spaceBelow < 280);
           }
           setIsMenuOpen(true);
         }}
