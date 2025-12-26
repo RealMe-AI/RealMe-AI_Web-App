@@ -31,7 +31,7 @@ export const useChatStore = create<ChatState>((set) => ({
     /* import { baseUrl } from "../lib/baseUrl"; // Ensure this import is added at top */
 
     try {
-      const res = await fetch(`${baseUrl}/chat/send`, {
+      const res = await fetch(`${baseUrl}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }), // Adjust body payload based on backend requirements

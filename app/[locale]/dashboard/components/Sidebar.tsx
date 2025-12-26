@@ -53,7 +53,7 @@ export default function Sidebar({
   const handleNewChat = async () => {
     closeAll();
     try {
-      const res = await fetch(`${baseUrl}/chat/create`, {
+      const res = await fetch(`${baseUrl}/conversations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Add auth token header here if needed
