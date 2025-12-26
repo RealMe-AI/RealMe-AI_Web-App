@@ -67,7 +67,7 @@ export default function SidebarItem({
 
       {/* Popover Menu */}
       {isMenuOpen && (
-        <div onClick={(e) => e.stopPropagation()}>
+        <div className="absolute" onClick={(e) => e.stopPropagation()}>
           <ChatActionsModal
             isOpen={true}
             onClose={() => setIsMenuOpen(false)}
