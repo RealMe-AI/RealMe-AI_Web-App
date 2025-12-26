@@ -6,7 +6,6 @@ import ChatActionsModal from "../chatEdit/ChatActionsModal";
 interface Chat {
   id: number;
   title: string;
-//   lastMessage: string;
 }
 
 interface SidebarItemProps {
@@ -42,7 +41,6 @@ export default function SidebarItem({
       {/* Chat info */}
       <div className="flex flex-col overflow-hidden">
         <p className="text-sm font-medium truncate">{chat.title}</p>
-        {/* <p className="text-xs truncate opacity-80">{chat.lastMessage}</p> */}
       </div>
 
       {/* Action button */}
