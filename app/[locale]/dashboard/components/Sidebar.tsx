@@ -11,16 +11,15 @@ import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
 
+export interface Chat {
+  id: number;
+  title: string;
+}
+
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onSelectChat: (chat: Chat) => void;
-}
-
-export interface Chat {
-  id: number;
-  title: string;
-  // lastMessage: string;
 }
 
 export default function Sidebar({
@@ -36,19 +35,18 @@ export default function Sidebar({
   const { closeAll } = useModalStore();
   const t = useTranslations();
 
+  /* Load chats from localStorage */
   useEffect(() => {
     const saved = localStorage.getItem("realme_chats");
     if (saved) {
-      Promise.resolve().then(() => setChats(JSON.parse(saved)));
+      setChats(JSON.parse(saved));
     }
   }, []);
 
+  /* Persist chats */
   useEffect(() => {
     localStorage.setItem("realme_chats", JSON.stringify(chats));
   }, [chats]);
-
-  /* import { baseUrl } from "../../../../lib/baseUrl"; // Ensure this import is added at top 
-     This tool call only adds the function but note the import requirement */
 
   const handleNewChat = async () => {
     closeAll();
@@ -56,23 +54,19 @@ export default function Sidebar({
       const res = await fetch(`${baseUrl}/conversations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Add auth token header here if needed
       });
 
       if (!res.ok) throw new Error("Failed to create chat");
 
-      const newChat: Chat = await res.json();
+      const newChat: Partial<Chat> = await res.json();
 
-      // Fallback if API returns empty/different structure, but expecting full Chat object
       const safeChat: Chat = {
-        id: newChat.id || Date.now(),
+        id: newChat.id ?? Date.now(),
         title:
-          newChat.title ||
+          newChat.title ??
           t("dashboard.search.new_conversation_title", {
             chatNumber: chats.length + 1,
           }),
-        // lastMessage:
-        //   newChat.lastMessage || t("dashboard.search.new_conversation_started"),
       };
 
       setChats((prev) => [safeChat, ...prev]);
@@ -80,7 +74,6 @@ export default function Sidebar({
       onSelectChat(safeChat);
     } catch (err) {
       console.error("Create chat error:", err);
-      // Optional: Show error toast/message
     }
   };
 
@@ -96,6 +89,7 @@ export default function Sidebar({
         setError("");
       }
     }, 200);
+
     return () => clearTimeout(timeout);
   }, [searchTerm, filteredChats, t]);
 
@@ -103,7 +97,6 @@ export default function Sidebar({
     closeAll();
     setActiveChatId(chat.id);
     onSelectChat(chat);
-    // close sidebar on mobile after selecting chat
     setIsOpen(false);
   };
 
@@ -111,6 +104,7 @@ export default function Sidebar({
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -132,7 +126,7 @@ export default function Sidebar({
             transition={{ type: "spring", stiffness: 260, damping: 30 }}
             className="
               fixed top-0 right-0 z-40 h-full
-              w-[85vw] max-w-[360px]  
+              w-[85vw] max-w-[360px]
               bg-white/90 dark:bg-slate-800/95
               backdrop-blur-xl shadow-2xl
               flex flex-col p-4
@@ -158,12 +152,19 @@ export default function Sidebar({
             </div>
 
             {/* New Chat */}
-            <div className="flex justify-end mb-3 ">
+            <div className="flex justify-end mb-3">
               <button
                 onClick={handleNewChat}
-                className=" flex items-center gap-1 text-xs font-medium px-2 py-1.5 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-500 transition"
+                className="
+                  flex items-center gap-1 text-xs font-medium
+                  px-2 py-1.5 rounded-lg
+                  text-slate-700 hover:bg-slate-100
+                  dark:text-white dark:hover:bg-slate-500
+                  transition
+                "
               >
-                <SquarePen size={13} /> {t("dashboard.sidebar.chat_button")}
+                <SquarePen size={13} />
+                {t("dashboard.sidebar.chat_button")}
               </button>
             </div>
 
