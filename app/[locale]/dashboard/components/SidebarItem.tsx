@@ -6,7 +6,7 @@ import ChatActionsModal from "../chatEdit/ChatActionsModal";
 interface Chat {
   id: number;
   title: string;
-  lastMessage: string;
+//   lastMessage: string;
 }
 
 interface SidebarItemProps {

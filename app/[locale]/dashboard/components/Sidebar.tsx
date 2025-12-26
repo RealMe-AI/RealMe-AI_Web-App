@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "use-intl";
+import { baseUrl } from "@/app/lib/baseUrl";
 
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
-import { baseUrl } from "@/app/lib/baseUrl";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -20,7 +20,7 @@ interface SidebarProps {
 export interface Chat {
   id: number;
   title: string;
-  lastMessage: string;
+  // lastMessage: string;
 }
 
 export default function Sidebar({
@@ -71,8 +71,8 @@ export default function Sidebar({
           t("dashboard.search.new_conversation_title", {
             chatNumber: chats.length + 1,
           }),
-        lastMessage:
-          newChat.lastMessage || t("dashboard.search.new_conversation_started"),
+        // lastMessage:
+        //   newChat.lastMessage || t("dashboard.search.new_conversation_started"),
       };
 
       setChats((prev) => [safeChat, ...prev]);
