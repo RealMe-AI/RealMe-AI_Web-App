@@ -42,7 +42,7 @@ export default function SidebarItem({
       {/* Chat info */}
       <div className="flex flex-col overflow-hidden">
         <p className="text-sm font-medium truncate">{chat.title}</p>
-        <p className="text-xs truncate opacity-80">{chat.lastMessage}</p>
+        {/* <p className="text-xs truncate opacity-80">{chat.lastMessage}</p> */}
       </div>
 
       {/* Action button */}
