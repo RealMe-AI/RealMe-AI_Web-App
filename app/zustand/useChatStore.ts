@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { ChatState, Message } from "../types/type";
+import { baseUrl } from "../lib/baseUrl";
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
@@ -27,11 +28,13 @@ export const useChatStore = create<ChatState>((set) => ({
       isLoading: true,
     }));
 
+    /* import { baseUrl } from "../lib/baseUrl"; // Ensure this import is added at top */
+
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch(`${baseUrl}/chat/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: content }),
+        body: JSON.stringify({ message: content }), // Adjust body payload based on backend requirements
       });
 
       if (!res.body) throw new Error("No stream received");

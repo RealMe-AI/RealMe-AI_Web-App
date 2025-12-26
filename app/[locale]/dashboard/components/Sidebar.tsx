@@ -9,6 +9,7 @@ import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
+import { baseUrl } from "@/app/lib/baseUrl";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -46,18 +47,41 @@ export default function Sidebar({
     localStorage.setItem("realme_chats", JSON.stringify(chats));
   }, [chats]);
 
-  const handleNewChat = () => {
+  /* import { baseUrl } from "../../../../lib/baseUrl"; // Ensure this import is added at top 
+     This tool call only adds the function but note the import requirement */
+
+  const handleNewChat = async () => {
     closeAll();
-    const newChat: Chat = {
-      id: Date.now(),
-      title: t("dashboard.search.new_conversation_title", {
-        chatNumber: chats.length + 1,
-      }),
-      lastMessage: t("dashboard.search.new_conversation_started"),
-    };
-    setChats((prev) => [newChat, ...prev]);
-    setActiveChatId(newChat.id);
-    onSelectChat(newChat);
+    try {
+      const res = await fetch(`${baseUrl}/chat/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // Add auth token header here if needed
+      });
+
+      if (!res.ok) throw new Error("Failed to create chat");
+
+      const newChat: Chat = await res.json();
+
+      // Fallback if API returns empty/different structure, but expecting full Chat object
+      const safeChat: Chat = {
+        id: newChat.id || Date.now(),
+        title:
+          newChat.title ||
+          t("dashboard.search.new_conversation_title", {
+            chatNumber: chats.length + 1,
+          }),
+        lastMessage:
+          newChat.lastMessage || t("dashboard.search.new_conversation_started"),
+      };
+
+      setChats((prev) => [safeChat, ...prev]);
+      setActiveChatId(safeChat.id);
+      onSelectChat(safeChat);
+    } catch (err) {
+      console.error("Create chat error:", err);
+      // Optional: Show error toast/message
+    }
   };
 
   const filteredChats = chats.filter((chat) =>
