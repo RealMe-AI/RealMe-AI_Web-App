@@ -36,6 +36,7 @@ export const useChatStore = create<ChatState>((set) => ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content }), // Adjust body payload based on backend requirements
+        credentials: "include",
       });
 
       if (!res.ok) {

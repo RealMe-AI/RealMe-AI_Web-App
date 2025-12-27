@@ -35,7 +35,9 @@ export default function Sidebar({
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`);
+        const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`, {
+          credentials: "include",
+        });
         if (!res.ok) throw new Error("Failed to fetch conversations");
         const data = await res.json();
         // Handle array or object with items/conversations property
@@ -58,6 +60,7 @@ export default function Sidebar({
       const res = await fetch(`${baseUrl}/conversations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
 
       if (!res.ok) throw new Error("Failed to create chat");
