@@ -166,7 +166,7 @@ export default function ChatWindow() {
                        text-slate-800 dark:text-slate-100 min-h-[22px]"
           />
 
-          {/* Mic or Se
+          {/* Mic or Send */}
           {input.trim() === "" && pendingFiles.length === 0 ? (
             <div
               onClick={() => setShowVoicePopup(true)}
