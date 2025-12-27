@@ -34,9 +34,15 @@ export const useChatStore = create<ChatState>((set) => ({
     try {
       const res = await fetch(`${baseUrl}/messages`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: content }), // Adjust body payload based on backend requirements
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          conversationId: crypto.randomUUID(), // TEMP until real conversations exist
+          content,
+          model: "llama-3.1-8b-instant",
+        }),
       });
 
       if (!res.ok) {
