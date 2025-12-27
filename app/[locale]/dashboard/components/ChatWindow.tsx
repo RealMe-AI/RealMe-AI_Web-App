@@ -87,7 +87,7 @@ export default function ChatWindow() {
       {/* Typing Indicator */}
       {isLoading && (
         <div className="text-sm text-slate-600 dark:text-slate-400 mb-3 animate-pulse">
-         RealMe {t("dashboard.RealMe is thinking")}…
+         RealMe {t("dashboard.realMeThinking")}…
         </div>
       )}
 
