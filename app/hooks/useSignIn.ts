@@ -5,6 +5,18 @@ import { useTranslate } from "./useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 
+interface LoginErrorResponse {
+  error?: string;
+  fieldErrors?: {
+    identifier?: string;
+    password?: string;
+  };
+}
+
+interface LoginSuccessResponse {
+  accessToken: string;
+}
+
 export default function useSignIn() {
   const router = useRouter();
   const { t } = useTranslate();
@@ -30,11 +42,10 @@ export default function useSignIn() {
   const validate = () => {
     console.log("[SignIn] Running validation");
 
-    const errs: { identifier: string | null; password: string | null } = {
-      identifier: null,
-      password: null,
+    const errs = {
+      identifier: null as string | null,
+      password: null as string | null,
     };
-
     const id = identifier.trim();
 
     if (!id) {
@@ -51,10 +62,10 @@ export default function useSignIn() {
 
     setFieldErrors(errs);
 
-    const isValid = !Object.values(errs).some(Boolean);
-    console.log("[SignIn] Validation result:", isValid, errs);
+    const valid = !Object.values(errs).some(Boolean);
+    console.log("[SignIn] Validation result:", valid, errs);
 
-    return isValid;
+    return valid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,7 +77,7 @@ export default function useSignIn() {
     console.log("[SignIn] Base URL:", baseUrl);
 
     if (!validate()) {
-      console.warn("[SignIn] Validation failed, aborting request");
+      console.warn("[SignIn] Validation failed");
       return;
     }
 
@@ -87,31 +98,45 @@ export default function useSignIn() {
       });
 
       console.log("[SignIn] Response status:", res.status);
-      console.log("[SignIn] Response ok:", res.ok);
 
-      let json: any = null;
+      let json: LoginErrorResponse | LoginSuccessResponse;
       try {
         json = await res.json();
         console.log("[SignIn] Response body:", json);
-      } catch (parseErr) {
-        console.error("[SignIn] Failed to parse JSON response", parseErr);
+      } catch {
+        throw new Error("Invalid JSON response from server");
       }
 
+      // ❌ Backend says NO
       if (!res.ok) {
-        console.warn("[SignIn] Login failed");
+        console.warn("[SignIn] Login rejected by backend");
+        const errorResponse = json as LoginErrorResponse;
 
-        if (json?.fieldErrors) {
-          setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
+        if (errorResponse.fieldErrors) {
+          setFieldErrors((prev) => ({ ...prev, ...errorResponse.fieldErrors }));
         }
 
-        setError(json?.error || t("error.sign_in.general"));
+        setError(errorResponse.error || t("error.sign_in.general"));
         setLoading(false);
         return;
       }
 
-      console.log("[SignIn] Login SUCCESS (according to frontend)");
+      // 🚨 CRITICAL FIX — REQUIRE TOKEN
+      const successResponse = json as LoginSuccessResponse;
+      const accessToken = successResponse.accessToken;
 
-      // 🚨 IMPORTANT: We are NOT validating token yet (on purpose)
+      if (!accessToken) {
+        console.error("[SignIn] No accessToken returned");
+        setError("Login failed: no access token returned");
+        setLoading(false);
+        return;
+      }
+
+      console.log("[SignIn] Access token received");
+
+      // ✅ Store token (temporary solution)
+      localStorage.setItem("accessToken", accessToken);
+
       setSuccess(true);
       setIdentifier("");
       setPassword("");
@@ -122,11 +147,11 @@ export default function useSignIn() {
 
       setTimeout(() => setSuccess(false), 1500);
     } catch (err) {
-      console.error("[SignIn] Network or runtime error:", err);
+      console.error("[SignIn] Network/runtime error:", err);
       setError(t("error.network"));
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return {
