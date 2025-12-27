@@ -68,6 +68,31 @@ export default function useSignIn() {
     return valid;
   };
 
+  // 🆕 Verify token works by making a test API call
+  const verifyToken = async (token: string): Promise<boolean> => {
+    try {
+      console.log("[SignIn] Verifying token with test request...");
+      
+      const res = await fetch(`${baseUrl}/conversations?page=1&limit=1`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        console.log("[SignIn] ✅ Token verified successfully");
+        return true;
+      } else {
+        console.error("[SignIn] ❌ Token verification failed:", res.status);
+        return false;
+      }
+    } catch (err) {
+      console.error("[SignIn] ❌ Token verification error:", err);
+      return false;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -121,7 +146,7 @@ export default function useSignIn() {
         return;
       }
 
-      // 🚨 CRITICAL FIX — REQUIRE TOKEN
+      // 🚨 REQUIRE TOKEN
       const successResponse = json as LoginSuccessResponse;
       const accessToken = successResponse.accessToken;
 
@@ -134,15 +159,27 @@ export default function useSignIn() {
 
       console.log("[SignIn] Access token received");
 
-      // ✅ Store token (temporary solution)
+      // ✅ Store token
       localStorage.setItem("accessToken", accessToken);
 
+      // 🆕 VERIFY TOKEN BEFORE REDIRECTING
+      const isTokenValid = await verifyToken(accessToken);
+
+      if (!isTokenValid) {
+        console.error("[SignIn] Token verification failed");
+        localStorage.removeItem("accessToken"); // Clean up invalid token
+        setError("Login successful but unable to access dashboard. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      // ✅ Only redirect if token is verified
       setSuccess(true);
       setIdentifier("");
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
 
-      console.log("[SignIn] Redirecting to /dashboard");
+      console.log("[SignIn] ✅ All checks passed - Redirecting to /dashboard");
       router.push("/dashboard");
 
       setTimeout(() => setSuccess(false), 1500);
