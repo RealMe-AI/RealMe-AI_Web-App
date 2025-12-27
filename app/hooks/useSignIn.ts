@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
+import { useRouter } from "@/i18n/routing";
 import {baseUrl} from "@/app/lib/baseUrl";
 
 export default function useSignIn() {
+  const router = useRouter();
   const { t } = useTranslate();
 
   const [identifier, setIdentifier] = useState("");
@@ -76,6 +78,7 @@ export default function useSignIn() {
       setIdentifier("");
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
+      router.push("/dashboard");
 
       setTimeout(() => setSuccess(false), 1500);
     } catch {
