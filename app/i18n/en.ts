@@ -159,6 +159,7 @@ const en = {
   },
 
   dashboard: {
+     realMeThinking: "is thinking...",
     sidebar: {
       chat_button: "New Chat",
       footer_full: "By",
