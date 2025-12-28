@@ -90,7 +90,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale: localeString } = await params;
-  const locale = localeString as Locale; // Type assertion to 
+  const locale = localeString as Locale; // Type assertion to Loc
 
   let messages: Messages;
   try {
