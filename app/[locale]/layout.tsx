@@ -27,7 +27,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
-  const { locale } = await params; // Await the params Promise
+  const { locale } = await params; 
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const pathname = locale === "en" ? "" : `/${locale}`;
