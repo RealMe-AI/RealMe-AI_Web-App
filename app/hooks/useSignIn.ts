@@ -146,7 +146,7 @@ export default function useSignIn() {
         return;
       }
 
-      // 🚨 REQUIRE TOKEN
+      //  REQUIRE TOKEN
       const successResponse = json as LoginSuccessResponse;
       const accessToken = successResponse.accessToken;
 
