@@ -159,7 +159,7 @@ export default function useSignIn() {
 
       console.log("[SignIn] Access token received");
 
-      // ✅ Store token
+      //  Store token
       localStorage.setItem("accessToken", accessToken);
 
       // 🆕 VERIFY TOKEN BEFORE REDIRECTING
