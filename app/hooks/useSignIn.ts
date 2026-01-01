@@ -132,7 +132,7 @@ export default function useSignIn() {
         throw new Error("Invalid JSON response from server");
       }
 
-      // ❌ Backend says NO
+      //  Backend says NO
       if (!res.ok) {
         console.warn("[SignIn] Login rejected by backend");
         const errorResponse = json as LoginErrorResponse;
