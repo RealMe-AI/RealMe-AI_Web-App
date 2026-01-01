@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { PanelLeft } from "lucide-react";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
+import { useChatStore } from "../../zustand/useChatStore";
 
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
@@ -11,9 +12,13 @@ export default function Page() {
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
 
+  const setActiveConversationId = useChatStore(
+    (s) => s.setActiveConversationId
+  );
+  const fetchMessages = useChatStore((s) => s.fetchMessages);
+
   return (
     <div className="min-h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
-      
       {/* Toggle Button */}
       {!isSidebarOpen && (
         <button
@@ -40,8 +45,10 @@ export default function Page() {
       <Sidebar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
-        onSelectChat={(chatId) => {
-          console.log("Selected chat:", chatId);
+        onSelectChat={(chat) => {
+          console.log("Selected chat:", chat.id);
+          setActiveConversationId(chat.id);
+          fetchMessages(chat.id);
         }}
       />
     </div>

@@ -4,16 +4,77 @@ import { create } from "zustand";
 import { ChatState, Message } from "../types/type";
 import { baseUrl } from "../lib/baseUrl";
 
-export const useChatStore = create<ChatState>((set) => ({
+export const useChatStore = create<ChatState>((set, get) => ({
   messages: [],
   isLoading: false,
+  activeConversationId: null,
+
+  setActiveConversationId: (id) => set({ activeConversationId: id }),
+
+  fetchMessages: async (conversationId: number) => {
+    set({ isLoading: true });
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("No access token found");
+      set({ isLoading: false });
+      // Optionally redirect or handle error
+      return;
+    }
+
+    try {
+      console.log(`Fetching messages for conversation ${conversationId}...`);
+      // USER SPECIFIED: GET /conversations/{id} fetches messages (or conversation details including messages)
+      const res = await fetch(`${baseUrl}/conversations/${conversationId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error(`Failed to fetch messages: ${res.status}`);
+
+      const data = await res.json();
+      // Assuming data structure. If it returns the conversation object with a 'messages' array:
+      // Adjust based on actual API response structure if needed.
+      // For now assuming data.messages exists or data IS the array?
+      // A common pattern for "GET /conversations/{id}" is returning the conversation object.
+
+      let messages: Message[] = [];
+
+      // Handle different possible structures safely
+      if (Array.isArray(data)) {
+        messages = data;
+      } else if (data.messages && Array.isArray(data.messages)) {
+        messages = data.messages;
+      } else if (data.items && Array.isArray(data.items)) {
+        messages = data.items;
+      }
+
+      // Ensure messages are valid Message objects if needed (mapping)
+      // Check if mapping is needed based on raw data vs Message type
+      // For now, assuming raw data matches or is close enough.
+
+      set({ messages, isLoading: false });
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+      set({ isLoading: false });
+    }
+  },
 
   sendMessage: async (content: string) => {
     console.log("sendMessage called with:", content, "baseUrl:", baseUrl);
     if (!content.trim()) return;
 
+    const { activeConversationId } = get();
+
+    if (!activeConversationId) {
+      console.error("No active conversation selected.");
+      // Should we create one? For now, error out to ensure flow is correct.
+      // Or handle creation here if ID is null.
+      return;
+    }
+
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: Date.now().toString(), // Temp ID
       sender: "user",
       type: "text",
       text: content,
@@ -46,7 +107,7 @@ export const useChatStore = create<ChatState>((set) => ({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          conversationId: crypto.randomUUID(), // TEMP until real conversations exist
+          conversationId: activeConversationId,
           content,
           model: "llama-3.1-8b-instant",
         }),

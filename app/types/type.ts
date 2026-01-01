@@ -41,7 +41,10 @@ export type Message = {
 export type ChatState = {
   messages: Message[];
   isLoading: boolean;
+  activeConversationId: number | null;
   sendMessage: (content: string) => Promise<void>;
+  setActiveConversationId: (id: number | null) => void;
+  fetchMessages: (conversationId: number) => Promise<void>;
 };
 
 export type ChatMessageProps = {
