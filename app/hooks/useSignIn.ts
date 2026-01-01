@@ -162,7 +162,7 @@ export default function useSignIn() {
       //  Store token
       localStorage.setItem("accessToken", accessToken);
 
-      // 🆕 VERIFY TOKEN BEFORE REDIRECTING
+      //  VERIFY TOKEN BEFORE REDIRECTING
       const isTokenValid = await verifyToken(accessToken);
 
       if (!isTokenValid) {

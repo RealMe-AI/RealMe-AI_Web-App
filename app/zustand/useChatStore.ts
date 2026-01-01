@@ -31,12 +31,19 @@ export const useChatStore = create<ChatState>((set) => ({
 
     /* import { baseUrl } from "../lib/baseUrl"; // Ensure this import is added at top */
 
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("No access token found");
+      set({ isLoading: false });
+      return;
+    }
+
     try {
       const res = await fetch(`${baseUrl}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           conversationId: crypto.randomUUID(), // TEMP until real conversations exist
