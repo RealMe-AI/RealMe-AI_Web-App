@@ -90,7 +90,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
       isLoading: true,
     }));
 
-    /*  { baseUrl } from "../lib/baseUrl"; // Ensure this import is added at top */
+    /*   from "../lib/baseUrl"; // Ensure this import is added at top */
 
     const token = localStorage.getItem("accessToken");
     if (!token) {
