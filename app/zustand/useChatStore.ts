@@ -90,8 +90,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
       isLoading: true,
     }));
 
-    /* is added at top */
-
     const token = localStorage.getItem("accessToken");
     if (!token) {
       console.error("No access token found");
