@@ -84,7 +84,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
       }),
     };
 
-    // Add user message + set loading
+    // Add user message + set
     set((state) => ({
       messages: [...state.messages, userMsg],
       isLoading: true,
