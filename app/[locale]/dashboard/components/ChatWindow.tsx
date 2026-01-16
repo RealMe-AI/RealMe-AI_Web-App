@@ -3,8 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
-import { useFetchMessages } from "../../../hooks/useFetchMessages";
-import { useSendMessage } from "../../../hooks/useSendMessage";
 import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -26,18 +24,8 @@ export default function ChatWindow() {
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  /* -------------------- STORES & HOOKS -------------------- */
-  const {
-    messages: chatMessages,
-    isLoading,
-    activeConversationId,
-    setMessages,
-    setIsLoading,
-    addUserMessage,
-    updateAIMessage,
-    finalizeAIMessage,
-  } = useChatStore();
-
+  /* -------------------- STORES -------------------- */
+  const { messages: chatMessages, isLoading, sendMessage } = useChatStore();
   const {
     pendingFiles,
     removePendingFile,
@@ -45,69 +33,21 @@ export default function ChatWindow() {
     messages: fileMessages,
   } = useSendFileMessage();
 
-  const { fetchMessages } = useFetchMessages();
-  const { sendMessage: sendMessageAPI, isSending } = useSendMessage();
-
-  /* -------------------- FETCH MESSAGES ON CONVERSATION CHANGE -------------------- */
-  useEffect(() => {
-    if (activeConversationId) {
-      const loadMessages = async () => {
-        setIsLoading(true);
-        const msgs = await fetchMessages(activeConversationId);
-        setMessages(msgs);
-        setIsLoading(false);
-      };
-      loadMessages();
-    }
-  }, [activeConversationId, fetchMessages, setMessages, setIsLoading]);
-
   /* -------------------- HANDLERS -------------------- */
   const handleSend = async () => {
     const textContent = input.trim();
     if (!textContent && pendingFiles.length === 0) return;
 
-    if (!activeConversationId) {
-      console.error("No active conversation selected.");
-      return;
-    }
-
-    // Handle text message
     if (textContent) {
-      // Add user message to UI immediately
-      addUserMessage(textContent);
-      setIsLoading(true);
-
-      // Clear input
-      setInput("");
-      if (inputRef.current) inputRef.current.textContent = "";
-
-      // Send message with streaming
-      await sendMessageAPI(
-        {
-          conversationId: activeConversationId,
-          content: textContent,
-          model: "llama-3.1-8b-instant",
-        },
-        {
-          onChunk: (text) => {
-            updateAIMessage(text);
-          },
-          onComplete: (fullText) => {
-            finalizeAIMessage(fullText);
-            setIsLoading(false);
-          },
-          onError: (error) => {
-            console.error("Message error:", error);
-            setIsLoading(false);
-          },
-        }
-      );
+      await sendMessage(textContent);
     }
 
-    // Handle file uploads
     if (pendingFiles.length > 0) {
       sendFilesWithText(undefined);
     }
+
+    setInput("");
+    if (inputRef.current) inputRef.current.textContent = "";
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -147,7 +87,7 @@ export default function ChatWindow() {
       {/* Typing Indicator */}
       {isLoading && (
         <div className="text-sm text-slate-600 dark:text-slate-400 mb-3 animate-pulse">
-          RealMe {t("dashboard.realMeThinking")}…
+         RealMe {t("dashboard.realMeThinking")}…
         </div>
       )}
 
@@ -249,11 +189,11 @@ export default function ChatWindow() {
           ) : (
             <button
               onClick={handleSend}
-              disabled={isLoading || isSending}
+              disabled={isLoading}
               className="p-2 rounded-full bg-indigo-500 hover:bg-indigo-600 
                          text-white font-medium text-sm transition disabled:opacity-50"
             >
-              {isLoading || isSending ? "…" : <ArrowUp size={20} />}
+              {isLoading ? "…" : <ArrowUp size={20} />}
             </button>
           )}
         </div>
