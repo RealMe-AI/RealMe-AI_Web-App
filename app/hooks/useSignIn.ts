@@ -146,13 +146,11 @@ export default function useSignIn() {
       const accessToken = successResponse.accessToken;
 
       if (!accessToken) {
-        console.error("[SignIn] No accessToken returned");
-        setError("Login failed: no access token returned");
+        setError("Invalid credentials");
         setLoading(false);
         return;
       }
 
-      console.log("[SignIn] Access token received");
 
       //  Store token
       localStorage.setItem("accessToken", accessToken);
@@ -174,7 +172,6 @@ export default function useSignIn() {
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
 
-      console.log("[SignIn] All checks passed - Redirecting to /dashboard");
       router.push("/dashboard");
 
       setTimeout(() => setSuccess(false), 1500);
