@@ -11,11 +11,33 @@ export function useChats() {
     const fetchChats = async () => {
       try {
         setIsLoading(true);
+        
+        // Get token from localStorage or cookies
+        const token = localStorage.getItem("token") || localStorage.getItem("authToken");
+        
+        const headers: HeadersInit = {
+          "Content-Type": "application/json",
+        };
+        
+        // Add Authorization header if token exists
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        
         const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`, {
+          method: "GET",
+          headers,
           credentials: "include",
         });
         
-        if (!res.ok) throw new Error("Failed to fetch conversations");
+        if (res.status === 401) {
+          throw new Error("Unauthorized - Please log in again");
+        }
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || "Failed to fetch conversations");
+        }
         
         const data = await res.json();
         const loadedChats = Array.isArray(data)
@@ -27,6 +49,11 @@ export function useChats() {
       } catch (err) {
         console.error("Error fetching chats:", err);
         setError(err instanceof Error ? err.message : "Failed to fetch chats");
+        
+        // Redirect to login if unauthorized
+        if (err instanceof Error && err.message.includes("Unauthorized")) {
+         
+        }
       } finally {
         setIsLoading(false);
       }
