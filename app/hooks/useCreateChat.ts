@@ -13,26 +13,22 @@ export function useCreateChat() {
       setIsCreating(true);
       setError(null);
 
-      // Get token from localStorage or cookies
-      const token = localStorage.getItem("token") || localStorage.getItem("authToken");
-      
-      const headers: HeadersInit = {
-        "Content-Type": "application/json",
-      };
-      
-      // Add Authorization header if token exists
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!accessToken) {
+        throw new Error("Unauthorized - No access token found");
       }
 
       const res = await fetch(`${baseUrl}/conversations`, {
         method: "POST",
-        headers,
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       if (res.status === 401) {
-        throw new Error("Unauthorized - Please log in again");
+        throw new Error("Unauthorized - Invalid or expired token");
       }
 
       if (!res.ok) {
@@ -55,12 +51,6 @@ export function useCreateChat() {
     } catch (err) {
       console.error("Create chat error:", err);
       setError(err instanceof Error ? err.message : "Failed to create chat");
-      
-      // Redirect to login if unauthorized
-      if (err instanceof Error && err.message.includes("Unauthorized")) {
-        
-      }
-      
       return null;
     } finally {
       setIsCreating(false);

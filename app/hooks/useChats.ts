@@ -12,7 +12,7 @@ export function useChats() {
       try {
         setIsLoading(true);
 
-        // Use the SAME key used in useSignIn
+        
         const accessToken = localStorage.getItem("accessToken");
 
         if (!accessToken) {
