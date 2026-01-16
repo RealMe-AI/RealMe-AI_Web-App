@@ -4,13 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "use-intl";
-import { baseUrl } from "@/app/lib/baseUrl";
 import { Chat } from "@/app/types/type";
 
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
+import { useChats } from "@/app/hooks/useChats";
+import { useCreateChat } from "@/app/hooks/useCreateChat";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -23,7 +24,8 @@ export default function Sidebar({
   setIsOpen,
   onSelectChat,
 }: SidebarProps) {
-  const [chats, setChats] = useState<Chat[]>([]);
+  const { chats, setChats } = useChats();
+  const { createChat } = useCreateChat();
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
@@ -31,56 +33,14 @@ export default function Sidebar({
   const { closeAll } = useModalStore();
   const t = useTranslations();
 
-  /* Load chats from API */
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`, {
-          credentials: "include",
-        });
-        if (!res.ok) throw new Error("Failed to fetch conversations");
-        const data = await res.json();
-        // Handle array or object with items/conversations property
-        const loadedChats = Array.isArray(data)
-          ? data
-          : data.items || data.conversations || [];
-        setChats(loadedChats);
-      } catch (err) {
-        console.error("Error fetching chats:", err);
-        // Optional: setChats([]) or setError
-      }
-    };
-
-    fetchChats();
-  }, [baseUrl]);
-
   const handleNewChat = async () => {
     closeAll();
-    try {
-      const res = await fetch(`${baseUrl}/conversations`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-
-      if (!res.ok) throw new Error("Failed to create chat");
-
-      const newChat: Partial<Chat> = await res.json();
-
-      const safeChat: Chat = {
-        id: newChat.id ?? Date.now(),
-        title:
-          newChat.title ??
-          t("dashboard.search.new_conversation_title", {
-            chatNumber: chats.length + 1,
-          }),
-      };
-
-      setChats((prev) => [safeChat, ...prev]);
-      setActiveChatId(safeChat.id);
-      onSelectChat(safeChat);
-    } catch (err) {
-      console.error("Create chat error:", err);
+    const newChat = await createChat(chats.length);
+    
+    if (newChat) {
+      setChats((prev) => [newChat, ...prev]);
+      setActiveChatId(newChat.id);
+      onSelectChat(newChat);
     }
   };
 
