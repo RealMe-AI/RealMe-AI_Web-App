@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { ChatState, Message } from "../types/type";
 import { baseUrl } from "../lib/baseUrl";
 
+
 // Raw API message type
 interface RawMessage {
   id: string;
