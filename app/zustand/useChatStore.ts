@@ -4,6 +4,23 @@ import { create } from "zustand";
 import { ChatState, Message } from "../types/type";
 import { baseUrl } from "../lib/baseUrl";
 
+// Raw API message type
+interface RawMessage {
+  id: string;
+  sender: "user" | "assistant" | "assistantMessage";
+  text?: string;
+  content?: string;
+  createdAt: string;
+}
+
+// API response for single message send
+interface MessageResponse {
+  userMessage?: RawMessage;
+  assistantMessage?: RawMessage;
+  messages?: RawMessage[];
+  items?: RawMessage[];
+}
+
 export const useChatStore = create<ChatState>((set, get) => ({
   messages: [],
   isLoading: false,
@@ -17,41 +34,48 @@ export const useChatStore = create<ChatState>((set, get) => ({
     if (!token) {
       console.error("No access token found");
       set({ isLoading: false });
-      // Optionally redirect or handle error
       return;
     }
 
     try {
-      console.log(`Fetching messages for conversation ${conversationId}...`);
-      // USER SPECIFIED: GET /conversations/{id} fetches messages (or conversation details including messages)
       const res = await fetch(`${baseUrl}/conversations/${conversationId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (!res.ok) throw new Error(`Failed to fetch messages: ${res.status}`);
-
-      const data = await res.json();
-      // Assuming data structure. If it returns the conversation object with a 'messages' array:
-      // Adjust based on actual API response structure if needed.
-      // For now assuming data.messages exists or data IS the array?
-      // A common pattern for "GET /conversations/{id}" is returning the conversation object.
+      const data: MessageResponse = await res.json();
 
       let messages: Message[] = [];
 
-      // Handle different possible structures safely
-      if (Array.isArray(data)) {
-        messages = data;
-      } else if (data.messages && Array.isArray(data.messages)) {
-        messages = data.messages;
-      } else if (data.items && Array.isArray(data.items)) {
-        messages = data.items;
-      }
+      // Helper to normalize a raw message
+      const mapRaw = (m: RawMessage): Message => ({
+        id: m.id ?? Date.now().toString(),
+        sender: m.sender === "assistantMessage" || m.sender === "assistant" ? "ai" : "user",
+        type: "text",
+        text: m.sender === "assistantMessage" || m.sender === "assistant"
+          ? m.content || ""
+          : m.text || m.content || "",
+        time: m.createdAt
+          ? new Date(m.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+          : new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      });
 
-      // Ensure messages are valid Message objects if needed (mapping)
-      // Check if mapping is needed based on raw data vs Message type
-      // For now, assuming raw data matches or is close enough.
+      // Case 1: API returns array directly
+      if (Array.isArray(data)) {
+        messages = data.map(mapRaw);
+      }
+      // Case 2: API returns object with messages array
+      else if (data.messages && Array.isArray(data.messages)) {
+        messages = data.messages.map(mapRaw);
+      }
+      // Case 3: API returns single user + assistant messages
+      else if (data.userMessage && data.assistantMessage) {
+        messages = [mapRaw(data.userMessage), mapRaw(data.assistantMessage)];
+      }
+      // Case 4: fallback for items array
+      else if (data.items && Array.isArray(data.items)) {
+        messages = data.items.map(mapRaw);
+      }
 
       set({ messages, isLoading: false });
     } catch (err) {
@@ -61,30 +85,23 @@ export const useChatStore = create<ChatState>((set, get) => ({
   },
 
   sendMessage: async (content: string) => {
-    console.log("sendMessage called with:", content, "baseUrl:", baseUrl);
     if (!content.trim()) return;
 
     const { activeConversationId } = get();
-
     if (!activeConversationId) {
       console.error("No active conversation selected.");
-      // Should we create one? For now, error out to ensure flow is correct.
-      // Or handle creation here if ID is null.
       return;
     }
 
+    // Add user message immediately
     const userMsg: Message = {
-      id: Date.now().toString(), // Temp ID
+      id: Date.now().toString(),
       sender: "user",
       type: "text",
       text: content,
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
-    // Add user message  
     set((state) => ({
       messages: [...state.messages, userMsg],
       isLoading: true,
@@ -111,66 +128,98 @@ export const useChatStore = create<ChatState>((set, get) => ({
         }),
       });
 
-      if (!res.ok) {
-        let errorMsg = `API Error ${res.status}`;
-        try {
-          const json = await res.json();
-          errorMsg += `: ${json.error || JSON.stringify(json)}`;
-        } catch {
-          const text = await res.text();
-          errorMsg += `: ${text}`;
+      if (!res.ok) throw new Error(`Failed to send message: ${res.status}`);
+
+      // Check if response is streaming or JSON
+      const contentType = res.headers.get("content-type");
+      
+      if (contentType?.includes("application/json")) {
+        // Handle JSON response
+        const data: MessageResponse = await res.json();
+        
+        // Extract AI response from the JSON structure
+        let aiText = "";
+        if (data.assistantMessage?.content) {
+          aiText = data.assistantMessage.content;
+        } else if (data.assistantMessage?.text) {
+          aiText = data.assistantMessage.text;
         }
-        throw new Error(errorMsg);
-      }
 
-      if (!res.body) throw new Error("No stream received");
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let aiText = "";
-
-      // Stream AI response chunks
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        aiText += decoder.decode(value);
-
-        set((state) => {
-          const hasTemp = state.messages.some((m) => m.id === "ai-temp");
-          return {
-            messages: hasTemp
-              ? state.messages.map((m) =>
-                  m.id === "ai-temp" ? { ...m, text: aiText } : m
-                )
-              : [
-                  ...state.messages,
-                  {
-                    id: "ai-temp",
-                    sender: "ai" as const,
-                    type: "text" as const,
-                    text: aiText,
-                    time: new Date().toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }),
-                  },
-                ],
+        if (aiText) {
+          const aiMsg: Message = {
+            id: data.assistantMessage?.id || Date.now().toString(),
+            sender: "ai",
+            type: "text",
+            text: aiText,
+            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           };
-        });
-      }
 
-      // Finalize AI message
-      set((state) => ({
-        messages: state.messages.map((m) =>
-          m.id === "ai-temp"
-            ? { ...m, id: Date.now().toString(), text: aiText }
-            : m
-        ),
-        isLoading: false,
-      }));
+          set((state) => ({
+            messages: [...state.messages, aiMsg],
+            isLoading: false,
+          }));
+        } else {
+          throw new Error("No AI response found in JSON");
+        }
+      } else if (res.body) {
+        // Handle streaming response
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let aiText = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          const chunk = decoder.decode(value);
+          aiText += chunk;
+
+          set((state) => {
+            const hasTemp = state.messages.some((m) => m.id === "ai-temp");
+            return {
+              messages: hasTemp
+                ? state.messages.map((m) =>
+                    m.id === "ai-temp" ? { ...m, text: aiText } : m
+                  )
+                : [
+                    ...state.messages,
+                    {
+                      id: "ai-temp",
+                      sender: "ai",
+                      type: "text",
+                      text: aiText,
+                      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+                    },
+                  ],
+            };
+          });
+        }
+
+        // Finalize AI message
+        set((state) => ({
+          messages: state.messages.map((m) =>
+            m.id === "ai-temp" ? { ...m, id: Date.now().toString(), text: aiText } : m
+          ),
+          isLoading: false,
+        }));
+      } else {
+        throw new Error("No response body received");
+      }
     } catch (err) {
       console.error("Chat error:", err);
-      set({ isLoading: false });
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: Date.now().toString(),
+            sender: "ai",
+            type: "text",
+            text: "Sorry, something went wrong. Please try again.",
+            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          },
+        ],
+        isLoading: false,
+      }));
     }
   },
 }));

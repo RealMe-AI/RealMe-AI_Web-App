@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
@@ -33,26 +33,28 @@ export default function ChatWindow() {
     messages: fileMessages,
   } = useSendFileMessage();
 
-  /* -------------------- HANDLERS -------------------- */
+  /* -------------------- HANDLE SEND -------------------- */
   const handleSend = async () => {
     const textContent = input.trim();
     if (!textContent && pendingFiles.length === 0) return;
 
+    // Clear input immediately for better UX
+    setInput("");
+    if (inputRef.current) inputRef.current.textContent = "";
+
+    // Send text message via chat store (handles AI response automatically)
     if (textContent) {
       await sendMessage(textContent);
     }
 
+    // Send pending files (if any)
     if (pendingFiles.length > 0) {
-      sendFilesWithText(undefined);
+      sendFilesWithText(textContent || undefined);
     }
-
-    setInput("");
-    if (inputRef.current) inputRef.current.textContent = "";
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const isSmallScreen = window.innerWidth < 768;
-
     if (e.key === "Enter" && (!e.shiftKey || isSmallScreen)) {
       e.preventDefault();
       handleSend();
@@ -60,9 +62,14 @@ export default function ChatWindow() {
   };
 
   /* -------------------- MERGE MESSAGES -------------------- */
-  const allMessages = [...chatMessages, ...fileMessages].sort(
-    (a, b) => Number(a.id) - Number(b.id)
-  );
+  const allMessages = useMemo(() => {
+    return [...chatMessages, ...fileMessages].sort((a, b) => {
+      // Convert id to number if possible, fallback to timestamp 0
+      const aId = Number(a.id) || 0;
+      const bId = Number(b.id) || 0;
+      return aId - bId;
+    });
+  }, [chatMessages, fileMessages]);
 
   /* -------------------- AUTO SCROLL -------------------- */
   useEffect(() => {
@@ -87,7 +94,7 @@ export default function ChatWindow() {
       {/* Typing Indicator */}
       {isLoading && (
         <div className="text-sm text-slate-600 dark:text-slate-400 mb-3 animate-pulse">
-         RealMe {t("dashboard.realMeThinking")}…
+          RealMe {t("dashboard.realMeThinking")}…
         </div>
       )}
 
@@ -104,7 +111,6 @@ export default function ChatWindow() {
             {pendingFiles.map((file, index) => {
               const ext = file.name.split(".").pop()?.toLowerCase();
               const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
-
               return (
                 <div
                   key={index}
@@ -148,9 +154,7 @@ export default function ChatWindow() {
                        dark:hover:bg-slate-600/30 cursor-pointer relative"
           >
             <Plus size={22} className="text-indigo-500 dark:text-white/40" />
-            {showUploadPopup && (
-              <FileUploadPopup close={() => setShowUploadPopup(false)} />
-            )}
+            {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
           </div>
 
           {/* Text Input */}
@@ -179,8 +183,7 @@ export default function ChatWindow() {
                   close={() => setShowVoicePopup(false)}
                   onTranscript={(text) => {
                     setInput(text);
-                    if (inputRef.current)
-                      inputRef.current.textContent = text;
+                    if (inputRef.current) inputRef.current.textContent = text;
                     setShowVoicePopup(false);
                   }}
                 />
