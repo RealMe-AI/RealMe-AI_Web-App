@@ -11,49 +11,49 @@ export function useChats() {
     const fetchChats = async () => {
       try {
         setIsLoading(true);
-        
-        // Get token from localStorage or cookies
-        const token = localStorage.getItem("token") || localStorage.getItem("authToken");
-        
-        const headers: HeadersInit = {
-          "Content-Type": "application/json",
-        };
-        
-        // Add Authorization header if token exists
-        if (token) {
-          headers["Authorization"] = `Bearer ${token}`;
+
+        // Use the SAME key used in useSignIn
+        const accessToken = localStorage.getItem("accessToken");
+
+        if (!accessToken) {
+          throw new Error("Unauthorized - No access token found");
         }
-        
-        const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`, {
-          method: "GET",
-          headers,
-          credentials: "include",
-        });
-        
+
+        const res = await fetch(
+          `${baseUrl}/conversations?page=1&limit=20`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
         if (res.status === 401) {
-          throw new Error("Unauthorized - Please log in again");
+          throw new Error("Unauthorized - Invalid or expired token");
         }
-        
+
         if (!res.ok) {
           const errorData = await res.json().catch(() => ({}));
-          throw new Error(errorData.message || "Failed to fetch conversations");
+          throw new Error(
+            errorData.message || "Failed to fetch conversations"
+          );
         }
-        
+
         const data = await res.json();
+
         const loadedChats = Array.isArray(data)
           ? data
           : data.items || data.conversations || [];
-        
+
         setChats(loadedChats);
         setError(null);
       } catch (err) {
         console.error("Error fetching chats:", err);
-        setError(err instanceof Error ? err.message : "Failed to fetch chats");
-        
-        // Redirect to login if unauthorized
-        if (err instanceof Error && err.message.includes("Unauthorized")) {
-         
-        }
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch chats"
+        );
       } finally {
         setIsLoading(false);
       }
