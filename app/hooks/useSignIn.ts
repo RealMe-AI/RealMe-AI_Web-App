@@ -68,7 +68,7 @@ export default function useSignIn() {
     return valid;
   };
 
-  // 🆕 Verify token works by making a test API call
+  //  Verify token works by making a test API call
   const verifyToken = async (token: string): Promise<boolean> => {
     try {
       console.log("[SignIn] Verifying token with test request...");
@@ -173,7 +173,7 @@ export default function useSignIn() {
         return;
       }
 
-      // ✅ Only redirect if token is verified
+      //  Only redirect if token is verified
       setSuccess(true);
       setIdentifier("");
       setPassword("");
