@@ -40,7 +40,6 @@ export default function useSignIn() {
   const isPhone = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v.trim());
 
   const validate = () => {
-    console.log("[SignIn] Running validation");
 
     const errs = {
       identifier: null as string | null,
@@ -81,14 +80,14 @@ export default function useSignIn() {
       });
 
       if (res.ok) {
-        console.log("[SignIn] ✅ Token verified successfully");
+        console.log("[SignIn] Token verified successfully");
         return true;
       } else {
-        console.error("[SignIn] ❌ Token verification failed:", res.status);
+        console.error("[SignIn] Token verification failed:", res.status);
         return false;
       }
     } catch (err) {
-      console.error("[SignIn] ❌ Token verification error:", err);
+      console.error("[SignIn] Token verification error:", err);
       return false;
     }
   };
@@ -96,10 +95,6 @@ export default function useSignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("[SignIn] Submit clicked");
-    console.log("[SignIn] Identifier:", identifier);
-    console.log("[SignIn] Password length:", password.length);
-    console.log("[SignIn] Base URL:", baseUrl);
 
     if (!validate()) {
       console.warn("[SignIn] Validation failed");
@@ -179,7 +174,7 @@ export default function useSignIn() {
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
 
-      console.log("[SignIn] ✅ All checks passed - Redirecting to /dashboard");
+      console.log("[SignIn] All checks passed - Redirecting to /dashboard");
       router.push("/dashboard");
 
       setTimeout(() => setSuccess(false), 1500);
