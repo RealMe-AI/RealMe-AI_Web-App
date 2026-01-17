@@ -61,20 +61,32 @@ export default function ChatWindow() {
     }
   };
 
-  /* -------------------- MERGE MESSAGES -------------------- */
+  /* -------------------- MERGE MESSAGES (FIXED SORTING) -------------------- */
   const allMessages = useMemo(() => {
-    return [...chatMessages, ...fileMessages].sort((a, b) => {
-      // Convert id to number if possible, fallback to timestamp 0
-      const aId = Number(a.id) || 0;
-      const bId = Number(b.id) || 0;
-      return aId - bId;
+    // Combine both message arrays
+    const combined = [...chatMessages, ...fileMessages];
+    
+    // Sort by timestamp in ASCENDING order (oldest first, newest last)
+    // This ensures messages appear top-to-bottom chronologically
+    return combined.sort((a, b) => {
+      // Try to parse ID as number (timestamp)
+      const aTime = Number(a.id);
+      const bTime = Number(b.id);
+      
+      // If both are valid numbers, sort numerically
+      if (!isNaN(aTime) && !isNaN(bTime)) {
+        return aTime - bTime;
+      }
+      
+      // Fallback: compare as strings
+      return a.id.localeCompare(b.id);
     });
   }, [chatMessages, fileMessages]);
 
   /* -------------------- AUTO SCROLL -------------------- */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [allMessages.length]);
+  }, [allMessages.length, isLoading]); // Also trigger on loading state change
 
   /* -------------------- UI -------------------- */
   return (
@@ -88,15 +100,28 @@ export default function ChatWindow() {
           <ChatMessage key={msg.id} message={msg} />
         ))}
 
+        {/* Typing Indicator */}
+        {isLoading && (
+          <div className="flex items-start gap-3">
+            <Image
+              src="/logo.png"
+              alt="RealMe AI"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-full border border-white/20"
+            />
+            <div className="px-4 py-3 rounded-2xl bg-white/50 dark:bg-slate-700/60 rounded-bl-sm">
+              <div className="flex gap-1">
+                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              </div>
+            </div>
+          </div>
+        )}
+
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Typing Indicator */}
-      {isLoading && (
-        <div className="text-sm text-slate-600 dark:text-slate-400 mb-3 animate-pulse">
-          RealMe {t("dashboard.realMeThinking")}…
-        </div>
-      )}
 
       {/* Input Container */}
       <div

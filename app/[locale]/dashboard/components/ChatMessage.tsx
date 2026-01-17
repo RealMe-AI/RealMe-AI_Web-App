@@ -1,233 +1,182 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo } from "react";
-import { useChatStore } from "../../../zustand/useChatStore";
-import { useSendFileMessage } from "../../../zustand/sendFileMessage";
-import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
+import { ChatMessageProps } from "../../../types/type";
+import { cn } from "../../../lib/utils";
+import { FileIcon, Mic, FileText } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
-import ChatMessage from "./ChatMessage";
-import VoiceInput from "./VoiceInput";
-import FileUploadPopup from "./FileUploadPopup";
+import MessageActions from "../components/MessageActions";
 
+export default function ChatMessage({ message }: ChatMessageProps) {
+  const isUser = message.sender === "user";
 
+  /** --------------------------
+   * AUDIO PLAYER
+   * -------------------------- */
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-export default function ChatWindow() {
-  const t = useTranslations();
-
-  /* -------------------- STATE -------------------- */
-  const [input, setInput] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [showUploadPopup, setShowUploadPopup] = useState(false);
-  const [showVoicePopup, setShowVoicePopup] = useState(false);
-
-  /* -------------------- REFS -------------------- */
-  const inputRef = useRef<HTMLDivElement | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
-
-  /* -------------------- STORES -------------------- */
-  const { messages: chatMessages, isLoading, sendMessage } = useChatStore();
-  const {
-    pendingFiles,
-    removePendingFile,
-    sendFilesWithText,
-    messages: fileMessages,
-  } = useSendFileMessage();
-
-  /* -------------------- HANDLE SEND -------------------- */
-  const handleSend = async () => {
-    const textContent = input.trim();
-    if (!textContent && pendingFiles.length === 0) return;
-
-    // Clear input immediately for better UX
-    setInput("");
-    if (inputRef.current) inputRef.current.textContent = "";
-
-    // Send text message via chat store (handles AI response automatically)
-    if (textContent) {
-      await sendMessage(textContent);
-    }
-
-    // Send pending files (if any)
-    if (pendingFiles.length > 0) {
-      sendFilesWithText(textContent || undefined);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const isSmallScreen = window.innerWidth < 768;
-    if (e.key === "Enter" && (!e.shiftKey || isSmallScreen)) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  /* -------------------- MERGE MESSAGES (FIXED SORTING) -------------------- */
-  const allMessages = useMemo(() => {
-    // Combine both message arrays
-    const combined = [...chatMessages, ...fileMessages];
-    
-    // Sort by timestamp in ASCENDING order (oldest first, newest last)
-    // This ensures messages appear top-to-bottom chronologically
-    return combined.sort((a, b) => {
-      // Try to parse ID as number (timestamp)
-      const aTime = Number(a.id);
-      const bTime = Number(b.id);
-      
-      // If both are valid numbers, sort numerically
-      if (!isNaN(aTime) && !isNaN(bTime)) {
-        return aTime - bTime;
-      }
-      
-      // Fallback: compare as strings
-      return a.id.localeCompare(b.id);
-    });
-  }, [chatMessages, fileMessages]);
-
-  /* -------------------- AUTO SCROLL -------------------- */
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [allMessages.length, isLoading]); // Also trigger on loading state change
+    if (message.audioUrl) {
+      audioRef.current = new Audio(message.audioUrl);
 
-  /* -------------------- UI -------------------- */
-  return (
-    <div
-      className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
-                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
-    >
-      {/* Chat Messages */}
-      <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
-        {allMessages.map((msg) => (
-          <ChatMessage key={msg.id} message={msg} />
-        ))}
+      audioRef.current.onended = () => setIsPlaying(false);
+    }
 
-        {/* Typing Indicator */}
-        {isLoading && (
-          <div className="flex items-start gap-3">
-            <Image
-              src="/logo.png"
-              alt="RealMe AI"
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-full border border-white/20"
-            />
-            <div className="px-4 py-3 rounded-2xl bg-white/50 dark:bg-slate-700/60 rounded-bl-sm">
-              <div className="flex gap-1">
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-              </div>
-            </div>
-          </div>
-        )}
+    return () => {
+      audioRef.current?.pause();
+      audioRef.current = null;
+    };
+  }, [message.audioUrl]);
 
-        <div ref={messagesEndRef} />
-      </div>
+  const handleAudio = () => {
+    if (!audioRef.current) return;
 
-      {/* Input Container */}
-      <div
-        className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
-                    rounded-full px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
-                    dark:border-0 backdrop-blur-xl transition
-                    ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
-      >
-        {/* Pending Files Preview */}
-        {pendingFiles.length > 0 && (
-          <div className="flex gap-2 overflow-x-auto py-1">
-            {pendingFiles.map((file, index) => {
-              const ext = file.name.split(".").pop()?.toLowerCase();
-              const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
-              return (
-                <div
-                  key={index}
-                  className="relative shrink-0 w-12 h-12 bg-white/40 dark:bg-slate-700/40 
-                             rounded-lg shadow"
-                >
-                  <button
-                    onClick={() => removePendingFile(index)}
-                    className="absolute -top-1 -right-2 w-5 h-5 flex items-center 
-                               justify-center rounded-full bg-red-500 text-white text-xs 
-                               hover:bg-red-600"
-                  >
-                    ×
-                  </button>
+    if (!isPlaying) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    } else {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
-                  {isImage ? (
-                    <Image
-                      src={URL.createObjectURL(file)}
-                      alt="preview"
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <FileIcon className="w-6 h-6 text-indigo-500" />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
+  /** --------------------------
+   * FILE PREVIEW
+   * -------------------------- */
+  const renderFilePreview = () => {
+    if (!message.fileUrl || !message.fileName) return null;
 
-        {/* Input Row */}
-        <div className="flex items-center gap-2">
-          {/* Upload Button */}
-          <div
-            onClick={() => setShowUploadPopup(true)}
-            className="mr-2 p-1 rounded-full hover:bg-white/30 
-                       dark:hover:bg-slate-600/30 cursor-pointer relative"
-          >
-            <Plus size={22} className="text-indigo-500 dark:text-white/40" />
-            {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
-          </div>
+    const ext = message.fileName.split(".").pop()?.toLowerCase();
 
-          {/* Text Input */}
-          <div
-            ref={inputRef}
-            contentEditable
-            suppressContentEditableWarning
-            onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 outline-none text-sm sm:text-base 
-                       text-slate-800 dark:text-slate-100 min-h-[22px]"
+    // IMAGES
+    if (["png", "jpg", "jpeg", "webp"].includes(ext || "")) {
+      return (
+        <div className="rounded-xl overflow-hidden mb-2">
+          <Image
+            src={message.fileUrl}
+            alt={message.fileName}
+            width={280}
+            height={280}
+            className="object-cover rounded-xl"
           />
-
-          {/* Mic or Send */}
-          {input.trim() === "" && pendingFiles.length === 0 ? (
-            <div
-              onClick={() => setShowVoicePopup(true)}
-              className="p-2 rounded-full hover:bg-white/30 
-                         dark:hover:bg-slate-600/30 cursor-pointer relative"
-            >
-              <Mic size={20} className="text-indigo-500 dark:text-white/40" />
-              {showVoicePopup && (
-                <VoiceInput
-                  close={() => setShowVoicePopup(false)}
-                  onTranscript={(text) => {
-                    setInput(text);
-                    if (inputRef.current) inputRef.current.textContent = text;
-                    setShowVoicePopup(false);
-                  }}
-                />
-              )}
-            </div>
-          ) : (
-            <button
-              onClick={handleSend}
-              disabled={isLoading}
-              className="p-2 rounded-full bg-indigo-500 hover:bg-indigo-600 
-                         text-white font-medium text-sm transition disabled:opacity-50"
-            >
-              {isLoading ? "…" : <ArrowUp size={20} />}
-            </button>
-          )}
         </div>
+      );
+    }
+
+    // PDF
+    if (ext === "pdf") {
+      return (
+        <div className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
+          <FileText className="text-red-500" />
+          <span className="text-sm font-medium">{message.fileName}</span>
+        </div>
+      );
+    }
+
+    // OTHERS (ZIP, DOCX, TXT, PPTX, etc.)
+    return (
+      <div className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
+        <FileIcon className="text-indigo-500" />
+        <span className="text-sm font-medium">{message.fileName}</span>
       </div>
-    </div>
+    );
+  };
+
+  /** --------------------------
+   * AUDIO BUBBLE
+   * -------------------------- */
+  const renderAudioBubble = () => {
+    if (!message.audioUrl) return null;
+
+    return (
+      <div className="p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2 flex items-center gap-3">
+        <button
+          onClick={handleAudio}
+          className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white"
+        >
+          {isPlaying ? <span>⏸</span> : <Mic size={16} />}
+        </button>
+
+        {/* Wave animation */}
+        <motion.div
+          className="flex gap-1"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+        >
+          {[1, 2, 3, 4].map((i) => (
+            <motion.div
+              key={i}
+              className="w-1 h-4 bg-indigo-500 rounded-full"
+              animate={{
+                height: isPlaying ? ["6px", "18px", "8px"] : "6px",
+              }}
+              transition={{ repeat: Infinity, duration: 0.7, ease: "easeInOut" }}
+            />
+          ))}
+        </motion.div>
+      </div>
+    );
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+      className={cn(
+        "flex w-full items-start gap-3 group relative",
+        isUser ? "justify-end" : "justify-start"
+      )}
+    >
+      {/* AI Avatar */}
+      {!isUser && (
+        <Image
+          src="/logo.png"
+          alt="RealMe AI"
+          width={32}
+          height={32}
+          className="w-8 h-8 rounded-full border border-white/20"
+        />
+      )}
+
+      {/* Bubble */}
+      <div
+        className={cn(
+          "px-4 py-3 rounded-2xl text-sm shadow-md backdrop-blur-md wrap-break-word transition-all",
+          isUser
+            ? "bg-indigo-500 text-white rounded-br-sm max-w-[80%] sm:max-w-[70%] ml-auto"
+            : "bg-white/50 dark:bg-slate-700/60 text-slate-900 dark:text-slate-200 rounded-bl-sm max-w-[80%] sm:max-w-[70%]"
+        )}
+      >
+        {message.type === "file" && renderFilePreview()}
+        {message.type === "audio" && renderAudioBubble()}
+
+        {message.text && (
+          <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
+        )}
+
+        <span className="block text-[10px] mt-1 opacity-60 text-right">
+          {message.time}
+        </span>
+      </div>
+
+      {/* Hover Actions */}
+      <div
+        className={cn(
+          "absolute sm:relative opacity-0 group-hover:opacity-100 transition-all z-10",
+          isUser
+            ? "left-0 -translate-x-10 sm:translate-x-0 mt-1"
+            : "right-0 translate-x-10 sm:translate-x-0 mt-1"
+        )}
+      >
+        <MessageActions />
+      </div>
+    </motion.div>
   );
 }
