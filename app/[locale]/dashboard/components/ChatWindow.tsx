@@ -19,7 +19,6 @@ export default function ChatWindow() {
   const [isFocused, setIsFocused] = useState(false);
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [showVoicePopup, setShowVoicePopup] = useState(false);
-  const [showNoConversationError, setShowNoConversationError] = useState(false);
 
   /* -------------------- REFS -------------------- */
   const inputRef = useRef<HTMLDivElement | null>(null);
@@ -45,14 +44,6 @@ export default function ChatWindow() {
     const textContent = input.trim();
     if (!textContent && pendingFiles.length === 0) return;
 
-    // Check if there's an active conversation
-    if (!activeConversationId) {
-      setShowNoConversationError(true);
-      setTimeout(() => setShowNoConversationError(false), 3000);
-      console.error("No active conversation selected. Please select or create a conversation first.");
-      return;
-    }
-
     // Clear input immediately for better UX
     setInput("");
     if (inputRef.current) inputRef.current.textContent = "";
@@ -76,20 +67,24 @@ export default function ChatWindow() {
     }
   };
 
-  /* -------------------- MERGE MESSAGES -------------------- */
+  /* -------------------- MERGE MESSAGES (FIXED SORTING) -------------------- */
   const allMessages = useMemo(() => {
-    return [...chatMessages, ...fileMessages].sort((a, b) => {
-      // Convert id to number if possible, fallback to timestamp 0
-      const aId = Number(a.id) || 0;
-      const bId = Number(b.id) || 0;
-      return aId - bId;
+    const merged = [...chatMessages, ...fileMessages];
+    
+    // Sort by timestamp (oldest first, newest last)
+    return merged.sort((a, b) => {
+      // Try to parse IDs as timestamps
+      const aTime = a.id === "ai-temp" ? Infinity : parseInt(a.id) || 0;
+      const bTime = b.id === "ai-temp" ? Infinity : parseInt(b.id) || 0;
+      
+      return aTime - bTime; // Ascending order (oldest to newest)
     });
   }, [chatMessages, fileMessages]);
 
   /* -------------------- AUTO SCROLL -------------------- */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [allMessages.length]);
+  }, [allMessages.length, isLoading]);
 
   /* -------------------- UI -------------------- */
   return (
@@ -97,25 +92,8 @@ export default function ChatWindow() {
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
     >
-      {/* No Conversation Error Banner */}
-      {showNoConversationError && (
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 
-                        bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg 
-                        animate-bounce">
-          Please select or create a conversation first
-        </div>
-      )}
-
       {/* Chat Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
-        {allMessages.length === 0 && !activeConversationId && (
-          <div className="flex items-center justify-center h-full text-slate-500 dark:text-slate-400">
-            <p className="text-center">
-              Select a conversation to start chatting
-            </p>
-          </div>
-        )}
-
         {allMessages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />
         ))}
@@ -135,8 +113,7 @@ export default function ChatWindow() {
         className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
                     rounded-full px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
                     dark:border-0 backdrop-blur-xl transition
-                    ${isFocused ? "ring-2 ring-indigo-500" : ""}
-                    ${!activeConversationId ? "opacity-50 cursor-not-allowed" : ""}`}
+                    ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
       >
         {/* Pending Files Preview */}
         {pendingFiles.length > 0 && (
@@ -182,10 +159,9 @@ export default function ChatWindow() {
         <div className="flex items-center gap-2">
           {/* Upload Button */}
           <div
-            onClick={() => activeConversationId && setShowUploadPopup(true)}
-            className={`mr-2 p-1 rounded-full hover:bg-white/30 
-                       dark:hover:bg-slate-600/30 relative
-                       ${activeConversationId ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+            onClick={() => setShowUploadPopup(true)}
+            className="mr-2 p-1 rounded-full hover:bg-white/30 
+                       dark:hover:bg-slate-600/30 relative cursor-pointer"
           >
             <Plus size={22} className="text-indigo-500 dark:text-white/40" />
             {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
@@ -194,24 +170,23 @@ export default function ChatWindow() {
           {/* Text Input */}
           <div
             ref={inputRef}
-            contentEditable={!!activeConversationId}
+            contentEditable
             suppressContentEditableWarning
             onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
-            className={`flex-1 outline-none text-sm sm:text-base 
-                       text-slate-800 dark:text-slate-100 min-h-[22px]
-                       ${!activeConversationId ? 'cursor-not-allowed' : ''}`}
+            className="flex-1 outline-none text-sm sm:text-base 
+                       text-slate-800 dark:text-slate-100 min-h-[22px]"
+            data-placeholder="Type a message..."
           />
 
           {/* Mic or Send */}
           {input.trim() === "" && pendingFiles.length === 0 ? (
             <div
-              onClick={() => activeConversationId && setShowVoicePopup(true)}
-              className={`p-2 rounded-full hover:bg-white/30 
-                         dark:hover:bg-slate-600/30 relative
-                         ${activeConversationId ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+              onClick={() => setShowVoicePopup(true)}
+              className="p-2 rounded-full hover:bg-white/30 
+                         dark:hover:bg-slate-600/30 relative cursor-pointer"
             >
               <Mic size={20} className="text-indigo-500 dark:text-white/40" />
               {showVoicePopup && (
@@ -228,7 +203,7 @@ export default function ChatWindow() {
           ) : (
             <button
               onClick={handleSend}
-              disabled={isLoading || !activeConversationId}
+              disabled={isLoading}
               className="p-2 rounded-full bg-indigo-500 hover:bg-indigo-600 
                          text-white font-medium text-sm transition disabled:opacity-50
                          disabled:cursor-not-allowed"

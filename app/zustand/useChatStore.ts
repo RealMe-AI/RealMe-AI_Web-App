@@ -87,10 +87,40 @@ export const useChatStore = create<ChatState>((set, get) => ({
   sendMessage: async (content: string) => {
     if (!content.trim()) return;
 
-    const { activeConversationId } = get();
-    if (!activeConversationId) {
-      console.error("No active conversation selected.");
+    let { activeConversationId } = get();
+    const token = localStorage.getItem("accessToken");
+    
+    if (!token) {
+      console.error("No access token found");
       return;
+    }
+
+    // AUTO-CREATE CONVERSATION if none exists (like ChatGPT)
+    if (!activeConversationId) {
+      try {
+        const createRes = await fetch(`${baseUrl}/conversations`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: content.substring(0, 50) + (content.length > 50 ? "..." : ""),
+          }),
+        });
+
+        if (!createRes.ok) {
+          console.error("Failed to create conversation");
+          return;
+        }
+
+        const newConv = await createRes.json();
+        activeConversationId = newConv.id;
+        set({ activeConversationId });
+      } catch (err) {
+        console.error("Error creating conversation:", err);
+        return;
+      }
     }
 
     // Add user message immediately
@@ -106,13 +136,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
       messages: [...state.messages, userMsg],
       isLoading: true,
     }));
-
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      console.error("No access token found");
-      set({ isLoading: false });
-      return;
-    }
 
     try {
       const res = await fetch(`${baseUrl}/messages`, {
@@ -147,7 +170,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
         if (aiText) {
           const aiMsg: Message = {
-            id: data.assistantMessage?.id || Date.now().toString(),
+            id: data.assistantMessage?.id || (Date.now() + 1).toString(),
             sender: "ai",
             type: "text",
             text: aiText,
@@ -160,7 +183,9 @@ export const useChatStore = create<ChatState>((set, get) => ({
           }));
 
           // Update conversation after successful message
-          await updateConversationDetails(activeConversationId, content, token);
+          if (activeConversationId) {
+            await updateConversationDetails(activeConversationId, content, token);
+          }
         } else {
           throw new Error("No AI response found in JSON");
         }
@@ -201,13 +226,15 @@ export const useChatStore = create<ChatState>((set, get) => ({
         // Finalize AI message
         set((state) => ({
           messages: state.messages.map((m) =>
-            m.id === "ai-temp" ? { ...m, id: Date.now().toString(), text: aiText } : m
+            m.id === "ai-temp" ? { ...m, id: (Date.now() + 1).toString(), text: aiText } : m
           ),
           isLoading: false,
         }));
 
         // Update conversation after streaming complete
-        await updateConversationDetails(activeConversationId, content, token);
+        if (activeConversationId) {
+          await updateConversationDetails(activeConversationId, content, token);
+        }
       } else {
         throw new Error("No response body received");
       }
@@ -217,7 +244,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
         messages: [
           ...state.messages,
           {
-            id: Date.now().toString(),
+            id: (Date.now() + 1).toString(),
             sender: "ai",
             type: "text",
             text: "Sorry, something went wrong. Please try again.",
