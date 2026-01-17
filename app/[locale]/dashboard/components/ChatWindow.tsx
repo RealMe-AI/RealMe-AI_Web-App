@@ -19,13 +19,20 @@ export default function ChatWindow() {
   const [isFocused, setIsFocused] = useState(false);
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [showVoicePopup, setShowVoicePopup] = useState(false);
+  const [showNoConversationError, setShowNoConversationError] = useState(false);
 
   /* -------------------- REFS -------------------- */
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   /* -------------------- STORES -------------------- */
-  const { messages: chatMessages, isLoading, sendMessage } = useChatStore();
+  const { 
+    messages: chatMessages, 
+    isLoading, 
+    sendMessage, 
+    activeConversationId 
+  } = useChatStore();
+  
   const {
     pendingFiles,
     removePendingFile,
@@ -37,6 +44,14 @@ export default function ChatWindow() {
   const handleSend = async () => {
     const textContent = input.trim();
     if (!textContent && pendingFiles.length === 0) return;
+
+    // Check if there's an active conversation
+    if (!activeConversationId) {
+      setShowNoConversationError(true);
+      setTimeout(() => setShowNoConversationError(false), 3000);
+      console.error("No active conversation selected. Please select or create a conversation first.");
+      return;
+    }
 
     // Clear input immediately for better UX
     setInput("");
@@ -61,32 +76,20 @@ export default function ChatWindow() {
     }
   };
 
-  /* -------------------- MERGE MESSAGES (FIXED SORTING) -------------------- */
+  /* -------------------- MERGE MESSAGES -------------------- */
   const allMessages = useMemo(() => {
-    // Combine both message arrays
-    const combined = [...chatMessages, ...fileMessages];
-    
-    // Sort by timestamp in ASCENDING order (oldest first, newest last)
-    // This ensures messages appear top-to-bottom chronologically
-    return combined.sort((a, b) => {
-      // Try to parse ID as number (timestamp)
-      const aTime = Number(a.id);
-      const bTime = Number(b.id);
-      
-      // If both are valid numbers, sort numerically
-      if (!isNaN(aTime) && !isNaN(bTime)) {
-        return aTime - bTime;
-      }
-      
-      // Fallback: compare as strings
-      return a.id.localeCompare(b.id);
+    return [...chatMessages, ...fileMessages].sort((a, b) => {
+      // Convert id to number if possible, fallback to timestamp 0
+      const aId = Number(a.id) || 0;
+      const bId = Number(b.id) || 0;
+      return aId - bId;
     });
   }, [chatMessages, fileMessages]);
 
   /* -------------------- AUTO SCROLL -------------------- */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [allMessages.length, isLoading]); // Also trigger on loading state change
+  }, [allMessages.length]);
 
   /* -------------------- UI -------------------- */
   return (
@@ -94,41 +97,46 @@ export default function ChatWindow() {
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
     >
+      {/* No Conversation Error Banner */}
+      {showNoConversationError && (
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 
+                        bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg 
+                        animate-bounce">
+          Please select or create a conversation first
+        </div>
+      )}
+
       {/* Chat Messages */}
       <div className="flex-1 space-y-5 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
+        {allMessages.length === 0 && !activeConversationId && (
+          <div className="flex items-center justify-center h-full text-slate-500 dark:text-slate-400">
+            <p className="text-center">
+              Select a conversation to start chatting
+            </p>
+          </div>
+        )}
+
         {allMessages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />
         ))}
 
-        {/* Typing Indicator */}
-        {isLoading && (
-          <div className="flex items-start gap-3">
-            <Image
-              src="/logo.png"
-              alt="RealMe AI"
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-full border border-white/20"
-            />
-            <div className="px-4 py-3 rounded-2xl bg-white/50 dark:bg-slate-700/60 rounded-bl-sm">
-              <div className="flex gap-1">
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-              </div>
-            </div>
-          </div>
-        )}
-
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Typing Indicator */}
+      {isLoading && (
+        <div className="text-sm text-slate-600 dark:text-slate-400 mb-3 animate-pulse">
+          RealMe {t("dashboard.realMeThinking")}…
+        </div>
+      )}
 
       {/* Input Container */}
       <div
         className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
                     rounded-full px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
                     dark:border-0 backdrop-blur-xl transition
-                    ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
+                    ${isFocused ? "ring-2 ring-indigo-500" : ""}
+                    ${!activeConversationId ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         {/* Pending Files Preview */}
         {pendingFiles.length > 0 && (
@@ -174,9 +182,10 @@ export default function ChatWindow() {
         <div className="flex items-center gap-2">
           {/* Upload Button */}
           <div
-            onClick={() => setShowUploadPopup(true)}
-            className="mr-2 p-1 rounded-full hover:bg-white/30 
-                       dark:hover:bg-slate-600/30 cursor-pointer relative"
+            onClick={() => activeConversationId && setShowUploadPopup(true)}
+            className={`mr-2 p-1 rounded-full hover:bg-white/30 
+                       dark:hover:bg-slate-600/30 relative
+                       ${activeConversationId ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
           >
             <Plus size={22} className="text-indigo-500 dark:text-white/40" />
             {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
@@ -185,22 +194,24 @@ export default function ChatWindow() {
           {/* Text Input */}
           <div
             ref={inputRef}
-            contentEditable
+            contentEditable={!!activeConversationId}
             suppressContentEditableWarning
             onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
-            className="flex-1 outline-none text-sm sm:text-base 
-                       text-slate-800 dark:text-slate-100 min-h-[22px]"
+            className={`flex-1 outline-none text-sm sm:text-base 
+                       text-slate-800 dark:text-slate-100 min-h-[22px]
+                       ${!activeConversationId ? 'cursor-not-allowed' : ''}`}
           />
 
           {/* Mic or Send */}
           {input.trim() === "" && pendingFiles.length === 0 ? (
             <div
-              onClick={() => setShowVoicePopup(true)}
-              className="p-2 rounded-full hover:bg-white/30 
-                         dark:hover:bg-slate-600/30 cursor-pointer relative"
+              onClick={() => activeConversationId && setShowVoicePopup(true)}
+              className={`p-2 rounded-full hover:bg-white/30 
+                         dark:hover:bg-slate-600/30 relative
+                         ${activeConversationId ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
             >
               <Mic size={20} className="text-indigo-500 dark:text-white/40" />
               {showVoicePopup && (
@@ -217,9 +228,10 @@ export default function ChatWindow() {
           ) : (
             <button
               onClick={handleSend}
-              disabled={isLoading}
+              disabled={isLoading || !activeConversationId}
               className="p-2 rounded-full bg-indigo-500 hover:bg-indigo-600 
-                         text-white font-medium text-sm transition disabled:opacity-50"
+                         text-white font-medium text-sm transition disabled:opacity-50
+                         disabled:cursor-not-allowed"
             >
               {isLoading ? "…" : <ArrowUp size={20} />}
             </button>

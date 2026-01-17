@@ -4,7 +4,6 @@ import { create } from "zustand";
 import { ChatState, Message } from "../types/type";
 import { baseUrl } from "../lib/baseUrl";
 
-
 // Raw API message type
 interface RawMessage {
   id: string;
@@ -30,7 +29,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   setActiveConversationId: (id) => set({ activeConversationId: id }),
 
   fetchMessages: async (conversationId: number) => {
-    set({ isLoading: true });
+    set({ isLoading: true, activeConversationId: conversationId });
     const token = localStorage.getItem("accessToken");
     if (!token) {
       console.error("No access token found");
@@ -159,6 +158,9 @@ export const useChatStore = create<ChatState>((set, get) => ({
             messages: [...state.messages, aiMsg],
             isLoading: false,
           }));
+
+          // Update conversation after successful message
+          await updateConversationDetails(activeConversationId, content, token);
         } else {
           throw new Error("No AI response found in JSON");
         }
@@ -203,6 +205,9 @@ export const useChatStore = create<ChatState>((set, get) => ({
           ),
           isLoading: false,
         }));
+
+        // Update conversation after streaming complete
+        await updateConversationDetails(activeConversationId, content, token);
       } else {
         throw new Error("No response body received");
       }
@@ -224,3 +229,36 @@ export const useChatStore = create<ChatState>((set, get) => ({
     }
   },
 }));
+
+// Helper function to update conversation details
+async function updateConversationDetails(
+  conversationId: number,
+  lastMessage: string,
+  token: string
+) {
+  try {
+    // Generate a title from the first message if needed
+    const title = lastMessage.length > 50 
+      ? lastMessage.substring(0, 50) + "..." 
+      : lastMessage;
+
+    const res = await fetch(`${baseUrl}/conversations/${conversationId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        lastMessage,
+        title,
+        updatedAt: new Date().toISOString(),
+      }),
+    });
+
+    if (!res.ok) {
+      console.warn(`Failed to update conversation: ${res.status}`);
+    }
+  } catch (err) {
+    console.warn("Error updating conversation details:", err);
+  }
+}
