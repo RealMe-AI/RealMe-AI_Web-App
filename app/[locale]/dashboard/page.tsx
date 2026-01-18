@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { PanelLeft } from "lucide-react";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
 import { useChatStore } from "../../zustand/useChatStore";
+import { useFetchMessages } from "@/app/hooks/useFetchMessages";
 
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
@@ -15,7 +16,7 @@ export default function Page() {
   const setActiveConversationId = useChatStore(
     (s) => s.setActiveConversationId
   );
-  const fetchMessages = useChatStore((s) => s.fetchMessages);
+  const { fetchMessages } = useFetchMessages();
 
   return (
     <div className="min-h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
@@ -35,7 +36,7 @@ export default function Page() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
         className={`flex-1 flex flex-col transition-all duration-500 ${
-          isSidebarOpen ? "md:mr-[360px]" : "md:mx-auto md:max-w-4xl"
+          isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl"
         } p-2 md:p-6`}
       >
         <ChatWindow />

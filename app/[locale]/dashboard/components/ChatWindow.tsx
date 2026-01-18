@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
+import { useSendMessage } from "@/app/hooks/useSendMessage";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -25,13 +26,10 @@ export default function ChatWindow() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   /* -------------------- STORES -------------------- */
-  const { 
-    messages: chatMessages, 
-    isLoading, 
-    sendMessage, 
-    activeConversationId 
-  } = useChatStore();
-  
+  const { messages: chatMessages, isLoading } = useChatStore();
+
+  const { sendMessage } = useSendMessage();
+
   const {
     pendingFiles,
     removePendingFile,
@@ -70,13 +68,13 @@ export default function ChatWindow() {
   /* -------------------- MERGE MESSAGES (FIXED SORTING) -------------------- */
   const allMessages = useMemo(() => {
     const merged = [...chatMessages, ...fileMessages];
-    
+
     // Sort by timestamp (oldest first, newest last)
     return merged.sort((a, b) => {
       // Try to parse IDs as timestamps
       const aTime = a.id === "ai-temp" ? Infinity : parseInt(a.id) || 0;
       const bTime = b.id === "ai-temp" ? Infinity : parseInt(b.id) || 0;
-      
+
       return bTime - aTime; // Ascending order (oldest to newest)
     });
   }, [chatMessages, fileMessages]);
@@ -120,7 +118,9 @@ export default function ChatWindow() {
           <div className="flex gap-2 overflow-x-auto py-1">
             {pendingFiles.map((file, index) => {
               const ext = file.name.split(".").pop()?.toLowerCase();
-              const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
+              const isImage = ["png", "jpg", "jpeg", "webp"].includes(
+                ext || ""
+              );
               return (
                 <div
                   key={index}
@@ -164,7 +164,9 @@ export default function ChatWindow() {
                        dark:hover:bg-slate-600/30 relative cursor-pointer"
           >
             <Plus size={22} className="text-indigo-500 dark:text-white/40" />
-            {showUploadPopup && <FileUploadPopup close={() => setShowUploadPopup(false)} />}
+            {showUploadPopup && (
+              <FileUploadPopup close={() => setShowUploadPopup(false)} />
+            )}
           </div>
 
           {/* Text Input */}

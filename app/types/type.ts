@@ -13,6 +13,23 @@ export type Active = {
   active: string;
 };
 
+// Raw API message type
+export interface RawMessage {
+  id: string;
+  sender: "user" | "assistant" | "assistantMessage";
+  text?: string;
+  content?: string;
+  createdAt: string;
+}
+
+// API response for single message send
+export interface MessageResponse {
+  userMessage?: RawMessage;
+  assistantMessage?: RawMessage;
+  messages?: RawMessage[];
+  items?: RawMessage[];
+}
+
 export type NavItem = {
   href: string;
   key: string;
@@ -42,9 +59,11 @@ export type ChatState = {
   messages: Message[];
   isLoading: boolean;
   activeConversationId: number | null;
-  sendMessage: (content: string) => Promise<void>;
+  setMessages: (messages: Message[]) => void;
+  addMessage: (message: Message) => void;
+  updateMessage: (id: string, updates: Partial<Message>) => void;
+  setIsLoading: (isLoading: boolean) => void;
   setActiveConversationId: (id: number | null) => void;
-  fetchMessages: (conversationId: number) => Promise<void>;
 };
 
 export type ChatMessageProps = {
