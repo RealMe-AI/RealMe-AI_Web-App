@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, SquarePen } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "use-intl";
 import { Chat } from "@/app/types/type";
 
@@ -17,14 +17,16 @@ interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onSelectChat: (chat: Chat) => void;
+  externalChats?: Chat[];
 }
 
 export default function Sidebar({
   isOpen,
   setIsOpen,
   onSelectChat,
+  externalChats = [],
 }: SidebarProps) {
-  const { chats, setChats } = useChats();
+  const { chats: fetchedChats, setChats } = useChats();
   const { createChat } = useCreateChat();
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
@@ -33,10 +35,23 @@ export default function Sidebar({
   const { closeAll } = useModalStore();
   const t = useTranslations();
 
+  // Merge external chats with fetched chats, avoiding duplicates
+  const allChats = useMemo(() => {
+    const chatMap = new Map<number, Chat>();
+
+    // Add fetched chats first
+    fetchedChats.forEach((chat) => chatMap.set(chat.id, chat));
+
+    // Add external chats (will overwrite if same ID, which is fine)
+    externalChats.forEach((chat) => chatMap.set(chat.id, chat));
+
+    return Array.from(chatMap.values());
+  }, [fetchedChats, externalChats]);
+
   const handleNewChat = async () => {
     closeAll();
-    const newChat = await createChat(chats.length);
-    
+    const newChat = await createChat(allChats.length);
+
     if (newChat) {
       setChats((prev) => [newChat, ...prev]);
       setActiveChatId(newChat.id);
@@ -44,7 +59,7 @@ export default function Sidebar({
     }
   };
 
-  const filteredChats = chats.filter((chat) =>
+  const filteredChats = allChats.filter((chat) =>
     chat.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

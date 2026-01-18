@@ -12,7 +12,11 @@ import ChatMessage from "./ChatMessage";
 import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
 
-export default function ChatWindow() {
+interface ChatWindowProps {
+  onConversationCreated?: (conversation: { id: number; title: string }) => void;
+}
+
+export default function ChatWindow({ onConversationCreated }: ChatWindowProps) {
   const t = useTranslations();
 
   /* -------------------- STATE -------------------- */
@@ -28,7 +32,7 @@ export default function ChatWindow() {
   /* -------------------- STORES -------------------- */
   const { messages: chatMessages, isLoading } = useChatStore();
 
-  const { sendMessage } = useSendMessage();
+  const { sendMessage } = useSendMessage(onConversationCreated);
 
   const {
     pendingFiles,

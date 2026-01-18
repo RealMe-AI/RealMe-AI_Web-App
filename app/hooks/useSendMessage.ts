@@ -3,7 +3,9 @@ import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
 import { Message, MessageResponse } from "../types/type";
 
-export const useSendMessage = () => {
+export const useSendMessage = (
+  onConversationCreated?: (conversation: { id: number; title: string }) => void
+) => {
   const {
     messages,
     activeConversationId,
@@ -84,6 +86,15 @@ export const useSendMessage = () => {
           const newConv = await createRes.json();
           currentConversationId = newConv.id;
           setActiveConversationId(newConv.id);
+
+          // Notify parent component about new conversation
+          if (onConversationCreated) {
+            onConversationCreated({
+              id: newConv.id,
+              title:
+                content.substring(0, 50) + (content.length > 50 ? "..." : ""),
+            });
+          }
         } catch (err) {
           console.error("Error creating conversation:", err);
           return;
@@ -182,11 +193,6 @@ export const useSendMessage = () => {
             }),
           };
 
-          // We can't use addMessage inside the loop easily if we want to replace/update.
-          // But we can add it once, then use updateMessage.
-          // However, addMessage here might race with previous state if we are not careful with closures.
-          // Using useChatStore.getState() might be safer inside the loop if available, or just relying on `updateMessage`.
-
           // Add temp message to store
           addMessage(tempMsg);
 
@@ -241,6 +247,7 @@ export const useSendMessage = () => {
       addMessage,
       updateMessage,
       setIsLoading,
+      onConversationCreated,
     ]
   );
 
