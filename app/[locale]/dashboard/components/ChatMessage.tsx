@@ -12,9 +12,7 @@ import MessageActions from "../components/MessageActions";
 export default function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.sender === "user";
 
-  /** --------------------------
-   * AUDIO PLAYER
-   * -------------------------- */
+   //AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -43,9 +41,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     }
   };
 
-  /** --------------------------
-   * FILE PREVIEW
-   * -------------------------- */
+   // FILE PREVIEW
+  
   const renderFilePreview = () => {
     if (!message.fileUrl || !message.fileName) return null;
 

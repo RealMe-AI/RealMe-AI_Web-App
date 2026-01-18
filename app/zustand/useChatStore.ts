@@ -47,14 +47,14 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
       let messages: Message[] = [];
 
-      // Helper to normalize a raw message
+      // Helper to normalize a raw message - FIXED SENDER MAPPING
       const mapRaw = (m: RawMessage): Message => ({
         id: m.id ?? Date.now().toString(),
-        sender: m.sender === "assistantMessage" || m.sender === "assistant" ? "ai" : "user",
+        sender: (m.sender === "assistantMessage" || m.sender === "assistant") ? "ai" : "user",
         type: "text",
-        text: m.sender === "assistantMessage" || m.sender === "assistant"
-          ? m.content || ""
-          : m.text || m.content || "",
+        text: (m.sender === "assistantMessage" || m.sender === "assistant")
+          ? (m.content || m.text || "")
+          : (m.text || m.content || ""),
         time: m.createdAt
           ? new Date(m.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
           : new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
@@ -76,6 +76,13 @@ export const useChatStore = create<ChatState>((set, get) => ({
       else if (data.items && Array.isArray(data.items)) {
         messages = data.items.map(mapRaw);
       }
+
+      // FIXED SORTING: Sort by ID (timestamp-based) in ascending order
+      messages.sort((a, b) => {
+        const aTime = parseInt(a.id) || 0;
+        const bTime = parseInt(b.id) || 0;
+        return aTime - bTime;
+      });
 
       set({ messages, isLoading: false });
     } catch (err) {

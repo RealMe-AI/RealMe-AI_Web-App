@@ -77,7 +77,7 @@ export default function ChatWindow() {
       const aTime = a.id === "ai-temp" ? Infinity : parseInt(a.id) || 0;
       const bTime = b.id === "ai-temp" ? Infinity : parseInt(b.id) || 0;
       
-      return aTime - bTime; // Ascending order (oldest to newest)
+      return bTime - aTime; // Ascending order (oldest to newest)
     });
   }, [chatMessages, fileMessages]);
 
