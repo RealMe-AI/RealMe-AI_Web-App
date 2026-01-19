@@ -1,3 +1,5 @@
+// Retrieve all messages in a specific conversation When a user clicks on a chat in the sidebar to view its history
+
 import { useCallback } from "react";
 import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";

@@ -1,3 +1,5 @@
+// Update the conversation's metadata (title, last message, timestamp), After successfully sending a message and getting an AI response
+
 import { useCallback } from "react";
 import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
@@ -63,7 +65,7 @@ export const useSendMessage = (
         return;
       }
 
-      // AUTO-CREATE CONVERSATION if none exists (like ChatGPT)
+      // Create a brand new conversation when user sends first message
       if (!currentConversationId) {
         try {
           const createRes = await fetch(`${baseUrl}/conversations`, {
