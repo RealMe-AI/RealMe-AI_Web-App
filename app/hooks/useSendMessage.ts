@@ -5,9 +5,7 @@ import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
 import { Message, MessageResponse } from "../types/type";
 
-export const useSendMessage = (
-  onConversationCreated?: (conversation: { id: number; title: string }) => void
-) => {
+export const useSendMessage = (onRefetchConversations?: () => void) => {
   const {
     messages,
     activeConversationId,
@@ -89,13 +87,9 @@ export const useSendMessage = (
           currentConversationId = newConv.id;
           setActiveConversationId(newConv.id);
 
-          // Notify parent component about new conversation
-          if (onConversationCreated) {
-            onConversationCreated({
-              id: newConv.id,
-              title:
-                content.substring(0, 50) + (content.length > 50 ? "..." : ""),
-            });
+          // Refetch conversations list to show the new conversation in sidebar
+          if (onRefetchConversations) {
+            onRefetchConversations();
           }
         } catch (err) {
           console.error("Error creating conversation:", err);
@@ -249,7 +243,7 @@ export const useSendMessage = (
       addMessage,
       updateMessage,
       setIsLoading,
-      onConversationCreated,
+      onRefetchConversations,
     ]
   );
 

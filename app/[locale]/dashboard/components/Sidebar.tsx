@@ -17,16 +17,16 @@ interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onSelectChat: (chat: Chat) => void;
-  externalChats?: Chat[];
+  refetchConversationsRef: React.MutableRefObject<(() => void) | null>;
 }
 
 export default function Sidebar({
   isOpen,
   setIsOpen,
   onSelectChat,
-  externalChats = [],
+  refetchConversationsRef,
 }: SidebarProps) {
-  const { chats: fetchedChats, setChats } = useChats();
+  const { chats, setChats, refetch } = useChats();
   const { createChat } = useCreateChat();
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
@@ -35,22 +35,14 @@ export default function Sidebar({
   const { closeAll } = useModalStore();
   const t = useTranslations();
 
-  // Merge external chats with fetched chats, avoiding duplicates
-  const allChats = useMemo(() => {
-    const chatMap = new Map<number, Chat>();
-
-    // Add fetched chats first
-    fetchedChats.forEach((chat) => chatMap.set(chat.id, chat));
-
-    // Add external chats (will overwrite if same ID, which is fine)
-    externalChats.forEach((chat) => chatMap.set(chat.id, chat));
-
-    return Array.from(chatMap.values());
-  }, [fetchedChats, externalChats]);
+  // Store refetch function in ref so ChatWindow can access it
+  useEffect(() => {
+    refetchConversationsRef.current = refetch;
+  }, [refetch, refetchConversationsRef]);
 
   const handleNewChat = async () => {
     closeAll();
-    const newChat = await createChat(allChats.length);
+    const newChat = await createChat(chats.length);
 
     if (newChat) {
       setChats((prev) => [newChat, ...prev]);
@@ -59,7 +51,7 @@ export default function Sidebar({
     }
   };
 
-  const filteredChats = allChats.filter((chat) =>
+  const filteredChats = chats.filter((chat) =>
     chat.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

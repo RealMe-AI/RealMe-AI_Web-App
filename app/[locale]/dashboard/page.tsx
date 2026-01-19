@@ -8,29 +8,19 @@ import { useFetchMessages } from "@/app/hooks/useFetchMessages";
 
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
-import { Chat } from "@/app/types/type";
-import { useState } from "react";
+import { useRef } from "react";
 
 export default function Page() {
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
-  const [sidebarChats, setSidebarChats] = useState<Chat[]>([]);
+
+  // Use ref to share refetch function between Sidebar and ChatWindow
+  const refetchConversationsRef = useRef<(() => void) | null>(null);
 
   const setActiveConversationId = useChatStore(
     (s) => s.setActiveConversationId
   );
   const { fetchMessages } = useFetchMessages();
-
-  const handleNewConversation = (conversation: {
-    id: number;
-    title: string;
-  }) => {
-    const newChat: Chat = {
-      id: conversation.id,
-      title: conversation.title,
-    };
-    setSidebarChats((prev) => [newChat, ...prev]);
-  };
 
   return (
     <div className="min-h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
@@ -53,7 +43,7 @@ export default function Page() {
           isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl"
         } p-2 md:p-6`}
       >
-        <ChatWindow onConversationCreated={handleNewConversation} />
+        <ChatWindow refetchConversationsRef={refetchConversationsRef} />
       </motion.div>
 
       {/* Sidebar */}
@@ -65,7 +55,7 @@ export default function Page() {
           setActiveConversationId(chat.id);
           fetchMessages(chat.id);
         }}
-        externalChats={sidebarChats}
+        refetchConversationsRef={refetchConversationsRef}
       />
     </div>
   );

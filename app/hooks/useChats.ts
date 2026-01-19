@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { Chat } from "@/app/types/type";
 
@@ -7,60 +7,52 @@ export function useChats() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        setIsLoading(true);
+  const fetchChats = useCallback(async () => {
+    try {
+      setIsLoading(true);
 
-        
-        const accessToken = localStorage.getItem("accessToken");
+      const accessToken = localStorage.getItem("accessToken");
 
-        if (!accessToken) {
-          throw new Error("Unauthorized - No access token found");
-        }
-
-        const res = await fetch(
-          `${baseUrl}/conversations?page=1&limit=20`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        if (res.status === 401) {
-          throw new Error("Unauthorized - Invalid or expired token");
-        }
-
-        if (!res.ok) {
-          const errorData = await res.json().catch(() => ({}));
-          throw new Error(
-            errorData.message || "Failed to fetch conversations"
-          );
-        }
-
-        const data = await res.json();
-
-        const loadedChats = Array.isArray(data)
-          ? data
-          : data.items || data.conversations || [];
-
-        setChats(loadedChats);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching chats:", err);
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch chats"
-        );
-      } finally {
-        setIsLoading(false);
+      if (!accessToken) {
+        throw new Error("Unauthorized - No access token found");
       }
-    };
 
-    fetchChats();
+      const res = await fetch(`${baseUrl}/conversations?page=1&limit=20`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (res.status === 401) {
+        throw new Error("Unauthorized - Invalid or expired token");
+      }
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to fetch conversations");
+      }
+
+      const data = await res.json();
+
+      const loadedChats = Array.isArray(data)
+        ? data
+        : data.items || data.conversations || [];
+
+      setChats(loadedChats);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching chats:", err);
+      setError(err instanceof Error ? err.message : "Failed to fetch chats");
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  return { chats, setChats, isLoading, error };
+  useEffect(() => {
+    fetchChats();
+  }, [fetchChats]);
+
+  return { chats, setChats, isLoading, error, refetch: fetchChats };
 }
