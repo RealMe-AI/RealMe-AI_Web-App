@@ -12,7 +12,7 @@ import MessageActions from "../components/MessageActions";
 export default function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.sender === "user";
 
-   //AUDIO PLAYER
+  // AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -41,8 +41,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     }
   };
 
-   // FILE PREVIEW
-  
+  // FILE PREVIEW
   const renderFilePreview = () => {
     if (!message.fileUrl || !message.fileName) return null;
 
@@ -82,9 +81,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     );
   };
 
-  /** --------------------------
-   * AUDIO BUBBLE
-   * -------------------------- */
+  // AUDIO BUBBLE
   const renderAudioBubble = () => {
     if (!message.audioUrl) return null;
 
@@ -126,53 +123,57 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className={cn(
-        "flex w-full items-start gap-3 group relative",
-        isUser ? "justify-end" : "justify-start"
-      )}
+      className="w-full"
     >
-      {/* AI Avatar */}
-      {!isUser && (
-        <Image
-          src="/logo.png"
-          alt="RealMe AI"
-          width={32}
-          height={32}
-          className="w-8 h-8 rounded-full border border-white/20"
-        />
-      )}
-
-      {/* Bubble */}
+      {/* Full-width background for user messages */}
       <div
         className={cn(
-          "px-4 py-3 rounded-2xl text-sm shadow-md backdrop-blur-md wrap-break-word transition-all",
-          isUser
-            ? "bg-indigo-500 text-white rounded-br-sm max-w-[80%] sm:max-w-[70%] ml-auto"
-            : "bg-white/50 dark:bg-slate-700/60 text-slate-900 dark:text-slate-200 rounded-bl-sm max-w-[80%] sm:max-w-[70%]"
+          "w-full py-4",
+          isUser && "bg-white/40 dark:bg-[#2f2f2f]"
         )}
       >
-        {message.type === "file" && renderFilePreview()}
-        {message.type === "audio" && renderAudioBubble()}
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="flex items-start gap-4 group relative">
+            {/* AI Avatar */}
+            {!isUser && (
+              <div className="flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="RealMe AI"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full border border-white/20"
+                />
+              </div>
+            )}
 
-        {message.text && (
-          <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
-        )}
+            {/* Message Content */}
+            <div className="flex-1 min-w-0">
+              <div className={cn(
+                "text-sm leading-relaxed",
+                isUser 
+                  ? "text-slate-900 dark:text-white" 
+                  : "text-slate-900 dark:text-white"
+              )}>
+                {message.type === "file" && renderFilePreview()}
+                {message.type === "audio" && renderAudioBubble()}
 
-        <span className="block text-[10px] mt-1 opacity-60 text-right">
-          {message.time}
-        </span>
-      </div>
+                {message.text && (
+                  <p className="whitespace-pre-wrap">{message.text}</p>
+                )}
 
-      {/* Hover Actions */}
-      <div
-        className={cn(
-          "absolute sm:relative opacity-0 group-hover:opacity-100 transition-all z-10",
-          isUser
-            ? "left-0 -translate-x-10 sm:translate-x-0 mt-1"
-            : "right-0 translate-x-10 sm:translate-x-0 mt-1"
-        )}
-      >
-        <MessageActions />
+                <span className="block text-[10px] mt-2 opacity-60">
+                  {message.time}
+                </span>
+              </div>
+            </div>
+
+            {/* Hover Actions */}
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+              <MessageActions />
+            </div>
+          </div>
+        </div>
       </div>
     </motion.div>
   );
