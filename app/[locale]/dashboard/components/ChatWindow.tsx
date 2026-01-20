@@ -86,7 +86,8 @@ export default function ChatWindow() {
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
     >
       {/* Chat Messages - Centered Container */}
-      <div className="flex-1 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-400/40">
+      <div className="flex-1 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300/40 dark:scrollbar-thumb-slate-600/40
+">
         <div className="max-w-3xl mx-auto space-y-5">
           {allMessages.map((msg) => (
             <ChatMessage key={msg.id} message={msg} />
@@ -105,7 +106,7 @@ export default function ChatWindow() {
         </div>
       )}
 
-      {/* Input Container - Centered */}
+      {/* Input Container */}
       <div className="max-w-3xl mx-auto w-full">
         <div
           className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
@@ -171,24 +172,24 @@ export default function ChatWindow() {
 
             {/* Text Input */}
             <div
-  ref={inputRef}
-  contentEditable
-  suppressContentEditableWarning
-  onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
-  onFocus={() => setIsFocused(true)}
-  onBlur={() => setIsFocused(false)}
-  onKeyDown={handleKeyDown}
-  className="
-    flex-1 outline-none text-sm sm:text-base
-    text-slate-800 dark:text-slate-100
-    min-h-[24px] max-h-[160px]
-    overflow-y-auto
-    break-words
-    whitespace-pre-wrap
-    leading-relaxed
-  "
-  data-placeholder="Type a message..."
-/>
+              ref={inputRef}
+              contentEditable
+              suppressContentEditableWarning
+              onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onKeyDown={handleKeyDown}
+              className="
+                flex-1 outline-none text-sm sm:text-base
+                text-slate-800 dark:text-slate-100
+                min-h-[24px] max-h-[160px]
+                overflow-y-auto
+                break-words
+                whitespace-pre-wrap
+                leading-relaxed
+              "
+              data-placeholder="Type a message..."
+            />
 
 
             {/* Mic or Send */}
