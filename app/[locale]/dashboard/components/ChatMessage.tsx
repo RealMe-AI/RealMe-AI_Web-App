@@ -123,58 +123,51 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="w-full group"
+      className={cn(
+        "w-full py-2",
+        isUser && "bg-white/40 dark:bg-[#2f2f2f]"
+      )}
     >
-      {/* Full-width background for user messages */}
-      <div
-        className={cn(
-          "w-full",
-          isUser && "bg-white/40 dark:bg-[#2f2f2f]"
-        )}
-      >
-        <div className="max-w-3xl mx-auto px-4 py-2">
-          <div className="flex items-start gap-4">
-            {/* AI Avatar */}
-            {!isUser && (
-              <div className="flex-shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="RealMe AI"
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 rounded-full border border-white/20"
-                />
-              </div>
-            )}
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="flex items-start gap-4 group">
+          {/* AI Avatar */}
+          {!isUser && (
+            <div className="flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="RealMe AI"
+                width={32}
+                height={32}
+                className="w-8 h-8 rounded-full border border-white/20"
+              />
+            </div>
+          )}
 
-            {/* Message Content */}
-            <div className="flex-1 min-w-0">
-              <div className={cn(
-                "text-sm leading-relaxed",
-                isUser 
-                  ? "text-slate-900 dark:text-white" 
-                  : "text-slate-900 dark:text-white"
-              )}>
-                {message.type === "file" && renderFilePreview()}
-                {message.type === "audio" && renderAudioBubble()}
+          {/* Message Content */}
+          <div className="flex-1 min-w-0 max-w-[85%]">
+            <div className={cn(
+              "text-sm leading-relaxed",
+              isUser 
+                ? "text-slate-900 dark:text-white" 
+                : "text-slate-900 dark:text-white"
+            )}>
+              {message.type === "file" && renderFilePreview()}
+              {message.type === "audio" && renderAudioBubble()}
 
-                {message.text && (
-                  <p className="whitespace-pre-wrap">{message.text}</p>
-                )}
+              {message.text && (
+                <p className="whitespace-pre-wrap">{message.text}</p>
+              )}
 
-                <span className="block text-[10px] mt-2 opacity-60">
-                  {message.time}
-                </span>
-              </div>
+              <span className="block text-[10px] mt-2 opacity-60">
+                {message.time}
+              </span>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Hover Actions - Outside the background div */}
-      <div className="max-w-3xl mx-auto px-4">
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity mt-1">
-          <MessageActions />
+          {/* Hover Actions - To the right */}
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+            <MessageActions />
+          </div>
         </div>
       </div>
     </motion.div>
