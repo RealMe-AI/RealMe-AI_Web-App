@@ -41,9 +41,9 @@ export const useChatActionsModal = () => {
     }
   };
 
-  const handleRename = async (chatId: number) => {
+  const handleRename = async (chatId: number, newTitle?: string) => {
     // Placeholder for Rename endpoint
-    console.log("Rename action triggered for chat:", chatId);
+    console.log("Rename action triggered for chat:", chatId, newTitle);
     // TODO: Implement Rename logic when endpoint is ready
   };
 
