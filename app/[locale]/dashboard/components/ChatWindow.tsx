@@ -23,7 +23,6 @@ export default function ChatWindow() {
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  /* -------------------- STORES -------------------- */
   const { messages: chatMessages, isLoading } = useChatStore();
 
   const { sendMessage } = useSendMessage();
