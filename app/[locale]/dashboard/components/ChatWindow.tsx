@@ -34,7 +34,6 @@ export default function ChatWindow() {
     messages: fileMessages,
   } = useSendFileMessage();
 
-  /* -------------------- HANDLE SEND -------------------- */
   const handleSend = async () => {
     const textContent = input.trim();
     if (!textContent && pendingFiles.length === 0) return;
