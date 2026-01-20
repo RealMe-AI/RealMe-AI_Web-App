@@ -23,12 +23,6 @@ export default function SidebarItem({
   const [openUpwards, setOpenUpwards] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleAction = (action: string) => {
-    console.log(`${action} triggered for chat ${chat.id}`);
-    alert(`${action} coming soon!`);
-    setIsMenuOpen(false);
-  };
-
   return (
     <div
       className={`relative w-75 flex items-center justify-between p-3 rounded-xl cursor-pointer transition group ${
@@ -69,10 +63,6 @@ export default function SidebarItem({
             isOpen={true}
             onClose={() => setIsMenuOpen(false)}
             chatId={chat.id}
-            onShare={() => handleAction("Share")}
-            onRename={() => handleAction("Rename")}
-            onPin={() => handleAction("Pin")}
-            onDelete={() => handleAction("Delete")}
             className={`absolute right-8 z-50 w-40 shadow-xl border border-slate-200 dark:border-slate-700 ${
               openUpwards ? "bottom-8" : "top-8"
             }`}
