@@ -14,7 +14,7 @@ export default function Page() {
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
 
-  // Use ref to share refetch function between Sidebar and 
+  // Use ref to share refetch function between Sidebar and ChatWindow
   const refetchConversationsRef = useRef<(() => void) | null>(null);
 
   const setActiveConversationId = useChatStore(
