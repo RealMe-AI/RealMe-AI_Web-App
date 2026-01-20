@@ -8,8 +8,6 @@ export const useChatActionsModal = () => {
     useChatStore();
 
   const handleDelete = async (chatId: number) => {
-    if (!confirm("Are you sure you want to delete this conversation?")) return;
-
     try {
       setIsLoading(true);
       const token = localStorage.getItem("accessToken");
