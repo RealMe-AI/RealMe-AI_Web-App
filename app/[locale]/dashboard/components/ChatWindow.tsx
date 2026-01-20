@@ -61,7 +61,7 @@ export default function ChatWindow() {
     }
   };
 
-  /* -------------------- MERGE MESSAGES (FIXED SORTING) -------------------- */
+  // MERGE MESSAGES (FIXED SORTING) 
   const allMessages = useMemo(() => {
     const merged = [...chatMessages, ...fileMessages];
 
