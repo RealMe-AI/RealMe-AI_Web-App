@@ -15,7 +15,6 @@ import FileUploadPopup from "./FileUploadPopup";
 export default function ChatWindow() {
   const t = useTranslations();
 
-  /* -------------------- STATE -------------------- */
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showUploadPopup, setShowUploadPopup] = useState(false);
