@@ -55,7 +55,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
               {/* Share */}
               <li
                 onClick={() => handleItemClick(onShare)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Share size={16} />
                 <span>Share</span>
@@ -64,7 +64,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
               {/* Rename */}
               <li
                 onClick={() => handleItemClick(onRename)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Edit2 size={16} />
                 <span>Rename</span>
@@ -73,7 +73,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
               {/* Pin */}
               <li
                 onClick={() => handleItemClick(onPin)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Pin size={16} />
                 <span>Pin</span>
