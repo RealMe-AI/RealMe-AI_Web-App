@@ -130,7 +130,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           {/* Message container with background */}
           <div className={cn(
             "flex items-start gap-4 flex-1 min-w-0",
-            isUser && "bg-white/40 dark:bg-[#2f2f2f] py-2 px-4 rounded-2xl"
+            isUser && "bg-slate-100 dark:bg-slate-700/40 py-2 px-4 rounded-2xl"
           )}>
             {/* AI Avatar */}
             {!isUser && (
