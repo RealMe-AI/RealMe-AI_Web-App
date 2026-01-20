@@ -80,7 +80,6 @@ export default function ChatWindow() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [allMessages.length, isLoading]);
 
-  /* -------------------- UI -------------------- */
   return (
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
@@ -180,7 +179,8 @@ export default function ChatWindow() {
               onBlur={() => setIsFocused(false)}
               onKeyDown={handleKeyDown}
               className="flex-1 outline-none text-sm sm:text-base 
-                         text-slate-800 dark:text-slate-100 min-h-[22px]"
+                         text-slate-800 dark:text-slate-100 min-h-[22px] max-h-[200px]
+                         overflow-y-auto break-words whitespace-pre-wrap"
               data-placeholder="Type a message..."
             />
 
