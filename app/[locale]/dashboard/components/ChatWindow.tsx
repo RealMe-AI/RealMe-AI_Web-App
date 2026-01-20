@@ -12,13 +12,7 @@ import ChatMessage from "./ChatMessage";
 import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
 
-interface ChatWindowProps {
-  refetchConversationsRef: React.MutableRefObject<(() => void) | null>;
-}
-
-export default function ChatWindow({
-  refetchConversationsRef,
-}: ChatWindowProps) {
+export default function ChatWindow() {
   const t = useTranslations();
 
   /* -------------------- STATE -------------------- */
@@ -34,12 +28,7 @@ export default function ChatWindow({
   /* -------------------- STORES -------------------- */
   const { messages: chatMessages, isLoading } = useChatStore();
 
-  const { sendMessage } = useSendMessage(() => {
-    // Call refetch from the ref when new conversation is created
-    if (refetchConversationsRef.current) {
-      refetchConversationsRef.current();
-    }
-  });
+  const { sendMessage } = useSendMessage();
 
   const {
     pendingFiles,

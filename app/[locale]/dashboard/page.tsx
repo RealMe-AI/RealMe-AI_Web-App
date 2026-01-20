@@ -8,14 +8,10 @@ import { useFetchMessages } from "@/app/hooks/useFetchMessages";
 
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
-import { useRef } from "react";
 
 export default function Page() {
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
-
-  // Use ref to share refetch function between Sidebar and ChatWindow
-  const refetchConversationsRef = useRef<(() => void) | null>(null);
 
   const setActiveConversationId = useChatStore(
     (s) => s.setActiveConversationId
@@ -43,7 +39,7 @@ export default function Page() {
           isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl"
         } p-2 md:p-6`}
       >
-        <ChatWindow refetchConversationsRef={refetchConversationsRef} />
+        <ChatWindow />
       </motion.div>
 
       {/* Sidebar */}
@@ -55,7 +51,6 @@ export default function Page() {
           setActiveConversationId(chat.id);
           fetchMessages(chat.id);
         }}
-        refetchConversationsRef={refetchConversationsRef}
       />
     </div>
   );

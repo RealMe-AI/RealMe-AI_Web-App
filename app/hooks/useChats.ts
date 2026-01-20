@@ -1,16 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { Chat } from "@/app/types/type";
+import { useChatStore } from "@/app/zustand/useChatStore";
 
 export function useChats() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Listen to global refresh signal
+  const refreshSignal = useChatStore((s) => s.chatsRefreshSignal);
+
   const fetchChats = useCallback(async () => {
     try {
       setIsLoading(true);
-
+      // ... existing fetch logic ...
+      // (I will use replace_file_content carefully to avoid rewriting the entire function body logic manually if possible, or just rewrite the imports and useEffect)
       const accessToken = localStorage.getItem("accessToken");
 
       if (!accessToken) {
@@ -38,7 +43,7 @@ export function useChats() {
 
       const loadedChats = Array.isArray(data)
         ? data
-        : data.items || data.conversations || [];
+        : data.data || data.items || data.conversations || [];
 
       setChats(loadedChats);
       setError(null);
@@ -52,7 +57,7 @@ export function useChats() {
 
   useEffect(() => {
     fetchChats();
-  }, [fetchChats]);
+  }, [fetchChats, refreshSignal]);
 
   return { chats, setChats, isLoading, error, refetch: fetchChats };
 }

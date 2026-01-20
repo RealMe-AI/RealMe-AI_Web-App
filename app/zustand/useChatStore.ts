@@ -17,4 +17,9 @@ export const useChatStore = create<ChatState>((set) => ({
     })),
   setIsLoading: (isLoading) => set({ isLoading }),
   setActiveConversationId: (id) => set({ activeConversationId: id }),
+
+  // Refresh signal for conversation list
+  chatsRefreshSignal: 0,
+  triggerChatsRefresh: () =>
+    set((state) => ({ chatsRefreshSignal: state.chatsRefreshSignal + 1 })),
 }));

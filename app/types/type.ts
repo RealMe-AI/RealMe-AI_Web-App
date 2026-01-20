@@ -64,6 +64,8 @@ export type ChatState = {
   updateMessage: (id: string, updates: Partial<Message>) => void;
   setIsLoading: (isLoading: boolean) => void;
   setActiveConversationId: (id: number | null) => void;
+  chatsRefreshSignal: number;
+  triggerChatsRefresh: () => void;
 };
 
 export type ChatMessageProps = {

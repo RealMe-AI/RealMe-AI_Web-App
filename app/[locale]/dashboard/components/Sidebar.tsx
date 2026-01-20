@@ -17,16 +17,14 @@ interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onSelectChat: (chat: Chat) => void;
-  refetchConversationsRef: React.MutableRefObject<(() => void) | null>;
 }
 
 export default function Sidebar({
   isOpen,
   setIsOpen,
   onSelectChat,
-  refetchConversationsRef,
 }: SidebarProps) {
-  const { chats, setChats, refetch } = useChats();
+  const { chats, setChats } = useChats();
   const { createChat } = useCreateChat();
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
@@ -34,11 +32,6 @@ export default function Sidebar({
 
   const { closeAll } = useModalStore();
   const t = useTranslations();
-
-  // Store refetch function in ref so ChatWindow can access it
-  useEffect(() => {
-    refetchConversationsRef.current = refetch;
-  }, [refetch, refetchConversationsRef]);
 
   const handleNewChat = async () => {
     closeAll();

@@ -5,7 +5,8 @@ import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
 import { Message, MessageResponse } from "../types/type";
 
-export const useSendMessage = (onRefetchConversations?: () => void) => {
+export const useSendMessage = () => {
+  /* -------------------- STORES -------------------- */
   const {
     messages,
     activeConversationId,
@@ -14,6 +15,7 @@ export const useSendMessage = (onRefetchConversations?: () => void) => {
     addMessage,
     updateMessage,
     setIsLoading,
+    triggerChatsRefresh,
   } = useChatStore();
 
   // Helper function to update conversation details
@@ -45,6 +47,9 @@ export const useSendMessage = (onRefetchConversations?: () => void) => {
       if (!res.ok) {
         console.warn(`Failed to update conversation: ${res.status}`);
       }
+
+      // Trigger sidebar refresh after update
+      triggerChatsRefresh();
     } catch (err) {
       console.warn("Error updating conversation details:", err);
     }
@@ -87,10 +92,8 @@ export const useSendMessage = (onRefetchConversations?: () => void) => {
           currentConversationId = newConv.id;
           setActiveConversationId(newConv.id);
 
-          // Refetch conversations list to show the new conversation in sidebar
-          if (onRefetchConversations) {
-            onRefetchConversations();
-          }
+          // Trigger sidebar refresh for new conversation
+          triggerChatsRefresh();
         } catch (err) {
           console.error("Error creating conversation:", err);
           return;
@@ -243,7 +246,7 @@ export const useSendMessage = (onRefetchConversations?: () => void) => {
       addMessage,
       updateMessage,
       setIsLoading,
-      onRefetchConversations,
+      triggerChatsRefresh,
     ]
   );
 
