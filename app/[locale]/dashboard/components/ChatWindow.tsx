@@ -109,9 +109,9 @@ export default function ChatWindow() {
       <div className="max-w-3xl mx-auto w-full">
         <div
           className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
-                      rounded-full px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
+                      rounded-2xl px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
                       dark:border-0 backdrop-blur-xl transition
-                      ${isFocused ? "ring-2 ring-indigo-500" : ""}`}
+                      ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
         >
           {/* Pending Files Preview */}
           {pendingFiles.length > 0 && (
@@ -156,7 +156,7 @@ export default function ChatWindow() {
           )}
 
           {/* Input Row */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-end gap-2 w-full">
             {/* Upload Button */}
             <div
               onClick={() => setShowUploadPopup(true)}
@@ -171,18 +171,25 @@ export default function ChatWindow() {
 
             {/* Text Input */}
             <div
-              ref={inputRef}
-              contentEditable
-              suppressContentEditableWarning
-              onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              onKeyDown={handleKeyDown}
-              className="flex-1 outline-none text-sm sm:text-base 
-                         text-slate-800 dark:text-slate-100 min-h-[22px] max-h-[200px]
-                         overflow-y-auto break-words whitespace-pre-wrap"
-              data-placeholder="Type a message..."
-            />
+  ref={inputRef}
+  contentEditable
+  suppressContentEditableWarning
+  onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
+  onFocus={() => setIsFocused(true)}
+  onBlur={() => setIsFocused(false)}
+  onKeyDown={handleKeyDown}
+  className="
+    flex-1 outline-none text-sm sm:text-base
+    text-slate-800 dark:text-slate-100
+    min-h-[24px] max-h-[160px]
+    overflow-y-auto
+    break-words
+    whitespace-pre-wrap
+    leading-relaxed
+  "
+  data-placeholder="Type a message..."
+/>
+
 
             {/* Mic or Send */}
             {input.trim() === "" && pendingFiles.length === 0 ? (
