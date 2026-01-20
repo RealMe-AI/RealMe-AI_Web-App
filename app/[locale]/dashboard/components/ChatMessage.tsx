@@ -123,17 +123,17 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="w-full"
+      className="w-full group"
     >
       {/* Full-width background for user messages */}
       <div
         className={cn(
-          "w-full py-4",
+          "w-full",
           isUser && "bg-white/40 dark:bg-[#2f2f2f]"
         )}
       >
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="flex items-start gap-4 group relative">
+        <div className="max-w-3xl mx-auto px-4 py-2">
+          <div className="flex items-start gap-4">
             {/* AI Avatar */}
             {!isUser && (
               <div className="flex-shrink-0">
@@ -167,12 +167,14 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                 </span>
               </div>
             </div>
-
-            {/* Hover Actions */}
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-              <MessageActions />
-            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Hover Actions - Outside the background div */}
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity mt-1">
+          <MessageActions />
         </div>
       </div>
     </motion.div>
