@@ -20,7 +20,6 @@ export default function ChatWindow() {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [showVoicePopup, setShowVoicePopup] = useState(false);
 
-  /* -------------------- REFS -------------------- */
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
