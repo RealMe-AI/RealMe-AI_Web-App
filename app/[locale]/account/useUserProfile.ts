@@ -74,7 +74,7 @@ export function useUserProfile() {
           accountType: data.accountType === "pro" ? "Pro" : "Free",
           plan: data.accountType === "pro" ? "Pro User" : "Free Plan",
           provider: data.loginMethod === "email" ? "Email" : "Number",
-          avatar: "/avatar.png", // default only (AvatarEditor handles updates)
+          avatar: "/avatar.png", 
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
