@@ -3,8 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CreditCard } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import {useUserProfile} from "./useUserProfile";
 
 import AvatarEditor from "./AvatarEditor";
 
@@ -13,38 +13,10 @@ interface AccountInfoModalProps {
   close: () => void;
 }
 
-interface UserData {
-  fullName: string;
-  email: string;
-  accountType: "Free" | "Pro";
-  plan: "Free Plan" | "Pro User";
-  provider: | "Email" | "Number";
-  avatar?: string;
-  dateJoined: string;
-  lastLogin: string;
-}
-
 export default function AccountInfoModal({ open, close }: AccountInfoModalProps) {
-  const [user, setUser] = useState<UserData | null>(null);
+  const { user, setUser, loading } = useUserProfile();
   const router = useRouter();
   const t = useTranslations();
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setUser({
-        fullName: "Owens Chikere",
-        email: "owensvisuels@gmail.com",
-        accountType: "Free",
-        plan: "Free Plan",
-        provider: "Number",
-        avatar: "/avatar.png",
-        dateJoined: "July 2024",
-        lastLogin: "November 12, 2025",
-      });
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   return (
     <AnimatePresence>
@@ -105,7 +77,7 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
 
             {/* Body */}
-            {user ? (
+            {!loading && user ? (
               <div className="space-y-2 text-sm">
                 <InfoItem label={t("account_info.full_name")} value={user.fullName} />
                 <InfoItem label={t("account_info.email")} value={user.email} />
