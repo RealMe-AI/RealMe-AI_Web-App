@@ -44,7 +44,12 @@ export default function AvatarEditor({ src, onChange }: Props) {
       if (!res.ok) throw new Error(t("modal.avatar_upload_failed"));
 
       const data = await res.json();
-      onChange(data.url); // backend URL of uploaded image
+
+      onChange(data.pictureUrl); 
+      
+      if (!data.pictureUrl) {
+      throw new Error("Missing pictureUrl in response");
+    }
     } catch (err) {
       console.error(err);
       alert(t("modal.avatar_upload_failed"));
