@@ -83,7 +83,7 @@ export default function useSignUp() {
         body: JSON.stringify({
           login: identifier.trim(),
           password,
-          fullName: fullName.trim(),
+          name: fullName.trim(),
         }),
       });
 
