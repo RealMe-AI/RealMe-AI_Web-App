@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, CreditCard } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import {useUserProfile} from "./useUserProfile";
+import { useUserProfile } from "./useUserProfile";
 
 import AvatarEditor from "./AvatarEditor";
 
@@ -13,7 +13,10 @@ interface AccountInfoModalProps {
   close: () => void;
 }
 
-export default function AccountInfoModal({ open, close }: AccountInfoModalProps) {
+export default function AccountInfoModal({
+  open,
+  close,
+}: AccountInfoModalProps) {
   const { user, setUser, loading } = useUserProfile();
   const router = useRouter();
   const t = useTranslations();
@@ -54,7 +57,8 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
               />
 
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                {t("account_info.signed_in_with")} {user?.provider || "—"}
+                {t("account_info.signed_in_with")}{" "}
+                {user?.provider ? t(user.provider) : "—"}
               </p>
 
               <span
@@ -75,11 +79,23 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
             {/* Body */}
             {!loading && user ? (
               <div className="space-y-2 text-sm">
-                <InfoItem label={t("account_info.full_name")} value={user.fullName} />
+                <InfoItem
+                  label={t("account_info.full_name")}
+                  value={user.fullName}
+                />
                 <InfoItem label={t("account_info.email")} value={user.email} />
-                <InfoItem label={t("account_info.account_type")} value={user.accountType} />
-                <InfoItem label={t("account_info.date_joined")} value={user.dateJoined} />
-                <InfoItem label={t("account_info.last_login")} value={user.lastLogin} />
+                <InfoItem
+                  label={t("account_info.account_type")}
+                  value={user.accountType}
+                />
+                <InfoItem
+                  label={t("account_info.date_joined")}
+                  value={user.dateJoined}
+                />
+                <InfoItem
+                  label={t("account_info.last_login")}
+                  value={user.lastLogin}
+                />
               </div>
             ) : (
               <p className="text-center text-sm text-slate-500 dark:text-slate-400 py-6">
@@ -110,8 +126,12 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
 function InfoItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
-      <span className="font-medium text-slate-600 dark:text-slate-400">{label}</span>
-      <span className="text-right text-slate-800 dark:text-slate-100">{value}</span>
+      <span className="font-medium text-slate-600 dark:text-slate-400">
+        {label}
+      </span>
+      <span className="text-right text-slate-800 dark:text-slate-100">
+        {value}
+      </span>
     </div>
   );
 }

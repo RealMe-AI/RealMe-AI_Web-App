@@ -8,8 +8,8 @@ interface BackendUser {
   fullName: string;
   email: string;
   phone: string;
-  loginMethod: "email" | "number";
-  accountType: "free" | "pro";
+  loginMethod: "Email" | "Phone";
+  accountType: "Free" | "Pro";
   dateJoined: string;
   lastLogin: string;
 }
@@ -19,7 +19,7 @@ interface UserData {
   email: string;
   accountType: "Free" | "Pro";
   plan: "Free Plan" | "Pro User";
-  provider: "Email" | "Number";
+  provider: "auth.identifier.email" | "auth.identifier.phone";
   avatar?: string;
   dateJoined: string;
   lastLogin: string;
@@ -70,12 +70,18 @@ export function useUserProfile() {
 
         if (!isMounted) return;
 
+        // Map backend loginMethod to i18n translation key
+        const providerKey =
+          data.loginMethod === "Email"
+            ? "auth.identifier.email"
+            : "auth.identifier.phone";
+
         setUser({
           fullName: data.fullName,
           email: data.email,
-          accountType: data.accountType === "pro" ? "Pro" : "Free",
-          plan: data.accountType === "pro" ? "Pro User" : "Free Plan",
-          provider: data.loginMethod === "email" ? "Email" : "Number",
+          accountType: data.accountType === "Pro" ? "Pro" : "Free",
+          plan: data.accountType === "Pro" ? "Pro User" : "Free Plan",
+          provider: providerKey,
           avatar: "/avatar.png",
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
