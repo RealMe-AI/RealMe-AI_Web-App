@@ -81,9 +81,9 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
                 }
               />
 
-              <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
+              {/* <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                 {user?.fullName || t("account_info.loading")}
-              </h2>
+              </h2> */}
 
               <p className="text-sm text-slate-500 dark:text-slate-400">
                 {t("account_info.signed_in_with")} {user?.provider || "—"}
