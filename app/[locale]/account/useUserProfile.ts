@@ -40,6 +40,12 @@ function formatLastLogin(date: string) {
   });
 }
 
+function truncateEmail(email: string, maxLength = 18) {
+  if (email.length <= maxLength) return email;
+  return email.slice(0, maxLength - 3) + "...";
+}
+
+
 export function useUserProfile() {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -78,7 +84,10 @@ export function useUserProfile() {
 
         setUser({
           fullName: data.fullName,
-          email: data.email,
+          email:
+          data.loginMethod === "Email"
+          ? truncateEmail(data.email, 18)
+          : data.email,
           accountType: data.accountType === "Pro" ? "Pro" : "Free",
           plan: data.accountType === "Pro" ? "Pro User" : "Free Plan",
           provider: providerKey,
