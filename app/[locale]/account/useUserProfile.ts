@@ -98,7 +98,7 @@ export function useUserProfile() {
 
   return {
     user,
-    setUser, // SAME pattern you already use
+    setUser, 
     loading,
     error,
   };
