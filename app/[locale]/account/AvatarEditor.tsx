@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
 import { Pencil } from "lucide-react";
-import AvatarCropper from "./AvatarCropper";
 import { useTranslations } from "next-intl";
+import { baseUrl } from "@/app/lib/baseUrl";
+
+import Image from "next/image";
+import AvatarCropper from "./AvatarCropper";
 
 interface Props {
   src: string;
@@ -34,7 +36,7 @@ export default function AvatarEditor({ src, onChange }: Props) {
       const fd = new FormData();
       fd.append("avatar", blob, "avatar.png");
 
-      const res = await fetch("/api/user/avatar", {
+      const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
         method: "POST",
         body: fd,
       });
