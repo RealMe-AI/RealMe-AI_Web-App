@@ -29,35 +29,41 @@ export default function AvatarEditor({ src, onChange }: Props) {
   };
 
   const handleSaveCropped = async (croppedImg: string) => {
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const blob = await (await fetch(croppedImg)).blob();
-      const fd = new FormData();
-      fd.append("avatar", blob, "avatar.png");
+  try {
+    const blob = await (await fetch(croppedImg)).blob();
 
-      const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
-        method: "POST",
-        body: fd,
-      });
+    const fd = new FormData();
+    fd.append("avatar", blob, "avatar.png");
 
-      if (!res.ok) throw new Error(t("modal.avatar_upload_failed"));
+    const token = localStorage.getItem("accessToken");
 
-      const data = await res.json();
+    const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
+      method: "POST",
+      headers: {
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      body: fd,
+    });
 
-      onChange(data.pictureUrl); 
-      
-      if (!data.pictureUrl) {
-      throw new Error("Missing pictureUrl in response");
+    if (!res.ok) {
+      throw new Error(t("modal.avatar_upload_failed"));
     }
-    } catch (err) {
-      console.error(err);
-      alert(t("modal.avatar_upload_failed"));
-    } finally {
-      setLoading(false);
-      setImageToCrop(null);
-    }
-  };
+
+    const data = await res.json();
+
+    //  use correct backend field
+    onChange(data.pictureUrl);
+  } catch (err) {
+    console.error(err);
+    alert(t("modal.avatar_upload_failed"));
+  } finally {
+    setLoading(false);
+    setImageToCrop(null);
+  }
+};
+
 
   return (
     <div className="relative group">
