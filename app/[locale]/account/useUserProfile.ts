@@ -52,11 +52,13 @@ export function useUserProfile() {
       try {
         setLoading(true);
 
+        const token = localStorage.getItem("accessToken");
+
         const res = await fetch(`${baseUrl}/users/profile`, {
           method: "GET",
-          credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` }),
           },
         });
 
@@ -74,7 +76,7 @@ export function useUserProfile() {
           accountType: data.accountType === "pro" ? "Pro" : "Free",
           plan: data.accountType === "pro" ? "Pro User" : "Free Plan",
           provider: data.loginMethod === "email" ? "Email" : "Number",
-          avatar: "/avatar.png", 
+          avatar: "/avatar.png",
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
@@ -98,7 +100,7 @@ export function useUserProfile() {
 
   return {
     user,
-    setUser, 
+    setUser,
     loading,
     error,
   };
