@@ -18,7 +18,7 @@ interface UserData {
   email: string;
   accountType: "Free" | "Pro";
   plan: "Free Plan" | "Pro User";
-  provider: "Google" | "Email" | "Phone";
+  provider: | "Email" | "Number";
   avatar?: string;
   dateJoined: string;
   lastLogin: string;
@@ -36,7 +36,7 @@ export default function AccountInfoModal({ open, close }: AccountInfoModalProps)
         email: "owensvisuels@gmail.com",
         accountType: "Free",
         plan: "Free Plan",
-        provider: "Google",
+        provider: "Number",
         avatar: "/avatar.png",
         dateJoined: "July 2024",
         lastLogin: "November 12, 2025",
