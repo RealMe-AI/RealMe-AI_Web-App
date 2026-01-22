@@ -95,7 +95,7 @@ export function useUserProfile() {
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
-      } catch (err) {
+      } catch {
         if (isMounted) {
           setError("Unable to load profile");
         }

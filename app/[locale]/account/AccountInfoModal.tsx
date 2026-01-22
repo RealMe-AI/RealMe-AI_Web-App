@@ -17,7 +17,7 @@ export default function AccountInfoModal({
   open,
   close,
 }: AccountInfoModalProps) {
-  const { user, setUser, loading } = useUserProfile();
+  const { user, setUser, loading, error } = useUserProfile();
   const router = useRouter();
   const t = useTranslations();
 
