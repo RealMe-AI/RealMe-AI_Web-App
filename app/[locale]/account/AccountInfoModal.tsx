@@ -54,6 +54,7 @@ export default function AccountInfoModal({
                 onChange={(newImg) =>
                   setUser((u) => (u ? { ...u, avatar: newImg } : u))
                 }
+                onSuccess={close}
               />
 
               <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -77,38 +78,35 @@ export default function AccountInfoModal({
             <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
 
             {/* Body */}
-              {loading ? (
-                <p className="text-center text-sm text-slate-500 dark:text-slate-400 py-6">
-                  {t("account_info.loading")}
-                </p>
-              ) : error ? (
-                <p className="text-center text-sm text-red-400 bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
-                  {error}
-                </p>
-              ) : user ? (
-                <div className="space-y-2 text-sm">
-                  <InfoItem
-                    label={t("account_info.full_name")}
-                    value={user.fullName}
-                  />
-                  <InfoItem
-                    label={t("account_info.email")}
-                    value={user.email}
-                  />
-                  <InfoItem
-                    label={t("account_info.account_type")}
-                    value={user.accountType}
-                  />
-                  <InfoItem
-                    label={t("account_info.date_joined")}
-                    value={user.dateJoined}
-                  />
-                  <InfoItem
-                    label={t("account_info.last_login")}
-                    value={user.lastLogin}
-                  />
-                </div>
-              ) : null}
+            {loading ? (
+              <p className="text-center text-sm text-slate-500 dark:text-slate-400 py-6">
+                {t("account_info.loading")}
+              </p>
+            ) : error ? (
+              <p className="text-center text-sm text-red-400 bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
+                {error}
+              </p>
+            ) : user ? (
+              <div className="space-y-2 text-sm">
+                <InfoItem
+                  label={t("account_info.full_name")}
+                  value={user.fullName}
+                />
+                <InfoItem label={t("account_info.email")} value={user.email} />
+                <InfoItem
+                  label={t("account_info.account_type")}
+                  value={user.accountType}
+                />
+                <InfoItem
+                  label={t("account_info.date_joined")}
+                  value={user.dateJoined}
+                />
+                <InfoItem
+                  label={t("account_info.last_login")}
+                  value={user.lastLogin}
+                />
+              </div>
+            ) : null}
 
             {/* Divider */}
             <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />

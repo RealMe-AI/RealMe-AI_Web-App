@@ -12,6 +12,7 @@ interface BackendUser {
   accountType: "Free" | "Pro";
   dateJoined: string;
   lastLogin: string;
+  pictureUrl?: string;
 }
 
 interface UserData {
@@ -44,7 +45,6 @@ function truncateEmail(email: string, maxLength = 18) {
   if (email.length <= maxLength) return email;
   return email.slice(0, maxLength - 3) + "...";
 }
-
 
 export function useUserProfile() {
   const [user, setUser] = useState<UserData | null>(null);
@@ -85,19 +85,21 @@ export function useUserProfile() {
         setUser({
           fullName: data.fullName,
           email:
-          data.loginMethod === "Email"
-          ? truncateEmail(data.email, 18)
-          : data.email,
+            data.loginMethod === "Email"
+              ? truncateEmail(data.email, 18)
+              : data.email,
           accountType: data.accountType === "Pro" ? "Pro" : "Free",
           plan: data.accountType === "Pro" ? "Pro User" : "Free Plan",
           provider: providerKey,
-          avatar: "/avatar.png",
+          avatar: data.pictureUrl || "/avatar.png",
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
-      } catch {
+      } catch (err) {
         if (isMounted) {
-          setError("Unable to load profile");
+          setError(
+            err instanceof Error ? err.message : "Unable to load profile"
+          );
         }
       } finally {
         if (isMounted) {

@@ -11,9 +11,10 @@ import AvatarCropper from "./AvatarCropper";
 interface Props {
   src: string;
   onChange: (imgUrl: string) => void; // Backend URL
+  onSuccess?: () => void;
 }
 
-export default function AvatarEditor({ src, onChange }: Props) {
+export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
@@ -29,41 +30,41 @@ export default function AvatarEditor({ src, onChange }: Props) {
   };
 
   const handleSaveCropped = async (croppedImg: string) => {
-  setLoading(true);
+    setLoading(true);
 
-  try {
-    const blob = await (await fetch(croppedImg)).blob();
+    try {
+      const blob = await (await fetch(croppedImg)).blob();
 
-    const fd = new FormData();
-    fd.append("avatar", blob, "avatar.png");
+      const fd = new FormData();
+      fd.append("avatar", blob, "avatar.png");
 
-    const token = localStorage.getItem("accessToken");
+      const token = localStorage.getItem("accessToken");
 
-    const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
-      method: "POST",
-      headers: {
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-      body: fd,
-    });
+      const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
+        method: "POST",
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: fd,
+      });
 
-    if (!res.ok) {
-      throw new Error(t("modal.avatar_upload_failed"));
+      if (!res.ok) {
+        throw new Error(t("modal.avatar_upload_failed"));
+      }
+
+      const data = await res.json();
+
+      //  use correct backend field
+      onChange(data.pictureUrl);
+      onSuccess?.();
+    } catch (err) {
+      console.error(err);
+      alert(t("modal.avatar_upload_failed"));
+    } finally {
+      setLoading(false);
+      setImageToCrop(null);
     }
-
-    const data = await res.json();
-
-    //  use correct backend field
-    onChange(data.pictureUrl);
-  } catch (err) {
-    console.error(err);
-    alert(t("modal.avatar_upload_failed"));
-  } finally {
-    setLoading(false);
-    setImageToCrop(null);
-  }
-};
-
+  };
 
   return (
     <div className="relative group">
