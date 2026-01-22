@@ -35,7 +35,8 @@ export const getCroppedImg = async (
     pixelCrop.height
   );
 
-  return canvas.toDataURL("image/png");
+  // Use JPEG with 0.8 quality to reduce file 
+  return canvas.toDataURL("image/jpeg", 0.8);
 };
 
 /**
