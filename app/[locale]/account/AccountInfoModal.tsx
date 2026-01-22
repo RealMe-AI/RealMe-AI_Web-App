@@ -82,7 +82,7 @@ export default function AccountInfoModal({
                   {t("account_info.loading")}
                 </p>
               ) : error ? (
-                <p className="text-center text-sm text-red-400 bg-red-50 dark:bg-red-900/20 px-4 py-3 rounded-lg6">
+                <p className="text-center text-sm text-red-400 bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
                   {error}
                 </p>
               ) : user ? (
