@@ -69,7 +69,14 @@ export function useUserProfile() {
         });
 
         if (!res.ok) {
-          throw new Error("Failed to fetch user profile");
+          let errorMsg = "Failed to fetch user profile";
+          try {
+            const errorData = await res.json();
+            errorMsg = errorData.message || errorData.error || errorMsg;
+          } catch {
+            // Fallback if not JSON
+          }
+          throw new Error(`${errorMsg} (${res.status})`);
         }
 
         const data: BackendUser = await res.json();

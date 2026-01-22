@@ -49,7 +49,14 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
       });
 
       if (!res.ok) {
-        throw new Error(t("modal.avatar_upload_failed"));
+        let errorMsg = t("modal.avatar_upload_failed");
+        try {
+          const errorData = await res.json();
+          errorMsg = errorData.message || errorData.error || errorMsg;
+        } catch {
+          // Fallback
+        }
+        throw new Error(errorMsg);
       }
 
       const data = await res.json();
