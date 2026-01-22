@@ -36,7 +36,9 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
       const blob = await (await fetch(croppedImg)).blob();
 
       const fd = new FormData();
-      fd.append("picture", blob, "avatar.png");
+      // 'file' is used in useVoiceInput.ts and other parts of the app.
+      // This is the most likely correct field name.
+      fd.append("file", blob, "avatar.png");
 
       const token = localStorage.getItem("accessToken");
 
@@ -61,12 +63,15 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
 
       const data = await res.json();
 
-      //  use correct backend field
+      // use correct backend field
       onChange(data.pictureUrl);
       onSuccess?.();
     } catch (err) {
       console.error(err);
-      alert(t("modal.avatar_upload_failed"));
+      // Show the actual error message so the user knows exactly what failed
+      alert(
+        err instanceof Error ? err.message : t("modal.avatar_upload_failed")
+      );
     } finally {
       setLoading(false);
       setImageToCrop(null);
