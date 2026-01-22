@@ -36,7 +36,7 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
       const blob = await (await fetch(croppedImg)).blob();
 
       const fd = new FormData();
-      fd.append("avatar", blob, "avatar.png");
+      fd.append("picture", blob, "avatar.png");
 
       const token = localStorage.getItem("accessToken");
 
