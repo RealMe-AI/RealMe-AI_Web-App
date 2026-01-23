@@ -39,21 +39,33 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
     setImageToCrop(null);
   };
 
-  // Force HTTPS if backend returns HTTP to avoid corrupted/blocked mixed content
-  const safeSrc = src.startsWith("http://")
-    ? src.replace("http://", "https://")
-    : src;
+  console.log("AvatarEditor src value →", {
+  src,
+  type: typeof src,
+  length: src?.length,
+});
 
+
+ const avatarSrc =
+  typeof src === "string" && src.trim().length > 0
+    ? src.replace("http://", "https://")
+    : "/avatar.png";
+    
+    console.log("Avatar src:", src);
   return (
     <div className="relative group">
-      <Image
-        src={safeSrc}
-        alt={t("account_info.avatar_alt", { name: "User" })}
-        width={70}
-        height={70}
-        unoptimized // Use unoptimized if the backend doesn't support Next.js image optimization
-        className="rounded-2xl object-cover shadow-sm"
-      />
+      {avatarSrc && (
+        <Image
+          key={avatarSrc} // forces refresh when URL changes
+          src={avatarSrc}
+          alt={t("account_info.avatar_alt", { name: "User" })}
+          width={70}
+          height={70}
+          unoptimized
+          priority
+          className="rounded-2xl object-cover shadow-sm"
+        />
+      )}
 
       <button
         onClick={openFilePicker}
