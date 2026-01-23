@@ -45,7 +45,6 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   length: src?.length,
 });
 
-
  const avatarSrc =
   typeof src === "string" && src.trim().length > 0
     ? src.replace("http://", "https://")
