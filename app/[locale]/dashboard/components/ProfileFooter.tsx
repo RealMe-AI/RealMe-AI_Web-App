@@ -26,7 +26,17 @@ export default function ProfileFooter() {
   const router = useRouter();
   const { t } = useTranslate();
 
-  const avatarSrc = user?.avatar || "/avatar.png";
+  // Robust avatar source logic
+  const avatarSrc =
+    typeof user?.avatar === "string" && user.avatar.trim().length > 0
+      ? user.avatar.replace("http://", "https://")
+      : "/avatar.png";
+
+  console.log("Dashboard ProfileFooter user state →", {
+    userPresent: !!user,
+    avatar: user?.avatar,
+    avatarSrc,
+  });
 
   return (
     <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
@@ -37,11 +47,13 @@ export default function ProfileFooter() {
                    dark:hover:bg-slate-700/40 cursor-pointer transition"
       >
         <Image
+          key={avatarSrc}
           src={avatarSrc}
           alt={t("account_info.avatar_alt")}
           width={50}
           height={50}
           unoptimized
+          priority
           className="w-10 h-10 rounded-full border border-white/20 object-cover"
         />
         <div>
