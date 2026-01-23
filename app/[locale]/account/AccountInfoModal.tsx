@@ -51,9 +51,7 @@ export default function AccountInfoModal({
             <div className="flex flex-col items-center text-center space-y-3">
               <AvatarEditor
                 src={user?.avatar || "/avatar.png"}
-                onChange={(newImg) =>
-                  setUser((u) => (u ? { ...u, avatar: newImg } : u))
-                }
+                onChange={(newImg) => setUser({ avatar: newImg })}
                 onSuccess={close}
               />
 
