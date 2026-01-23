@@ -101,6 +101,7 @@ const ig = {
       sign_in: "Banye",
       create_account: "Mepụta Akaụntụ",
       continue_email: "Gaa n’ihu na Email",
+      continue_google: "Gaa n’ihu na Google",
       creating: "Na-emepụta…",
       signing_in: "Na-abanye…",
       success: "Mmeri",
@@ -160,7 +161,7 @@ const ig = {
   dashboard: {
     sidebar: {
       chat_button: "Mkparịta ụka Ọhụrụ",
-       footer_full: "Site na",
+      footer_full: "Site na",
       upgrade: "Melite",
       logout: "Pụọ",
     },

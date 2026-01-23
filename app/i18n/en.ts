@@ -101,6 +101,7 @@ const en = {
       sign_in: "Sign In",
       create_account: "Create Account",
       continue_email: "Continue with Email",
+      continue_google: "Continue with Google",
       creating: "Creating…",
       signing_in: "Signing in…",
       success: "Success",
@@ -152,14 +153,13 @@ const en = {
         default: "Enter your full name.",
       },
       general: "Already have an account!",
-      
     },
 
     network: "Network error. Please try again.",
   },
 
   dashboard: {
-     realMeThinking: "is thinking",
+    realMeThinking: "is thinking",
     sidebar: {
       chat_button: "New Chat",
       footer_full: "By",
@@ -168,7 +168,7 @@ const en = {
     },
     search: {
       chats_placeholder: "Search chats...",
-      no_results: 'No chat found with the title',
+      no_results: "No chat found with the title",
       no_chat: "No chats yet start one!",
       thinking: "RealMe is thinking...",
       new_conversation_title: "Chat {chatNumber}",

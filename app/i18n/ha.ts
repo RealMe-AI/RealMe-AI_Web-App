@@ -101,6 +101,7 @@ const ha = {
       sign_in: "Shiga",
       create_account: "Ƙirƙiri Asusu",
       continue_email: "Ci gaba da Imel",
+      continue_google: "Ci gaba da Google",
       creating: "Ana ƙirƙira…",
       signing_in: "Ana shiga…",
       success: "Nasara",
