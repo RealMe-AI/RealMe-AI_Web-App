@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
 
@@ -10,45 +10,6 @@ export function useAvatarEditor() {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  /* =======================
-     GET: fetch user picture
-     ======================= */
-  const fetchAvatar = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const token = localStorage.getItem("accessToken");
-
-      const res = await fetch(`${baseUrl}/users/profile`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-      });
-
-      if (!res.ok) {
-        let errorMsg = "Failed to fetch avatar";
-        try {
-          const errorData = await res.json();
-          errorMsg = errorData.message || errorData.error || errorMsg;
-        } catch {}
-        throw new Error(errorMsg);
-      }
-
-      const data = await res.json();
-
-      // Only what we care about
-      setAvatar(data.picture || "/avatar.png");
-    } catch (err) {
-      console.error(err);
-      setError(err instanceof Error ? err.message : "Unable to load avatar");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   /* =======================
      POST: upload new avatar
@@ -99,17 +60,9 @@ export function useAvatarEditor() {
     }
   };
 
-  /* =======================
-     Auto-fetch on mount
-     ======================= */
-  useEffect(() => {
-    fetchAvatar();
-  }, []);
-
   return {
     avatar,
     setAvatar,
-    fetchAvatar,
     uploadAvatar,
     loading,
     error,

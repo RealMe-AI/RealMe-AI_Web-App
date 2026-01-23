@@ -89,6 +89,11 @@ export function useUserProfile() {
             ? "auth.identifier.email"
             : "auth.identifier.phone";
 
+        let avatarUrl = data.picture || "/avatar.png";
+        if (avatarUrl.startsWith("http://")) {
+          avatarUrl = avatarUrl.replace("http://", "https://");
+        }
+
         setUser({
           fullName: data.fullName,
           email:
@@ -98,7 +103,7 @@ export function useUserProfile() {
           accountType: data.accountType === "Pro" ? "Pro" : "Free",
           plan: data.accountType === "Pro" ? "Pro User" : "Free Plan",
           provider: providerKey,
-          avatar: data.picture || "/avatar.png",
+          avatar: avatarUrl,
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
@@ -115,7 +120,11 @@ export function useUserProfile() {
       }
     }
 
-    fetchProfile();
+    if (!user) {
+      fetchProfile();
+    } else {
+      setLoading(false);
+    }
 
     return () => {
       isMounted = false;

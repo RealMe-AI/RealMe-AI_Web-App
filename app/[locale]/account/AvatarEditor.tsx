@@ -9,15 +9,17 @@ import AvatarCropper from "./AvatarCropper";
 import { useAvatarEditor } from "./useAvatarEditor";
 
 interface Props {
+  src: string;
+  onChange: (imgUrl: string) => void;
   onSuccess?: () => void;
 }
 
-export default function AvatarEditor({ onSuccess }: Props) {
+export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
 
-  const { avatar, uploadAvatar, loading } = useAvatarEditor();
+  const { uploadAvatar, loading } = useAvatarEditor();
 
   const openFilePicker = () => fileRef.current?.click();
 
@@ -29,18 +31,27 @@ export default function AvatarEditor({ onSuccess }: Props) {
   };
 
   const handleSaveCropped = async (croppedImg: string) => {
-    await uploadAvatar(croppedImg);
+    const newUrl = await uploadAvatar(croppedImg);
+    if (newUrl) {
+      onChange(newUrl);
+      onSuccess?.();
+    }
     setImageToCrop(null);
-    onSuccess?.();
   };
+
+  // Force HTTPS if backend returns HTTP to avoid corrupted/blocked mixed content
+  const safeSrc = src.startsWith("http://")
+    ? src.replace("http://", "https://")
+    : src;
 
   return (
     <div className="relative group">
       <Image
-        src={avatar || "/avatar.png"}
+        src={safeSrc}
         alt={t("account_info.avatar_alt", { name: "User" })}
         width={70}
         height={70}
+        unoptimized // Use unoptimized if the backend doesn't support Next.js image optimization
         className="rounded-2xl object-cover shadow-sm"
       />
 
