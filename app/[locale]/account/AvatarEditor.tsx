@@ -3,14 +3,14 @@
 import { useState, useRef } from "react";
 import { Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { baseUrl } from "@/app/lib/baseUrl";
-
 import Image from "next/image";
+
 import AvatarCropper from "./AvatarCropper";
+import { useAvatarEditor } from "./useAvatarEditor";
 
 interface Props {
   src: string;
-  onChange: (imgUrl: string) => void; // Backend URL
+  onChange: (imgUrl: string) => void;
   onSuccess?: () => void;
 }
 
@@ -18,7 +18,11 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const { uploadAvatar, loading } = useAvatarEditor({
+    onChange,
+    onSuccess,
+  });
 
   const openFilePicker = () => fileRef.current?.click();
 
@@ -30,52 +34,8 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   };
 
   const handleSaveCropped = async (croppedImg: string) => {
-    setLoading(true);
-
-    try {
-      const blob = await (await fetch(croppedImg)).blob();
-
-      const fd = new FormData();
-      // 'file' is used in useVoiceInput.ts and other parts of the app.
-      // This is the most likely correct field name.
-      fd.append("file", blob, "avatar.png");
-
-      const token = localStorage.getItem("accessToken");
-
-      const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
-        method: "POST",
-        headers: {
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-        body: fd,
-      });
-
-      if (!res.ok) {
-        let errorMsg = t("modal.avatar_upload_failed");
-        try {
-          const errorData = await res.json();
-          errorMsg = errorData.message || errorData.error || errorMsg;
-        } catch {
-          // Fallback
-        }
-        throw new Error(errorMsg);
-      }
-
-      const data = await res.json();
-
-      // use correct backend field
-      onChange(data.pictureUrl);
-      onSuccess?.();
-    } catch (err) {
-      console.error(err);
-      // Show the actual error message so the user knows exactly what failed
-      alert(
-        err instanceof Error ? err.message : t("modal.avatar_upload_failed")
-      );
-    } finally {
-      setLoading(false);
-      setImageToCrop(null);
-    }
+    await uploadAvatar(croppedImg);
+    setImageToCrop(null);
   };
 
   return (
@@ -90,8 +50,8 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
 
       <button
         onClick={openFilePicker}
-        className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50 
-                   hover:bg-black/80 transition p-1.5 rounded-full opacity-0 
+        className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50
+                   hover:bg-black/80 transition p-1.5 rounded-full opacity-0
                    group-hover:opacity-100"
       >
         <Pencil size={14} className="text-white" />
@@ -115,7 +75,9 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
 
       {loading && (
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-2xl">
-          <span className="text-white text-sm">{t("modal.uploading")}</span>
+          <span className="text-white text-sm">
+            {t("modal.uploading")}
+          </span>
         </div>
       )}
     </div>
