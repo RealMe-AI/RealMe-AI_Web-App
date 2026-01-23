@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { UserPlus, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import useSignUp from "../../../hooks/useSignUp";
+import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function SignUpForm() {
   const {
@@ -108,6 +109,17 @@ export default function SignUpForm() {
         )}
       </div>
 
+      {/* Divider */}
+      <div className="flex items-center gap-3 my-2">
+        <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+        <span className="text-xs text-slate-400 font-medium">
+          {t("auth.divider.or")}
+        </span>
+        <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+      </div>
+
+      <GoogleAuthButton />
+
       {/* Submit */}
       <motion.button
         type="submit"
@@ -119,15 +131,15 @@ export default function SignUpForm() {
           ${loading ? "opacity-70 pointer-events-none" : ""}
           ${success ? "bg-emerald-500 text-white" : ""}`}
       >
-        {loading
-          ? t("auth.button.creating")
-          : success
-          ? t("auth.button.success")
-          : (
-            <>
-              <UserPlus size={18} /> {t("auth.button.create_account")}
-            </>
-          )}
+        {loading ? (
+          t("auth.button.creating")
+        ) : success ? (
+          t("auth.button.success")
+        ) : (
+          <>
+            <UserPlus size={18} /> {t("auth.button.create_account")}
+          </>
+        )}
       </motion.button>
 
       {error && <p className="text-center text-sm text-red-500">{error}</p>}

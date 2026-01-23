@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import useSignIn from "../../../hooks/useSignIn";
+import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function SignInForm() {
   const {
@@ -87,6 +88,17 @@ export default function SignInForm() {
           <p className="mt-1 text-xs text-red-500">{fieldErrors.password}</p>
         )}
       </div>
+
+      {/* Divider */}
+      <div className="flex items-center gap-3 my-2">
+        <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+        <span className="text-xs text-slate-400 font-medium">
+          {t("auth.divider.or")}
+        </span>
+        <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+      </div>
+
+      <GoogleAuthButton />
 
       {/* Submit */}
       <motion.button
