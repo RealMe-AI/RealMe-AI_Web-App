@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useUserStore } from "@/app/zustand/useUserStore";
 
 interface BackendUser {
   id: string;
@@ -15,18 +16,8 @@ interface BackendUser {
   picture?: string;
 }
 
-interface UserData {
-  fullName: string;
-  email: string;
-  accountType: "Free" | "Pro";
-  plan: "Free Plan" | "Pro User";
-  provider: "auth.identifier.email" | "auth.identifier.phone";
-  avatar?: string;
-  dateJoined: string;
-  lastLogin: string;
-}
-
 function formatDate(date: string) {
+  if (!date) return "—";
   return new Date(date).toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
@@ -34,6 +25,7 @@ function formatDate(date: string) {
 }
 
 function formatLastLogin(date: string) {
+  if (!date) return "—";
   return new Date(date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -42,22 +34,28 @@ function formatLastLogin(date: string) {
 }
 
 function truncateEmail(email: string, maxLength = 18) {
+  if (!email) return "";
   if (email.length <= maxLength) return email;
   return email.slice(0, maxLength - 3) + "...";
 }
 
 export function useUserProfile() {
-  const [user, setUser] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, setFetchedUser, setUser } = useUserStore();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
     async function fetchProfile() {
+      // Don't fetch if we already have it
+      if (user) {
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
-
         const token = localStorage.getItem("accessToken");
 
         const res = await fetch(`${baseUrl}/users/profile`, {
@@ -73,9 +71,7 @@ export function useUserProfile() {
           try {
             const errorData = await res.json();
             errorMsg = errorData.message || errorData.error || errorMsg;
-          } catch {
-            // Fallback if not JSON
-          }
+          } catch {}
           throw new Error(`${errorMsg} (${res.status})`);
         }
 
@@ -83,18 +79,14 @@ export function useUserProfile() {
 
         if (!isMounted) return;
 
-        // Map backend loginMethod to i18n translation key
         const providerKey =
           data.loginMethod === "Email"
             ? "auth.identifier.email"
             : "auth.identifier.phone";
 
-        let avatarUrl = data.picture || "/avatar.png";
-        if (avatarUrl.startsWith("http://")) {
-          avatarUrl = avatarUrl.replace("http://", "https://");
-        }
+        const avatarUrl = data.picture || "/avatar.png";
 
-        setUser({
+        setFetchedUser({
           fullName: data.fullName,
           email:
             data.loginMethod === "Email"
@@ -120,16 +112,12 @@ export function useUserProfile() {
       }
     }
 
-    if (!user) {
-      fetchProfile();
-    } else {
-      setLoading(false);
-    }
+    fetchProfile();
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [user, setFetchedUser]);
 
   return {
     user,

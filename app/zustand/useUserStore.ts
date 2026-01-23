@@ -2,15 +2,19 @@ import { create } from "zustand";
 
 interface UserData {
   fullName: string;
-  username: string;
   email: string;
-  provider: "Google" | "Email" | "Phone";
+  accountType: "Free" | "Pro";
+  plan: string;
+  provider: string;
   avatar?: string;
+  dateJoined: string;
+  lastLogin: string;
 }
 
 interface UserStore {
   user: UserData | null;
   setUser: (data: Partial<UserData>) => void;
+  setFetchedUser: (data: UserData) => void;
 
   isEditProfileOpen: boolean;
   openEditProfile: () => void;
@@ -22,6 +26,8 @@ export const useUserStore = create<UserStore>((set) => ({
 
   setUser: (data) =>
     set((state) => ({ user: state.user ? { ...state.user, ...data } : null })),
+
+  setFetchedUser: (data) => set({ user: data }),
 
   isEditProfileOpen: false,
   openEditProfile: () => set({ isEditProfileOpen: true }),
