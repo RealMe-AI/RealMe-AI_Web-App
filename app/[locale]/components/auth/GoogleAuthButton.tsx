@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import useGoogleAuth from "../../../hooks/useGoogleAuth";
 
 export default function GoogleAuthButton() {
   const t = useTranslations();
+  const { signInWithGoogle } = useGoogleAuth();
 
   const handleGoogleSignIn = () => {
-    // This will be implemented when backend is ready
-    console.log("Google Sign-In clicked");
+    signInWithGoogle();
   };
 
   return (

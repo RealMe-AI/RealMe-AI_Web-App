@@ -5,11 +5,13 @@ import { PanelLeft } from "lucide-react";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
 import { useChatStore } from "../../zustand/useChatStore";
 import { useFetchMessages } from "@/app/hooks/useFetchMessages";
-
+// import useGoogleAuth from "@/app/hooks/useGoogleAuth";
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
 
 export default function Page() {
+  // useGoogleAuth();
+
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
 
