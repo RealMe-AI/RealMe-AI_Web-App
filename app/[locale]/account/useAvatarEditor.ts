@@ -44,9 +44,7 @@ export function useAvatarEditor() {
       setAvatar(data.picture || "/avatar.png");
     } catch (err) {
       console.error(err);
-      setError(
-        err instanceof Error ? err.message : "Unable to load avatar"
-      );
+      setError(err instanceof Error ? err.message : "Unable to load avatar");
     } finally {
       setLoading(false);
     }
@@ -55,7 +53,7 @@ export function useAvatarEditor() {
   /* =======================
      POST: upload new avatar
      ======================= */
-  const uploadAvatar = async (croppedImg: string) => {
+  const uploadAvatar = async (croppedImg: string): Promise<string | null> => {
     try {
       setLoading(true);
       setError(null);
@@ -86,14 +84,16 @@ export function useAvatarEditor() {
       const data = await res.json();
 
       // Update local avatar state directly
-      setAvatar(data.picture);
+      // Note: POST /upload-picture returns 'pictureUrl', explicitly different from GET /profile which returns 'picture'
+      const newUrl = data.pictureUrl;
+      setAvatar(newUrl);
+      return newUrl;
     } catch (err) {
       console.error(err);
       setError(
-        err instanceof Error
-          ? err.message
-          : t("modal.avatar_upload_failed")
+        err instanceof Error ? err.message : t("modal.avatar_upload_failed")
       );
+      return null;
     } finally {
       setLoading(false);
     }

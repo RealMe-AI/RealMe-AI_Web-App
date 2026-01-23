@@ -8,14 +8,16 @@ import Image from "next/image";
 import AvatarCropper from "./AvatarCropper";
 import { useAvatarEditor } from "./useAvatarEditor";
 
+interface Props {
+  onSuccess?: () => void;
+}
 
-export default function AvatarEditor() {
+export default function AvatarEditor({ onSuccess }: Props) {
   const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
 
   const { avatar, uploadAvatar, loading } = useAvatarEditor();
-
 
   const openFilePicker = () => fileRef.current?.click();
 
@@ -29,12 +31,13 @@ export default function AvatarEditor() {
   const handleSaveCropped = async (croppedImg: string) => {
     await uploadAvatar(croppedImg);
     setImageToCrop(null);
+    onSuccess?.();
   };
 
   return (
     <div className="relative group">
       <Image
-       src={avatar || "/avatar.png"}
+        src={avatar || "/avatar.png"}
         alt={t("account_info.avatar_alt", { name: "User" })}
         width={70}
         height={70}
@@ -68,9 +71,7 @@ export default function AvatarEditor() {
 
       {loading && (
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-2xl">
-          <span className="text-white text-sm">
-            {t("modal.uploading")}
-          </span>
+          <span className="text-white text-sm">{t("modal.uploading")}</span>
         </div>
       )}
     </div>
