@@ -8,21 +8,14 @@ import Image from "next/image";
 import AvatarCropper from "./AvatarCropper";
 import { useAvatarEditor } from "./useAvatarEditor";
 
-interface Props {
-  src: string;
-  onChange: (imgUrl: string) => void;
-  onSuccess?: () => void;
-}
 
-export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
+export default function AvatarEditor() {
   const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
 
-  const { uploadAvatar, loading } = useAvatarEditor({
-    onChange,
-    onSuccess,
-  });
+  const { avatar, uploadAvatar, loading } = useAvatarEditor();
+
 
   const openFilePicker = () => fileRef.current?.click();
 
@@ -41,7 +34,7 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   return (
     <div className="relative group">
       <Image
-        src={src}
+       src={avatar || "/avatar.png"}
         alt={t("account_info.avatar_alt", { name: "User" })}
         width={70}
         height={70}

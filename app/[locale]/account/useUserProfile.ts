@@ -12,7 +12,7 @@ interface BackendUser {
   accountType: "Free" | "Pro";
   dateJoined: string;
   lastLogin: string;
-  pictureUrl?: string;
+  picture?: string;
 }
 
 interface UserData {
@@ -98,7 +98,7 @@ export function useUserProfile() {
           accountType: data.accountType === "Pro" ? "Pro" : "Free",
           plan: data.accountType === "Pro" ? "Pro User" : "Free Plan",
           provider: providerKey,
-          avatar: data.pictureUrl || "/avatar.png",
+          avatar: data.picture || "/avatar.png",
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
