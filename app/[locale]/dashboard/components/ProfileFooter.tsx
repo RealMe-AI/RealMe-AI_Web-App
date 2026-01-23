@@ -46,10 +46,11 @@ export default function ProfileFooter() {
         />
         <div>
           <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
-            Owens Visuels
+            {user?.fullName || "—"}
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            {t("account_info.signed_in_with")} Google
+            {t("account_info.signed_in_with")}{" "}
+            {user?.provider ? t(user.provider) : "—"}
           </p>
         </div>
       </div>
