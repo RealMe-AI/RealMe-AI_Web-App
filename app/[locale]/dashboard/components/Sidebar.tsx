@@ -10,8 +10,8 @@ import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
+import { useChatStore } from "@/app/zustand/useChatStore";
 import { useChats } from "@/app/hooks/useChats";
-import { useCreateChat } from "@/app/hooks/useCreateChat";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -24,24 +24,24 @@ export default function Sidebar({
   setIsOpen,
   onSelectChat,
 }: SidebarProps) {
-  const { chats, setChats } = useChats();
-  const { createChat } = useCreateChat();
+  const { chats } = useChats();
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
-  const [activeChatId, setActiveChatId] = useState<number | null>(null);
-
-  const { closeAll } = useModalStore();
   const t = useTranslations();
 
-  const handleNewChat = async () => {
-    closeAll();
-    const newChat = await createChat(chats.length);
+  const { activeConversationId, setActiveConversationId, setMessages } =
+    useChatStore();
 
-    if (newChat) {
-      setChats((prev) => [newChat, ...prev]);
-      setActiveChatId(newChat.id);
-      onSelectChat(newChat);
-    }
+  const { closeAll } = useModalStore();
+
+  const handleNewChat = () => {
+    closeAll();
+    // 1. Reset chat session locally
+    setActiveConversationId(null);
+    setMessages([]);
+
+    // 2. UI Transitions
+    setIsOpen(false);
   };
 
   const filteredChats = chats.filter((chat) =>
@@ -62,7 +62,7 @@ export default function Sidebar({
 
   const handleSelectChat = (chat: Chat) => {
     closeAll();
-    setActiveChatId(chat.id);
+    setActiveConversationId(chat.id);
     onSelectChat(chat);
     setIsOpen(false);
   };
@@ -170,7 +170,7 @@ export default function Sidebar({
                   <SidebarItem
                     key={chat.id}
                     chat={chat}
-                    isActive={activeChatId === chat.id}
+                    isActive={activeConversationId === chat.id}
                     onClick={() => handleSelectChat(chat)}
                   />
                 ))
