@@ -9,7 +9,7 @@ interface BackendUser {
   fullName: string;
   email: string;
   phone: string;
-  loginMethod: "Email" | "Phone";
+  loginMethod: "Email" | "Google" | "Phone";
   accountType: "Free" | "Pro";
   dateJoined: string;
   lastLogin: string;
@@ -82,6 +82,8 @@ export function useUserProfile() {
         const providerKey =
           data.loginMethod === "Email"
             ? "auth.identifier.email"
+            : data.loginMethod === "Google"
+            ? "auth.identifier.google"
             : "auth.identifier.phone";
 
         const avatarUrl = data.picture || "/avatar.png";
@@ -89,7 +91,7 @@ export function useUserProfile() {
         setFetchedUser({
           fullName: data.fullName,
           email:
-            data.loginMethod === "Email"
+            data.loginMethod === "Email" || data.loginMethod === "Google"
               ? truncateEmail(data.email, 18)
               : data.email,
           accountType: data.accountType === "Pro" ? "Pro" : "Free",

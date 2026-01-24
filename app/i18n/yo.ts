@@ -118,8 +118,9 @@ const yo = {
       or: "TABI",
     },
     identifier: {
-      email: "imeeli",
-      phone: "foonu",
+      email: "Imeeli",
+      phone: "Foonu",
+      google: "Google",
     },
   },
 

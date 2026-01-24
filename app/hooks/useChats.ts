@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { Chat } from "@/app/types/type";
 import { useChatStore } from "@/app/zustand/useChatStore";
 
 export function useChats() {

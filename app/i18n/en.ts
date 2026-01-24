@@ -118,8 +118,9 @@ const en = {
       or: "OR",
     },
     identifier: {
-      email: "email",
-      phone: "phone",
+      email: "Email",
+      phone: "Phone",
+      google: "Google",
     },
   },
 

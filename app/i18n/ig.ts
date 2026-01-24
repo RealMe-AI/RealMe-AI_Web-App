@@ -118,8 +118,9 @@ const ig = {
       or: "MA Ọ BỤ",
     },
     identifier: {
-      email: "email",
-      phone: "ekwentị",
+      email: "Email",
+      phone: "Ekwentị",
+      google: "Google"
     },
   },
 

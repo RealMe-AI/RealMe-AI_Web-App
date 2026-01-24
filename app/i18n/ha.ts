@@ -118,8 +118,9 @@ const ha = {
       or: "KO",
     },
     identifier: {
-      email: "imel",
-      phone: "waya",
+      email: "Imel",
+      phone: "Waya",
+      google: "Google",
     },
   },
 
