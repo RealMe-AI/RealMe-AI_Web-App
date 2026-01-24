@@ -27,12 +27,6 @@ export const useSendMessage = () => {
         token: string
       ) => {
         try {
-          // Generate a title from the first message if needed
-          const title =
-            lastMessage.length > 50
-              ? lastMessage.substring(0, 50) + "..."
-              : lastMessage;
-
           const res = await fetch(
             `${baseUrl}/conversations/${conversationId}`,
             {
@@ -43,7 +37,6 @@ export const useSendMessage = () => {
               },
               body: JSON.stringify({
                 lastMessage,
-                title,
                 updatedAt: new Date().toISOString(),
               }),
             }
