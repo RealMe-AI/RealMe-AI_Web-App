@@ -60,8 +60,8 @@ export type ChatState = {
   isLoading: boolean;
   activeConversationId: number | null;
   chats: Chat[];
-  setMessages: (messages: Message[]) => void;
-  setConversations: (chats: Chat[]) => void;
+  setMessages: (messages: Message[] | ((prev: Message[]) => Message[])) => void;
+  setConversations: (chats: Chat[] | ((prev: Chat[]) => Chat[])) => void;
   updateChatTitle: (id: number, title: string) => void;
   addMessage: (message: Message) => void;
   updateMessage: (id: string, updates: Partial<Message>) => void;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTranslations } from "use-intl";
+import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { Chat } from "@/app/types/type";
 
@@ -19,12 +19,18 @@ export function useCreateChat() {
         throw new Error("Unauthorized - No access token found");
       }
 
+      // Create a default title
+      const title = t("dashboard.search.new_conversation_title", {
+        chatNumber: chatsLength + 1,
+      });
+
       const res = await fetch(`${baseUrl}/conversations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
+        body: JSON.stringify({ title }),
       });
 
       if (res.status === 401) {
@@ -40,11 +46,7 @@ export function useCreateChat() {
 
       const safeChat: Chat = {
         id: newChat.id ?? Date.now(),
-        title:
-          newChat.title ??
-          t("dashboard.search.new_conversation_title", {
-            chatNumber: chatsLength + 1,
-          }),
+        title: newChat.title ?? title,
       };
 
       return safeChat;
