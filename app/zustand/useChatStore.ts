@@ -8,19 +8,19 @@ export const useChatStore = create<ChatState>((set) => ({
   activeConversationId: null,
 
   setMessages: (messagesOrUpdater) =>
-    set((state) => ({
-      messages:
-        typeof messagesOrUpdater === "function"
-          ? (messagesOrUpdater as any)(state.messages)
-          : messagesOrUpdater,
-    })),
+    set((state) => {
+      if (typeof messagesOrUpdater === "function") {
+        return { messages: messagesOrUpdater(state.messages) };
+      }
+      return { messages: messagesOrUpdater };
+    }),
   setConversations: (chatsOrUpdater) =>
-    set((state) => ({
-      chats:
-        typeof chatsOrUpdater === "function"
-          ? (chatsOrUpdater as any)(state.chats)
-          : chatsOrUpdater,
-    })),
+    set((state) => {
+      if (typeof chatsOrUpdater === "function") {
+        return { chats: chatsOrUpdater(state.chats) };
+      }
+      return { chats: chatsOrUpdater };
+    }),
   updateChatTitle: (id, title) =>
     set((state) => ({
       chats: state.chats.map((c) => (c.id === id ? { ...c, title } : c)),
