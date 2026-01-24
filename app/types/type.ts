@@ -59,7 +59,10 @@ export type ChatState = {
   messages: Message[];
   isLoading: boolean;
   activeConversationId: number | null;
+  chats: Chat[];
   setMessages: (messages: Message[]) => void;
+  setConversations: (chats: Chat[]) => void;
+  updateChatTitle: (id: number, title: string) => void;
   addMessage: (message: Message) => void;
   updateMessage: (id: string, updates: Partial<Message>) => void;
   setIsLoading: (isLoading: boolean) => void;

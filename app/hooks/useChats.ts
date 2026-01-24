@@ -4,7 +4,7 @@ import { Chat } from "@/app/types/type";
 import { useChatStore } from "@/app/zustand/useChatStore";
 
 export function useChats() {
-  const [chats, setChats] = useState<Chat[]>([]);
+  const { chats, setConversations } = useChatStore();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +45,7 @@ export function useChats() {
         ? data
         : data.data || data.items || data.conversations || [];
 
-      setChats(loadedChats);
+      setConversations(loadedChats);
       setError(null);
     } catch (err) {
       console.error("Error fetching chats:", err);
@@ -59,5 +59,11 @@ export function useChats() {
     fetchChats();
   }, [fetchChats, refreshSignal]);
 
-  return { chats, setChats, isLoading, error, refetch: fetchChats };
+  return {
+    chats,
+    setChats: setConversations,
+    isLoading,
+    error,
+    refetch: fetchChats,
+  };
 }

@@ -3,10 +3,16 @@ import { ChatState } from "../types/type";
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
+  chats: [],
   isLoading: false,
   activeConversationId: null,
 
   setMessages: (messages) => set({ messages }),
+  setConversations: (chats) => set({ chats }),
+  updateChatTitle: (id, title) =>
+    set((state) => ({
+      chats: state.chats.map((c) => (c.id === id ? { ...c, title } : c)),
+    })),
   addMessage: (message) =>
     set((state) => ({ messages: [...state.messages, message] })),
   updateMessage: (id, updates) =>

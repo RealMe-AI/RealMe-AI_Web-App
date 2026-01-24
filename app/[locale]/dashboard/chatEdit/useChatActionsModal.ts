@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/zustand/useChatStore";
+import { useConversation } from "@/app/hooks/useConversation";
 
 export const useChatActionsModal = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { triggerChatsRefresh, activeConversationId, setActiveConversationId } =
-    useChatStore();
+  const {
+    triggerChatsRefresh,
+    activeConversationId,
+    setActiveConversationId,
+    updateChatTitle,
+  } = useChatStore();
+  const { updateConversation } = useConversation();
 
   const handleDelete = async (chatId: number) => {
     try {
@@ -40,9 +46,23 @@ export const useChatActionsModal = () => {
   };
 
   const handleRename = async (chatId: number, newTitle?: string) => {
-    // Placeholder for Rename endpoint
-    console.log("Rename action triggered for chat:", chatId, newTitle);
-    // TODO: Implement Rename logic when endpoint is ready
+    if (!newTitle) return;
+
+    try {
+      // 1. Optimistic update (instantly changes UI)
+      updateChatTitle(chatId, newTitle);
+
+      // 2. Persist to backend
+      const success = await updateConversation(chatId, { title: newTitle });
+
+      if (!success) {
+        console.warn("Failed to persist rename to backend, reverting...");
+        triggerChatsRefresh(); // Revert to server state if API fails
+      }
+    } catch (error) {
+      console.error("Error renaming conversation:", error);
+      triggerChatsRefresh();
+    }
   };
 
   const handleShare = async (chatId: number) => {
