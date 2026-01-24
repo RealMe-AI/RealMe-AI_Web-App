@@ -69,8 +69,8 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
       <button
         onClick={openFilePicker}
         className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50
-                   hover:bg-black/80 transition p-1.5 rounded-full opacity-0
-                   group-hover:opacity-100"
+                   hover:bg-black/80 transition p-1.5 rounded-full lg:opacity-0
+                   lg:group-hover:opacity-100"
       >
         <Pencil size={14} className="text-white" />
       </button>
