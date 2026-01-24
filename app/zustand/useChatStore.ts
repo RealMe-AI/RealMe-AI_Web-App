@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ChatState, Message } from "../types/type";
+import { ChatState } from "../types/type";
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
