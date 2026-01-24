@@ -159,6 +159,7 @@ const ig = {
   },
 
   dashboard: {
+    realMeThinking: "ọ na-eche",
     sidebar: {
       chat_button: "Mkparịta ụka Ọhụrụ",
       footer_full: "Site na",

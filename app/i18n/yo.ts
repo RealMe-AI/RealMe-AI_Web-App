@@ -159,6 +159,7 @@ const yo = {
   },
 
   dashboard: {
+    realMeThinking: "ó ń ronú",
     sidebar: {
       chat_button: "Ijiroro Tuntun",
       footer_full: "Nípa",

@@ -159,6 +159,7 @@ const ha = {
   },
 
   dashboard: {
+    realMeThinking: "yana tunani",
     sidebar: {
       chat_button: "Sabuwar Tattaunawa",
       footer_full: "Ta",
