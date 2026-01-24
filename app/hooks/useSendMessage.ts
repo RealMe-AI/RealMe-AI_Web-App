@@ -8,56 +8,57 @@ import { Message, MessageResponse } from "../types/type";
 export const useSendMessage = () => {
   /* -------------------- STORES -------------------- */
   const {
-    messages,
     activeConversationId,
     setActiveConversationId,
-    setMessages,
     addMessage,
     updateMessage,
     setIsLoading,
     triggerChatsRefresh,
   } = useChatStore();
 
-  // Helper function to update conversation details
-  const updateConversationDetails = async (
-    conversationId: number,
-    lastMessage: string,
-    token: string
-  ) => {
-    try {
-      // Generate a title from the first message if needed
-      const title =
-        lastMessage.length > 50
-          ? lastMessage.substring(0, 50) + "..."
-          : lastMessage;
-
-      const res = await fetch(`${baseUrl}/conversations/${conversationId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          lastMessage,
-          title,
-          updatedAt: new Date().toISOString(),
-        }),
-      });
-
-      if (!res.ok) {
-        console.warn(`Failed to update conversation: ${res.status}`);
-      }
-
-      // Trigger sidebar refresh after update
-      triggerChatsRefresh();
-    } catch (err) {
-      console.warn("Error updating conversation details:", err);
-    }
-  };
-
   const sendMessage = useCallback(
     async (content: string) => {
       if (!content.trim()) return;
+
+      // Helper function to update conversation details
+      const updateConversationDetails = async (
+        conversationId: number,
+        lastMessage: string,
+        token: string
+      ) => {
+        try {
+          // Generate a title from the first message if needed
+          const title =
+            lastMessage.length > 50
+              ? lastMessage.substring(0, 50) + "..."
+              : lastMessage;
+
+          const res = await fetch(
+            `${baseUrl}/conversations/${conversationId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                lastMessage,
+                title,
+                updatedAt: new Date().toISOString(),
+              }),
+            }
+          );
+
+          if (!res.ok) {
+            console.warn(`Failed to update conversation: ${res.status}`);
+          }
+
+          // Trigger sidebar refresh after update
+          triggerChatsRefresh();
+        } catch (err) {
+          console.warn("Error updating conversation details:", err);
+        }
+      };
 
       // Use a local variable to track the current ID to handle auto-creation
       let currentConversationId = activeConversationId;

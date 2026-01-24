@@ -134,7 +134,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           )}>
             {/* AI Avatar */}
             {!isUser && (
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <Image
                   src="/logo.png"
                   alt="RealMe AI"
@@ -168,7 +168,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           </div>
 
           {/* Hover Actions - Outside background, to the right */}
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
             <MessageActions />
           </div>
         </div>

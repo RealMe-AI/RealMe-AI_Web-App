@@ -184,7 +184,7 @@ export default function ChatWindow() {
                 text-slate-800 dark:text-slate-100
                 min-h-[24px] max-h-[160px]
                 overflow-y-auto
-                break-words
+                wrap-break-words
                 whitespace-pre-wrap
                 leading-relaxed
               "
