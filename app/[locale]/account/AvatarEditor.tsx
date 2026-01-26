@@ -55,7 +55,7 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
     <div className="relative group">
       {avatarSrc && (
         <Image
-          key={avatarSrc} // forces refresh when URL 
+          key={avatarSrc} // forces refresh when  
           src={avatarSrc}
           alt={t("account_info.avatar_alt", { name: "User" })}
           width={70}
