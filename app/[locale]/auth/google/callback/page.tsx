@@ -10,7 +10,6 @@ export default function AuthCallbackPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const params = Object.fromEntries(searchParams.entries());
 
     const token = searchParams.get("token");
     console.log("[AuthCallback] Extracted token:", token);
