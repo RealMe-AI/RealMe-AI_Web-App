@@ -14,7 +14,6 @@ export default function AuthCallbackPage() {
     const token = searchParams.get("token");
 
     if (!token) {
-      console.warn("[AuthCallback] No token found, redirecting to auth with error");
       router.replace("/auth?error=oauth_failed");
       return;
     }
