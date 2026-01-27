@@ -94,7 +94,7 @@ export default function EditProfileModal() {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="p-2 rounded-lg bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 focus:outline-none"
+                  className="p-2 rounded-lg text-slate-700 dark:text-white bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 focus:outline-none"
                   placeholder={t("modal.edit_profile.name_placeholder")}
                 />
 

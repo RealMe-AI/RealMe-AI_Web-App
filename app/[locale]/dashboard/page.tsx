@@ -1,26 +1,34 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LayoutDashboard } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
-
+import { useChatStore } from "../../zustand/useChatStore";
+import { useFetchMessages } from "@/app/hooks/useFetchMessages";
+// import useGoogleAuth from "@/app/hooks/useGoogleAuth";
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
 
 export default function Page() {
+  // useGoogleAuth();
+
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
 
+  const setActiveConversationId = useChatStore(
+    (s) => s.setActiveConversationId
+  );
+  const { fetchMessages } = useFetchMessages();
+
   return (
     <div className="min-h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
-      
       {/* Toggle Button */}
       {!isSidebarOpen && (
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="fixed top-4 right-4 z-50 p-3 rounded-full bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg transition"
+          className="fixed top-4 right-4 z-50  hover:text-slate-700 text-slate-500 shadow-lg transition"
         >
-          <LayoutDashboard size={22} />
+          <PanelLeft size={20} />
         </button>
       )}
 
@@ -30,7 +38,7 @@ export default function Page() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
         className={`flex-1 flex flex-col transition-all duration-500 ${
-          isSidebarOpen ? "md:mr-[360px]" : "md:mx-auto md:max-w-4xl"
+          isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl"
         } p-2 md:p-6`}
       >
         <ChatWindow />
@@ -40,8 +48,10 @@ export default function Page() {
       <Sidebar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
-        onSelectChat={(chatId) => {
-          console.log("Selected chat:", chatId);
+        onSelectChat={(chat) => {
+          console.log("Selected chat:", chat.id);
+          setActiveConversationId(chat.id);
+          fetchMessages(chat.id);
         }}
       />
     </div>

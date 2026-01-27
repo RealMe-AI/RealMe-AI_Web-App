@@ -101,6 +101,7 @@ const ig = {
       sign_in: "Banye",
       create_account: "Mepụta Akaụntụ",
       continue_email: "Gaa n’ihu na Email",
+      continue_google: "Gaa n’ihu na Google",
       creating: "Na-emepụta…",
       signing_in: "Na-abanye…",
       success: "Mmeri",
@@ -117,8 +118,9 @@ const ig = {
       or: "MA Ọ BỤ",
     },
     identifier: {
-      email: "email",
-      phone: "ekwentị",
+      email: "Email",
+      phone: "Ekwentị",
+      google: "Google"
     },
   },
 
@@ -158,9 +160,10 @@ const ig = {
   },
 
   dashboard: {
+    realMeThinking: "ọ na-eche",
     sidebar: {
       chat_button: "Mkparịta ụka Ọhụrụ",
-       footer_full: "Site na",
+      footer_full: "Site na",
       upgrade: "Melite",
       logout: "Pụọ",
     },

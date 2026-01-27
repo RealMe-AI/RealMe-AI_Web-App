@@ -20,7 +20,7 @@ export function useBackdrop(isOpen: boolean) {
       body.style.overflow = originalOverflow || "";
     }
 
-    // Cleanup on unmount or when isOpen changes
+    // Cleanup on unmount or when isOpen changes 
     return () => {
       body.style.overflow = originalOverflow || "";
     };

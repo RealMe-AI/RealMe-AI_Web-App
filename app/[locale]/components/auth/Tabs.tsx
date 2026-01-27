@@ -17,7 +17,7 @@ export default function Tabs({ isSignUp, setIsSignUp }: TabsProps) {
   ];
 
   return (
-    <div className="flex items-center justify-center bg-white/30 dark:bg-slate-700/40 p-1 rounded-xl">
+    <div className="flex items-center justify-center bg-slate-700/40 p-1 rounded-xl">
       {tabs.map((tab) => {
         const active = isSignUp === tab.isSignUpTab;
 
@@ -25,7 +25,7 @@ export default function Tabs({ isSignUp, setIsSignUp }: TabsProps) {
           <button
             key={tab.labelKey}
             onClick={() => setIsSignUp(tab.isSignUpTab)}
-            className="relative w-1/2 py-2 font-semibold text-sm text-slate-600 dark:text-gray-300"
+            className="relative w-1/2 py-2 font-semibold text-sm text-white"
           >
             {active && (
               <motion.div

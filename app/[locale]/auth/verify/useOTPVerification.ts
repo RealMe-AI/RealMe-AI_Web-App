@@ -9,7 +9,7 @@ export function useOTPVerification() {
   const router = useRouter();
 
   // zustand store
-  const { contact, method } = useSignUpStore();
+  const { contact, method, userId } = useSignUpStore();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timeLeft, setTimeLeft] = useState(300);
@@ -18,12 +18,12 @@ export function useOTPVerification() {
   const [invalidCode, setInvalidCode] = useState(false);
   const [resending, setResending] = useState(false);
 
-  // Redirect if verification accessed incorrectly
+  // Guard: prevent direct access
   useEffect(() => {
-    if (!contact || !method) {
+    if (!contact || !method || !userId) {
       router.push("/auth");
     }
-  }, [contact, method, router]);
+  }, [contact, method, userId, router]);
 
   // Countdown timer
   useEffect(() => {
@@ -43,20 +43,17 @@ export function useOTPVerification() {
     return () => clearInterval(interval);
   }, [expired]);
 
-  // FORMAT TIME → mm:ss
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  // Warning color logic (Tailwind-ready)
   const timerTextClass =
     timeLeft <= 30 && !expired
       ? "text-red-500 animate-pulse"
       : "text-muted-foreground";
 
-  // Handle OTP input
   const handleChange = useCallback((value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
@@ -69,55 +66,70 @@ export function useOTPVerification() {
     setInvalidCode(false);
   }, []);
 
-  // Submit OTP
+  // SUBMIT OTP
   const submitOTP = async () => {
     const code = otp.join("");
     if (code.length !== 6) return;
 
     setLoading(true);
+    setInvalidCode(false);
 
     try {
       const res = await fetch(`${baseUrl}/auth/verify`, {
         method: "POST",
-        body: JSON.stringify({ code, contact, method }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, userId }),
       });
 
-      const data = await res.json();
-      console.log("Verification response:", data);
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        console.error("Verification failed:", data);
-        throw new Error(data.error || "Invalid code");
+        const msg =
+          Array.isArray(data.message)
+            ? data.message.join(", ")
+            : data.error || data.message || "Invalid code";
+        throw new Error(msg);
       }
 
+      // EXPECT ACCESS TOKEN
+      const accessToken = data.accessToken;
+
+      if (!accessToken) {
+        throw new Error("Verification succeeded but no access token returned");
+      }
+
+      // STORE TOKEN (CRITICAL)
+      localStorage.setItem("accessToken", accessToken);
+
+      //  REDIRECT ONLY AFTER TOKEN EXISTS
       router.push("/dashboard");
-    } catch (error) {
-      console.error("OTP verification error:", error);
+    } catch (err) {
+      console.error("OTP verification error:", err);
       setInvalidCode(true);
     } finally {
       setLoading(false);
     }
   };
 
-  // Resend OTP
+  // Resend OTP (unchanged)
   const resendOTP = async () => {
     setResending(true);
 
     try {
       const res = await fetch(`${baseUrl}/auth/resend-otp`, {
         method: "POST",
-        body: JSON.stringify({ contact, method }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ login: contact }),
       });
 
-      if (!res.ok) throw new Error("Failed to resend OTP");
+      if (!res.ok) {
+        throw new Error("Failed to resend OTP");
+      }
 
-      // Reset UI + timer
       setOtp(["", "", "", "", "", ""]);
       setInvalidCode(false);
       setExpired(false);
-      setTimeLeft(60);
+      setTimeLeft(300);
     } catch (e) {
       console.error("Resend OTP failed:", e);
     } finally {

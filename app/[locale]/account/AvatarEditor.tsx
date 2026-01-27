@@ -1,21 +1,25 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
 import { Pencil } from "lucide-react";
-import AvatarCropper from "./AvatarCropper";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+
+import AvatarCropper from "./AvatarCropper";
+import { useAvatarEditor } from "./useAvatarEditor";
 
 interface Props {
   src: string;
-  onChange: (imgUrl: string) => void; // Backend URL
+  onChange: (imgUrl: string) => void;
+  onSuccess?: () => void;
 }
 
-export default function AvatarEditor({ src, onChange }: Props) {
+export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   const t = useTranslations();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+
+  const { uploadAvatar, loading } = useAvatarEditor();
 
   const openFilePicker = () => fileRef.current?.click();
 
@@ -27,46 +31,46 @@ export default function AvatarEditor({ src, onChange }: Props) {
   };
 
   const handleSaveCropped = async (croppedImg: string) => {
-    setLoading(true);
-
-    try {
-      const blob = await (await fetch(croppedImg)).blob();
-      const fd = new FormData();
-      fd.append("avatar", blob, "avatar.png");
-
-      const res = await fetch("/api/user/avatar", {
-        method: "POST",
-        body: fd,
-      });
-
-      if (!res.ok) throw new Error(t("modal.avatar_upload_failed"));
-
-      const data = await res.json();
-      onChange(data.url); // backend URL of uploaded image
-    } catch (err) {
-      console.error(err);
-      alert(t("modal.avatar_upload_failed"));
-    } finally {
-      setLoading(false);
-      setImageToCrop(null);
+    const newUrl = await uploadAvatar(croppedImg);
+    if (newUrl) {
+      onChange(newUrl);
+      onSuccess?.();
     }
+    setImageToCrop(null);
   };
 
+  console.log("AvatarEditor src value →", {
+  src,
+  type: typeof src,
+  length: src?.length,
+});
+
+ const avatarSrc =
+  typeof src === "string" && src.trim().length > 0
+    ? src.replace("http://", "https://")
+    : "/avatar.png";
+    
+    console.log("Avatar src:", src);
   return (
     <div className="relative group">
-      <Image
-        src={src}
-        alt={t("account_info.avatar_alt", { name: "User" })}
-        width={70}
-        height={70}
-        className="rounded-2xl object-cover shadow-sm"
-      />
+      {avatarSrc && (
+        <Image
+          key={avatarSrc}      
+          src={avatarSrc}
+          alt={t("account_info.avatar_alt", { name: "User" })}
+          width={70}
+          height={70}
+          unoptimized
+          priority
+          className="rounded-2xl object-cover shadow-sm"
+        />
+      )}
 
       <button
         onClick={openFilePicker}
-        className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50 
-                   hover:bg-black/80 transition p-1.5 rounded-full opacity-0 
-                   group-hover:opacity-100"
+        className="absolute -top-2 -right-2 bg-black/60 dark:bg-black/50
+                   hover:bg-black/80 transition p-1.5 rounded-full lg:opacity-0
+                   lg:group-hover:opacity-100"
       >
         <Pencil size={14} className="text-white" />
       </button>

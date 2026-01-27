@@ -6,7 +6,6 @@ import { baseUrl } from "@/app/lib/baseUrl";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
 
-
 type FieldErrors = {
   login: string | null;
   password: string | null;
@@ -17,7 +16,6 @@ export default function useSignUp() {
   const { t } = useTranslate();
   const router = useRouter();
   const { setSignUpData } = useSignUpStore();
-
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -78,7 +76,6 @@ export default function useSignUp() {
     setError(null);
     setSuccess(false);
 
-    
     try {
       const res = await fetch(`${baseUrl}/auth/register`, {
         method: "POST",
@@ -86,14 +83,12 @@ export default function useSignUp() {
         body: JSON.stringify({
           login: identifier.trim(),
           password,
-          fullName: fullName.trim(),
+          name: fullName.trim(),
         }),
       });
 
       const json = await res.json();
-      console.log(json)
-
-
+      console.log(json);
 
       if (!res.ok) {
         if (json.fieldErrors)
@@ -111,15 +106,15 @@ export default function useSignUp() {
       setFullName("");
       setFieldErrors({ login: null, password: null, fullName: null });
 
-      // Save email OR phone for OTP
-  setSignUpData({
-  contact: identifier.trim(),
-  method: isEmail(identifier) ? "email" : "phone",
-});
+      // Save userId, email OR phone for OTP
+      setSignUpData({
+        contact: identifier.trim(),
+        method: isEmail(identifier) ? "email" : "phone",
+        userId: json.userId, // Save userId from registration response
+      });
 
-// Redirect to OTP page
-router.push("/auth/verify");
-
+      // Redirect to OTP page
+      router.push("/auth/verify");
     } catch {
       setError(t("error.network"));
     }

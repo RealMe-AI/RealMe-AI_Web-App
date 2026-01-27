@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { UserPlus, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import useSignUp from "../../../hooks/useSignUp";
+import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function SignUpForm() {
   const {
@@ -42,12 +43,12 @@ export default function SignUpForm() {
           placeholder={t("auth.login.email_placeholder")}
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
+          className="w-full pl-10 pr-4 py-3 rounded-lg text-white bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
 
-        <div className="absolute right-3 top-3 text-xs text-slate-500 dark:text-slate-400">
+        <div className="absolute right-3 top-1 text-xs text-slate-400">
           {identifier
             ? isEmail(identifier)
               ? t("auth.identifier.email")
@@ -71,9 +72,9 @@ export default function SignUpForm() {
           placeholder={t("auth.login.password_placeholder")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full pl-10 pr-10 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
-            border border-gray-200 dark:border-slate-600 placeholder-gray-500
-            dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
+          className="w-full pl-10 pr-10 py-3 rounded-lg text-white bg-slate-700/50
+            border border-gray-200 dark:border-slate-600 placeholder-gray-400
+           focus:ring-2 focus:ring-indigo-400 outline-none"
         />
 
         <button
@@ -98,7 +99,7 @@ export default function SignUpForm() {
           value={fullName}
           placeholder={t("auth.login.full_name_placeholder")}
           onChange={(e) => setFullName(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/50 dark:bg-slate-700/50
+          className="w-full pl-10 pr-4 py-3 rounded-lg text-white dark:bg-slate-700/50
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
         />
@@ -108,26 +109,37 @@ export default function SignUpForm() {
         )}
       </div>
 
+      {/* Divider */}
+      <div className="flex items-center gap-3 my-2">
+        <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+        <span className="text-xs text-slate-400 font-medium">
+          {t("auth.divider.or")}
+        </span>
+        <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+      </div>
+
+      <GoogleAuthButton />
+
       {/* Submit */}
       <motion.button
         type="submit"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className={`mt-2 flex items-center justify-center gap-2 
-          bg-indigo-400 text-slate-800 dark:bg-indigo-600 dark:text-white 
+          bg-indigo-400 dark:bg-indigo-600 text-white 
           font-semibold py-3 rounded-lg shadow-md transition
           ${loading ? "opacity-70 pointer-events-none" : ""}
           ${success ? "bg-emerald-500 text-white" : ""}`}
       >
-        {loading
-          ? t("auth.button.creating")
-          : success
-          ? t("auth.button.success")
-          : (
-            <>
-              <UserPlus size={18} /> {t("auth.button.create_account")}
-            </>
-          )}
+        {loading ? (
+          t("auth.button.creating")
+        ) : success ? (
+          t("auth.button.success")
+        ) : (
+          <>
+            <UserPlus size={18} /> {t("auth.button.create_account")}
+          </>
+        )}
       </motion.button>
 
       {error && <p className="text-center text-sm text-red-500">{error}</p>}

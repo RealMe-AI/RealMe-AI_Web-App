@@ -2,9 +2,23 @@
 
 import { useState } from "react";
 import { useTranslate } from "./useTranslate";
-import {baseUrl} from "@/app/lib/baseUrl";
+import { useRouter } from "@/i18n/routing";
+import { baseUrl } from "@/app/lib/baseUrl";
+
+interface LoginErrorResponse {
+  error?: string;
+  fieldErrors?: {
+    identifier?: string;
+    password?: string;
+  };
+}
+
+interface LoginSuccessResponse {
+  accessToken: string;
+}
 
 export default function useSignIn() {
+  const router = useRouter();
   const { t } = useTranslate();
 
   const [identifier, setIdentifier] = useState("");
@@ -26,7 +40,11 @@ export default function useSignIn() {
   const isPhone = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v.trim());
 
   const validate = () => {
-    const errs: { identifier: string | null; password: string | null } = { identifier: null, password: null };
+
+    const errs = {
+      identifier: null as string | null,
+      password: null as string | null,
+    };
     const id = identifier.trim();
 
     if (!id) {
@@ -42,47 +60,127 @@ export default function useSignIn() {
     }
 
     setFieldErrors(errs);
-    return !Object.values(errs).some(Boolean);
+
+    const valid = !Object.values(errs).some(Boolean);
+    console.log("[SignIn] Validation result:", valid, errs);
+
+    return valid;
+  };
+
+  //  Verify token works by making a test API call
+  const verifyToken = async (token: string): Promise<boolean> => {
+    try {
+      console.log("[SignIn] Verifying token with test request...");
+      
+      const res = await fetch(`${baseUrl}/conversations?page=1&limit=1`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        console.log("[SignIn] Token verified successfully");
+        return true;
+      } else {
+        console.error("[SignIn] Token verification failed:", res.status);
+        return false;
+      }
+    } catch (err) {
+      console.error("[SignIn] Token verification error:", err);
+      return false;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+
+
+    if (!validate()) {
+      console.warn("[SignIn] Validation failed");
+      return;
+    }
 
     setLoading(true);
     setError(null);
     setSuccess(false);
 
     try {
+      console.log("[SignIn] Sending login request…");
+
       const res = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ login: identifier.trim(), password }),
+        body: JSON.stringify({
+          login: identifier.trim(),
+          password,
+        }),
       });
 
-      const json = await res.json();
+      console.log("[SignIn] Response status:", res.status);
 
+      let json: LoginErrorResponse | LoginSuccessResponse;
+      try {
+        json = await res.json();
+        console.log("[SignIn] Response body:", json);
+      } catch {
+        throw new Error("Invalid JSON response from server");
+      }
+
+      //  Backend says NO
       if (!res.ok) {
-        if (json.fieldErrors)
-          setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
+        console.warn("[SignIn] Login rejected by backend");
+        const errorResponse = json as LoginErrorResponse;
 
-        setError(json.error || t("error.sign_in.general"));
+        if (errorResponse.fieldErrors) {
+          setFieldErrors((prev) => ({ ...prev, ...errorResponse.fieldErrors }));
+        }
+
+        setError(errorResponse.error || t("error.sign_in.general"));
         setLoading(false);
         return;
       }
 
-      // ✅ Success: clear inputs
+      //  REQUIRE TOKEN
+      const successResponse = json as LoginSuccessResponse;
+      const accessToken = successResponse.accessToken;
+
+      if (!accessToken) {
+        setError("Invalid credentials");
+        setLoading(false);
+        return;
+      }
+
+
+      //  Store token
+      localStorage.setItem("accessToken", accessToken);
+
+      //  VERIFY TOKEN BEFORE REDIRECTING
+      const isTokenValid = await verifyToken(accessToken);
+
+      if (!isTokenValid) {
+        console.error("[SignIn] Token verification failed");
+        localStorage.removeItem("accessToken"); // Clean up invalid token
+        setError("Login successful but unable to access dashboard. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      //  Only redirect if token is verified
       setSuccess(true);
       setIdentifier("");
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
 
-      setTimeout(() => setSuccess(false), 1500);
-    } catch {
-      setError(t("error.network"));
-    }
+      router.push("/dashboard");
 
-    setLoading(false);
+      setTimeout(() => setSuccess(false), 1500);
+    } catch (err) {
+      console.error("[SignIn] Network/runtime error:", err);
+      setError(t("error.network"));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return {

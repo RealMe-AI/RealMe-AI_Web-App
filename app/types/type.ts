@@ -1,8 +1,7 @@
 export type Features = {
-  key: string;   
-  icon: string;  
+  key: string;
+  icon: string;
 };
-
 
 export type Props = {
   isOpen: boolean;
@@ -13,6 +12,23 @@ export type Props = {
 export type Active = {
   active: string;
 };
+
+// Raw API message type
+export interface RawMessage {
+  id: string;
+  sender: "user" | "assistant" | "assistantMessage";
+  text?: string;
+  content?: string;
+  createdAt: string;
+}
+
+// API response for single message send
+export interface MessageResponse {
+  userMessage?: RawMessage;
+  assistantMessage?: RawMessage;
+  messages?: RawMessage[];
+  items?: RawMessage[];
+}
 
 export type NavItem = {
   href: string;
@@ -28,16 +44,31 @@ export type Toggle = {
 export type Message = {
   id: string;
   sender: "user" | "ai";
-  text: string;
+  type: "text" | "file" | "image" | "audio"; // Required for ChatMessageProps
+  text?: string; // Optional since file/image may have no text
   time: string;
   fileName?: string;
   fileUrl?: string;
+  fileSize?: number;
+  mimeType?: string;
+  imageUrl?: string;
+  audioUrl?: string;
 };
 
 export type ChatState = {
   messages: Message[];
   isLoading: boolean;
-  sendMessage: (content: string) => Promise<void>;
+  activeConversationId: number | null;
+  chats: Chat[];
+  setMessages: (messages: Message[] | ((prev: Message[]) => Message[])) => void;
+  setConversations: (chats: Chat[] | ((prev: Chat[]) => Chat[])) => void;
+  updateChatTitle: (id: number, title: string) => void;
+  addMessage: (message: Message) => void;
+  updateMessage: (id: string, updates: Partial<Message>) => void;
+  setIsLoading: (isLoading: boolean) => void;
+  setActiveConversationId: (id: number | null) => void;
+  chatsRefreshSignal: number;
+  triggerChatsRefresh: () => void;
 };
 
 export type ChatMessageProps = {
@@ -71,7 +102,7 @@ export type SidebarProps = {
 export type Chat = {
   id: number;
   title: string;
-  lastMessage: string;
+  lastMessage?: string;
 };
 
 export type ModalState = {
@@ -91,4 +122,4 @@ export type AboutStore = {
   isOpen: boolean;
   openAbout: () => void;
   closeAbout: () => void;
-}
+};

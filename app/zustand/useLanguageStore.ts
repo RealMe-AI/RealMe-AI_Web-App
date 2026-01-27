@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type Language = "en" | "ha" | "ig" | "yo";
 
@@ -12,13 +12,13 @@ interface LanguageState {
 
 export const useLanguageStore = create<LanguageState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       language: "en", // default
-      setLanguage: (lang: Language) => set({ language: lang }),
+      setLanguage: (lang) => set({ language: lang }),
     }),
     {
-      name: "realme-language", // localStorage key
-      getStorage: () => localStorage,
+      name: "realme-language",
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

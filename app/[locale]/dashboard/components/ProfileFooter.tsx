@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useTranslate } from "../../../hooks/useTranslate";
 import { useRouter } from "@/i18n/routing";
+import { useUserProfile } from "../../account/useUserProfile";
 
 import Image from "next/image";
 import AccountInfoModal from "./../../account/AccountInfoModal";
@@ -21,8 +22,21 @@ export default function ProfileFooter() {
     closeAll,
   } = useModalStore();
 
+  const { user } = useUserProfile();
   const router = useRouter();
   const { t } = useTranslate();
+
+  // Robust avatar source logic
+  const avatarSrc =
+    typeof user?.avatar === "string" && user.avatar.trim().length > 0
+      ? user.avatar.replace("http://", "https://")
+      : "/avatar.png";
+
+  console.log("Dashboard ProfileFooter user state →", {
+    userPresent: !!user,
+    avatar: user?.avatar,
+    avatarSrc,
+  });
 
   return (
     <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
@@ -33,18 +47,22 @@ export default function ProfileFooter() {
                    dark:hover:bg-slate-700/40 cursor-pointer transition"
       >
         <Image
-          src="/avatar.png"
+          key={avatarSrc}
+          src={avatarSrc}
           alt={t("account_info.avatar_alt")}
           width={50}
           height={50}
-          className="w-10 h-10 rounded-full border border-white/20"
+          unoptimized
+          priority
+          className="w-10 h-10 rounded-full border border-white/20 object-cover"
         />
         <div>
           <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
-            Owens Visuels
+            {user?.fullName || "—"}
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            {t("account_info.signed_in_with")} Google
+            {t("account_info.signed_in_with")}{" "}
+            {user?.provider ? t(user.provider) : "—"}
           </p>
         </div>
       </div>
@@ -99,7 +117,7 @@ export default function ProfileFooter() {
 
       {/* Footer Text */}
       <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-3">
-         {t("dashboard.sidebar.footer_full")} OwenVisuels
+        {t("dashboard.sidebar.footer_full")} OwenVisuels
       </p>
 
       {/* Account Info Modal */}

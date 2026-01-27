@@ -1,85 +1,43 @@
-"use client";
-
 import { create } from "zustand";
-import { ChatState, Message } from "../types/type";
+import { ChatState } from "../types/type";
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
+  chats: [],
   isLoading: false,
+  activeConversationId: null,
 
-  sendMessage: async (content: string) => {
-    if (!content.trim()) return;
-
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      sender: "user",
-      text: content,
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-
-    // Add user message + set loading
-    set((state) => ({
-      messages: [...state.messages, userMsg],
-      isLoading: true,
-    }));
-
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: content }),
-      });
-
-      if (!res.body) throw new Error("No stream received");
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let aiText = "";
-
-      // Stream AI response chunks
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        aiText += decoder.decode(value);
-
-        set((state) => {
-          const hasTemp = state.messages.some((m) => m.id === "ai-temp");
-          return {
-            messages: hasTemp
-              ? state.messages.map((m) =>
-                  m.id === "ai-temp" ? { ...m, text: aiText } : m
-                )
-              : [
-                  ...state.messages,
-                  {
-                    id: "ai-temp",
-                    sender: "ai",
-                    text: aiText,
-                    time: new Date().toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }),
-                  },
-                ],
-          };
-        });
+  setMessages: (messagesOrUpdater) =>
+    set((state) => {
+      if (typeof messagesOrUpdater === "function") {
+        return { messages: messagesOrUpdater(state.messages) };
       }
+      return { messages: messagesOrUpdater };
+    }),
+  setConversations: (chatsOrUpdater) =>
+    set((state) => {
+      if (typeof chatsOrUpdater === "function") {
+        return { chats: chatsOrUpdater(state.chats) };
+      }
+      return { chats: chatsOrUpdater };
+    }),
+  updateChatTitle: (id, title) =>
+    set((state) => ({
+      chats: state.chats.map((c) => (c.id === id ? { ...c, title } : c)),
+    })),
+  addMessage: (message) =>
+    set((state) => ({ messages: [...state.messages, message] })),
+  updateMessage: (id, updates) =>
+    set((state) => ({
+      messages: state.messages.map((msg) =>
+        msg.id === id ? { ...msg, ...updates } : msg
+      ),
+    })),
+  setIsLoading: (isLoading) => set({ isLoading }),
+  setActiveConversationId: (id) => set({ activeConversationId: id }),
 
-      // Finalize AI message
-      set((state) => ({
-        messages: state.messages.map((m) =>
-          m.id === "ai-temp"
-            ? { ...m, id: Date.now().toString(), text: aiText }
-            : m
-        ),
-        isLoading: false,
-      }));
-    } catch (err) {
-      console.error("Chat error:", err);
-      set({ isLoading: false });
-    }
-  },
+  // Refresh signal for conversation list
+  chatsRefreshSignal: 0,
+  triggerChatsRefresh: () =>
+    set((state) => ({ chatsRefreshSignal: state.chatsRefreshSignal + 1 })),
 }));

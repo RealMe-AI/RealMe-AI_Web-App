@@ -101,6 +101,7 @@ const yo = {
       sign_in: "Wọle",
       create_account: "Ṣẹda Account",
       continue_email: "Tẹsiwaju pẹlu Imeeli",
+      continue_google: "Tẹsiwaju pẹlu Google",
       creating: "Ṣiṣẹda…",
       signing_in: "Wọle…",
       success: "Aseyori",
@@ -117,8 +118,9 @@ const yo = {
       or: "TABI",
     },
     identifier: {
-      email: "imeeli",
-      phone: "foonu",
+      email: "Imeeli",
+      phone: "Foonu",
+      google: "Google",
     },
   },
 
@@ -158,9 +160,10 @@ const yo = {
   },
 
   dashboard: {
+    realMeThinking: "ó ń ronú",
     sidebar: {
       chat_button: "Ijiroro Tuntun",
-      footer_full: "Nípa", 
+      footer_full: "Nípa",
       upgrade: "Mu dara si",
       logout: "Jade",
     },
