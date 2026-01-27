@@ -12,7 +12,6 @@ export default function AuthCallbackPage() {
   useEffect(() => {
 
     const token = searchParams.get("token");
-    console.log("[AuthCallback] Extracted token:", token);
 
     if (!token) {
       console.warn("[AuthCallback] No token found, redirecting to auth with error");
