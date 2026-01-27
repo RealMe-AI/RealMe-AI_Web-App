@@ -11,7 +11,6 @@ export default function AuthCallbackPage() {
 
   useEffect(() => {
     const params = Object.fromEntries(searchParams.entries());
-    console.log("[AuthCallback] Full search parameters:", params);
 
     const token = searchParams.get("token");
     console.log("[AuthCallback] Extracted token:", token);
