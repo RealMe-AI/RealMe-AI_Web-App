@@ -19,7 +19,6 @@ export default function AuthCallbackPage() {
     }
 
     localStorage.setItem("accessToken", token);
-    console.log("[AuthCallback] Token saved, redirecting to dashboard");
 
     router.replace("/dashboard");
   }, [searchParams, router]);
