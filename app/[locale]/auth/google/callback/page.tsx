@@ -10,14 +10,20 @@ export default function AuthCallbackPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const params = Object.fromEntries(searchParams.entries());
+    console.log("[AuthCallback] Full search parameters:", params);
+
     const token = searchParams.get("token");
+    console.log("[AuthCallback] Extracted token:", token);
 
     if (!token) {
+      console.warn("[AuthCallback] No token found, redirecting to auth with error");
       router.replace("/auth?error=oauth_failed");
       return;
     }
 
     localStorage.setItem("accessToken", token);
+    console.log("[AuthCallback] Token saved, redirecting to dashboard");
 
     router.replace("/dashboard");
   }, [searchParams, router]);
