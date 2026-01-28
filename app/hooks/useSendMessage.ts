@@ -219,7 +219,7 @@ export const useSendMessage = () => {
         }
       } catch (err) {
         console.error("Chat error:", err);
-        // Add error   
+        // Add error message  
         const errorMsg: Message = {
           id: (Date.now() + 1).toString(),
           sender: "ai",
