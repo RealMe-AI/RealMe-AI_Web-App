@@ -7,7 +7,7 @@ export default function HelpSupport() {
     <section className="min-h-screen bg-linear-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 py-20">
       <div className="max-w-5xl mx-auto px-6">
         
-        {/*  */}
+        {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
             Help & Support
