@@ -21,7 +21,7 @@ export default function HelpSupport() {
         {/* Grid  */}
         <div className="grid md:grid-cols-2 gap-10">
 
-          {/*   */}
+          {/* Knowledge  */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-8">
             <BookOpen className="w-10 h-10 text-indigo-500" />
             <h2 className="text-xl font-semibold mt-4 text-slate-900 dark:text-white">
