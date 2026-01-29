@@ -18,7 +18,7 @@ export default function HelpSupport() {
           </p>
         </div>
 
-        {/* Grid Sections */}
+        {/* Grid  */}
         <div className="grid md:grid-cols-2 gap-10">
 
           {/* Knowledge Base */}
