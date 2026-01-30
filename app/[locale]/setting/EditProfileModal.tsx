@@ -5,10 +5,16 @@ import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useUserStore } from "../../zustand/useUserStore";
 import { useTranslations } from "next-intl";
+import { baseUrl } from "@/app/lib/baseUrl";
 
 interface UpdateProfileResponse {
-  success: boolean;
-  fullName?: string;
+  name?: string;
+  picture?: string;
+  preferences?: {
+    theme?: string;
+    language?: string;
+    aiModel?: string;
+  };
   message?: string;
 }
 
@@ -34,21 +40,25 @@ export default function EditProfileModal() {
     setError("");
 
     try {
-      const res = await fetch("/api/user/update-profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName }),
+      const token = localStorage.getItem("accessToken");
+
+      const res = await fetch(`${baseUrl}/users/profile`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: JSON.stringify({ name: fullName }),
       });
 
       const data: UpdateProfileResponse = await res.json();
 
-      if (!res.ok || !data.success) {
-        throw new Error(
-          data.message || t("modal_edit.no_data.success")
-        );
+      if (!res.ok) {
+        throw new Error(data.message || t("modal_edit.no_data.success"));
       }
 
-      setUser({ fullName });
+      // Update store with the returned name or the one we sent
+      setUser({ fullName: data.name || fullName });
       closeEditProfile();
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);
@@ -98,11 +108,7 @@ export default function EditProfileModal() {
                   placeholder={t("modal.edit_profile.name_placeholder")}
                 />
 
-                {error && (
-                  <p className="text-red-600 text-sm">
-                    {error}
-                  </p>
-                )}
+                {error && <p className="text-red-600 text-sm">{error}</p>}
               </div>
 
               <button
@@ -114,7 +120,9 @@ export default function EditProfileModal() {
                     : "bg-indigo-600 hover:bg-indigo-700"
                 }`}
               >
-                {loading ? t("modal.saving") : t("modal.edit_profile.save_button")}
+                {loading
+                  ? t("modal.saving")
+                  : t("modal.edit_profile.save_button")}
               </button>
             </div>
           </motion.div>
