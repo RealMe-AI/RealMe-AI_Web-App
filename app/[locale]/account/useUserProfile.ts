@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useUserStore } from "@/app/zustand/useUserStore";
 
@@ -43,17 +43,15 @@ export function useUserProfile() {
   const { user, setFetchedUser, setUser } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
+    // Skip if we've already fetched this session
+    if (hasFetchedRef.current) return;
+
     let isMounted = true;
 
     async function fetchProfile() {
-      // Don't fetch if we already have it
-      if (user) {
-        setLoading(false);
-        return;
-      }
-
       try {
         setLoading(true);
         const token = localStorage.getItem("accessToken");
@@ -83,10 +81,13 @@ export function useUserProfile() {
           data.loginMethod === "Email"
             ? "auth.identifier.email"
             : data.loginMethod === "Google"
-            ? "auth.identifier.google"
-            : "auth.identifier.phone";
+              ? "auth.identifier.google"
+              : "auth.identifier.phone";
 
         const avatarUrl = data.picture || "/avatar.png";
+
+        // console.log("Profile fetched - picture URL:", data.picture);
+        // console.log("Setting avatar to:", avatarUrl);
 
         setFetchedUser({
           fullName: data.fullName,
@@ -101,10 +102,12 @@ export function useUserProfile() {
           dateJoined: formatDate(data.dateJoined),
           lastLogin: formatLastLogin(data.lastLogin),
         });
+
+        hasFetchedRef.current = true;
       } catch (err) {
         if (isMounted) {
           setError(
-            err instanceof Error ? err.message : "Unable to load profile"
+            err instanceof Error ? err.message : "Unable to load profile",
           );
         }
       } finally {
@@ -119,12 +122,18 @@ export function useUserProfile() {
     return () => {
       isMounted = false;
     };
-  }, [user, setFetchedUser]);
+  }, [setFetchedUser]);
+
+  // Function to force refresh profile data
+  const refreshProfile = () => {
+    hasFetchedRef.current = false;
+  };
 
   return {
     user,
     setUser,
     loading,
     error,
+    refreshProfile,
   };
 }

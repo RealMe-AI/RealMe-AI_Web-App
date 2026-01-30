@@ -16,6 +16,25 @@ const nextConfig: NextConfig = {
         protocol: "http",
         hostname: "realme-ai-jf2e.onrender.com",
       },
+
+      // Cloudinary for avatar uploads
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.cloudinary.com",
+      },
+      // Common image storage providers
+      {
+        protocol: "https",
+        hostname: "**.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+      },
     ],
   },
 };
