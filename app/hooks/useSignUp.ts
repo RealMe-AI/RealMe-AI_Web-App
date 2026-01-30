@@ -99,7 +99,7 @@ export default function useSignUp() {
         return;
       }
 
-      //  Success: clear inputs
+      //  Success: clear 
       setSuccess(true);
       setIdentifier("");
       setPassword("");
