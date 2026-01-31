@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 
-//
 export function useActiveSection() {
   const [active, setActive] = useState("#dashboard");
 
