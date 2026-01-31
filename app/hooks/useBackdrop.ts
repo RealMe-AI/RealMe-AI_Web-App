@@ -4,7 +4,7 @@ import { useEffect } from "react";
 /**
  * useBackdrop Hook
  
- * @param isOpen - Whether the backdrop/modal is open
+ * @param isOpen - Whether the backdrop/modal is 
  */
 export function useBackdrop(isOpen: boolean) {
   useEffect(() => {
