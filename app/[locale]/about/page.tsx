@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -8,13 +7,6 @@ import Image from "next/image";
 
 export default function AboutPage() {
   const router = useRouter();
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
 
   return (
     <div
