@@ -17,11 +17,11 @@ export default function Footer() {
           </div>
 
           {/* Right side - links */}
-          <div className="flex flex-wrap justify-center md:justify-end gap-4">
+          {/* <div className="flex flex-wrap justify-center md:justify-end gap-4">
             <Link href="/">{t("privacy")}</Link>
             <Link href="/">{t("terms")}</Link>
             <Link href="/">{t("contact")}</Link>
-          </div>
+          </div> */}
 
         </div>
       </div>
