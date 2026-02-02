@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
 
   // Hooks
   const {
-    email,  
+    email,
     setEmail,
     error: emailError,
     loading: emailLoading,
@@ -59,7 +59,11 @@ export default function ForgotPasswordPage() {
   // Handlers
   const onSendEmail = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSendCode(() => setStep("otp"));
+    console.log("onSendEmail triggered in Page");
+    handleSendCode(() => {
+      console.log("handleSendCode success callback");
+      setStep("otp");
+    });
   };
 
   const onVerifyCode = () => {
