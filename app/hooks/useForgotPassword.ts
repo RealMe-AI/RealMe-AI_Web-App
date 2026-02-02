@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { baseUrl } from "@/app/lib/baseUrl";
 
 export default function useForgotPassword() {
   const [email, setEmail] = useState("");
@@ -28,12 +29,25 @@ export default function useForgotPassword() {
     setLoading(true);
 
     try {
-      // Simulate API call
       console.log("Sending code to:", email);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      const res = await fetch(`${baseUrl}/auth/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: email,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to send verification code");
+      }
 
       onSuccess();
     } catch (err) {
+      console.error("Forgot password error:", err);
       setError("Failed to send verification code. Please try again.");
     } finally {
       setLoading(false);
