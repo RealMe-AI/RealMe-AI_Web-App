@@ -59,9 +59,7 @@ export default function ForgotPasswordPage() {
   // Handlers
   const onSendEmail = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("onSendEmail triggered in Page");
     handleSendCode(() => {
-      console.log("handleSendCode success callback");
       setStep("otp");
     });
   };
