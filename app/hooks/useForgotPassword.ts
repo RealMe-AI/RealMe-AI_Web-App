@@ -18,13 +18,11 @@ export default function useForgotPassword() {
 
     console.log("handleSendCode called with email:", email);
     if (!email.trim()) {
-      console.log("Email is empty");
       setError("Please enter your email address");
       return;
     }
 
     if (!validateEmail(email)) {
-      console.log("Email validation failed for:", email);
       setError("Please enter a valid email address");
       return;
     }
@@ -32,8 +30,6 @@ export default function useForgotPassword() {
     setLoading(true);
 
     try {
-      console.log("Sending code to:", email);
-
       const res = await fetch(`${baseUrl}/auth/forgot-password`, {
         method: "POST",
         headers: {
@@ -50,7 +46,6 @@ export default function useForgotPassword() {
 
       onSuccess();
     } catch (err) {
-      console.error("Forgot password error:", err);
       setError("Failed to send verification code. Please try again.");
     } finally {
       setLoading(false);
