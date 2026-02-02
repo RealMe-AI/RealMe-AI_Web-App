@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import {Link} from "@/i18n/routing";
 import useSignIn from "../../../hooks/useSignIn";
 import GoogleAuthButton from "./GoogleAuthButton";
-import Link from "next/link";
 
 export default function SignInForm() {
   const {
@@ -92,7 +92,7 @@ export default function SignInForm() {
 
       <div className="flex gap-1 text-xs text-slate-400 font-medium">
       <p>Forgot Password?</p>
-      <Link href="/" className="text-indigo-400 hover:underline">Click</Link>
+      <Link href="/auth/ForgotPasswordEmail" className="text-indigo-400 hover:underline">Click</Link>
       </div>
 
       {/* Divider */}
