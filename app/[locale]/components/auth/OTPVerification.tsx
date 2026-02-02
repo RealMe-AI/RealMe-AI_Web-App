@@ -1,112 +1,42 @@
 "use client";
 
-import {
-  useState,
-  useRef,
-  useEffect,
-  KeyboardEvent,
-  ClipboardEvent,
-} from "react";
 import { motion } from "framer-motion";
 import { Shield, CheckCircle2, ArrowLeft, RefreshCw } from "lucide-react";
+import { MutableRefObject } from "react";
 
 interface OTPVerificationProps {
-  onVerify: (otp: string) => void;
-  onResend?: () => void;
-  onBack?: () => void;
-  email?: string;
-  loading?: boolean;
+  email: string;
+  otp: string[];
+  otpError: string;
+  loading: boolean;
+  resendTimer: number;
+  canResend: boolean;
+  isOtpComplete: boolean;
+  inputRefs: MutableRefObject<(HTMLInputElement | null)[]>;
+  onChange: (index: number, value: string) => void;
+  onKeyDown: (index: number, e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void;
+  onVerify: () => void;
+  onResend: () => void;
+  onBack: () => void;
 }
 
 export default function OTPVerification({
+  email,
+  otp,
+  otpError,
+  loading,
+  resendTimer,
+  canResend,
+  isOtpComplete,
+  inputRefs,
+  onChange,
+  onKeyDown,
+  onPaste,
   onVerify,
   onResend,
   onBack,
-  email = "",
-  loading = false,
 }: OTPVerificationProps) {
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-  const [error, setError] = useState("");
-  const [resendTimer, setResendTimer] = useState(60);
-  const canResend = resendTimer === 0;
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-  // Countdown timer for resend
-  useEffect(() => {
-    if (resendTimer > 0) {
-      const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [resendTimer]);
-
-  // Focus first input on mount
-  useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, []);
-
-  const handleChange = (index: number, value: string) => {
-    if (!/^\d*$/.test(value)) return; // Only allow digits
-
-    const newOtp = [...otp];
-    newOtp[index] = value.slice(-1); // Take only the last digit
-    setOtp(newOtp);
-    setError("");
-
-    // Auto-focus next input
-    if (value && index < 5) {
-      inputRefs.current[index + 1]?.focus();
-    }
-
-    // Auto-submit when all fields are filled
-    if (newOtp.every((digit) => digit !== "") && index === 5) {
-      handleSubmit(newOtp.join(""));
-    }
-  };
-
-  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
-  };
-
-  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const pastedData = e.clipboardData
-      .getData("text")
-      .replace(/\D/g, "")
-      .slice(0, 6);
-
-    if (pastedData.length === 6) {
-      const newOtp = pastedData.split("");
-      setOtp(newOtp);
-      inputRefs.current[5]?.focus();
-      handleSubmit(pastedData);
-    }
-  };
-
-  const handleSubmit = (code?: string) => {
-    const otpCode = code || otp.join("");
-
-    if (otpCode.length !== 6) {
-      setError("Please enter all 6 digits");
-      return;
-    }
-
-    onVerify(otpCode);
-  };
-
-  const handleResend = () => {
-    if (canResend && onResend) {
-      onResend();
-      setResendTimer(60);
-
-      setOtp(Array(6).fill(""));
-      inputRefs.current[0]?.focus();
-    }
-  };
-
-  const isComplete = otp.every((digit) => digit !== "");
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -158,9 +88,9 @@ export default function OTPVerification({
                 inputMode="numeric"
                 maxLength={1}
                 value={digit}
-                onChange={(e) => handleChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                onPaste={index === 0 ? handlePaste : undefined}
+                onChange={(e) => onChange(index, e.target.value)}
+                onKeyDown={(e) => onKeyDown(index, e)}
+                onPaste={index === 0 ? onPaste : undefined}
                 className={`w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-xl
                            bg-slate-800/60 backdrop-blur-sm border-2 text-white
                            focus:outline-none transition-all duration-300
@@ -169,7 +99,7 @@ export default function OTPVerification({
                                ? "border-emerald-500/50 shadow-lg shadow-emerald-500/20"
                                : "border-slate-700/50 focus:border-indigo-500/50"
                            }
-                           ${error ? "border-red-500/50 shake" : ""}`}
+                           ${otpError ? "border-red-500/50 shake" : ""}`}
               />
               {/* Glow effect when filled */}
               {digit && (
@@ -183,27 +113,27 @@ export default function OTPVerification({
           ))}
         </div>
 
-        {error && (
+        {otpError && (
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center text-xs text-red-400 flex items-center justify-center gap-1"
           >
             <span className="w-1 h-1 rounded-full bg-red-400" />
-            {error}
+            {otpError}
           </motion.p>
         )}
 
         {/* Verify Button */}
         <motion.button
-          onClick={() => handleSubmit()}
-          disabled={!isComplete || loading}
-          whileHover={{ scale: !isComplete || loading ? 1 : 1.02 }}
-          whileTap={{ scale: !isComplete || loading ? 1 : 0.98 }}
+          onClick={onVerify}
+          disabled={!isOtpComplete || loading}
+          whileHover={{ scale: !isOtpComplete || loading ? 1 : 1.02 }}
+          whileTap={{ scale: !isOtpComplete || loading ? 1 : 0.98 }}
           className={`relative flex items-center justify-center gap-3 py-4 px-6 rounded-xl
                      font-semibold text-white overflow-hidden shadow-xl transition-all duration-300
                      ${
-                       !isComplete || loading
+                       !isOtpComplete || loading
                          ? "bg-slate-700 cursor-not-allowed opacity-50"
                          : "bg-gradient-to-r from-emerald-600 to-teal-600 hover:shadow-emerald-500/30"
                      }`}
@@ -233,7 +163,7 @@ export default function OTPVerification({
             Didn&apos;t receive the code?
           </p>
           <motion.button
-            onClick={handleResend}
+            onClick={onResend}
             disabled={!canResend}
             whileHover={{ scale: canResend ? 1.05 : 1 }}
             className={`inline-flex items-center gap-2 text-sm font-medium transition-colors
@@ -251,18 +181,16 @@ export default function OTPVerification({
         </div>
 
         {/* Back Link */}
-        {onBack && (
-          <motion.button
-            type="button"
-            onClick={onBack}
-            whileHover={{ x: -4 }}
-            className="flex items-center justify-center gap-2 text-slate-400 hover:text-white 
+        <motion.button
+          type="button"
+          onClick={onBack}
+          whileHover={{ x: -4 }}
+          className="flex items-center justify-center gap-2 text-slate-400 hover:text-white 
                        text-sm font-medium transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </motion.button>
-        )}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </motion.button>
       </div>
     </motion.div>
   );

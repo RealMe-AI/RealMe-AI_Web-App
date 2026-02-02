@@ -1,45 +1,25 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, ArrowLeft, Sparkles } from "lucide-react";
 
 interface ForgotPasswordEmailProps {
-  onSendCode: (email: string) => void;
-  onBack?: () => void;
-  loading?: boolean;
+  email: string;
+  setEmail: (email: string) => void;
+  error?: string;
+  loading: boolean;
+  onSendCode: (e: React.FormEvent) => void;
+  onBack: () => void;
 }
 
 export default function ForgotPasswordEmail({
+  email,
+  setEmail,
+  error,
+  loading,
   onSendCode,
   onBack,
-  loading = false,
 }: ForgotPasswordEmailProps) {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (!email.trim()) {
-      setError("Please enter your email address");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
-
-    onSendCode(email);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -69,7 +49,7 @@ export default function ForgotPasswordEmail({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        onSubmit={handleSubmit}
+        onSubmit={onSendCode}
         className="flex flex-col gap-5"
       >
         {/* Email Input */}
@@ -88,10 +68,7 @@ export default function ForgotPasswordEmail({
               type="email"
               placeholder="Enter your email address"
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (error) setError("");
-              }}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-12 pr-4 py-4 rounded-xl text-white bg-slate-800/60 
                         backdrop-blur-sm border border-slate-700/50 placeholder-slate-500
                         focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 
@@ -157,18 +134,16 @@ export default function ForgotPasswordEmail({
         </motion.button>
 
         {/* Back Link */}
-        {onBack && (
-          <motion.button
-            type="button"
-            onClick={onBack}
-            whileHover={{ x: -4 }}
-            className="flex items-center justify-center gap-2 text-slate-400 hover:text-white 
+        <motion.button
+          type="button"
+          onClick={onBack}
+          whileHover={{ x: -4 }}
+          className="flex items-center justify-center gap-2 text-slate-400 hover:text-white 
                        text-sm font-medium transition-colors mt-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Sign In
-          </motion.button>
-        )}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Sign In
+        </motion.button>
       </motion.form>
     </motion.div>
   );

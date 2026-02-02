@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Lock,
@@ -12,31 +11,42 @@ import {
 } from "lucide-react";
 
 interface NewPasswordFormProps {
-  onSubmit: (password: string) => void;
-  loading?: boolean;
+  password: string;
+  setPassword: (val: string) => void;
+  confirmPassword: string;
+  setConfirmPassword: (val: string) => void;
+  showPassword: boolean;
+  setShowPassword: (val: boolean) => void;
+  showConfirmPassword: boolean;
+  setShowConfirmPassword: (val: boolean) => void;
+  error: string;
+  loading: boolean;
+  strengthScore: number;
+  checks: {
+    length: boolean;
+    uppercase: boolean;
+    lowercase: boolean;
+    number: boolean;
+    special: boolean;
+  };
+  onSubmit: (e: React.FormEvent) => void;
 }
 
 export default function NewPasswordForm({
+  password,
+  setPassword,
+  confirmPassword,
+  setConfirmPassword,
+  showPassword,
+  setShowPassword,
+  showConfirmPassword,
+  setShowConfirmPassword,
+  error,
+  loading,
+  strengthScore,
+  checks,
   onSubmit,
-  loading = false,
 }: NewPasswordFormProps) {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState("");
-
-  // Password strength checks
-  const checks = {
-    length: password.length >= 8,
-    uppercase: /[A-Z]/.test(password),
-    lowercase: /[a-z]/.test(password),
-    number: /\d/.test(password),
-    special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-  };
-
-  const strengthScore = Object.values(checks).filter(Boolean).length;
-
   const getStrengthColor = () => {
     if (strengthScore <= 2) return "bg-red-500";
     if (strengthScore <= 3) return "bg-yellow-500";
@@ -49,28 +59,6 @@ export default function NewPasswordForm({
     if (strengthScore <= 3) return "Fair";
     if (strengthScore <= 4) return "Good";
     return "Strong";
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (!password) {
-      setError("Please enter a password");
-      return;
-    }
-
-    if (strengthScore < 3) {
-      setError("Password is too weak. Please make it stronger.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    onSubmit(password);
   };
 
   return (
@@ -104,7 +92,7 @@ export default function NewPasswordForm({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         className="flex flex-col gap-5"
       >
         {/* New Password Input */}
@@ -123,10 +111,7 @@ export default function NewPasswordForm({
               type={showPassword ? "text" : "password"}
               placeholder="Enter new password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (error) setError("");
-              }}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-12 pr-12 py-4 rounded-xl text-white bg-slate-800/60 
                         backdrop-blur-sm border border-slate-700/50 placeholder-slate-500
                         focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20 
@@ -228,10 +213,7 @@ export default function NewPasswordForm({
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm new password"
               value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                if (error) setError("");
-              }}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className={`w-full pl-12 pr-12 py-4 rounded-xl text-white bg-slate-800/60 
                         backdrop-blur-sm border placeholder-slate-500
                         focus:ring-2 outline-none transition-all duration-300
