@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import useSignIn from "../../../hooks/useSignIn";
 import GoogleAuthButton from "./GoogleAuthButton";
+import Link from "next/link";
 
 export default function SignInForm() {
   const {
@@ -89,8 +90,9 @@ export default function SignInForm() {
         )}
       </div>
 
-      <div className="flex">
-      <p className="text-xs text-slate-400 font-medium">Forgot Password?</p>
+      <div className="flex gap-1 text-xs text-slate-400 font-medium">
+      <p>Forgot Password?</p>
+      <Link href="/" className="text-indigo-400 dark:text-indigo-600 hover:underline">click</Link>
       </div>
 
       {/* Divider */}
