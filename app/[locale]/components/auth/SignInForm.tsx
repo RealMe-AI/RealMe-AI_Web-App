@@ -88,6 +88,7 @@ export default function SignInForm() {
           <p className="mt-1 text-xs text-red-500">{fieldErrors.password}</p>
         )}
       </div>
+      <p className="text-xs text-slate-400 font-medium">Forgot Password?</p>
 
       {/* Divider */}
       <div className="flex items-center gap-3 my-2">
