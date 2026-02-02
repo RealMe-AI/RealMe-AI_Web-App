@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import {Link} from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import useSignIn from "../../../hooks/useSignIn";
 import GoogleAuthButton from "./GoogleAuthButton";
 
@@ -53,8 +53,8 @@ export default function SignInForm() {
             ? isEmail(identifier)
               ? t("auth.identifier.email")
               : isPhone(identifier)
-              ? t("auth.identifier.phone")
-              : ""
+                ? t("auth.identifier.phone")
+                : ""
             : ""}
         </div>
 
@@ -91,8 +91,13 @@ export default function SignInForm() {
       </div>
 
       <div className="flex gap-1 text-xs text-slate-400 font-medium">
-      <p>Forgot Password?</p>
-      <Link href="/auth/ForgotPasswordEmail" className="text-indigo-400 hover:underline">Click</Link>
+        <p>Forgot Password?</p>
+        <Link
+          href="/auth/forgot-password"
+          className="text-indigo-400 hover:underline"
+        >
+          Click
+        </Link>
       </div>
 
       {/* Divider */}
@@ -117,15 +122,15 @@ export default function SignInForm() {
           ${loading ? "opacity-70 pointer-events-none" : ""}
           ${success ? "bg-emerald-500 text-white" : ""}`}
       >
-        {loading
-          ? t("auth.button.signing_in")
-          : success
-          ? t("auth.button.success")
-          : (
-            <>
-              <LogIn size={18} /> {t("auth.button.sign_in")}
-            </>
-          )}
+        {loading ? (
+          t("auth.button.signing_in")
+        ) : success ? (
+          t("auth.button.success")
+        ) : (
+          <>
+            <LogIn size={18} /> {t("auth.button.sign_in")}
+          </>
+        )}
       </motion.button>
 
       {error && <p className="text-center text-sm text-red-500">{error}</p>}
