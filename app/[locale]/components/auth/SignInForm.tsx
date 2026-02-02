@@ -92,7 +92,7 @@ export default function SignInForm() {
 
       <div className="flex gap-1 text-xs text-slate-400 font-medium">
       <p>Forgot Password?</p>
-      <Link href="/" className="text-indigo-400 dark:text-indigo-600 hover:underline">click</Link>
+      <Link href="/" className="text-indigo-400 hover:underline">Click</Link>
       </div>
 
       {/* Divider */}
