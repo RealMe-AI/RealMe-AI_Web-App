@@ -24,8 +24,8 @@ export default function ForgotPasswordPage() {
     handleSendCode,
   } = useForgotPassword();
 
+  // OTP
   const {
-    // OTP
     otp,
     otpError,
     resendTimer,
@@ -71,7 +71,6 @@ export default function ForgotPasswordPage() {
   const onSubmitPassword = (e: React.FormEvent) => {
     e.preventDefault();
     submitNewPassword(() => {
-      // Show success message or toast here if needed
       router.push("/auth");
     });
   };
