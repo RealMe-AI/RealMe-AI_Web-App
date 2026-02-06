@@ -14,7 +14,7 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-12 items-center">
 
-        {/* LEFT SECTION */}
+        {/* LEFT SETION */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
