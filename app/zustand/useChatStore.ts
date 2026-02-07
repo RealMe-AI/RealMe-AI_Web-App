@@ -30,7 +30,7 @@ export const useChatStore = create<ChatState>((set) => ({
   updateMessage: (id, updates) =>
     set((state) => ({
       messages: state.messages.map((msg) =>
-        msg.id === id ? { ...msg, ...updates } : msg
+        msg.id === id ? { ...msg, ...updates } : msg,
       ),
     })),
   setIsLoading: (isLoading) => set({ isLoading }),
@@ -40,4 +40,9 @@ export const useChatStore = create<ChatState>((set) => ({
   chatsRefreshSignal: 0,
   triggerChatsRefresh: () =>
     set((state) => ({ chatsRefreshSignal: state.chatsRefreshSignal + 1 })),
+
+  // Signal to focus chat input
+  inputFocusSignal: 0,
+  triggerInputFocus: () =>
+    set((state) => ({ inputFocusSignal: state.inputFocusSignal + 1 })),
 }));

@@ -23,9 +23,28 @@ export default function ChatWindow() {
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const { messages: chatMessages, isLoading } = useChatStore();
+  const {
+    messages: chatMessages,
+    isLoading,
+    inputFocusSignal,
+  } = useChatStore();
 
   const { sendMessage } = useSendMessage();
+
+  // FOCUS INPUT ON SIGNAL
+  useEffect(() => {
+    if (inputFocusSignal > 0 && inputRef.current) {
+      inputRef.current.focus();
+
+      // For contentEditable, move cursor to the end
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(inputRef.current);
+      range.collapse(false);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }, [inputFocusSignal]);
 
   const {
     pendingFiles,
@@ -61,7 +80,7 @@ export default function ChatWindow() {
     }
   };
 
-  // MERGE MESSAGES (FIXED SORTING) 
+  // MERGE MESSAGES (FIXED SORTING)
   const allMessages = useMemo(() => {
     const merged = [...chatMessages, ...fileMessages];
 
@@ -71,7 +90,7 @@ export default function ChatWindow() {
       const aTime = a.id === "ai-temp" ? Infinity : parseInt(a.id) || 0;
       const bTime = b.id === "ai-temp" ? Infinity : parseInt(b.id) || 0;
 
-      return bTime - aTime; 
+      return bTime - aTime;
     });
   }, [chatMessages, fileMessages]);
 
@@ -86,8 +105,10 @@ export default function ChatWindow() {
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
     >
       {/* Chat Messages - Centered Container */}
-      <div className="flex-1 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300/40 dark:scrollbar-thumb-slate-600/40
-">
+      <div
+        className="flex-1 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300/40 dark:scrollbar-thumb-slate-600/40
+"
+      >
         <div className="max-w-3xl mx-auto">
           {allMessages.map((msg) => (
             <ChatMessage key={msg.id} message={msg} />
@@ -120,7 +141,7 @@ export default function ChatWindow() {
               {pendingFiles.map((file, index) => {
                 const ext = file.name.split(".").pop()?.toLowerCase();
                 const isImage = ["png", "jpg", "jpeg", "webp"].includes(
-                  ext || ""
+                  ext || "",
                 );
                 return (
                   <div
@@ -190,7 +211,6 @@ export default function ChatWindow() {
               "
               data-placeholder="Type a message..."
             />
-
 
             {/* Mic or Send */}
             {input.trim() === "" && pendingFiles.length === 0 ? (
