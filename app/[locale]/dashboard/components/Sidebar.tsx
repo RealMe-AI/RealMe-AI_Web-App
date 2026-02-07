@@ -41,11 +41,10 @@ export default function Sidebar({
     setMessages([]);
 
     // 2. UI Transitions
-    setIsOpen(false);
   };
 
   const filteredChats = chats.filter((chat) =>
-    chat.title.toLowerCase().includes(searchTerm.toLowerCase())
+    chat.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   useEffect(() => {
@@ -64,7 +63,6 @@ export default function Sidebar({
     closeAll();
     setActiveConversationId(chat.id);
     onSelectChat(chat);
-    setIsOpen(false);
   };
 
   return (
