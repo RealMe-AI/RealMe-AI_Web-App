@@ -8,7 +8,7 @@ export default function MessageActions() {
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-white/70 dark:bg-slate-800/80 backdrop-blur-md rounded-xl p-2 shadow-lg border border-white/20">
+    <div className="flex flex-row gap-1 bg-white/70 dark:bg-slate-800/80 backdrop-blur-md rounded-lg p-1 shadow-md border border-white/20">
       <button
         onClick={handleCopy}
         className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"
