@@ -29,8 +29,12 @@ export default function Sidebar({
   const [error, setError] = useState("");
   const t = useTranslations();
 
-  const { activeConversationId, setActiveConversationId, setMessages } =
-    useChatStore();
+  const {
+    activeConversationId,
+    setActiveConversationId,
+    setMessages,
+    triggerInputFocus,
+  } = useChatStore();
 
   const { closeAll } = useModalStore();
 
@@ -40,12 +44,12 @@ export default function Sidebar({
     setActiveConversationId(null);
     setMessages([]);
 
-    // 2. UI Transitions
-    setIsOpen(false);
+    // 2. Trigger focus for chat input
+    triggerInputFocus();
   };
 
   const filteredChats = chats.filter((chat) =>
-    chat.title.toLowerCase().includes(searchTerm.toLowerCase())
+    chat.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   useEffect(() => {
@@ -64,7 +68,6 @@ export default function Sidebar({
     closeAll();
     setActiveConversationId(chat.id);
     onSelectChat(chat);
-    setIsOpen(false);
   };
 
   return (

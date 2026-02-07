@@ -69,6 +69,8 @@ export type ChatState = {
   setActiveConversationId: (id: number | null) => void;
   chatsRefreshSignal: number;
   triggerChatsRefresh: () => void;
+  inputFocusSignal: number;
+  triggerInputFocus: () => void;
 };
 
 export type ChatMessageProps = {
