@@ -110,7 +110,11 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               animate={{
                 height: isPlaying ? ["6px", "18px", "8px"] : "6px",
               }}
-              transition={{ repeat: Infinity, duration: 0.7, ease: "easeInOut" }}
+              transition={{
+                repeat: Infinity,
+                duration: 0.7,
+                ease: "easeInOut",
+              }}
             />
           ))}
         </motion.div>
@@ -128,10 +132,13 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       <div className="max-w-3xl mx-auto px-4 py-2 group">
         <div className="flex items-start gap-4">
           {/* Message container with background */}
-          <div className={cn(
-            "flex items-start gap-4 flex-1 min-w-0",
-            isUser && "bg-slate-100 dark:bg-slate-700/40 py-2 px-4 rounded-2xl"
-          )}>
+          <div
+            className={cn(
+              "flex items-start gap-4 flex-1 min-w-0",
+              isUser &&
+                "bg-slate-100 dark:bg-slate-700/40 py-2 px-4 rounded-2xl",
+            )}
+          >
             {/* AI Avatar */}
             {!isUser && (
               <div className="shrink-0">
@@ -147,12 +154,14 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
             {/* Message Content */}
             <div className="flex-1 min-w-0">
-              <div className={cn(
-                "text-sm leading-relaxed",
-                isUser 
-                  ? "text-slate-900 dark:text-white" 
-                  : "text-slate-900 dark:text-white"
-              )}>
+              <div
+                className={cn(
+                  "text-sm leading-relaxed",
+                  isUser
+                    ? "text-slate-900 dark:text-white"
+                    : "text-slate-900 dark:text-white",
+                )}
+              >
                 {message.type === "file" && renderFilePreview()}
                 {message.type === "audio" && renderAudioBubble()}
 
@@ -164,12 +173,12 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                   {message.time}
                 </span>
               </div>
-            </div>
-          </div>
 
-          {/* Hover Actions - Outside background, to the right */}
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-            <MessageActions />
+              {/* Message Actions - Bottom Positioned */}
+              <div className="mt-2 flex justify-end lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                <MessageActions />
+              </div>
+            </div>
           </div>
         </div>
       </div>
