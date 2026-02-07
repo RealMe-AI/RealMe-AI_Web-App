@@ -175,7 +175,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               </div>
 
               {/* Message Actions - Bottom Positioned */}
-              <div className="mt-2 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+              <div className="mt-2 flex justify-end lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                 <MessageActions />
               </div>
             </div>
