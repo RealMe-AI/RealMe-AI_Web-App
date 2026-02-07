@@ -88,7 +88,7 @@ export default function ChatWindow() {
       {/* Chat Messages - Centered Container */}
       <div className="flex-1 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300/40 dark:scrollbar-thumb-slate-600/40
 ">
-        <div className="max-w-3xl mx-auto space-y-5">
+        <div className="max-w-3xl mx-auto">
           {allMessages.map((msg) => (
             <ChatMessage key={msg.id} message={msg} />
           ))}
