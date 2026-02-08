@@ -22,7 +22,7 @@ export default function Hero() {
           viewport={{ once: true }}
           className="text-center lg:text-left space-y-8"
         >
-          {/* Badge */}
+          {/*  */}
             <div className="py-2 px-4 rounded-full bg-indigo-100 dark:bg-gray-900/50 max-w-max mx-auto lg:mx-0 mb-4">
           <div className="flex items-center justify-center md:justify-start gap-2 text-sm font-semibold text-indigo-400">
 
