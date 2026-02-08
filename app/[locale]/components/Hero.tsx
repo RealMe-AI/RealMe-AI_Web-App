@@ -36,7 +36,7 @@ export default function Hero() {
             {t("title")}
           </h1>
 
-          {/* Subtitle */}
+          {/*  */}
           <p className="sm:text-xl text-lg text-slate-600 dark:text-slate-300 max-w-xl">
             {t("subtitle")}
           </p>
