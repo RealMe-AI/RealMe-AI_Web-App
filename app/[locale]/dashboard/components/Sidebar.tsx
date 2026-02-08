@@ -46,6 +46,11 @@ export default function Sidebar({
 
     // 2. Trigger focus for chat input
     triggerInputFocus();
+
+    // 3. Close sidebar on mobile
+    if (window.innerWidth < 640) {
+      setIsOpen(false);
+    }
   };
 
   const filteredChats = chats.filter((chat) =>
@@ -68,6 +73,11 @@ export default function Sidebar({
     closeAll();
     setActiveConversationId(chat.id);
     onSelectChat(chat);
+
+    // Close sidebar on mobile
+    if (window.innerWidth < 640) {
+      setIsOpen(false);
+    }
   };
 
   return (
