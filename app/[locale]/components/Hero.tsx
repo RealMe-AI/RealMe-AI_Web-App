@@ -45,7 +45,7 @@ export default function Hero() {
             <CTAButtons />
           </div>
 
-          {/*   */}
+          {/* Feature  */}
           <div className="mt-8 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start text-sm text-slate-700 dark:text-slate-400">
             {["offer1", "offer2", "offer3"].map((key) => (
               <div key={key} className="flex items-center gap-2 justify-center">
