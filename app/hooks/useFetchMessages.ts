@@ -30,15 +30,38 @@ export const useFetchMessages = () => {
         let messages: Message[] = [];
 
         // Helper to normalize a raw message - FIXED SENDER MAPPING
+        // Check both 'sender' and 'role' fields since backend might use either
+        const getSenderType = (m: RawMessage): "user" | "ai" => {
+          const senderValue = m.sender || m.role || "";
+
+          // Debug log to see what backend returns
+          console.log("Message sender/role:", {
+            sender: m.sender,
+            role: m.role,
+            resolved: senderValue,
+          });
+
+          // Check for AI variants
+          if (
+            senderValue === "assistant" ||
+            senderValue === "assistantMessage" ||
+            senderValue === "ai"
+          ) {
+            return "ai";
+          }
+          // Check for user
+          if (senderValue === "user") {
+            return "user";
+          }
+          return "user";
+        };
+
         const mapRaw = (m: RawMessage): Message => ({
           id: m.id ?? Date.now().toString(),
-          sender:
-            m.sender === "assistantMessage" || m.sender === "assistant"
-              ? "ai"
-              : "user",
+          sender: getSenderType(m),
           type: "text",
           text:
-            m.sender === "assistantMessage" || m.sender === "assistant"
+            getSenderType(m) === "ai"
               ? m.content || m.text || ""
               : m.text || m.content || "",
           time: m.createdAt
@@ -52,29 +75,36 @@ export const useFetchMessages = () => {
               }),
         });
 
+        // Helper to sort raw messages by createdAt before mapping
+        const sortRawMessages = (rawMsgs: RawMessage[]): RawMessage[] => {
+          return [...rawMsgs].sort((a, b) => {
+            const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+            // Oldest first, newest last
+            return aTime - bTime;
+          });
+        };
+
         // Case 1: API returns array directly
         if (Array.isArray(data)) {
-          messages = data.map(mapRaw);
+          messages = sortRawMessages(data).map(mapRaw);
         }
         // Case 2: API returns object with messages array
         else if (data.messages && Array.isArray(data.messages)) {
-          messages = data.messages.map(mapRaw);
+          messages = sortRawMessages(data.messages).map(mapRaw);
         }
         // Case 3: API returns single user + assistant messages
         else if (data.userMessage && data.assistantMessage) {
-          messages = [mapRaw(data.userMessage), mapRaw(data.assistantMessage)];
+          const sorted = sortRawMessages([
+            data.userMessage,
+            data.assistantMessage,
+          ]);
+          messages = sorted.map(mapRaw);
         }
         // Case 4: fallback for items array
         else if (data.items && Array.isArray(data.items)) {
-          messages = data.items.map(mapRaw);
+          messages = sortRawMessages(data.items).map(mapRaw);
         }
-
-        // FIXED SORTING: Sort by ID (timestamp-based) in ascending order
-        messages.sort((a, b) => {
-          const aTime = parseInt(a.id) || 0;
-          const bTime = parseInt(b.id) || 0;
-          return aTime - bTime;
-        });
 
         setMessages(messages);
       } catch (err) {
@@ -83,7 +113,7 @@ export const useFetchMessages = () => {
         setIsLoading(false);
       }
     },
-    [setMessages, setIsLoading]
+    [setMessages, setIsLoading],
   );
 
   return { fetchMessages };
