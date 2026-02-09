@@ -80,18 +80,8 @@ export default function ChatWindow() {
     }
   };
 
-  // MERGE MESSAGES (FIXED SORTING)
   const allMessages = useMemo(() => {
-    const merged = [...chatMessages, ...fileMessages];
-
-    // Sort by timestamp (oldest first, newest last)
-    return merged.sort((a, b) => {
-      // Try to parse IDs as timestamps
-      const aTime = a.id === "ai-temp" ? Infinity : parseInt(a.id) || 0;
-      const bTime = b.id === "ai-temp" ? Infinity : parseInt(b.id) || 0;
-
-      return aTime - bTime;
-    });
+    return [...chatMessages, ...fileMessages];
   }, [chatMessages, fileMessages]);
 
   /* -------------------- AUTO SCROLL -------------------- */
