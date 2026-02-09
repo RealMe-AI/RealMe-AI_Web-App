@@ -16,7 +16,7 @@ export type Active = {
 // Raw API message type
 export interface RawMessage {
   id: string;
-  sender: "user" | "assistant" | "assistantMessage";
+  sender: "user" | "assistant" | "assistantMessage" | "ai";
   text?: string;
   content?: string;
   createdAt: string;

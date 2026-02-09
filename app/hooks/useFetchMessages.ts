@@ -30,17 +30,26 @@ export const useFetchMessages = () => {
         let messages: Message[] = [];
 
         // Helper to normalize a raw message - FIXED SENDER MAPPING
+        const isAiSender = (sender: string): boolean => {
+          return (
+            sender === "assistant" ||
+            sender === "assistantMessage" ||
+            sender === "ai"
+          );
+        };
+
         const mapRaw = (m: RawMessage): Message => ({
           id: m.id ?? Date.now().toString(),
-          sender:
-            m.sender === "assistantMessage" || m.sender === "assistant"
-              ? "ai"
-              : "user",
+          // Map to "ai" if sender is any AI variant
+          sender: isAiSender(m.sender)
+            ? "ai"
+            : m.sender === "user"
+              ? "user"
+              : "ai",
           type: "text",
-          text:
-            m.sender === "assistantMessage" || m.sender === "assistant"
-              ? m.content || m.text || ""
-              : m.text || m.content || "",
+          text: isAiSender(m.sender)
+            ? m.content || m.text || ""
+            : m.text || m.content || "",
           time: m.createdAt
             ? new Date(m.createdAt).toLocaleTimeString([], {
                 hour: "2-digit",
