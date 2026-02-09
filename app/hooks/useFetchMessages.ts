@@ -52,29 +52,36 @@ export const useFetchMessages = () => {
               }),
         });
 
+        // Helper to sort raw messages by createdAt before mapping
+        const sortRawMessages = (rawMsgs: RawMessage[]): RawMessage[] => {
+          return [...rawMsgs].sort((a, b) => {
+            const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+            // Oldest first, newest last
+            return aTime - bTime;
+          });
+        };
+
         // Case 1: API returns array directly
         if (Array.isArray(data)) {
-          messages = data.map(mapRaw);
+          messages = sortRawMessages(data).map(mapRaw);
         }
         // Case 2: API returns object with messages array
         else if (data.messages && Array.isArray(data.messages)) {
-          messages = data.messages.map(mapRaw);
+          messages = sortRawMessages(data.messages).map(mapRaw);
         }
         // Case 3: API returns single user + assistant messages
         else if (data.userMessage && data.assistantMessage) {
-          messages = [mapRaw(data.userMessage), mapRaw(data.assistantMessage)];
+          const sorted = sortRawMessages([
+            data.userMessage,
+            data.assistantMessage,
+          ]);
+          messages = sorted.map(mapRaw);
         }
         // Case 4: fallback for items array
         else if (data.items && Array.isArray(data.items)) {
-          messages = data.items.map(mapRaw);
+          messages = sortRawMessages(data.items).map(mapRaw);
         }
-
-        // FIXED SORTING: Sort by ID (timestamp-based) in ascending order
-        messages.sort((a, b) => {
-          const aTime = parseInt(a.id) || 0;
-          const bTime = parseInt(b.id) || 0;
-          return aTime - bTime;
-        });
 
         setMessages(messages);
       } catch (err) {
@@ -83,7 +90,7 @@ export const useFetchMessages = () => {
         setIsLoading(false);
       }
     },
-    [setMessages, setIsLoading]
+    [setMessages, setIsLoading],
   );
 
   return { fetchMessages };
