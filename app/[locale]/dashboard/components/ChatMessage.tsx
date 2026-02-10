@@ -130,54 +130,53 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       className="w-full"
     >
       <div className="max-w-3xl mx-auto px-4 py-2 group">
-        <div className="flex items-start gap-4">
-          {/* Message container with background */}
-          <div
-            className={cn(
-              "flex items-start gap-4 flex-1 min-w-0",
-              isUser &&
-                "bg-slate-100 dark:bg-slate-700/40 py-2 px-4 rounded-2xl",
-            )}
-          >
-            {/* AI Avatar */}
-            {!isUser && (
-              <div className="shrink-0">
-                <Image
-                  src="/logo.png"
-                  alt="RealMe AI"
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 rounded-full border border-white/20"
-                />
-              </div>
-            )}
+        <div
+          className={cn(
+            "flex w-full",
+            isUser ? "justify-end" : "justify-start",
+          )}
+        >
+          <div className="flex flex-col items-end gap-1">
+            {/* MESSAGE BUBBLE */}
+            <div
+              className={cn(
+                "flex gap-3 rounded-2xl px-4 py-2",
+                "wrap-break-words",
+                isUser
+          ? "bg-slate-100 dark:bg-red-700/40 text-slate-900 dark:text-white"
+                  : "text-slate-900 dark:text-white",
+              )}
+            >
+              {/* AI Avatar */}
+              {!isUser && (
+                <div className="shrink-0 mt-0.5">
+                  <Image
+                    src="/logo.png"
+                    alt="RealMe AI"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 rounded-full border border-white/20"
+                  />
+                </div>
+              )}
 
-            {/* Message Content */}
-            <div className="flex-1 min-w-0">
-              <div
-                className={cn(
-                  "text-sm leading-relaxed",
-                  isUser
-                    ? "text-slate-900 dark:text-white"
-                    : "text-slate-900 dark:text-white",
-                )}
-              >
+              {/* Message Content */}
+              <div className="min-w-0">
                 {message.type === "file" && renderFilePreview()}
                 {message.type === "audio" && renderAudioBubble()}
 
                 {message.text && (
-                  <p className="whitespace-pre-wrap">{message.text}</p>
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                    {message.text}
+                  </p>
                 )}
-
-                <span className="block text-[10px] mt-2 opacity-60">
-                  {message.time}
-                </span>
               </div>
+            </div>
 
-              {/* Message Actions - Bottom Positioned */}
-              <div className="mt-2 flex justify-end lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                <MessageActions />
-              </div>
+            {/* META (outside background) */}
+            <div className="flex w-full justify-end text-[10px] opacity-60 px-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+              {/* <span>{message.time}</span> */}
+              <MessageActions />
             </div>
           </div>
         </div>
