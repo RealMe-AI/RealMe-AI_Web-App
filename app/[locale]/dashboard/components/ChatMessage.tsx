@@ -160,7 +160,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                 </div>
               )}
 
-              {/* Message Content */}
+              {/* Message  */}
               <div className="min-w-0">
                 {message.type === "file" && renderFilePreview()}
                 {message.type === "audio" && renderAudioBubble()}
