@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendMessage } from "@/app/hooks/useSendMessage";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
-import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
+import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
+import { cn } from "@/app/lib/utils"
 import { useTranslations } from "next-intl";
 
 import Image from "next/image";
@@ -199,8 +200,8 @@ export default function ChatWindow() {
               data-placeholder="Type a message..."
             />
 
-            {/* Mic or Send */}
-            {input.trim() === "" && pendingFiles.length === 0 ? (
+            {/* Mic or Send/Stop */}
+            {input.trim() === "" && pendingFiles.length === 0 && !isLoading ? (
               <div
                 onClick={() => setShowVoicePopup(true)}
                 className="p-2 rounded-full hover:bg-white/30 
@@ -220,13 +221,23 @@ export default function ChatWindow() {
               </div>
             ) : (
               <button
-                onClick={handleSend}
-                disabled={isLoading}
-                className="p-2 rounded-full bg-indigo-500 hover:bg-indigo-600 
-                           text-white font-medium text-sm transition disabled:opacity-50
-                           disabled:cursor-not-allowed"
+                onClick={
+                  isLoading
+                    ? () => useChatStore.getState().abortMessage()
+                    : handleSend
+                }
+                className={cn(
+                  "p-2 rounded-full transition-all duration-200",
+                  isLoading
+                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
+                    : "bg-indigo-500 hover:bg-indigo-600 text-white",
+                )}
               >
-                {isLoading ? "…" : <ArrowUp size={20} />}
+                {isLoading ? (
+                  <Square size={16} fill="currentColor" />
+                ) : (
+                  <ArrowUp size={20} />
+                )}
               </button>
             )}
           </div>

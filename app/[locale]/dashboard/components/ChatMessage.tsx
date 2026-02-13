@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ChatMessageProps } from "../../../types/type";
-import { cn } from "../../../lib/utils";
+import { cn } from "@/app/lib/utils";
 import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
