@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendMessage } from "@/app/hooks/useSendMessage";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
-import { Plus, Mic, FileIcon, ArrowUp } from "lucide-react";
+import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
+import { cn } from "@/app/lib/utils"
 import { useTranslations } from "next-intl";
 
 import Image from "next/image";
@@ -91,14 +92,11 @@ export default function ChatWindow() {
 
   return (
     <div
-      className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
-                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
+      className=" relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
+                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
     >
       {/* Chat Messages - Centered Container */}
-      <div
-        className="flex-1 pb-4 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300/40 dark:scrollbar-thumb-slate-600/40
-"
-      >
+      <div className="flex-1 pb-4 overflow-y-auto">
         <div className="max-w-3xl mx-auto">
           {allMessages.map((msg) => (
             <ChatMessage key={msg.id} message={msg} />
@@ -120,7 +118,7 @@ export default function ChatWindow() {
       {/* Input Container */}
       <div className="max-w-3xl mx-auto w-full">
         <div
-          className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
+          className={`flex flex-col gap-1 bg-white/90 dark:bg-slate-700/60 
                       rounded-2xl px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
                       dark:border-0 backdrop-blur-xl transition
                       ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
@@ -202,8 +200,8 @@ export default function ChatWindow() {
               data-placeholder="Type a message..."
             />
 
-            {/* Mic or Send */}
-            {input.trim() === "" && pendingFiles.length === 0 ? (
+            {/* Mic or Send/Stop */}
+            {input.trim() === "" && pendingFiles.length === 0 && !isLoading ? (
               <div
                 onClick={() => setShowVoicePopup(true)}
                 className="p-2 rounded-full hover:bg-white/30 
@@ -223,13 +221,23 @@ export default function ChatWindow() {
               </div>
             ) : (
               <button
-                onClick={handleSend}
-                disabled={isLoading}
-                className="p-2 rounded-full bg-indigo-500 hover:bg-indigo-600 
-                           text-white font-medium text-sm transition disabled:opacity-50
-                           disabled:cursor-not-allowed"
+                onClick={
+                  isLoading
+                    ? () => useChatStore.getState().abortMessage()
+                    : handleSend
+                }
+                className={cn(
+                  "p-2 rounded-full transition-all duration-200",
+                  isLoading
+                    ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
+                    : "bg-indigo-500 hover:bg-indigo-600 text-white",
+                )}
               >
-                {isLoading ? "…" : <ArrowUp size={20} />}
+                {isLoading ? (
+                  <Square size={16} fill="currentColor" />
+                ) : (
+                  <ArrowUp size={20} />
+                )}
               </button>
             )}
           </div>

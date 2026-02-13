@@ -5,13 +5,13 @@ import { Search, X, SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Chat } from "@/app/types/type";
+import { useChatStore } from "@/app/zustand/useChatStore";
+import { useChats } from "@/app/hooks/useChats";
 
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../zustand/modalStore";
-import { useChatStore } from "@/app/zustand/useChatStore";
-import { useChats } from "@/app/hooks/useChats";
 
 interface SidebarProps {
   isOpen: boolean;

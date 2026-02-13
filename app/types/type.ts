@@ -72,6 +72,9 @@ export type ChatState = {
   triggerChatsRefresh: () => void;
   inputFocusSignal: number;
   triggerInputFocus: () => void;
+  abortController: AbortController | null;
+  setAbortController: (controller: AbortController | null) => void;
+  abortMessage: () => void;
 };
 
 export type ChatMessageProps = {

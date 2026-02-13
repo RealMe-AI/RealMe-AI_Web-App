@@ -14,6 +14,7 @@ export const useSendMessage = () => {
     updateMessage,
     setIsLoading,
     triggerChatsRefresh,
+    setAbortController,
   } = useChatStore();
 
   const sendMessage = useCallback(
@@ -24,7 +25,7 @@ export const useSendMessage = () => {
       const updateConversationDetails = async (
         conversationId: number,
         lastMessage: string,
-        token: string
+        token: string,
       ) => {
         try {
           const res = await fetch(
@@ -39,7 +40,7 @@ export const useSendMessage = () => {
                 lastMessage,
                 updatedAt: new Date().toISOString(),
               }),
-            }
+            },
           );
 
           if (!res.ok) {
@@ -108,7 +109,10 @@ export const useSendMessage = () => {
 
       // Optimistic update
       addMessage(userMsg);
+      // Add AbortController support
+      const controller = new AbortController();
       setIsLoading(true);
+      setAbortController(controller);
 
       try {
         const res = await fetch(`${baseUrl}/messages`, {
@@ -117,6 +121,7 @@ export const useSendMessage = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          signal: controller.signal,
           body: JSON.stringify({
             conversationId: currentConversationId,
             content,
@@ -161,7 +166,7 @@ export const useSendMessage = () => {
               await updateConversationDetails(
                 currentConversationId,
                 content,
-                token
+                token,
               );
             }
           } else {
@@ -211,13 +216,19 @@ export const useSendMessage = () => {
             await updateConversationDetails(
               currentConversationId,
               content,
-              token
+              token,
             );
           }
         } else {
           throw new Error("No response body received");
         }
-      } catch (err) {
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === "AbortError") {
+          console.log("Chat generation stopped by user");
+          // loading already handled in abortMessage
+          return;
+        }
+
         console.error("Chat error:", err);
         // Add error message to chat
         const errorMsg: Message = {
@@ -232,6 +243,8 @@ export const useSendMessage = () => {
         };
         addMessage(errorMsg);
         setIsLoading(false);
+      } finally {
+        setAbortController(null);
       }
     },
     [
@@ -241,7 +254,8 @@ export const useSendMessage = () => {
       updateMessage,
       setIsLoading,
       triggerChatsRefresh,
-    ]
+      setAbortController
+    ],
   );
 
   return { sendMessage };

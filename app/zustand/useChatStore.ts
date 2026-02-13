@@ -45,4 +45,13 @@ export const useChatStore = create<ChatState>((set) => ({
   inputFocusSignal: 0,
   triggerInputFocus: () =>
     set((state) => ({ inputFocusSignal: state.inputFocusSignal + 1 })),
+  abortController: null,
+  setAbortController: (controller) => set({ abortController: controller }),
+  abortMessage: () =>
+    set((state) => {
+      if (state.abortController) {
+        state.abortController.abort();
+      }
+      return { isLoading: false, abortController: null };
+    }),
 }));
