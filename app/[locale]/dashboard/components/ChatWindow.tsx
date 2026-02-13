@@ -91,7 +91,7 @@ export default function ChatWindow() {
 
   return (
     <div
-      className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
+      className=" relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
     >
       {/* Chat Messages - Centered Container */}
