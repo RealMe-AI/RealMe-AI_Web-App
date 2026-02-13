@@ -16,12 +16,12 @@ export default function Page() {
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
 
   const setActiveConversationId = useChatStore(
-    (s) => s.setActiveConversationId
+    (s) => s.setActiveConversationId,
   );
   const { fetchMessages } = useFetchMessages();
 
   return (
-    <div className="min-h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
+    <div className="h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
       {/* Toggle Button */}
       {!isSidebarOpen && (
         <button
@@ -37,8 +37,8 @@ export default function Page() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
-        className={`flex-1 flex flex-col transition-all duration-500 ${
-          isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl"
+        className={`flex-1 flex flex-col h-full min-h-0 transition-all duration-500 ${
+          isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl w-full"
         } p-2 md:p-6`}
       >
         <ChatWindow />

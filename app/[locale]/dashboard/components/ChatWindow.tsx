@@ -92,7 +92,7 @@ export default function ChatWindow() {
   return (
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
-                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full"
+                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
     >
       {/* Chat Messages - Centered Container */}
       <div
@@ -120,7 +120,7 @@ export default function ChatWindow() {
       {/* Input Container */}
       <div className="max-w-3xl mx-auto w-full">
         <div
-          className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
+          className={`flex flex-col gap-1 bg-white/90 dark:bg-slate-700/60 
                       rounded-2xl px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
                       dark:border-0 backdrop-blur-xl transition
                       ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
