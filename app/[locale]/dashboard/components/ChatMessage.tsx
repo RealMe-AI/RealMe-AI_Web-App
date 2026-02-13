@@ -136,15 +136,19 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             isUser ? "justify-end" : "justify-start",
           )}
         >
-          <div className="flex flex-col items-end gap-1">
+          <div
+            className={cn(
+              "flex flex-col gap-1",
+              isUser ? "items-end" : "items-start",
+            )}
+          >
             {/* MESSAGE BUBBLE */}
             <div
               className={cn(
-                "flex gap-3 rounded-2xl px-4 py-2",
-                "wrap-break-words",
+                "flex gap-3 rounded-2xl px-4 py-2 min-w-0",
                 isUser
-          ? "bg-slate-100 dark:bg-red-700/40 text-slate-900 dark:text-white"
-                  : "text-slate-900 dark:text-white",
+                  ? "max-w-[85%] sm:max-w-[75%] wrap-break-words [word-break:break-word] wrap-anywhere bg-slate-100 dark:bg-slate-700/40 text-slate-900 dark:text-white"
+                  : "w-full text-slate-900 dark:text-white",
               )}
             >
               {/* AI Avatar */}
