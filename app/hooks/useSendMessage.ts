@@ -111,6 +111,7 @@ export const useSendMessage = () => {
       addMessage(userMsg);
       // Add AbortController support
       const controller = new AbortController();
+      setIsLoading(true);
       setAbortController(controller);
 
       try {
@@ -253,6 +254,7 @@ export const useSendMessage = () => {
       updateMessage,
       setIsLoading,
       triggerChatsRefresh,
+      setAbortController
     ],
   );
 
