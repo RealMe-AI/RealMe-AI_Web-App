@@ -122,7 +122,7 @@ export default function ChatWindow() {
         <div
           className={`flex flex-col gap-1 mt-2 bg-white/90 dark:bg-slate-700/60 
                       rounded-2xl px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
-                      dark:border-0 backdrop-blur-xl transition
+                      dark:border-0 backdrop-blur-xl transition min-w-0
                       ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
         >
           {/* Pending Files Preview */}
@@ -195,7 +195,7 @@ export default function ChatWindow() {
                 text-slate-800 dark:text-slate-100
                 min-h-[24px] max-h-[160px]
                 overflow-y-auto
-                wrap-break-words
+                break-words [word-break:break-word] [overflow-wrap:anywhere]
                 whitespace-pre-wrap
                 leading-relaxed
               "
