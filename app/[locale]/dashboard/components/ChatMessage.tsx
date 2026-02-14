@@ -131,7 +131,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     >
       <div className="max-w-3xl mx-auto px-4 py-2 group">
         <div className="flex items-start gap-4">
-          {/* Message container with background */}
+          {/* Message    */}
           <div
             className={cn(
               "flex flex-col gap-1",
@@ -160,7 +160,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                 </div>
               )}
 
-              {/*   */}
+              {/* message  */}
               <div className="min-w-0">
                 {message.type === "file" && renderFilePreview()}
                 {message.type === "audio" && renderAudioBubble()}
