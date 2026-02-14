@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChatMessageProps } from "../../../types/type";
+import { ChatMessageProps } from "@/app/types/type";
 import { cn } from "@/app/lib/utils";
 import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
