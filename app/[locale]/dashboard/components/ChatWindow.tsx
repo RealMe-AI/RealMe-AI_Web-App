@@ -189,7 +189,7 @@ export default function ChatWindow() {
               onBlur={() => setIsFocused(false)}
               onKeyDown={handleKeyDown}
               className="
-                flex-1 outline-none text-sm sm:text-base
+                flex-1 outline-none md:text-sm text-base
                 text-slate-800 dark:text-slate-100
                 min-h-[24px] max-h-[160px]
                 overflow-y-auto
