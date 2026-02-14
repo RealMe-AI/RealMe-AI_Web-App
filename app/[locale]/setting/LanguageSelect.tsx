@@ -32,17 +32,17 @@ export default function LanguageSelect() {
   };
 
   return (
-    <CustomSelect
-      label={""}
-      options={[
-        { label: t("settings.language.english"), value: "en" },
-        { label: t("settings.language.hausa"), value: "ha" },
-        { label: t("settings.language.igbo"), value: "ig" },
-        { label: t("settings.language.yoruba"), value: "yo" },
-      ]}
-      value={currentLocale}
-      onChange={handleChange}
+      <CustomSelect
+        label={""}
+        options={[
+          { label: t("settings.language.english"), value: "en" },
+          { label: t("settings.language.hausa"), value: "ha" },
+          { label: t("settings.language.igbo"), value: "ig" },
+          { label: t("settings.language.yoruba"), value: "yo" },
+        ]}
+        value={currentLocale}
+        onChange={handleChange}
       icon={""}
-    />
+      />
   );
 }

@@ -39,7 +39,7 @@ export default function ProfileFooter() {
   });
 
   return (
-    <div className="relative mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4">
+    <div className="relative">
       {/* Profile Header */}
       <div
         onClick={() => (isProfileOpen ? closeAll() : openProfile())}
@@ -50,14 +50,14 @@ export default function ProfileFooter() {
           key={avatarSrc}
           src={avatarSrc}
           alt={t("account_info.avatar_alt")}
-          width={50}
-          height={50}
+          width={44}
+          height={44}
           unoptimized
           priority
-          className="w-10 h-10 rounded-full border border-white/20 object-cover"
+          className="w-11 h-11 rounded-full border border-white/20 object-cover"
         />
-        <div>
-          <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
+        <div className="min-w-0">
+          <p className="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">
             {user?.fullName || "—"}
           </p>
           <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -75,8 +75,8 @@ export default function ProfileFooter() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 left-0 w-full bg-white/60 dark:bg-slate-800/90 
-                       backdrop-blur-xl shadow-lg rounded-xl p-2"
+            className="absolute bottom-16 left-0 w-64 bg-white/60 dark:bg-slate-800/90 
+                       backdrop-blur-xl shadow-lg rounded-xl p-2 z-50"
           >
             <button
               onClick={openAccountInfo}
@@ -114,11 +114,6 @@ export default function ProfileFooter() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Footer Text */}
-      <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-3">
-        {t("dashboard.sidebar.footer_full")} OwenVisuels
-      </p>
 
       {/* Account Info Modal */}
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />

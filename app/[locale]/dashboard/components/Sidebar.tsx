@@ -8,6 +8,7 @@ import { Chat } from "@/app/types/type";
 import { useChatStore } from "@/app/zustand/useChatStore";
 import { useChats } from "@/app/hooks/useChats";
 
+import LanguageSelect from "./../../setting/LanguageSelect";
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
@@ -194,7 +195,18 @@ export default function Sidebar({
               )}
             </div>
 
-            <ProfileFooter />
+            {/* Footer Area */}
+            <div className="mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
+              <ProfileFooter />
+              <div className="shrink-0">
+                <LanguageSelect />
+              </div>
+            </div>
+
+            {/* Credits */}
+            <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-4">
+              {t("dashboard.sidebar.footer_full")} OwenVisuels
+            </p>
           </motion.div>
         </>
       )}

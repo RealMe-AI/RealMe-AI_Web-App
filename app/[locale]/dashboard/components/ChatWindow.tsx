@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useChatStore } from "../../../zustand/useChatStore";
+import { useChatStore } from "@/app/zustand/useChatStore";
 import { useSendMessage } from "@/app/hooks/useSendMessage";
-import { useSendFileMessage } from "../../../zustand/sendFileMessage";
+import { useSendFileMessage } from "@/app/zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
