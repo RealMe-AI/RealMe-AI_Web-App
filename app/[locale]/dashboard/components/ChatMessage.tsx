@@ -177,7 +177,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               </div>
             </div>
 
-            {/* META (outside background) */}
             <div className="flex w-full justify-end text-[10px] opacity-60 px-1 max-md:hidden lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
               {/* <span>{message.time}</span> */}
               <MessageActions />
