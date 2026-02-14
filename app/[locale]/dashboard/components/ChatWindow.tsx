@@ -5,7 +5,7 @@ import { useChatStore } from "../../../zustand/useChatStore";
 import { useSendMessage } from "@/app/hooks/useSendMessage";
 import { useSendFileMessage } from "../../../zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
 
 import Image from "next/image";
@@ -75,7 +75,7 @@ export default function ChatWindow() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const isSmallScreen = window.innerWidth < 768;
-    if (e.key === "Enter" && (!e.shiftKey || isSmallScreen)) {
+    if (e.key === "Enter" && !isSmallScreen && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
