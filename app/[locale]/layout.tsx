@@ -4,7 +4,8 @@ import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "../theme-provider/theme-provider";
 import { getStructuredData } from "../seo/structuredData";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { StatusBarHandler } from "./components/StatusBarHandler";
 
 import StructuredData from "./components/StructuredData";
 
@@ -27,7 +28,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
-  const { locale } = await params; 
+  const { locale } = await params;
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const pathname = locale === "en" ? "" : `/${locale}`;
@@ -90,7 +91,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale: localeString } = await params;
-  const locale = localeString as Locale; 
+  const locale = localeString as Locale;
 
   let messages: Messages;
   try {
@@ -109,6 +110,7 @@ export default async function LocaleLayout({
         <StructuredData data={{ "@graph": structuredData }} />
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <StatusBarHandler />
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>
