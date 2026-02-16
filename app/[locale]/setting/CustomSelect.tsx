@@ -12,6 +12,7 @@ import { Check, ChevronDown } from "lucide-react";
 
 interface Option {
   label: string;
+  shortLabel?: string;
   value: string;
 }
 
@@ -40,13 +41,13 @@ export default function CustomSelect({
       <Listbox value={value} onChange={onChange}>
         <div className="relative">
           <ListboxButton
-            className="relative w-30 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
-                       border border-slate-300 dark:border-slate-600 py-2 pl-3 pr-10 text-left
+            className="relative w-16 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
+                       border border-slate-300 dark:border-slate-600 py-1.5 pl-2 pr-6 text-left
                        shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
                        focus:ring-opacity-50"
           >
             <span className="block truncate text-slate-800 dark:text-slate-100">
-              {selected?.label}
+              {selected?.shortLabel || selected?.label}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDown className="w-4 h-4 text-slate-500 dark:text-slate-300" />
@@ -60,7 +61,7 @@ export default function CustomSelect({
             leaveTo="opacity-0"
           >
             <ListboxOptions
-              className="absolute mt-1 max-h-60 w-30 overflow-auto rounded-md 
+              className="absolute bottom-full right-0 mb-1 max-h-60 w-32 overflow-auto rounded-md 
                          bg-white dark:bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black/10 dark:ring-white/20
                          focus:outline-none sm:text-sm z-50"
             >
