@@ -43,8 +43,7 @@ export default function CustomSelect({
           <ListboxButton
             className="relative w-16 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
                        border border-slate-300 dark:border-slate-600 py-1.5 pl-2 pr-6 text-left
-                       shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
-                       focus:ring-opacity-50"
+                       shadow-sm focus:outline-none focus:ring-2 focus:ring-opacity-50"
           >
             <span className="block truncate text-slate-800 dark:text-slate-100">
               {selected?.shortLabel || selected?.label}
