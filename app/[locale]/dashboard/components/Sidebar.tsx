@@ -196,7 +196,7 @@ export default function Sidebar({
             </div>
 
             {/* Footer Area */}
-            <div className="mt-4 border-t border-white/20 dark:border-slate-700/40 pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="border-t border-white/20 dark:border-slate-700/40 flex items-center justify-between gap-2">
               <ProfileFooter />
               <div className="shrink-0">
                 <LanguageSelect />
@@ -204,7 +204,7 @@ export default function Sidebar({
             </div>
 
             {/* Credits */}
-            <p className="text-[10px] text-center text-slate-500 dark:text-slate-500 mt-4">
+            <p className="text-[10px] text-center text-slate-500 dark:text-slate-500">
               {t("dashboard.sidebar.footer_full")} OwenVisuels
             </p>
           </motion.div>

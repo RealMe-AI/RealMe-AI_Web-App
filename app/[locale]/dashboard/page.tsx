@@ -37,7 +37,7 @@ export default function Page() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4 }}
-        className={`flex-1 flex flex-col h-full min-h-0 transition-all duration-500 caret-transparent ${
+        className={`flex-1 flex flex-col h-full min-h-0 transition-all duration-500 ${
           isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl w-full"
         } p-2 md:p-6`}
       >

@@ -60,7 +60,7 @@ export default function ProfileFooter() {
           <p className="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">
             {user?.fullName || "—"}
           </p>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-[10px] text-slate-500 dark:text-slate-400">
             {t("account_info.signed_in_with")}{" "}
             {user?.provider ? t(user.provider) : "—"}
           </p>
