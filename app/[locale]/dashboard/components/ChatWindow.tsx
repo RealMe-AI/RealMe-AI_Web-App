@@ -109,20 +109,20 @@ export default function ChatWindow() {
                 transition={{ duration: 0.5 }}
                 className="text-center"
               >
-                <div className="mb-1 flex items-center justify-center">
+                <div className="mb-1 flex items-center justify-center gap-3">
                     <Image
                         src="/logo.png"
                         alt="RealMe AI"
-                        width={44}
-                        height={44}
-                        className="w-11 h-11 rounded-full border border-white/20 object-cover"
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 rounded-full border border-white/20 object-cover"
                       />
-                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
+                <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
                   Hi, {user?.fullName || "there"}
                 </h1>
                 </div>
-                <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium">
-                  I&apos;m RealMe
+                <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                  I&apos;m RealMe, your AI assistant. How can I help you today?
                 </p>
               </motion.div>
             </div>
