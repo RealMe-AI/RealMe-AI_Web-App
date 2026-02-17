@@ -195,7 +195,7 @@ export default function Sidebar({
               )}
             </div>
 
-            {/*   */}
+            {/*  Area */}
             <div className="border-t border-white/20 dark:border-slate-700/40 flex items-center justify-between gap-2">
               <ProfileFooter />
               <div className="shrink-0">
