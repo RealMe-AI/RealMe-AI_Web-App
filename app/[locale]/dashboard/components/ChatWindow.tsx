@@ -109,22 +109,18 @@ export default function ChatWindow() {
                 transition={{ duration: 0.5 }}
                 className="text-center"
               >
-                <div className="mb-6 flex justify-center">
-                  <div className="relative w-20 h-20 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 p-1 shadow-2xl">
-                    <div className="w-full h-full rounded-full bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden">
-                      <Image
+                <div className="mb-1 flex items-center justify-center">
+                    <Image
                         src="/logo.png"
                         alt="RealMe AI"
-                        width={60}
-                        height={60}
-                        className="object-contain"
+                        width={44}
+                        height={44}
+                        className="w-11 h-11 rounded-full border border-white/20 object-cover"
                       />
-                    </div>
-                  </div>
-                </div>
                 <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
                   Hi, {user?.fullName || "there"}
                 </h1>
+                </div>
                 <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium">
                   I&apos;m RealMe
                 </p>
