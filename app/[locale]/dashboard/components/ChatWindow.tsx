@@ -7,6 +7,8 @@ import { useSendFileMessage } from "@/app/zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
+import { useUserStore } from "@/app/zustand/useUserStore";
 
 import Image from "next/image";
 import ChatMessage from "./ChatMessage";
@@ -15,6 +17,7 @@ import FileUploadPopup from "./FileUploadPopup";
 
 export default function ChatWindow() {
   const t = useTranslations();
+  const { user } = useUserStore();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -96,11 +99,40 @@ export default function ChatWindow() {
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
     >
       {/* Chat Messages - Centered Container */}
-      <div className="flex-1 pb-4 overflow-y-auto caret-transparent">
-        <div className="max-w-3xl mx-auto">
-          {allMessages.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} />
-          ))}
+      <div className="flex-1 pb-4 overflow-y-auto caret-transparent relative">
+        <div className="max-w-3xl mx-auto h-full">
+          {allMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
+                <div className="mb-6 flex justify-center">
+                  <div className="relative w-20 h-20 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 p-1 shadow-2xl">
+                    <div className="w-full h-full rounded-full bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="/logo.png"
+                        alt="RealMe AI"
+                        width={60}
+                        height={60}
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
+                  Hi, {user?.fullName || "there"}
+                </h1>
+                <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium">
+                  I&apos;m RealMe
+                </p>
+              </motion.div>
+            </div>
+          ) : (
+            allMessages.map((msg) => <ChatMessage key={msg.id} message={msg} />)
+          )}
 
           <div ref={messagesEndRef} />
         </div>
