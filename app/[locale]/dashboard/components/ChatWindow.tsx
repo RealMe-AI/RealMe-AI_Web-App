@@ -7,6 +7,8 @@ import { useSendFileMessage } from "@/app/zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
+import { useUserStore } from "@/app/zustand/useUserStore";
 
 import Image from "next/image";
 import ChatMessage from "./ChatMessage";
@@ -15,6 +17,7 @@ import FileUploadPopup from "./FileUploadPopup";
 
 export default function ChatWindow() {
   const t = useTranslations();
+  const { user } = useUserStore();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -96,11 +99,36 @@ export default function ChatWindow() {
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
     >
       {/* Chat Messages - Centered Container */}
-      <div className="flex-1 pb-4 overflow-y-auto caret-transparent">
-        <div className="max-w-3xl mx-auto">
-          {allMessages.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} />
-          ))}
+      <div className="flex-1 pb-4 overflow-y-auto caret-transparent relative">
+        <div className="max-w-3xl mx-auto h-full">
+          {allMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
+                <div className="mb-1 flex items-center justify-center gap-3">
+                  <Image
+                    src="/logo.png"
+                    alt="RealMe AI"
+                    width={35}
+                    height={35}
+                    className="w-8 h-8 rounded-full border border-white/20 object-cover"
+                  />
+                  <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
+                    Hi, {user?.fullName?.split(" ")[0] || "there"}
+                  </h1>
+                </div>
+                <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                  I&apos;m RealMe, your AI assistant. How can I help you today?
+                </p>
+              </motion.div>
+            </div>
+          ) : (
+            allMessages.map((msg) => <ChatMessage key={msg.id} message={msg} />)
+          )}
 
           <div ref={messagesEndRef} />
         </div>
