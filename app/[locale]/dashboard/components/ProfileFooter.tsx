@@ -45,7 +45,7 @@ export default function ProfileFooter() {
       <div
         onClick={() => (isProfileOpen ? closeAll() : openProfile())}
         className={cn(
-          "flex items-center gap-3 p-2 md:w-48 rounded-lg hover:bg-white/30 dark:hover:bg-slate-700/40 cursor-pointer caret-transparent transition",
+          "flex items-center gap-3 p-2 md:w-48 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/40 cursor-pointer caret-transparent transition",
           !user && "animate-pulse",
         )}
       >
