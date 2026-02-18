@@ -98,7 +98,7 @@ export default function ChatWindow() {
       className=" relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
     >
-      {/* Chat Messages - Centered  */}
+      {/* Chat Messages -   */}
       <div className="flex-1 pb-4 overflow-y-auto caret-transparent relative">
         <div className="max-w-3xl mx-auto h-full">
           {allMessages.length === 0 ? (
