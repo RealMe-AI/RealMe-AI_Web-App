@@ -194,12 +194,12 @@ export default function ChatWindow() {
           )}
 
           {/* Input Row */}
-          <div className="flex items-end gap-2 w-full">
+          <div className="flex items-center gap-2 w-full">
             {/* Upload Button */}
             <div
               onClick={() => setShowUploadPopup(true)}
-              className="mr-2 p-1 rounded-full hover:bg-white/30 
-                         dark:hover:bg-slate-600/30 relative cursor-pointer"
+              className="rounded-full hover:bg-white/30 
+                         dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
               <Plus size={22} className="text-indigo-500 dark:text-white/40" />
               {showUploadPopup && (
@@ -208,32 +208,38 @@ export default function ChatWindow() {
             </div>
 
             {/* Text Input */}
-            <div
-              ref={inputRef}
-              contentEditable
-              suppressContentEditableWarning
-              onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              onKeyDown={handleKeyDown}
-              className="
-                flex-1 outline-none md:text-sm text-base
-                text-slate-800 dark:text-slate-100
-                min-h-[24px] max-h-[160px]
-                overflow-y-auto
-                wrap-break-words [word-break:break-word] wrap-anywhere
-                whitespace-pre-wrap
-                leading-relaxed
-              "
-              data-placeholder="Type a message..."
-            />
+            <div className="flex-1 relative">
+              {!input && (
+                <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
+                  Type a message...
+                </div>
+              )}
+              <div
+                ref={inputRef}
+                contentEditable
+                suppressContentEditableWarning
+                onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                onKeyDown={handleKeyDown}
+                className="
+                  w-full outline-none md:text-sm text-base
+                  text-slate-800 dark:text-slate-100
+                  min-h-[24px] max-h-[160px]
+                  overflow-y-auto
+                  wrap-break-words [word-break:break-word] wrap-anywhere
+                  whitespace-pre-wrap
+                  leading-relaxed
+                "
+              />
+            </div>
 
             {/* Mic or Send/Stop */}
             {input.trim() === "" && pendingFiles.length === 0 && !isLoading ? (
               <div
                 onClick={() => setShowVoicePopup(true)}
-                className="p-2 rounded-full hover:bg-white/30 
-                           dark:hover:bg-slate-600/30 relative cursor-pointer"
+                className="rounded-full hover:bg-white/30 
+                           dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
               >
                 <Mic size={20} className="text-indigo-500 dark:text-white/40" />
                 {showVoicePopup && (
@@ -255,7 +261,7 @@ export default function ChatWindow() {
                     : handleSend
                 }
                 className={cn(
-                  "p-2 rounded-full transition-all duration-200",
+                  "flex items-center justify-center shrink-0 w-8 h-8 rounded-full transition-all duration-200",
                   isLoading
                     ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
                     : "bg-indigo-500 hover:bg-indigo-600 text-white",
