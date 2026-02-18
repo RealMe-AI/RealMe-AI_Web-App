@@ -141,7 +141,7 @@ export default function Sidebar({
                   px-2 py-1.5 rounded-lg
                   text-slate-700 hover:bg-slate-100
                   dark:text-white dark:hover:bg-slate-500
-                  transition
+                  transition caret-transparent
                 "
               >
                 <SquarePen size={13} />
@@ -178,7 +178,7 @@ export default function Sidebar({
             )}
 
             {/* Chat List */}
-            <div className="flex-1 overflow-y-auto space-y-3">
+            <div className="flex-1 overflow-y-auto space-y-3 caret-transparent">
               {filteredChats.length ? (
                 filteredChats.map((chat) => (
                   <SidebarItem
@@ -189,7 +189,7 @@ export default function Sidebar({
                   />
                 ))
               ) : (
-                <p className="text-sm text-slate-500 italic text-center">
+                <p className="text-sm text-slate-500 italic text-center caret-transparent">
                   {t("dashboard.search.no_chat")}
                 </p>
               )}

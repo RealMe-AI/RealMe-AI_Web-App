@@ -130,7 +130,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       className="w-full"
     >
       <div className="max-w-3xl mx-auto px-4 py-2 group">
-        <div className="flex items-start gap-4">
+        <div className={cn("flex items-start gap-4", isUser && "justify-end")}>
           {/* Message */}
           <div
             className={cn(
@@ -173,7 +173,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               </div>
             </div>
 
-            <div className="flex w-full justify-end text-[10px] opacity-60 px-1 max-md:hidden lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+            <div className=" text-[10px] opacity-60 px-1 max-md:hidden lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
               {/* <span>{message.time}</span> */}
               <MessageActions />
             </div>
