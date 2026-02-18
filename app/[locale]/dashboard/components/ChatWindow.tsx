@@ -147,7 +147,7 @@ export default function ChatWindow() {
       <div className="max-w-3xl mx-auto w-full">
         <div
           className={`flex flex-col gap-1 bg-white/90 dark:bg-slate-700/60 
-                      rounded-2xl px-3 py-2 sm:px-4 sm:py-3 border border-slate-300 
+                      rounded-2xl px-3 py-1 sm:py-2 border border-slate-300 
                       dark:border-0 backdrop-blur-xl transition
                       ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
         >
