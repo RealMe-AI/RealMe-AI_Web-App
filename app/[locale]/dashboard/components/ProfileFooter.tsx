@@ -5,6 +5,7 @@ import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useTranslate } from "../../../hooks/useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { useUserProfile } from "../../account/useUserProfile";
+import { cn } from "@/app/lib/utils";
 
 import Image from "next/image";
 import AccountInfoModal from "./../../account/AccountInfoModal";
@@ -43,8 +44,10 @@ export default function ProfileFooter() {
       {/* Profile Header */}
       <div
         onClick={() => (isProfileOpen ? closeAll() : openProfile())}
-        className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/30 
-                   dark:hover:bg-slate-700/40 cursor-pointer transition"
+        className={cn(
+          "flex items-center gap-3 p-2 md:w-48 rounded-lg hover:bg-white/30 dark:hover:bg-slate-700/40 cursor-pointer transition",
+          !user && "animate-pulse",
+        )}
       >
         <Image
           key={avatarSrc}
@@ -53,16 +56,24 @@ export default function ProfileFooter() {
           width={44}
           height={44}
           unoptimized
-          priority
+          loading="lazy"
           className="w-11 h-11 rounded-full border border-white/20 object-cover"
         />
         <div className="min-w-0">
           <p className="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">
-            {user?.fullName || "—"}
+            {user?.fullName || (
+              <span className="inline-block w-24 h-4 bg-slate-200 dark:bg-slate-700/60 rounded" />
+            )}
           </p>
           <p className="text-[10px] text-slate-500 dark:text-slate-400">
-            {t("account_info.signed_in_with")}{" "}
-            {user?.provider ? t(user.provider) : "—"}
+            {user ? (
+              <>
+                {t("account_info.signed_in_with")}{" "}
+                {user?.provider ? t(user.provider) : "—"}
+              </>
+            ) : (
+              <span className="inline-block w-16 h-3 bg-slate-200/60 dark:bg-slate-700/40 rounded mt-1" />
+            )}
           </p>
         </div>
       </div>
