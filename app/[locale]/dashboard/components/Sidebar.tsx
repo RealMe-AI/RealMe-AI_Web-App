@@ -124,11 +124,11 @@ export default function Sidebar({
               </button>
 
               <Image
-                src="/"
+                src="/logo.png"
                 alt="RealMe AI"
                 width={32}
                 height={32}
-                className="rounded-full border border-white/20"
+                className="rounded-full border border-gray-300 dark:border-white/20"
               />
             </div>
 

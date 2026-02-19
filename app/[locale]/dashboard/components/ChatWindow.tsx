@@ -115,7 +115,7 @@ export default function ChatWindow() {
                     alt="RealMe AI"
                     width={35}
                     height={35}
-                    className="w-8 h-8 rounded-full border border-white/20 object-cover"
+                    className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
                   />
                   <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
                     Hi, {user?.fullName?.split(" ")[0] || "there"}
