@@ -49,11 +49,10 @@ export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
                   key={item.key}
                   href={item.href}
                   className="
-      font-semibold 
-      text-slate-800 dark:text-gray-300 
-      hover:text-indigo-500 
-      transition-colors
-    "
+                  font-semibold 
+                  text-slate-800 dark:text-gray-300 
+                  hover:text-indigo-500 
+                  transition-colors"
                 >
                   {t(item.key)}
                 </Link>
