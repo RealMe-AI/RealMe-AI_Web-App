@@ -20,11 +20,10 @@ export default function DesktopNav() {
           key={item.key}
           href={item.href}
           className="
-      font-semibold 
-      text-slate-800 dark:text-gray-300 
-      hover:text-indigo-500 
-      transition-colors
-    "
+          font-semibold 
+          text-slate-800 dark:text-gray-300 
+          hover:text-indigo-500 
+          transition-colors"
         >
           {tNav(item.key)}
         </Link>
