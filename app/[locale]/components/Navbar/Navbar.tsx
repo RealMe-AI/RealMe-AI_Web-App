@@ -2,10 +2,12 @@
 
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
-import { useBackdrop } from "../../../hooks/useBackdrop";
-import { useThemeStore } from "../../../zustand/useThemeStore";
-import { Props } from "../../../types/type";
+import { useBackdrop } from "@/app/hooks/useBackdrop";
+import { useThemeStore } from "@/app/zustand/useThemeStore";
+import { Props } from "@/app/types/type";
 import { Link } from "@/i18n/routing";
+
+import Image from "next/image";
 
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
@@ -18,17 +20,19 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="font-bold text-lg">
-          RealMe AI
+        <Link href="/" className="flex items-center ">
+          <Image
+            src="/logo.png"
+            alt="RealMe AI Logo"
+            width={44}
+            height={44}
+            className="w-10 h-10"
+          />
+          <span className="font-bold text-sm hidden md:block text-slate-800 dark:text-gray-300">
+            RealMe AI
+          </span>
         </Link>
-        {/* 🧪 Dev shortcut to Dashboard (NOT translated) */}
-                {/* <Link
-                  href="/dashboard"
-                  className="px-6 py-3 rounded-xl bg-slate-700 text-white hover:bg-slate-800 transition"
-                >
-                  Go to Dashboard (Dev Only)
-                </Link> */}
-        
+
         <div className="flex items-center gap-6">
           {/* Desktop Nav */}
           <DesktopNav />

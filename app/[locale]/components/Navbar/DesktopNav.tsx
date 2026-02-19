@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { navItems } from "../../../data/NavData";
+import { navItems } from "@/app/data/NavData";
 import { Link } from "@/i18n/routing";
 
-import useNavigateToAuth from "../../../hooks/useNavigateToAuth";
+import useNavigateToAuth from "@/app/hooks/useNavigateToAuth";
 
 export default function DesktopNav() {
   const goToAuth = useNavigateToAuth();
