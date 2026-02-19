@@ -130,10 +130,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       className="w-full"
     >
       <div className="max-w-3xl mx-auto px-4 py-2 group">
-        <div className="flex items-start gap-4">
+        <div className={cn("flex items-start gap-4", isUser && "justify-end")}>
           {/* Message */}
-          <div
-            className={cn(
+          <div className={cn(
               "flex flex-col gap-1",
               isUser ? "items-end" : "items-start",
             )}
@@ -141,9 +140,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             {/* MESSAGE BUBBLE */}
             <div
               className={cn(
-                "flex gap-3 rounded-2xl px-4 py-2 min-w-0 select-text outline-none focus:ring-0 caret-transparent",
+                "flex gap-3 items-center rounded-2xl px-4 min-w-0 select-text outline-none focus:ring-0 caret-transparent",
                 isUser
-                  ? " max-w-[85%] sm:max-w-[75%] wrap-break-words [word-break:break-word] wrap-anywhere bg-slate-100 dark:bg-slate-700/40 text-slate-900 dark:text-white"
+                  ? "py-2 max-w-[85%] sm:max-w-[75%] wrap-break-words [word-break:break-word] wrap-anywhere bg-slate-100 dark:bg-slate-700/40 text-slate-900 dark:text-white"
                   : "w-full text-slate-900 dark:text-white",
               )}
             >
