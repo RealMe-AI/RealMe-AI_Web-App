@@ -12,7 +12,7 @@ export default function CTAButtons() {
   return (
     <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
 
-      {/* Primary CTA */}
+      {/* Primary  */}
       <div className="flex flex-col items-center sm:flex-row gap-4">
 
       <motion.div
