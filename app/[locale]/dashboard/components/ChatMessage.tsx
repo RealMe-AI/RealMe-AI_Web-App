@@ -131,7 +131,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     >
       <div className="max-w-3xl mx-auto px-4 py-2 group">
         <div className={cn("flex items-start gap-4", isUser && "justify-end")}>
-          {/* Message */}
+          {/*  */}
           <div className={cn(
               "flex flex-col gap-1",
               isUser ? "items-end" : "items-start",
