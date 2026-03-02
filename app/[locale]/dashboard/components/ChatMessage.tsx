@@ -137,7 +137,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               isUser ? "items-end" : "items-start",
             )}
           >
-            {/*   */}
+            {/*  */}
             <div
               className={cn(
                 "flex gap-3 rounded-2xl px-4 min-w-0 select-text outline-none focus:ring-0 caret-transparent",
