@@ -7,7 +7,7 @@ export function useChats() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Listen to global refresh 
+  // Listen to global  
   const refreshSignal = useChatStore((s) => s.chatsRefreshSignal);
 
   const fetchChats = useCallback(async () => {
