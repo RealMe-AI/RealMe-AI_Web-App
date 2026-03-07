@@ -11,7 +11,7 @@ export const useFetchMessages = () => {
   const fetchMessages = useCallback(
     async (conversationId: number) => {
       setIsLoading(true);
-      useChatStore.setState({ activeConversationId: conversationId }); // Update directly or use setter if available
+      useChatStore.setState({ activeConversationId: conversationId }); // Update directly or use setter if 
       const token = localStorage.getItem("accessToken");
       if (!token) {
         console.error("No access token found");
