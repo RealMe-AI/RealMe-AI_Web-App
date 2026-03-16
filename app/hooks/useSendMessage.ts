@@ -6,7 +6,7 @@ import { useChatStore } from "../zustand/useChatStore";
 import { Message, MessageResponse } from "../types/type";
 
 export const useSendMessage = () => {
-  /* STORES  */
+  /* STORES */
   const {
     activeConversationId,
     setActiveConversationId,
