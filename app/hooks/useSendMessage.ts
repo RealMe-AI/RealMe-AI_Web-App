@@ -6,7 +6,7 @@ import { useChatStore } from "../zustand/useChatStore";
 import { Message, MessageResponse } from "../types/type";
 
 export const useSendMessage = () => {
-  /*  STORES  */
+  /* STORES  */
   const {
     activeConversationId,
     setActiveConversationId,
@@ -19,7 +19,7 @@ export const useSendMessage = () => {
 
   const sendMessage = useCallback(
     async (content: string) => {
-      if (!content.trim()) return;
+      if (!content.trim()) return;  
 
       // Helper function to update conversation
       const updateConversationDetails = async (
