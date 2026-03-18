@@ -21,7 +21,7 @@ export const useSendMessage = () => {
     async (content: string) => {
       if (!content.trim()) return;  
 
-      // Helper function to update conv
+      // Helper function to update conve
       const updateConversationDetails = async (
         conversationId: number,
         lastMessage: string,
