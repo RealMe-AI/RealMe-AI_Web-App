@@ -41,7 +41,7 @@ export default function useResetPassword() {
 
   // Focus first OTP input on mount (can be triggered by parent effect if needed, but handled in component usually)
 
-  // OTP Handl
+  // OTP Handle
   const handleOtpChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
 
