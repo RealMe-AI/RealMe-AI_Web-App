@@ -31,7 +31,7 @@ export default function useResetPassword() {
   };
   const strengthScore = Object.values(checks).filter(Boolean).length;
 
-  // Timer Logic
+  // Timer Logi
   useEffect(() => {
     if (resendTimer > 0) {
       const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
