@@ -21,7 +21,7 @@ export default function useResetPassword() {
   const canResend = resendTimer === 0;
   const isOtpComplete = otp.every((digit) => digit !== "");
 
-  // Password Strengt
+  // Password Streng
   const checks = {
     length: password.length >= 8,
     uppercase: /[A-Z]/.test(password),
