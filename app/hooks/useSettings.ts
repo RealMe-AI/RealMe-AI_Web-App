@@ -45,7 +45,7 @@ export function useSettings() {
     return typeof window !== "undefined";
   });
 
-  // Persist preferences
+  // Persist preferences - only after initial load to prevent overwriting
   useEffect(() => {
     if (!isInitialized) return;
 
