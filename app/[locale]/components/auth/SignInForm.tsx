@@ -43,8 +43,8 @@ export default function SignInForm() {
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
           className="w-full pl-10 pr-4 py-3 rounded-lg text-white bg-slate-700/50
-            border border-gray-200 dark:border-slate-600 placeholder-gray-500
-            dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
+            border border-gray-200 dark:border-slate-600 placeholder-slate-300
+            focus:ring-2 focus:ring-indigo-400 outline-none"
           aria-invalid={!!fieldErrors.identifier}
         />
 
@@ -73,8 +73,8 @@ export default function SignInForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full pl-10 pr-10 py-3 rounded-lg text-white bg-slate-700/50
-            border border-gray-200 dark:border-slate-600 placeholder-gray-500
-            dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 outline-none"
+            border border-gray-200 dark:border-slate-600 placeholder-slate-300
+            focus:ring-2 focus:ring-indigo-400 outline-none"
         />
 
         <button

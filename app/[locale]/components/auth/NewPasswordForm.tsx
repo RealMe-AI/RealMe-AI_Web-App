@@ -156,7 +156,7 @@ export default function NewPasswordForm({
             {/* Requirements Checklist */}
             <div className="grid grid-cols-2 gap-2 text-xs">
               {[
-                { key: "length", label: "8+ characters" },
+                { key: "length", label: "6+ characters" },
                 { key: "uppercase", label: "Uppercase letter" },
                 { key: "lowercase", label: "Lowercase letter" },
                 { key: "number", label: "Number" },

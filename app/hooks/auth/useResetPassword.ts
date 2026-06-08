@@ -23,7 +23,7 @@ export default function useResetPassword() {
 
   // Password Strength
   const checks = {
-    length: password.length >= 8,
+    length: password.length >= 6,
     uppercase: /[A-Z]/.test(password),
     lowercase: /[a-z]/.test(password),
     number: /\d/.test(password),
