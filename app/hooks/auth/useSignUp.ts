@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslate } from "./useTranslate";
+import { useTranslate } from "../useTranslate";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";

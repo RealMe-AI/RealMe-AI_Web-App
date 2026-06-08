@@ -7,7 +7,7 @@ import {
   EyeOff,
   CheckCircle,
   ShieldCheck,
-  } from "lucide-react";
+} from "lucide-react";
 
 interface NewPasswordFormProps {
   password: string;

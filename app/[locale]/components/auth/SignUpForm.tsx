@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { UserPlus, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
-import useSignUp from "../../../hooks/useSignUp";
+import useSignUp from "@/app/hooks/auth/useSignUp";
 import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function SignUpForm() {

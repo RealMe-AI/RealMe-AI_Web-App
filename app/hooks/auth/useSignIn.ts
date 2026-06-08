@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslate } from "./useTranslate";
+import { useTranslate } from "../useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 

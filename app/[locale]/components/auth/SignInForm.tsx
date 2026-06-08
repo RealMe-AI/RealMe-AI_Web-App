@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import useSignIn from "../../../hooks/useSignIn";
+import useSignIn from "@/app/hooks/auth/useSignIn";
 import GoogleAuthButton from "./GoogleAuthButton";
 
 export default function SignInForm() {
