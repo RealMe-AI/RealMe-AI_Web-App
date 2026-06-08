@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Send, ArrowLeft, Sparkles } from "lucide-react";
+import { Mail, Send, ArrowLeft } from "lucide-react";
 
 interface ForgotPasswordEmailProps {
   email: string;
@@ -35,11 +35,13 @@ export default function ForgotPasswordEmail({
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="inline-flex items-center justify-center w-16 h-16 rounded-full 
-                     bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 shadow-lg shadow-indigo-500/30"
+                     bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white mb-4 shadow-lg shadow-indigo-500/30"
         >
           <Mail className="w-8 h-8 text-white" />
         </motion.div>
-        <h2 className="text-2xl font-bold text-white mb-2">Reset Password</h2>
+        <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
+          Reset Password
+        </h2>
         <p className="text-slate-400 text-sm">
           Enter your email address and we&apos;ll send you a verification code
         </p>
@@ -54,29 +56,19 @@ export default function ForgotPasswordEmail({
       >
         {/* Email Input */}
         <div className="relative group">
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 
-                         rounded-xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"
-          />
-
           <div className="relative">
-            <Mail
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 
-                            group-focus-within:text-indigo-400 transition-colors"
-            />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type="email"
               placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 rounded-xl text-white bg-slate-800/60 
-                        backdrop-blur-sm border border-slate-700/50 placeholder-slate-500
-                        focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 
-                        outline-none transition-all duration-300"
+              className="w-full pl-10 pr-4 py-3 rounded-lg text-black dark:text-white bg-white
+            border border-gray-200 dark:border-slate-600 placeholder-gray-500
+            dark:placeholder-gray-400 outline-none"
               autoComplete="email"
             />
           </div>
-
           {error && (
             <motion.p
               initial={{ opacity: 0, y: -10 }}
@@ -99,14 +91,14 @@ export default function ForgotPasswordEmail({
                      font-semibold text-white overflow-hidden shadow-xl transition-all duration-300
                      ${
                        loading
-                         ? "bg-slate-700 cursor-not-allowed"
-                         : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-indigo-500/30"
+                         ? "bg-slate-400 cursor-not-allowed"
+                         : "bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white hover:shadow-indigo-500/30"
                      }`}
         >
           {/* Animated background */}
           {!loading && (
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500"
+              className="absolute inset-0 bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white"
               initial={{ x: "-100%" }}
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
@@ -127,7 +119,6 @@ export default function ForgotPasswordEmail({
               <>
                 <Send className="w-5 h-5" />
                 Send Verification Code
-                <Sparkles className="w-4 h-4 opacity-70" />
               </>
             )}
           </span>
@@ -138,8 +129,7 @@ export default function ForgotPasswordEmail({
           type="button"
           onClick={onBack}
           whileHover={{ x: -4 }}
-          className="flex items-center justify-center gap-2 text-slate-400 hover:text-white 
-                       text-sm font-medium transition-colors mt-2"
+          className="flex items-center justify-center gap-2 text-slate-400 text-sm font-medium transition-colors mt-2"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Sign In

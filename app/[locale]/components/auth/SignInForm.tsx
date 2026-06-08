@@ -94,7 +94,7 @@ export default function SignInForm() {
         <p>Forgot Password?</p>
         <Link
           href="/auth/forgot-password"
-          className="text-indigo-400 hover:underline"
+          className="text-white hover:underline"
         >
           Click
         </Link>

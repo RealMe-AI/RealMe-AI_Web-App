@@ -76,11 +76,11 @@ export default function NewPasswordForm({
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="inline-flex items-center justify-center w-16 h-16 rounded-full 
-                     bg-gradient-to-br from-violet-500 to-purple-600 mb-4 shadow-lg shadow-violet-500/30"
+                     bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white mb-4 shadow-lg shadow-indigo-300/30"
         >
           <ShieldCheck className="w-8 h-8 text-white" />
         </motion.div>
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
           Create New Password
         </h2>
         <p className="text-slate-400 text-sm">
@@ -97,25 +97,15 @@ export default function NewPasswordForm({
       >
         {/* New Password Input */}
         <div className="relative group">
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 
-                         rounded-xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"
-          />
-
           <div className="relative">
-            <Lock
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 
-                            group-focus-within:text-violet-400 transition-colors"
-            />
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter new password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-12 pr-12 py-4 rounded-xl text-white bg-slate-800/60 
-                        backdrop-blur-sm border border-slate-700/50 placeholder-slate-500
-                        focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20 
-                        outline-none transition-all duration-300"
+              className="w-full pl-12 pr-12 py-4 rounded-xl text-slate-600 bg-white dark:text-white dark:bg-slate-800 
+                        backdrop-blur-sm border border-slate-300 placeholder-slate-500 focus:ring-2 outline-none transition-all duration-300"
               autoComplete="new-password"
             />
             <button
@@ -199,11 +189,6 @@ export default function NewPasswordForm({
 
         {/* Confirm Password Input */}
         <div className="relative group">
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 
-                         rounded-xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"
-          />
-
           <div className="relative">
             <Lock
               className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 
@@ -214,15 +199,15 @@ export default function NewPasswordForm({
               placeholder="Confirm new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`w-full pl-12 pr-12 py-4 rounded-xl text-white bg-slate-800/60 
-                        backdrop-blur-sm border placeholder-slate-500
+              className={`w-full pl-12 pr-12 py-4 rounded-xl text-slate-600 bg-white dark:text-white dark:bg-slate-800 
+                        backdrop-blur-sm border border-slate-300 placeholder-slate-500
                         focus:ring-2 outline-none transition-all duration-300
                         ${
                           confirmPassword && password !== confirmPassword
                             ? "border-red-500/50 focus:border-red-500/50 focus:ring-red-500/20"
                             : confirmPassword && password === confirmPassword
                               ? "border-emerald-500/50 focus:border-emerald-500/50 focus:ring-emerald-500/20"
-                              : "border-slate-700/50 focus:border-violet-500/50 focus:ring-violet-500/20"
+                              : "border-slate-700/50"
                         }`}
               autoComplete="new-password"
             />
@@ -288,14 +273,14 @@ export default function NewPasswordForm({
                        loading ||
                        strengthScore < 3 ||
                        password !== confirmPassword
-                         ? "bg-slate-700 cursor-not-allowed opacity-50"
-                         : "bg-gradient-to-r from-violet-600 to-purple-600 hover:shadow-violet-500/30"
+                         ? "bg-slate-400 cursor-not-allowed opacity-50"
+                         : "bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white hover:shadow-indigo-500/30"
                      }`}
         >
           {/* Animated background */}
           {!loading && strengthScore >= 3 && password === confirmPassword && (
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500"
+              className="absolute inset-0 bg-indigo-300 dark:bg-indigo-600"
               initial={{ x: "-100%" }}
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
@@ -316,7 +301,6 @@ export default function NewPasswordForm({
               <>
                 <ShieldCheck className="w-5 h-5" />
                 Reset Password
-                <Sparkles className="w-4 h-4 opacity-70" />
               </>
             )}
           </span>

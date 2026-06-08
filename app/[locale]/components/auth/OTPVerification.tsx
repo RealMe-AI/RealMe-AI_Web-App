@@ -52,11 +52,11 @@ export default function OTPVerification({
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="inline-flex items-center justify-center w-16 h-16 rounded-full 
-                     bg-gradient-to-br from-emerald-500 to-teal-600 mb-4 shadow-lg shadow-emerald-500/30"
+                    bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white mb-4 shadow-lg shadow-indigo-300/30"
         >
           <Shield className="w-8 h-8 text-white" />
         </motion.div>
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
           Verify Your Email
         </h2>
         <p className="text-slate-400 text-sm">
@@ -92,14 +92,14 @@ export default function OTPVerification({
                 onKeyDown={(e) => onKeyDown(index, e)}
                 onPaste={index === 0 ? onPaste : undefined}
                 className={`w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-xl
-                           bg-slate-800/60 backdrop-blur-sm border-2 text-white
+                           bg-white dark:bg-slate-800 backdrop-blur-sm border-2 text-slate-600 dark:text-white
                            focus:outline-none transition-all duration-300
                            ${
                              digit
-                               ? "border-emerald-500/50 shadow-lg shadow-emerald-500/20"
-                               : "border-slate-700/50 focus:border-indigo-500/50"
+                               ? "border-indigo-500/50 shadow-lg shadow-indigo-300/20"
+                               : "border-slate-300 dark:border-slate-700/50 focus:border-indigo-500/50"
                            }
-                           ${otpError ? "border-red-500/50 shake" : ""}`}
+                           ${otpError ? "border-red-500 shake" : ""}`}
               />
               {/* Glow effect when filled */}
               {digit && (
@@ -134,8 +134,8 @@ export default function OTPVerification({
                      font-semibold text-white overflow-hidden shadow-xl transition-all duration-300
                      ${
                        !isOtpComplete || loading
-                         ? "bg-slate-700 cursor-not-allowed opacity-50"
-                         : "bg-gradient-to-r from-emerald-600 to-teal-600 hover:shadow-emerald-500/30"
+                         ? "bg-slate-400 cursor-not-allowed opacity-50"
+                         : "bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white hover:shadow-indigo-500/30"
                      }`}
         >
           <span className="relative flex items-center gap-2">
@@ -185,7 +185,7 @@ export default function OTPVerification({
           type="button"
           onClick={onBack}
           whileHover={{ x: -4 }}
-          className="flex items-center justify-center gap-2 text-slate-400 hover:text-white 
+          className="flex items-center justify-center gap-2 text-slate-400 
                        text-sm font-medium transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
