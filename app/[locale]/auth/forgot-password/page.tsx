@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { AnimatePresence } from "framer-motion";
-import useForgotPassword from "@/app/hooks/useForgotPassword";
-import useResetPassword from "@/app/hooks/useResetPassword";
+import useForgotPassword from "@/app/hooks/auth/useForgotPassword";
+import useResetPassword from "@/app/hooks/auth/useResetPassword";
 import ForgotPasswordEmail from "../../components/auth/ForgotPasswordEmail";
 import OTPVerification from "../../components/auth/OTPVerification";
 import NewPasswordForm from "../../components/auth/NewPasswordForm";
