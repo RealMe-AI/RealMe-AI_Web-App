@@ -9,7 +9,7 @@ interface OTPVerificationProps {
   otp: string[];
   otpError: string;
   loading: boolean;
-  resendTimer: number;
+  resendTimer: string | number;
   canResend: boolean;
   isOtpComplete: boolean;
   inputRefs: MutableRefObject<(HTMLInputElement | null)[]>;
@@ -176,7 +176,7 @@ export default function OTPVerification({
             <RefreshCw
               className={`w-4 h-4 ${!canResend ? "animate-pulse" : ""}`}
             />
-            {canResend ? "Resend Code" : `Resend in ${resendTimer}s`}
+            {canResend ? "Resend Code" : `Resend in ${resendTimer}`}
           </motion.button>
         </div>
 

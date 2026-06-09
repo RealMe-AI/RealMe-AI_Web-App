@@ -6,6 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import useForgotPassword from "@/app/hooks/auth/useForgotPassword";
 import useResetPassword from "@/app/hooks/auth/useResetPassword";
 import useVerifyResetOtp from "@/app/hooks/auth/useVerifyResetOtp";
+import useResendResetOtp from "@/app/hooks/auth/useResendResetOtp";
 import ForgotPasswordEmail from "../../components/auth/ForgotPasswordEmail";
 import OTPVerification from "../../components/auth/OTPVerification";
 import NewPasswordForm from "../../components/auth/NewPasswordForm";
@@ -27,20 +28,19 @@ export default function ForgotPasswordPage() {
   } = useForgotPassword();
 
   const { verifyOtp: verifyResetOtp, loading: verifyLoading, error: verifyError } = useVerifyResetOtp();
+  const { resendCode, canResend, formattedTime, loading: resendLoading } = useResendResetOtp(email);
 
   // OTP
   const {
     otp,
+    setOtp,
     otpError,
-    resendTimer,
-    canResend,
+    setOtpError,
     isOtpComplete,
     otpInputRefs,
     handleOtpChange,
     handleOtpKeyDown,
     handleOtpPaste,
-    verifyOtp,
-    resendCode,
 
     // Password
     password,
@@ -84,6 +84,13 @@ export default function ForgotPasswordPage() {
     });
   };
 
+  const onResendCode = async () => {
+    await resendCode();
+    setOtp(Array(6).fill(""));
+    setOtpError("");
+    otpInputRefs.current[0]?.focus();
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <AnimatePresence mode="wait">
@@ -106,7 +113,7 @@ export default function ForgotPasswordPage() {
             otp={otp}
             otpError={verifyError || otpError}
             loading={verifyLoading}
-            resendTimer={resendTimer}
+            resendTimer={formattedTime}
             canResend={canResend}
             isOtpComplete={isOtpComplete}
             inputRefs={otpInputRefs}
@@ -114,7 +121,7 @@ export default function ForgotPasswordPage() {
             onKeyDown={handleOtpKeyDown}
             onPaste={handleOtpPaste}
             onVerify={onVerifyCode}
-            onResend={resendCode}
+            onResend={onResendCode}
             onBack={() => setStep("email")}
           />
         )}
