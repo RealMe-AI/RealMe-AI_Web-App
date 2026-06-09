@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/routing";
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 
 export default function AuthCallbackPage() {
   const searchParams = useSearchParams();
@@ -18,7 +19,7 @@ export default function AuthCallbackPage() {
       return;
     }
 
-    localStorage.setItem("accessToken", token);
+    useAuthStore.getState().setAccessToken(token);
 
     router.replace("/dashboard");
   }, [searchParams, router]);

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/zustand/useChatStore";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 
 export function useChats() {
   const { chats, setConversations } = useChatStore();
@@ -15,7 +16,7 @@ export function useChats() {
       setIsLoading(true);
       // ... existing fetch logic ...
       // (I will use replace_file_content carefully to avoid rewriting the entire function body logic manually if possible, or just rewrite the imports and useEffect)
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = useAuthStore.getState().accessToken;
 
       if (!accessToken) {
         throw new Error("Unauthorized - No access token found");

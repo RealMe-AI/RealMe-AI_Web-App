@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { baseUrl } from '../lib/baseUrl';
+import { useAuthStore } from '../zustand/useAuthStore';
 
 interface UpdateConversationParams {
   title?: string;
@@ -16,7 +17,7 @@ export const useConversation = () => {
       setIsUpdating(true);
       setError(null);
 
-      const token = localStorage.getItem('accessToken');
+      const token = useAuthStore.getState().accessToken;
       if (!token) {
         setError('No access token found');
         setIsUpdating(false);

@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
+import { useAuthStore } from "../zustand/useAuthStore";
 import { Message, MessageResponse } from "../types/type";
 
 export const useSendMessage = () => {
@@ -56,7 +57,7 @@ export const useSendMessage = () => {
 
       // Use a local variable to track the current ID to handle auto-creation
       let currentConversationId = activeConversationId;
-      const token = localStorage.getItem("accessToken");
+      const token = useAuthStore.getState().accessToken;
 
       if (!token) {
         console.error("No access token found");

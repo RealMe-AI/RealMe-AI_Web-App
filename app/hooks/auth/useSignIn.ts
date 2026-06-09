@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslate } from "../useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 
 interface LoginErrorResponse {
   error?: string;
@@ -153,14 +154,14 @@ export default function useSignIn() {
 
 
       //  Store token
-      localStorage.setItem("accessToken", accessToken);
+      useAuthStore.getState().setAccessToken(accessToken);
 
       //  VERIFY TOKEN BEFORE REDIRECTING
       const isTokenValid = await verifyToken(accessToken);
 
       if (!isTokenValid) {
         console.error("[SignIn] Token verification failed");
-        localStorage.removeItem("accessToken"); // Clean up invalid token
+        useAuthStore.getState().clearAccessToken(); // Clean up invalid token
         setError("Login successful but unable to access dashboard. Please try again.");
         setLoading(false);
         return;

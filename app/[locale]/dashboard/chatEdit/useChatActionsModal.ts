@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/zustand/useChatStore";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 import { useConversation } from "@/app/hooks/useConversation";
 
 export const useChatActionsModal = () => {
@@ -16,7 +17,7 @@ export const useChatActionsModal = () => {
   const handleDelete = async (chatId: number) => {
     try {
       setIsLoading(true);
-      const token = localStorage.getItem("accessToken");
+      const token = useAuthStore.getState().accessToken;
       if (!token) throw new Error("No access token found");
 
       const res = await fetch(`${baseUrl}/conversations/${chatId}`, {

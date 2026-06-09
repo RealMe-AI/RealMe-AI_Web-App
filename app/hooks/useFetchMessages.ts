@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
+import { useAuthStore } from "../zustand/useAuthStore";
 import { RawMessage, Message, MessageResponse } from "../types/type";
 
 export const useFetchMessages = () => {
@@ -12,7 +13,7 @@ export const useFetchMessages = () => {
     async (conversationId: number) => {
       setIsLoading(true);
       useChatStore.setState({ activeConversationId: conversationId }); // Update directly or use setter if available
-      const token = localStorage.getItem("accessToken");
+      const token = useAuthStore.getState().accessToken;
       if (!token) {
         console.error("No access token found");
         setIsLoading(false);
