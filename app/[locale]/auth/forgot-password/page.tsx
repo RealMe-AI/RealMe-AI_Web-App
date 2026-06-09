@@ -28,8 +28,20 @@ export default function ForgotPasswordPage() {
     handleSendCode,
   } = useForgotPassword();
 
-  const { verifyOtp: verifyResetOtp, loading: verifyLoading, error: verifyError } = useVerifyResetOtp();
-  const { resendCode, canResend, formattedTime, loading: resendLoading } = useResendResetOtp(email);
+  const {
+    verifyOtp: verifyResetOtp,
+    loading: verifyLoading,
+    error: verifyError,
+  } = useVerifyResetOtp();
+  const {
+    resendCode,
+    canResend,
+    formattedTime,
+    loading: resendLoading,
+    startTimer,
+    expired,
+    timerTextClass,
+  } = useResendResetOtp(email);
 
   // OTP
   const {
@@ -66,6 +78,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     handleSendCode(() => {
       setStep("otp");
+      startTimer();
     });
   };
 
@@ -95,7 +108,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center p-4 bg-linear-to-br from-indigo-200 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
       <AnimatePresence mode="wait">
         {step === "email" && (
           <ForgotPasswordEmail
@@ -119,6 +132,8 @@ export default function ForgotPasswordPage() {
             resendLoading={resendLoading}
             resendTimer={formattedTime}
             canResend={canResend}
+            expired={expired}
+            timerTextClass={timerTextClass}
             isOtpComplete={isOtpComplete}
             inputRefs={otpInputRefs}
             onChange={handleOtpChange}

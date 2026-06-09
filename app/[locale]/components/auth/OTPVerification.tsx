@@ -12,6 +12,8 @@ interface OTPVerificationProps {
   resendLoading: boolean;
   resendTimer: string | number;
   canResend: boolean;
+  expired: boolean;
+  timerTextClass: string;
   isOtpComplete: boolean;
   inputRefs: MutableRefObject<(HTMLInputElement | null)[]>;
   onChange: (index: number, value: string) => void;
@@ -30,6 +32,8 @@ export default function OTPVerification({
   resendLoading,
   resendTimer,
   canResend,
+  expired,
+  timerTextClass,
   isOtpComplete,
   inputRefs,
   onChange,
@@ -159,28 +163,44 @@ export default function OTPVerification({
           </span>
         </motion.button>
 
+        {/* Countdown Timer / Expired */}
+        <div className="text-center mt-4">
+          {!expired && !canResend ? (
+            <p className={`text-sm font-light text-slate-600 dark:text-white ${timerTextClass}`}>
+              Expires in{" "}
+              <span className="font-semibold">{resendTimer}</span>
+            </p>
+          ) : expired ? (
+            <p className="text-red-500 dark:text-red-400 text-sm font-light">
+              Code expired.
+            </p>
+          ) : null}
+        </div>
+
         {/* Resend Code */}
-        <div className="text-center">
-          <p className="text-slate-400 text-sm mb-2">
-            Didn&apos;t receive the code?
-          </p>
-          <motion.button
-            onClick={onResend}
-            disabled={!canResend || resendLoading}
-            whileHover={canResend && !resendLoading ? { scale: 1.05 } : {}}
-            className={`inline-flex items-center gap-2 text-sm font-medium transition-colors
+        {canResend && (
+          <div className="text-center">
+            <p className="text-slate-400 text-sm mb-2">
+              Didn&apos;t receive the code?
+            </p>
+            <motion.button
+              onClick={onResend}
+              disabled={!canResend || resendLoading}
+              whileHover={canResend && !resendLoading ? { scale: 1.05 } : {}}
+              className={`inline-flex items-center gap-2 text-sm font-medium transition-colors
                        ${
                          canResend && !resendLoading
                            ? "text-indigo-400 hover:text-indigo-300 cursor-pointer"
                            : "text-slate-500 cursor-not-allowed"
                        }`}
-          >
-            <RefreshCw
-              className={`w-4 h-4 ${(resendLoading || !canResend) ? "animate-spin" : ""}`}
-            />
-            {canResend ? "Resend Code" : `Resend in ${resendTimer}`}
-          </motion.button>
-        </div>
+            >
+              <RefreshCw
+                className={`w-4 h-4 ${resendLoading || !canResend ? "animate-spin" : ""}`}
+              />
+              {canResend ? "Resend Code" : `Resend in ${resendTimer}`}
+            </motion.button>
+          </div>
+        )}
 
         {/* Back Link */}
         <motion.button

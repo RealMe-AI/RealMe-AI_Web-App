@@ -104,7 +104,7 @@ export default function useSignUp() {
         if (json.fieldErrors)
           setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
 
-        setError(t("error.sign_up.general"));
+        setError(json.message || json.error || t("error.sign_up.general"));
         setLoading(false);
         return;
       }

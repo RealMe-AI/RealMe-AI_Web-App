@@ -14,16 +14,23 @@ export default function useResendResetOtp(login: string) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
+  const [expired, setExpired] = useState(false);
 
   const canResend = timeLeft === 0;
 
+  const timerTextClass =
+    timeLeft <= 30 && !expired && timeLeft > 0
+      ? "text-red-500 animate-pulse"
+      : "text-muted-foreground";
+
   useEffect(() => {
-    if (timeLeft <= 0) return;
+    if (expired || timeLeft <= 0) return;
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
+          setExpired(true);
           return 0;
         }
         return prev - 1;
@@ -31,12 +38,17 @@ export default function useResendResetOtp(login: string) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timeLeft]);
+  }, [expired, timeLeft]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const startTimer = () => {
+    setExpired(false);
+    setTimeLeft(300);
   };
 
   const resendCode = useCallback(async () => {
@@ -60,6 +72,7 @@ export default function useResendResetOtp(login: string) {
       }
 
       showToast.success("Code resent successfully");
+      setExpired(false);
       setTimeLeft(300);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Failed to resend code";
@@ -77,5 +90,8 @@ export default function useResendResetOtp(login: string) {
     timeLeft,
     formattedTime: formatTime(timeLeft),
     canResend,
+    expired,
+    timerTextClass,
+    startTimer,
   };
 }

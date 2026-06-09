@@ -63,7 +63,7 @@ export default function ForgotPasswordEmail({
               placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-lg text-black dark:text-white bg-white
+              className="w-full pl-10 pr-4 py-3 rounded-lg text-black dark:text-white bg-white dark:bg-transparent
             border border-gray-200 dark:border-slate-600 placeholder-gray-500
             dark:placeholder-gray-400 outline-none"
               autoComplete="email"
