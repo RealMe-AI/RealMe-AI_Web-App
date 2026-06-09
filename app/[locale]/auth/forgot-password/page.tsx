@@ -113,6 +113,7 @@ export default function ForgotPasswordPage() {
             otp={otp}
             otpError={verifyError || otpError}
             loading={verifyLoading}
+            resendLoading={resendLoading}
             resendTimer={formattedTime}
             canResend={canResend}
             isOtpComplete={isOtpComplete}

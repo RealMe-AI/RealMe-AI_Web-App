@@ -9,6 +9,7 @@ interface OTPVerificationProps {
   otp: string[];
   otpError: string;
   loading: boolean;
+  resendLoading: boolean;
   resendTimer: string | number;
   canResend: boolean;
   isOtpComplete: boolean;
@@ -26,6 +27,7 @@ export default function OTPVerification({
   otp,
   otpError,
   loading,
+  resendLoading,
   resendTimer,
   canResend,
   isOtpComplete,
@@ -164,17 +166,17 @@ export default function OTPVerification({
           </p>
           <motion.button
             onClick={onResend}
-            disabled={!canResend}
-            whileHover={{ scale: canResend ? 1.05 : 1 }}
+            disabled={!canResend || resendLoading}
+            whileHover={canResend && !resendLoading ? { scale: 1.05 } : {}}
             className={`inline-flex items-center gap-2 text-sm font-medium transition-colors
                        ${
-                         canResend
+                         canResend && !resendLoading
                            ? "text-indigo-400 hover:text-indigo-300 cursor-pointer"
                            : "text-slate-500 cursor-not-allowed"
                        }`}
           >
             <RefreshCw
-              className={`w-4 h-4 ${!canResend ? "animate-pulse" : ""}`}
+              className={`w-4 h-4 ${(resendLoading || !canResend) ? "animate-spin" : ""}`}
             />
             {canResend ? "Resend Code" : `Resend in ${resendTimer}`}
           </motion.button>
