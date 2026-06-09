@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import useGoogleAuth from "../../../hooks/useGoogleAuth";
+import useGoogleAuth from "../../../hooks/auth/useGoogleAuth";
 
 export default function GoogleAuthButton() {
   const t = useTranslations();

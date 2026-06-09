@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useUserStore } from "../../zustand/useUserStore";
+import { useAuthStore } from "../../zustand/useAuthStore";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
 
@@ -40,7 +41,7 @@ export default function EditProfileModal() {
     setError("");
 
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = useAuthStore.getState().accessToken;
 
       const res = await fetch(`${baseUrl}/users/profile`, {
         method: "PATCH",

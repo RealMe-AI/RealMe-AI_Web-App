@@ -43,8 +43,8 @@ export default function VerifyPage() {
           {method === "email"
             ? `We sent a 6-digit code to ${contact || "your email"}.`
             : method === "phone"
-            ? `We sent a 6-digit code to ${contact || "your number"}.`
-            : "We sent a 6-digit code to your email or number."}
+              ? `We sent a 6-digit code to ${contact || "your number"}.`
+              : "We sent a 6-digit code to your email or number."}
         </p>
 
         <OTPInput
@@ -57,7 +57,9 @@ export default function VerifyPage() {
         {/* TIMER / EXPIRED MESSAGE */}
         <div className="text-center mt-4">
           {!expired ? (
-            <p className={`text-sm font-light ${timerTextClass}`}>
+            <p
+              className={`text-sm font-light text-slate-600 dark:text-white ${timerTextClass}`}
+            >
               Expires in <span className="font-semibold">{formattedTime}</span>
             </p>
           ) : (

@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { PanelLeft } from "lucide-react";
+import { useRouter } from "@/i18n/routing";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
 import { useChatStore } from "../../zustand/useChatStore";
+import { useAuthStore } from "../../zustand/useAuthStore";
 import { useFetchMessages } from "@/app/hooks/useFetchMessages";
 // import useGoogleAuth from "@/app/hooks/useGoogleAuth";
 import Sidebar from "./components/Sidebar";
@@ -11,6 +14,16 @@ import ChatWindow from "./components/ChatWindow";
 
 export default function Page() {
   // useGoogleAuth();
+  const router = useRouter();
+  const accessToken = useAuthStore((s) => s.accessToken);
+
+  useEffect(() => {
+    if (!accessToken) {
+      router.push("/auth");
+    }
+  }, [accessToken, router]);
+
+  if (!accessToken) return null;
 
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 import { Chat } from "@/app/types/type";
 
 export function useCreateChat() {
@@ -13,7 +14,7 @@ export function useCreateChat() {
       setIsCreating(true);
       setError(null);
 
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = useAuthStore.getState().accessToken;
 
       if (!accessToken) {
         throw new Error("Unauthorized - No access token found");

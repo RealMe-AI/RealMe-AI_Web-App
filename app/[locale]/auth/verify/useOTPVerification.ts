@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 import { baseUrl } from "@/app/lib/baseUrl";
 
 export function useOTPVerification() {
@@ -99,7 +100,7 @@ export function useOTPVerification() {
       }
 
       // STORE TOKEN (CRITICAL)
-      localStorage.setItem("accessToken", accessToken);
+      useAuthStore.getState().setAccessToken(accessToken);
 
       //  REDIRECT ONLY AFTER TOKEN EXISTS
       router.push("/dashboard");

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslate } from "./useTranslate";
+import { useTranslate } from "../useTranslate";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/zustand/useSignUpStore";
@@ -37,6 +37,16 @@ export default function useSignUp() {
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
   const isPhone = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v.trim());
 
+  // Password Strength
+  const checks = {
+    length: password.length >= 6,
+    uppercase: /[A-Z]/.test(password),
+    lowercase: /[a-z]/.test(password),
+    number: /\d/.test(password),
+    special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+  };
+  const strengthScore = Object.values(checks).filter(Boolean).length;
+
   const validate = () => {
     const errs: FieldErrors = {
       login: null,
@@ -53,7 +63,7 @@ export default function useSignUp() {
 
     if (!password) {
       errs.password = t("error.sign_in.password.required");
-    } else if (password.length < 6) {
+    } else if (strengthScore < 3) {
       errs.password = t("error.sign_up.password.min_length");
     }
 
@@ -94,7 +104,7 @@ export default function useSignUp() {
         if (json.fieldErrors)
           setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
 
-        setError(t("error.sign_up.general"));
+        setError(json.message || json.error || t("error.sign_up.general"));
         setLoading(false);
         return;
       }
@@ -139,5 +149,7 @@ export default function useSignUp() {
     handleSubmit,
     isEmail,
     isPhone,
+    checks,
+    strengthScore,
   };
 }

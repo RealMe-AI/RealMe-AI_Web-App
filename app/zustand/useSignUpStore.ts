@@ -5,9 +5,9 @@ import { create } from "zustand";
 type Method = "email" | "phone";
 
 interface SignUpStore {
-  contact: string | null; // email OR phone (top-level)
-  method: Method | null; // "email" or "phone"
-  userId: string | null; // userId from registration response
+  contact: string | null;
+  method: Method | null;
+  userId: string | null;
 
   setSignUpData: (payload: {
     contact: string;

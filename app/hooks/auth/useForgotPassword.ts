@@ -7,6 +7,7 @@ export default function useForgotPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,6 +45,11 @@ export default function useForgotPassword() {
         throw new Error("Failed to send verification code");
       }
 
+      const data = await res.json();
+      if (data.userId) {
+        setUserId(data.userId);
+      }
+
       onSuccess();
     } catch (err) {
       setError("Failed to send verification code. Please try again.");
@@ -58,6 +64,7 @@ export default function useForgotPassword() {
     error,
     setError,
     loading,
+    userId,
     handleSendCode,
   };
 }

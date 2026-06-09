@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { AnimatePresence } from "framer-motion";
-import useForgotPassword from "@/app/hooks/useForgotPassword";
-import useResetPassword from "@/app/hooks/useResetPassword";
+import useForgotPassword from "@/app/hooks/auth/useForgotPassword";
+import useResetPassword from "@/app/hooks/auth/useResetPassword";
+import useVerifyResetOtp from "@/app/hooks/auth/useVerifyResetOtp";
+import useResendResetOtp from "@/app/hooks/auth/useResendResetOtp";
 import ForgotPasswordEmail from "../../components/auth/ForgotPasswordEmail";
 import OTPVerification from "../../components/auth/OTPVerification";
 import NewPasswordForm from "../../components/auth/NewPasswordForm";
@@ -14,6 +16,7 @@ type Step = "email" | "otp" | "reset";
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("email");
+  const [resetToken, setResetToken] = useState<string | null>(null);
 
   // Hooks
   const {
@@ -21,22 +24,36 @@ export default function ForgotPasswordPage() {
     setEmail,
     error: emailError,
     loading: emailLoading,
+    userId,
     handleSendCode,
   } = useForgotPassword();
+
+  const {
+    verifyOtp: verifyResetOtp,
+    loading: verifyLoading,
+    error: verifyError,
+  } = useVerifyResetOtp();
+  const {
+    resendCode,
+    canResend,
+    formattedTime,
+    loading: resendLoading,
+    startTimer,
+    expired,
+    timerTextClass,
+  } = useResendResetOtp(email);
 
   // OTP
   const {
     otp,
+    setOtp,
     otpError,
-    resendTimer,
-    canResend,
+    setOtpError,
     isOtpComplete,
     otpInputRefs,
     handleOtpChange,
     handleOtpKeyDown,
     handleOtpPaste,
-    verifyOtp,
-    resendCode,
 
     // Password
     password,
@@ -61,22 +78,37 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     handleSendCode(() => {
       setStep("otp");
+      startTimer();
     });
   };
 
-  const onVerifyCode = () => {
-    verifyOtp(() => setStep("reset"));
+  const onVerifyCode = async () => {
+    if (!userId) return;
+    const code = otp.join("");
+    const token = await verifyResetOtp(userId, code);
+    if (token) {
+      setResetToken(token);
+      setStep("reset");
+    }
   };
 
   const onSubmitPassword = (e: React.FormEvent) => {
     e.preventDefault();
-    submitNewPassword(() => {
+    if (!resetToken) return;
+    submitNewPassword(resetToken, () => {
       router.push("/auth");
     });
   };
 
+  const onResendCode = async () => {
+    await resendCode();
+    setOtp(Array(6).fill(""));
+    setOtpError("");
+    otpInputRefs.current[0]?.focus();
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center p-4 bg-linear-to-br from-indigo-200 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
       <AnimatePresence mode="wait">
         {step === "email" && (
           <ForgotPasswordEmail
@@ -95,17 +127,20 @@ export default function ForgotPasswordPage() {
             key="otp-step"
             email={email}
             otp={otp}
-            otpError={otpError}
-            loading={resetLoading}
-            resendTimer={resendTimer}
+            otpError={verifyError || otpError}
+            loading={verifyLoading}
+            resendLoading={resendLoading}
+            resendTimer={formattedTime}
             canResend={canResend}
+            expired={expired}
+            timerTextClass={timerTextClass}
             isOtpComplete={isOtpComplete}
             inputRefs={otpInputRefs}
             onChange={handleOtpChange}
             onKeyDown={handleOtpKeyDown}
             onPaste={handleOtpPaste}
             onVerify={onVerifyCode}
-            onResend={resendCode}
+            onResend={onResendCode}
             onBack={() => setStep("email")}
           />
         )}

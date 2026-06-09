@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useUserStore } from "@/app/zustand/useUserStore";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 
 interface BackendUser {
   id: string;
@@ -54,7 +55,7 @@ export function useUserProfile() {
     async function fetchProfile() {
       try {
         setLoading(true);
-        const token = localStorage.getItem("accessToken");
+        const token = useAuthStore.getState().accessToken;
 
         const res = await fetch(`${baseUrl}/users/profile`, {
           method: "GET",

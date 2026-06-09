@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useAuthStore } from "@/app/zustand/useAuthStore";
 
 export function useAvatarEditor() {
   const t = useTranslations();
@@ -23,7 +24,7 @@ export function useAvatarEditor() {
       const formData = new FormData();
       formData.append("file", blob, "avatar.png");
 
-      const token = localStorage.getItem("accessToken");
+      const token = useAuthStore.getState().accessToken;
 
       const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
         method: "POST",
