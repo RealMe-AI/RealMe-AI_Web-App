@@ -77,7 +77,7 @@ export default function OTPVerification({
 
       <div className="flex flex-col gap-6">
         {/* OTP Input Slots */}
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-2 sm:gap-3">
           {otp.map((digit, index) => (
             <motion.div
               key={index}
@@ -97,7 +97,7 @@ export default function OTPVerification({
                 onChange={(e) => onChange(index, e.target.value)}
                 onKeyDown={(e) => onKeyDown(index, e)}
                 onPaste={index === 0 ? onPaste : undefined}
-                className={`w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold rounded-xl
+                className={`w-10 h-12 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-bold rounded-xl
                            bg-white dark:bg-slate-800 backdrop-blur-sm border-2 text-slate-600 dark:text-white
                            focus:outline-none transition-all duration-300
                            ${
