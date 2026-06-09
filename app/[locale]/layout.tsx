@@ -4,8 +4,9 @@ import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
 import { ThemeProvider } from "../theme-provider/theme-provider";
 import { getStructuredData } from "../seo/structuredData";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
+import { ToastProvider } from "@/app/lib/ToastProvider";
 
 import StructuredData from "./components/StructuredData";
 
@@ -111,7 +112,7 @@ export default async function LocaleLayout({
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <StatusBarHandler />
-            {children}
+            <ToastProvider>{children}</ToastProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

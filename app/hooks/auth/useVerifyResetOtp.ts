@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { showToast } from "@/app/lib/toast";
 
 interface VerifyResetOtpResponse {
   verified: boolean;
@@ -34,9 +35,11 @@ export default function useVerifyResetOtp() {
         throw new Error(msg);
       }
 
+      showToast.success("Verification successful");
       return data.verified;
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Verification failed";
+      showToast.error(msg);
       setError(msg);
       return false;
     } finally {
