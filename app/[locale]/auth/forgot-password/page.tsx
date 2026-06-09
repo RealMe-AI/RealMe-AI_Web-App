@@ -16,6 +16,7 @@ type Step = "email" | "otp" | "reset";
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("email");
+  const [resetToken, setResetToken] = useState<string | null>(null);
 
   // Hooks
   const {
@@ -71,15 +72,17 @@ export default function ForgotPasswordPage() {
   const onVerifyCode = async () => {
     if (!userId) return;
     const code = otp.join("");
-    const verified = await verifyResetOtp(userId, code);
-    if (verified) {
+    const token = await verifyResetOtp(userId, code);
+    if (token) {
+      setResetToken(token);
       setStep("reset");
     }
   };
 
   const onSubmitPassword = (e: React.FormEvent) => {
     e.preventDefault();
-    submitNewPassword(() => {
+    if (!resetToken) return;
+    submitNewPassword(resetToken, () => {
       router.push("/auth");
     });
   };

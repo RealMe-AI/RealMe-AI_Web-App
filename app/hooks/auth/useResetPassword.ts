@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { baseUrl } from "@/app/lib/baseUrl";
+import { showToast } from "@/app/lib/toast";
 
 export default function useResetPassword() {
   // OTP State
@@ -66,7 +68,7 @@ export default function useResetPassword() {
   };
 
   // Password Handlers
-  const submitNewPassword = async (onSuccess: () => void) => {
+  const submitNewPassword = async (resetToken: string, onSuccess: () => void) => {
     setPasswordError("");
 
     if (!password) {
@@ -86,12 +88,25 @@ export default function useResetPassword() {
 
     setLoading(true);
     try {
-      // Simulate API call
-      console.log("Resetting password...");
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const res = await fetch(`${baseUrl}/auth/reset-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: resetToken, newPassword: password }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        const msg = data.message || "Failed to reset password";
+        throw new Error(msg);
+      }
+
+      showToast.success("Password reset successful. You can now login.");
       onSuccess();
     } catch (err) {
-      setPasswordError("Failed to reset password");
+      const msg = err instanceof Error ? err.message : "Failed to reset password";
+      showToast.error(msg);
+      setPasswordError(msg);
     } finally {
       setLoading(false);
     }

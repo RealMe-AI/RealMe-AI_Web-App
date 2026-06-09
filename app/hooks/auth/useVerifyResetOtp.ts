@@ -6,6 +6,7 @@ import { showToast } from "@/app/lib/toast";
 
 interface VerifyResetOtpResponse {
   verified: boolean;
+  resetToken?: string;
   message?: string;
 }
 
@@ -16,7 +17,7 @@ export default function useVerifyResetOtp() {
   const verifyOtp = async (
     userId: string,
     code: string,
-  ): Promise<boolean> => {
+  ): Promise<string | null> => {
     setLoading(true);
     setError(null);
 
@@ -36,12 +37,12 @@ export default function useVerifyResetOtp() {
       }
 
       showToast.success("Verification successful");
-      return data.verified;
+      return data.resetToken ?? null;
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Verification failed";
       showToast.error(msg);
       setError(msg);
-      return false;
+      return null;
     } finally {
       setLoading(false);
     }
