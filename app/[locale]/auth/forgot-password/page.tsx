@@ -5,6 +5,7 @@ import { useRouter } from "@/i18n/routing";
 import { AnimatePresence } from "framer-motion";
 import useForgotPassword from "@/app/hooks/auth/useForgotPassword";
 import useResetPassword from "@/app/hooks/auth/useResetPassword";
+import useVerifyResetOtp from "@/app/hooks/auth/useVerifyResetOtp";
 import ForgotPasswordEmail from "../../components/auth/ForgotPasswordEmail";
 import OTPVerification from "../../components/auth/OTPVerification";
 import NewPasswordForm from "../../components/auth/NewPasswordForm";
@@ -21,8 +22,11 @@ export default function ForgotPasswordPage() {
     setEmail,
     error: emailError,
     loading: emailLoading,
+    userId,
     handleSendCode,
   } = useForgotPassword();
+
+  const { verifyOtp: verifyResetOtp, loading: verifyLoading, error: verifyError } = useVerifyResetOtp();
 
   // OTP
   const {
@@ -64,8 +68,13 @@ export default function ForgotPasswordPage() {
     });
   };
 
-  const onVerifyCode = () => {
-    verifyOtp(() => setStep("reset"));
+  const onVerifyCode = async () => {
+    if (!userId) return;
+    const code = otp.join("");
+    const verified = await verifyResetOtp(userId, code);
+    if (verified) {
+      setStep("reset");
+    }
   };
 
   const onSubmitPassword = (e: React.FormEvent) => {
@@ -95,8 +104,8 @@ export default function ForgotPasswordPage() {
             key="otp-step"
             email={email}
             otp={otp}
-            otpError={otpError}
-            loading={resetLoading}
+            otpError={verifyError || otpError}
+            loading={verifyLoading}
             resendTimer={resendTimer}
             canResend={canResend}
             isOtpComplete={isOtpComplete}
