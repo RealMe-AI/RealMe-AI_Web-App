@@ -2,6 +2,7 @@ import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
 import { Chat } from "@/app/types/type";
+import { useLanguageStore } from "@/app/zustand/useLanguageStore";
 
 export function useCreateConversation() {
   const [isCreating, setIsCreating] = useState(false);
@@ -12,9 +13,11 @@ export function useCreateConversation() {
       setIsCreating(true);
       setError(null);
 
+      const language = useLanguageStore.getState().language;
+
       const res = await authFetch(`${baseUrl}/conversations`, {
         method: "POST",
-        body: JSON.stringify({ title }),
+        body: JSON.stringify({ title, language }),
       });
 
       if (!res.ok) {
