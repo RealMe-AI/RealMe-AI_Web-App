@@ -16,6 +16,12 @@ export default function Page() {
   // useGoogleAuth();
   const router = useRouter();
   const accessToken = useAuthStore((s) => s.accessToken);
+  const isSidebarOpen = useSidebarStore((s) => s.isOpen);
+  const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
+  const setActiveConversationId = useChatStore(
+    (s) => s.setActiveConversationId,
+  );
+  const { fetchMessages } = useFetchMessages();
 
   useEffect(() => {
     if (!accessToken) {
@@ -24,14 +30,6 @@ export default function Page() {
   }, [accessToken, router]);
 
   if (!accessToken) return null;
-
-  const isSidebarOpen = useSidebarStore((s) => s.isOpen);
-  const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
-
-  const setActiveConversationId = useChatStore(
-    (s) => s.setActiveConversationId,
-  );
-  const { fetchMessages } = useFetchMessages();
 
   return (
     <div className="h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">

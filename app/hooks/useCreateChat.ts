@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { authFetch } from "@/app/lib/apiClient";
 import { Chat } from "@/app/types/type";
 
 export function useCreateChat() {
@@ -14,29 +14,15 @@ export function useCreateChat() {
       setIsCreating(true);
       setError(null);
 
-      const accessToken = useAuthStore.getState().accessToken;
-
-      if (!accessToken) {
-        throw new Error("Unauthorized - No access token found");
-      }
-
       // Create a default title
       const title = t("dashboard.search.new_conversation_title", {
         chatNumber: chatsLength + 1,
       });
 
-      const res = await fetch(`${baseUrl}/conversations`, {
+      const res = await authFetch(`${baseUrl}/conversations`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
         body: JSON.stringify({ title }),
       });
-
-      if (res.status === 401) {
-        throw new Error("Unauthorized - Invalid or expired token");
-      }
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));

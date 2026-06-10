@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
-import { useAuthStore } from "../zustand/useAuthStore";
+import { authFetch } from "@/app/lib/apiClient";
 import { Message, MessageResponse } from "../types/type";
 
 export const useSendMessage = () => {
@@ -26,17 +26,12 @@ export const useSendMessage = () => {
       const updateConversationDetails = async (
         conversationId: number,
         lastMessage: string,
-        token: string,
       ) => {
         try {
-          const res = await fetch(
+          const res = await authFetch(
             `${baseUrl}/conversations/${conversationId}`,
             {
               method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
               body: JSON.stringify({
                 lastMessage,
                 updatedAt: new Date().toISOString(),
@@ -57,22 +52,12 @@ export const useSendMessage = () => {
 
       // Use a local variable to track the current ID to handle auto-creation
       let currentConversationId = activeConversationId;
-      const token = useAuthStore.getState().accessToken;
-
-      if (!token) {
-        console.error("No access token found");
-        return;
-      }
 
       // Create a brand new conversation when user sends first message
       if (!currentConversationId) {
         try {
-          const createRes = await fetch(`${baseUrl}/conversations`, {
+          const createRes = await authFetch(`${baseUrl}/conversations`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
             body: JSON.stringify({
               title:
                 content.substring(0, 50) + (content.length > 50 ? "..." : ""),
@@ -116,13 +101,8 @@ export const useSendMessage = () => {
       setAbortController(controller);
 
       try {
-        const res = await fetch(`${baseUrl}/messages`, {
+        const res = await authFetch(`${baseUrl}/messages`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          signal: controller.signal,
           body: JSON.stringify({
             conversationId: currentConversationId,
             content,
@@ -167,7 +147,6 @@ export const useSendMessage = () => {
               await updateConversationDetails(
                 currentConversationId,
                 content,
-                token,
               );
             }
           } else {
@@ -217,7 +196,6 @@ export const useSendMessage = () => {
             await updateConversationDetails(
               currentConversationId,
               content,
-              token,
             );
           }
         } else {

@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useUserStore } from "../../zustand/useUserStore";
-import { useAuthStore } from "../../zustand/useAuthStore";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { authFetch } from "@/app/lib/apiClient";
 
 interface UpdateProfileResponse {
   name?: string;
@@ -41,14 +41,8 @@ export default function EditProfileModal() {
     setError("");
 
     try {
-      const token = useAuthStore.getState().accessToken;
-
-      const res = await fetch(`${baseUrl}/users/profile`, {
+      const res = await authFetch(`${baseUrl}/users/profile`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: JSON.stringify({ name: fullName }),
       });
 

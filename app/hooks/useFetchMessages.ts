@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { baseUrl } from "../lib/baseUrl";
 import { useChatStore } from "../zustand/useChatStore";
-import { useAuthStore } from "../zustand/useAuthStore";
+import { authFetch } from "@/app/lib/apiClient";
 import { RawMessage, Message, MessageResponse } from "../types/type";
 
 export const useFetchMessages = () => {
@@ -13,16 +13,10 @@ export const useFetchMessages = () => {
     async (conversationId: number) => {
       setIsLoading(true);
       useChatStore.setState({ activeConversationId: conversationId }); // Update directly or use setter if available
-      const token = useAuthStore.getState().accessToken;
-      if (!token) {
-        console.error("No access token found");
-        setIsLoading(false);
-        return;
-      }
 
       try {
-        const res = await fetch(`${baseUrl}/conversations/${conversationId}`, {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await authFetch(`${baseUrl}/conversations/${conversationId}`, {
+          method: "GET",
         });
 
         if (!res.ok) throw new Error(`Failed to fetch messages: ${res.status}`);

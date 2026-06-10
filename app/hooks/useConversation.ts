@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { baseUrl } from '../lib/baseUrl';
-import { useAuthStore } from '../zustand/useAuthStore';
+import { authFetch } from '@/app/lib/apiClient';
 
 interface UpdateConversationParams {
   title?: string;
@@ -17,20 +17,9 @@ export const useConversation = () => {
       setIsUpdating(true);
       setError(null);
 
-      const token = useAuthStore.getState().accessToken;
-      if (!token) {
-        setError('No access token found');
-        setIsUpdating(false);
-        return false;
-      }
-
       try {
-        const res = await fetch(`${baseUrl}/conversations/${conversationId}`, {
+        const res = await authFetch(`${baseUrl}/conversations/${conversationId}`, {
           method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
           body: JSON.stringify(updates),
         });
 
