@@ -1,23 +1,16 @@
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
 import { Chat } from "@/app/types/type";
 
-export function useCreateChat() {
+export function useCreateConversation() {
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const t = useTranslations();
 
-  const createChat = async (chatsLength: number): Promise<Chat | null> => {
+  const createConversation = async (title: string): Promise<Chat | null> => {
     try {
       setIsCreating(true);
       setError(null);
-
-      // Create a default title
-      const title = t("dashboard.search.new_conversation_title", {
-        chatNumber: chatsLength + 1,
-      });
 
       const res = await authFetch(`${baseUrl}/conversations`, {
         method: "POST",
@@ -26,25 +19,25 @@ export function useCreateChat() {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Failed to create chat");
+        throw new Error(errorData.message || "Failed to create conversation");
       }
 
-      const newChat: Partial<Chat> = await res.json();
+      const newConv: Partial<Chat> = await res.json();
 
       const safeChat: Chat = {
-        id: newChat.id ?? Date.now(),
-        title: newChat.title ?? title,
+        id: newConv.id ?? Date.now(),
+        title: newConv.title ?? title,
       };
 
       return safeChat;
     } catch (err) {
-      console.error("Create chat error:", err);
-      setError(err instanceof Error ? err.message : "Failed to create chat");
+      console.error("Create conversation error:", err);
+      setError(err instanceof Error ? err.message : "Failed to create conversation");
       return null;
     } finally {
       setIsCreating(false);
     }
   };
 
-  return { createChat, isCreating, error };
+  return { createConversation, isCreating, error };
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/zustand/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
-import { useConversation } from "@/app/hooks/useConversation";
+import { useUpdateConversation } from "@/app/hooks/messages/useUpdateConversation";
 
 export const useChatActionsModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +12,7 @@ export const useChatActionsModal = () => {
     setActiveConversationId,
     updateChatTitle,
   } = useChatStore();
-  const { updateConversation } = useConversation();
+  const { updateConversation } = useUpdateConversation();
 
   const handleDelete = async (chatId: number) => {
     try {

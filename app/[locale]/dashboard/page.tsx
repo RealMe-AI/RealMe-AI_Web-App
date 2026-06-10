@@ -7,7 +7,7 @@ import { useRouter } from "@/i18n/routing";
 import { useSidebarStore } from "../../zustand/useSidebarStore";
 import { useChatStore } from "../../zustand/useChatStore";
 import { useAuthStore } from "../../zustand/useAuthStore";
-import { useFetchMessages } from "@/app/hooks/useFetchMessages";
+import { useFetchMessages } from "@/app/hooks/messages/useFetchMessages";
 // import useGoogleAuth from "@/app/hooks/useGoogleAuth";
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";

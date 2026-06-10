@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
-import { baseUrl } from '../lib/baseUrl';
-import { authFetch } from '@/app/lib/apiClient';
+import { useState, useCallback } from "react";
+import { baseUrl } from "@/app/lib/baseUrl";
+import { authFetch } from "@/app/lib/apiClient";
 
 interface UpdateConversationParams {
   title?: string;
@@ -8,7 +8,7 @@ interface UpdateConversationParams {
   updatedAt?: string;
 }
 
-export const useConversation = () => {
+export const useUpdateConversation = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +19,7 @@ export const useConversation = () => {
 
       try {
         const res = await authFetch(`${baseUrl}/conversations/${conversationId}`, {
-          method: 'PATCH',
+          method: "PATCH",
           body: JSON.stringify(updates),
         });
 
@@ -30,8 +30,8 @@ export const useConversation = () => {
         setIsUpdating(false);
         return true;
       } catch (err) {
-        console.error('Error updating conversation:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        console.error("Error updating conversation:", err);
+        setError(err instanceof Error ? err.message : "Unknown error");
         setIsUpdating(false);
         return false;
       }
