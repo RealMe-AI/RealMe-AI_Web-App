@@ -71,12 +71,12 @@ export default function SidebarItem({
   return (
     <>
       <div
-        className={`relative w-70 max-sm:w-full flex items-center justify-between p-3 rounded-xl cursor-pointer transition group ${
+        className={`relative w-70 max-sm:w-full flex items-center justify-between px-2 rounded-xl cursor-pointer transition group ${
           isActive
             ? "bg-slate-100 dark:bg-slate-700/40 text-slate-700 dark:text-white"
             : "text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700/40"
         } ${
-          isRenaming ? "ring-2 ring-indigo-400 bg-white dark:bg-slate-800" : ""
+          isRenaming ? "ring-1 ring-indigo-400 bg-white dark:bg-slate-800" : ""
         }`}
         onClick={() => {
           if (!isRenaming) onClick();
@@ -96,11 +96,11 @@ export default function SidebarItem({
                 onChange={(e) => setRenameValue(e.target.value)}
                 onBlur={onRenameSubmit}
                 onKeyDown={handleKeyDown}
-                className="w-full bg-transparent border-0 p-0 text-sm font-medium focus:ring-0 text-slate-900 dark:text-white"
+                className="w-full bg-transparent border-none py-2 text-sm font-medium focus:outline-none text-slate-900 dark:text-white"
               />
             </div>
           ) : (
-            <p className="text-sm font-medium truncate">{chat.title}</p>
+            <p className="text-sm font-medium truncate p-3">{chat.title}</p>
           )}
         </div>
 
