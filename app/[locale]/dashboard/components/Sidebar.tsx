@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Chat } from "@/app/types/type";
 import { useChatStore } from "@/app/zustand/useChatStore";
-import { useChats } from "@/app/hooks/useChats";
+import { useChats } from "@/app/hooks/messages/useChats";
 
 import LanguageSelect from "./../../setting/LanguageSelect";
 import ProfileFooter from "./ProfileFooter";

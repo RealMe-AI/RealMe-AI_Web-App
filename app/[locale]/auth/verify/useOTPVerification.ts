@@ -100,7 +100,10 @@ export function useOTPVerification() {
       }
 
       // STORE TOKEN (CRITICAL)
-      useAuthStore.getState().setAccessToken(accessToken);
+      useAuthStore.getState().setTokens({
+        accessToken,
+        refreshToken: data.refreshToken,
+      });
 
       //  REDIRECT ONLY AFTER TOKEN EXISTS
       router.push("/dashboard");

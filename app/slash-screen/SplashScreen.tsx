@@ -34,7 +34,7 @@ export default function SplashScreen({
             {/* Replace /logo.png later */}
             <div className="w-32 h-32">
               <Image
-                src="/"
+                src="/logo.png"
                 alt="RealMe AI Logo"
                 width={128}
                 height={128}

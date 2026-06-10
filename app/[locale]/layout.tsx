@@ -7,6 +7,7 @@ import { getStructuredData } from "../seo/structuredData";
 import type { Metadata } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
 import { ToastProvider } from "@/app/lib/ToastProvider";
+import { AuthProvider } from "./components/AuthProvider";
 
 import StructuredData from "./components/StructuredData";
 
@@ -110,10 +111,12 @@ export default async function LocaleLayout({
       <body className={`${poppins.className} antialiased`}>
         <StructuredData data={{ "@graph": structuredData }} />
         <ThemeProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <StatusBarHandler />
-            <ToastProvider>{children}</ToastProvider>
-          </NextIntlClientProvider>
+          <AuthProvider>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              <StatusBarHandler />
+              <ToastProvider>{children}</ToastProvider>
+            </NextIntlClientProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

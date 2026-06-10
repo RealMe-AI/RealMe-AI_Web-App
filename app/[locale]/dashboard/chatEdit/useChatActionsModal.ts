@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/zustand/useChatStore";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
-import { useConversation } from "@/app/hooks/useConversation";
+import { authFetch } from "@/app/lib/apiClient";
+import { useUpdateConversation } from "@/app/hooks/messages/useUpdateConversation";
 
 export const useChatActionsModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,19 +12,14 @@ export const useChatActionsModal = () => {
     setActiveConversationId,
     updateChatTitle,
   } = useChatStore();
-  const { updateConversation } = useConversation();
+  const { updateConversation } = useUpdateConversation();
 
   const handleDelete = async (chatId: number) => {
     try {
       setIsLoading(true);
-      const token = useAuthStore.getState().accessToken;
-      if (!token) throw new Error("No access token found");
 
-      const res = await fetch(`${baseUrl}/conversations/${chatId}`, {
+      const res = await authFetch(`${baseUrl}/conversations/${chatId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       });
 
       if (!res.ok) {

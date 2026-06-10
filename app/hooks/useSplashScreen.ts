@@ -10,13 +10,7 @@ export function useSplashScreen() {
     // Defer to avoid synchronous setState warning
     const id = requestAnimationFrame(() => {
       setMounted(true);
-
-      const hasSeen = localStorage.getItem("hasSeenSplash");
-
-      if (!hasSeen) {
-        setShowSplash(true);
-        localStorage.setItem("hasSeenSplash", "true");
-      }
+      setShowSplash(true);
     });
 
     return () => cancelAnimationFrame(id);

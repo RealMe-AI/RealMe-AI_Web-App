@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useUserStore } from "@/app/zustand/useUserStore";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { authFetch } from "@/app/lib/apiClient";
 
 interface BackendUser {
   id: string;
@@ -55,14 +55,9 @@ export function useUserProfile() {
     async function fetchProfile() {
       try {
         setLoading(true);
-        const token = useAuthStore.getState().accessToken;
 
-        const res = await fetch(`${baseUrl}/users/profile`, {
+        const res = await authFetch(`${baseUrl}/users/profile`, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            ...(token && { Authorization: `Bearer ${token}` }),
-          },
         });
 
         if (!res.ok) {
@@ -86,9 +81,6 @@ export function useUserProfile() {
               : "auth.identifier.phone";
 
         const avatarUrl = data.picture || "/avatar.png";
-
-        // console.log("Profile fetched - picture URL:", data.picture);
-        // console.log("Setting avatar to:", avatarUrl);
 
         setFetchedUser({
           fullName: data.fullName,

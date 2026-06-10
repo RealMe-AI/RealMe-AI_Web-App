@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { authFetch } from "@/app/lib/apiClient";
 
 export function useAvatarEditor() {
   const t = useTranslations();
@@ -24,13 +24,8 @@ export function useAvatarEditor() {
       const formData = new FormData();
       formData.append("file", blob, "avatar.png");
 
-      const token = useAuthStore.getState().accessToken;
-
-      const res = await fetch(`${baseUrl}/users/profile/upload-picture`, {
+      const res = await authFetch(`${baseUrl}/users/profile/upload-picture`, {
         method: "POST",
-        headers: {
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: formData,
       });
 

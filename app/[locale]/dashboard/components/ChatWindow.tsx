@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useChatStore } from "@/app/zustand/useChatStore";
-import { useSendMessage } from "@/app/hooks/useSendMessage";
+import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useSendFileMessage } from "@/app/zustand/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
@@ -33,7 +33,7 @@ export default function ChatWindow() {
     inputFocusSignal,
   } = useChatStore();
 
-  const { sendMessage } = useSendMessage();
+  const { sendMessage } = useMessageStream();
 
   // FOCUS INPUT ON SIGNAL
   useEffect(() => {

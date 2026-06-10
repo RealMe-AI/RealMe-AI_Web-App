@@ -16,6 +16,7 @@ interface LoginErrorResponse {
 
 interface LoginSuccessResponse {
   accessToken: string;
+  refreshToken?: string;
 }
 
 export default function useSignIn() {
@@ -154,14 +155,17 @@ export default function useSignIn() {
 
 
       //  Store token
-      useAuthStore.getState().setAccessToken(accessToken);
+      useAuthStore.getState().setTokens({
+        accessToken,
+        refreshToken: successResponse.refreshToken,
+      });
 
       //  VERIFY TOKEN BEFORE REDIRECTING
       const isTokenValid = await verifyToken(accessToken);
 
       if (!isTokenValid) {
         console.error("[SignIn] Token verification failed");
-        useAuthStore.getState().clearAccessToken(); // Clean up invalid token
+        useAuthStore.getState().clearAuth(); // Clean up invalid token
         setError("Login successful but unable to access dashboard. Please try again.");
         setLoading(false);
         return;

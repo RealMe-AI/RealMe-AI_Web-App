@@ -13,13 +13,17 @@ export default function AuthCallbackPage() {
   useEffect(() => {
 
     const token = searchParams.get("token");
+    const refreshToken = searchParams.get("refreshToken");
 
     if (!token) {
       router.replace("/auth?error=oauth_failed");
       return;
     }
 
-    useAuthStore.getState().setAccessToken(token);
+    useAuthStore.getState().setTokens({
+      accessToken: token,
+      refreshToken: refreshToken ?? undefined,
+    });
 
     router.replace("/dashboard");
   }, [searchParams, router]);
