@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import hljs from "highlight.js";
+import { Copy, Check } from "lucide-react";
 
 type ParsedSegment =
   | { type: "code"; language: string; code: string }
@@ -229,11 +230,15 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
   });
 }
 
-function renderCodeBlock(
-  language: string,
-  code: string,
-  key: number,
-): React.ReactNode {
+function CodeBlock({
+  language,
+  code,
+}: {
+  language: string;
+  code: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
   let highlighted: string;
 
   if (language && hljs.getLanguage(language)) {
@@ -246,13 +251,24 @@ function renderCodeBlock(
     highlighted = hljs.highlightAuto(code).value;
   }
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
   return (
-    <div key={key} className="my-3 rounded-lg overflow-hidden">
-      {language && (
-        <div className="bg-gray-200 dark:bg-slate-700 px-4 py-1 text-xs font-mono text-gray-600 dark:text-gray-300 uppercase">
-          {language}
-        </div>
-      )}
+    <div className="my-3 rounded-lg overflow-hidden">
+      <div className="relative bg-gray-200 dark:bg-slate-700 px-4 py-1 text-xs font-mono text-gray-600 dark:text-gray-300 uppercase">
+        <span>{language || "code"}</span>
+        <button
+          onClick={handleCopy}
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+          title="Copy code"
+        >
+          {copied ? <Check size={14} /> : <Copy size={14} />}
+        </button>
+      </div>
       <pre className="bg-gray-100 dark:bg-slate-800 p-4 overflow-x-auto">
         <code
           className={`language-${language || "plaintext"} text-sm font-mono leading-relaxed`}
@@ -274,7 +290,7 @@ export default function parseMarkdown(text: string): React.ReactNode[] {
     // Code block
     const codeMatch = block.match(/^```(\w*)\n([\s\S]*?)```$/);
     if (codeMatch) {
-      elements.push(renderCodeBlock(codeMatch[1], codeMatch[2], key++));
+      elements.push(<CodeBlock key={key++} language={codeMatch[1]} code={codeMatch[2]} />);
       continue;
     }
 
