@@ -1,8 +1,8 @@
 "use client";
 
-import { Copy, RefreshCcw, Star, Pin } from "lucide-react";
+import { Copy, Pencil } from "lucide-react";
 
-export default function MessageActions() {
+export default function MessageActions({sender}: {sender: "user" | "ai"}) {
   const handleCopy = () => {
     navigator.clipboard.writeText("Message copied!");
   };
@@ -15,15 +15,15 @@ export default function MessageActions() {
       >
         <Copy size={14} className="text-slate-700 dark:text-slate-200" />
       </button>
-      <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
+      {/* <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
         <RefreshCcw size={14} className="text-slate-700 dark:text-slate-200" />
       </button>
       <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
         <Star size={14} className="text-slate-700 dark:text-slate-200" />
-      </button>
-      <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
-        <Pin size={14} className="text-slate-700 dark:text-slate-200" />
-      </button>
+      </button> */}
+      {sender === "user" && <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
+        <Pencil size={14} className="text-slate-700 dark:text-slate-200" />
+      </button>}
     </div>
   );
 }
