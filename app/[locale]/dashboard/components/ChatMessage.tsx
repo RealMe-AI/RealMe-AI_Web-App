@@ -8,6 +8,7 @@ import { useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
 import MessageActions from "../components/MessageActions";
+import parseMarkdown from "@/app/lib/parseMarkdown";
 
 export default function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.sender === "user";
@@ -165,9 +166,15 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                 {message.type === "audio" && renderAudioBubble()}
 
                 {message.text && (
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                    {message.text}
-                  </p>
+                  isUser ? (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200">
+                      {message.text}
+                    </p>
+                  ) : (
+                    <div className="text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+                      {parseMarkdown(message.text)}
+                    </div>
+                  )
                 )}
               </div>
             </div>
