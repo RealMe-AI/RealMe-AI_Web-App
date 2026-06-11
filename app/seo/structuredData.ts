@@ -17,7 +17,7 @@ export function getStructuredData(SITE_URL: string) {
       "@type": "Organization",
       name: "RealMe AI",
       url: SITE_URL,
-      logo: `${SITE_URL}/favicon.ico`,
+      logo: `${SITE_URL}/logo2.jpeg`,
     },
     {
       "@context": "https://schema.org",
@@ -29,7 +29,7 @@ export function getStructuredData(SITE_URL: string) {
       description: "AI assistant for learning, conversation and productivity.",
       author: {
         "@type": "Person",
-        name: "Your Name or Company",
+        name: "Agunwa Chidiebele Calistus",
       },
       publisher: {
         "@type": "Organization",

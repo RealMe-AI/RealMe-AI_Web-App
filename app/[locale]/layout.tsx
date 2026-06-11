@@ -36,13 +36,13 @@ export async function generateMetadata({
   const pathname = locale === "en" ? "" : `/${locale}`;
   const canonical = new URL(`${SITE_URL}${pathname}/`);
 
-  const title = "RealMe AI — Converse. Learn. Evolve.";
+  const title = "RealMe AI";
   const description =
     "RealMe AI — Conversational AI for personal and professional growth.";
 
   const images = [
     {
-      url: `${SITE_URL}/og/og-default.png`,
+      url: `${SITE_URL}/logo2.jpeg`,
       width: 1200,
       height: 630,
       alt: "RealMe AI",
@@ -59,6 +59,10 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
+    icons: {
+      icon: "/logo2.jpeg",
+      apple: "/logo2.jpeg",
+    },
     alternates: {
       canonical: canonical.toString(),
       languages,
