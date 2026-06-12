@@ -10,6 +10,7 @@ export const useChatActionsModal = () => {
     triggerChatsRefresh,
     activeConversationId,
     setActiveConversationId,
+    setMessages,
     updateChatTitle,
   } = useChatStore();
   const { updateConversation } = useUpdateConversation();
@@ -26,9 +27,10 @@ export const useChatActionsModal = () => {
         throw new Error("Failed to delete conversation");
       }
 
-      // If deleted chat was active, clear selection
+      // If deleted chat was active, clear selection and messages
       if (activeConversationId === chatId) {
         setActiveConversationId(null);
+        setMessages([]);
       }
 
       // Refresh sidebar list
