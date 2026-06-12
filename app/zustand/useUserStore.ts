@@ -16,6 +16,9 @@ interface UserStore {
   setUser: (data: Partial<UserData>) => void;
   setFetchedUser: (data: UserData) => void;
 
+  editProfileName: string;
+  setEditProfileName: (name: string) => void;
+
   isEditProfileOpen: boolean;
   openEditProfile: () => void;
   closeEditProfile: () => void;
@@ -29,7 +32,14 @@ export const useUserStore = create<UserStore>((set) => ({
 
   setFetchedUser: (data) => set({ user: data }),
 
+  editProfileName: "",
+  setEditProfileName: (name) => set({ editProfileName: name }),
+
   isEditProfileOpen: false,
-  openEditProfile: () => set({ isEditProfileOpen: true }),
-  closeEditProfile: () => set({ isEditProfileOpen: false }),
+  openEditProfile: () =>
+    set((state) => ({
+      isEditProfileOpen: true,
+      editProfileName: state.user?.fullName || "",
+    })),
+  closeEditProfile: () => set({ isEditProfileOpen: false, editProfileName: "" }),
 }));

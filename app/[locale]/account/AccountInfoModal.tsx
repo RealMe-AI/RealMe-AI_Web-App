@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, CreditCard } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { useUserProfile } from "./useUserProfile";
+import { useUserProfile } from "@/app/hooks/user/useUserProfile";
 
 import AvatarEditor from "./AvatarEditor";
 

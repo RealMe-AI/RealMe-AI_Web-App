@@ -3,13 +3,24 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-function decodeTokenExpiry(token: string): number | null {
+function decodeTokenPayload(token: string): Record<string, unknown> | null {
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.exp ? payload.exp * 1000 : null;
+    return JSON.parse(atob(token.split(".")[1]));
   } catch {
     return null;
   }
+}
+
+function decodeTokenExpiry(token: string): number | null {
+  const payload = decodeTokenPayload(token);
+  return payload?.exp ? (payload.exp as number) * 1000 : null;
+}
+
+export function getUserIdFromToken(): string | null {
+  const { accessToken } = useAuthStore.getState();
+  if (!accessToken) return null;
+  const payload = decodeTokenPayload(accessToken);
+  return (payload?.sub as string) || (payload?.id as string) || null;
 }
 
 interface AuthState {
