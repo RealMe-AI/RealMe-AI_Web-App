@@ -2,65 +2,23 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useState, useEffect } from "react";
 import { useUserStore } from "../../zustand/useUserStore";
 import { useTranslations } from "next-intl";
-import { baseUrl } from "@/app/lib/baseUrl";
-import { authFetch } from "@/app/lib/apiClient";
-
-interface UpdateProfileResponse {
-  name?: string;
-  picture?: string;
-  preferences?: {
-    theme?: string;
-    language?: string;
-    aiModel?: string;
-  };
-  message?: string;
-}
+import useUpdateProfile from "@/app/hooks/user/useUpdateProfile";
 
 export default function EditProfileModal() {
   const t = useTranslations();
 
-  const { user, setUser, isEditProfileOpen, closeEditProfile } = useUserStore();
-  const [fullName, setFullName] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-
-  useEffect(() => {
-    if (user?.fullName) setFullName(user.fullName);
-  }, [user]);
+  const { editProfileName, setEditProfileName, isEditProfileOpen, closeEditProfile } = useUserStore();
+  const { updateProfile, isUpdating, error } = useUpdateProfile();
 
   const handleSave = async () => {
-    if (!fullName.trim()) {
-      setError(t("modal_edit_profile.error_empty_name"));
+    if (!editProfileName.trim()) {
       return;
     }
 
-    setLoading(true);
-    setError("");
-
-    try {
-      const res = await authFetch(`${baseUrl}/users/profile`, {
-        method: "PATCH",
-        body: JSON.stringify({ name: fullName }),
-      });
-
-      const data: UpdateProfileResponse = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || t("modal_edit.no_data.success"));
-      }
-
-      // Update store with the returned name or the one we sent
-      setUser({ fullName: data.name || fullName });
-      closeEditProfile();
-    } catch (err: unknown) {
-      if (err instanceof Error) setError(err.message);
-      else setError(t("modal_edit.no_data.success"));
-    } finally {
-      setLoading(false);
-    }
+    const success = await updateProfile(editProfileName);
+    if (success) closeEditProfile();
   };
 
   return (
@@ -97,8 +55,8 @@ export default function EditProfileModal() {
 
                 <input
                   type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={editProfileName}
+                  onChange={(e) => setEditProfileName(e.target.value)}
                   className="p-2 rounded-lg text-slate-700 dark:text-white bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 focus:outline-none"
                   placeholder={t("modal.edit_profile.name_placeholder")}
                 />
@@ -108,14 +66,14 @@ export default function EditProfileModal() {
 
               <button
                 onClick={handleSave}
-                disabled={loading}
+                disabled={isUpdating}
                 className={`w-full px-4 py-2 rounded-lg text-white shadow-md transition ${
-                  loading
+                  isUpdating
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-indigo-600 hover:bg-indigo-700"
                 }`}
               >
-                {loading
+                {isUpdating
                   ? t("modal.saving")
                   : t("modal.edit_profile.save_button")}
               </button>

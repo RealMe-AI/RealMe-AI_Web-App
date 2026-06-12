@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useTranslate } from "@/app/hooks/useTranslate";
 import { useRouter } from "@/i18n/routing";
-import { useUserProfile } from "../../account/useUserProfile";
+import { useUserProfile } from "@/app/hooks/user/useUserProfile";
 import { cn } from "@/app/lib/utils";
 import useLogout from "@/app/hooks/auth/useLogout";
 

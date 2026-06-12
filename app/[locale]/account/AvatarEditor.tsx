@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 import AvatarCropper from "./AvatarCropper";
-import { useAvatarEditor } from "./useAvatarEditor";
+import { useAvatarEditor } from "@/app/hooks/user/useAvatarEditor";
 
 interface Props {
   src: string;
