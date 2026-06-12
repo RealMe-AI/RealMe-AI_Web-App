@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share, Edit2, Pin, Trash2 } from "lucide-react";
+import { Share, Pencil, Pin, Trash2 } from "lucide-react";
 import { useChatActionsModal } from "./useChatActionsModal";
 
 interface ChatActionsModalProps {
@@ -81,7 +81,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
                 onClick={() => handleItemClick(onRename, defaultRename)}
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
-                <Edit2 size={16} />
+                <Pencil size={16} />
                 <span>Rename</span>
               </li>
 
@@ -97,7 +97,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
               {/* Delete */}
               <li
                 onClick={() => handleItemClick(onDelete, defaultDelete)}
-                className="flex items-center gap-2 px-4 py-2 hover:bg-red-100 dark:hover:bg-red-700 text-red-600 dark:text-red-400 cursor-pointer transition"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-red-100 dark:hover:bg-red-800/20 text-red-600 dark:text-red-400 cursor-pointer transition"
               >
                 <Trash2 size={16} />
                 <span>Delete</span>

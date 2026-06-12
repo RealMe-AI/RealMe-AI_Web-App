@@ -28,7 +28,7 @@ const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-60 bg-black/40 backdrop-blur-sm"
           />
 
           {/* Modal */}
@@ -36,7 +36,7 @@ const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none"
+            className="fixed inset-0 z-70 flex items-center justify-center p-4 pointer-events-none"
           >
             <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl w-full max-w-sm pointer-events-auto border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="p-6">

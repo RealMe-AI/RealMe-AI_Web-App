@@ -100,7 +100,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Danger */}
               <Section title={t("settings.danger_zone.label")}>
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/60 transition">
+                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/20 transition">
                   <Trash2 size={16} /> {t("settings.delete_account")}
                 </button>
               </Section>
