@@ -17,14 +17,12 @@ export function useTranslate(): UseTranslateReturn {
 
   // Detect browser language on first load
   useEffect(() => {
-    const storedLang = localStorage.getItem("realme-language") as Language | null;
-    if (!storedLang) {
+    if (language === "en" && !localStorage.getItem("realme-language")) {
       const browserLang = (navigator.language.slice(0, 2) as Language) ?? "en";
       const langToSet = SUPPORTED_LANGS.includes(browserLang) ? browserLang : "en";
       setLanguage(langToSet);
-      localStorage.setItem("realme-language", langToSet);
     }
-  }, [setLanguage]);
+  }, [language, setLanguage]);
 
   // Translation function using Next-Intl
   // The key can be nested like "landing.hero.title"

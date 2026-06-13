@@ -22,11 +22,6 @@ export function useSettings() {
     return saved ?? "system";
   });
 
-  const [language, setLanguage] = useState<string>(() => {
-    if (typeof window === "undefined") return "en";
-    return localStorage.getItem("user-language") ?? "en";
-  });
-
   const [notifications, setNotifications] = useState(() => {
     if (typeof window === "undefined") return { email: true };
     const saved = localStorage.getItem("user-notifications");
@@ -50,16 +45,13 @@ export function useSettings() {
     if (!isInitialized) return;
 
     localStorage.setItem("user-theme", theme);
-    localStorage.setItem("user-language", language);
     localStorage.setItem("user-notifications", JSON.stringify(notifications));
-  }, [theme, language, notifications, isInitialized]);
+  }, [theme, notifications, isInitialized]);
 
   return {
     user,
     theme,
     setTheme,
-    language,
-    setLanguage,
     notifications,
     setNotifications,
   };
