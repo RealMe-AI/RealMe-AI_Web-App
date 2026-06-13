@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "../theme-provider/theme-provider";
+
 import { getStructuredData } from "../seo/structuredData";
 import type { Metadata } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
@@ -114,14 +114,12 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={`${poppins.className} antialiased`}>
         <StructuredData data={{ "@graph": structuredData }} />
-        <ThemeProvider>
-          <AuthProvider>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              <StatusBarHandler />
-              <ToastProvider>{children}</ToastProvider>
-            </NextIntlClientProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <StatusBarHandler />
+            <ToastProvider>{children}</ToastProvider>
+          </NextIntlClientProvider>
+        </AuthProvider>
       </body>
     </html>
   );

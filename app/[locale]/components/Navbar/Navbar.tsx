@@ -14,7 +14,7 @@ import MobileNav from "./MobileNav";
 
 export default function Navbar({ isOpen, setIsOpen, active }: Props) {
   useBackdrop(isOpen);
-  const { theme, toggleTheme } = useThemeStore();
+  const { resolvedTheme, toggleTheme } = useThemeStore();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-sm">
@@ -48,7 +48,7 @@ export default function Navbar({ isOpen, setIsOpen, active }: Props) {
             hover:bg-gray-200 dark:hover:bg-slate-600
             text-slate-700 dark:text-gray-100"
           >
-            {theme === "light" ? <Sun size={16} /> : <Moon size={16} />}
+            {resolvedTheme === "light" ? <Sun size={16} /> : <Moon size={16} />}
           </motion.button>
 
           {/* Hamburger */}

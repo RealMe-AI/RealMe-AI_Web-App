@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSettings } from "../../hooks/useSettings";
 import { useParams } from "next/navigation";
+import { useLanguageStore, type Language } from "@/app/zustand/useLanguageStore";
 
 import CustomSelect from "./CustomSelect";
 
@@ -11,12 +11,11 @@ export default function LanguageSelect() {
   const t = useTranslations();
   const router = useRouter();
   const params = useParams();
-  const { setLanguage } = useSettings();
 
   const currentLocale = params.locale as string;
 
   const handleChange = (value: string) => {
-    setLanguage(value);
+    useLanguageStore.getState().setLanguage(value as Language);
 
     const pathname = window.location.pathname;
     const searchParams = new URLSearchParams(window.location.search);
