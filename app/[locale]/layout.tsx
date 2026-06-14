@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
 
-import { getStructuredData } from "../seo/structuredData";
+import { getStructuredData } from "../lib/structuredData";
 import type { Metadata } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
 import { ToastProvider } from "@/app/lib/ToastProvider";

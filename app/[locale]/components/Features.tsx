@@ -1,6 +1,6 @@
 "use client";
 
-import { items } from "../../data/featuresData";
+import { items } from "../../constants/featuresData";
 import { JSX } from "react";
 import { Languages, Brain, Mic, History, Shield, Sliders } from "lucide-react";
 import { useTranslate } from "../../hooks/useTranslate";

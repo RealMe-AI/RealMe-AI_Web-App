@@ -1,6 +1,6 @@
 "use client";
 
-import SplashScreen from "../slash-screen/SplashScreen";
+import SplashScreen from "../splash-screen/SplashScreen";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
