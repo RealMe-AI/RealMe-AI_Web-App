@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
-import { Chat } from "@/app/types/type";
+import { Chat } from "@/app/interface/type";
 import { useLanguageStore } from "@/app/store/useLanguageStore";
 
 export function useCreateConversation() {

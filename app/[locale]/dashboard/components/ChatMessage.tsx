@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChatMessageProps } from "@/app/types/type";
+import { ChatMessageProps } from "@/app/interface/type";
 import { cn } from "@/app/lib/utils";
 import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
@@ -133,7 +133,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       <div className="max-w-3xl mx-auto px-4 py-2 group">
         <div className={cn("flex items-start gap-4", isUser && "justify-end")}>
           {/* Message */}
-          <div className={cn(
+          <div
+            className={cn(
               "flex flex-col gap-1",
               isUser ? "items-end" : "items-start",
             )}
@@ -165,8 +166,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                 {message.type === "file" && renderFilePreview()}
                 {message.type === "audio" && renderAudioBubble()}
 
-                {message.text && (
-                  isUser ? (
+                {message.text &&
+                  (isUser ? (
                     <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200">
                       {message.text}
                     </p>
@@ -174,14 +175,18 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                     <div className="text-sm leading-relaxed text-slate-800 dark:text-slate-200">
                       {parseMarkdown(message.text)}
                     </div>
-                  )
-                )}
+                  ))}
               </div>
             </div>
 
-            <div className={cn("flex w-full text-[10px] opacity-60 px-1 max-md:hidden lg:opacity-0 lg:group-hover:opacity-100 transition-opacity", isUser ? "justify-end" : "justify-start")}>
+            <div
+              className={cn(
+                "flex w-full text-[10px] opacity-60 px-1 max-md:hidden lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",
+                isUser ? "justify-end" : "justify-start",
+              )}
+            >
               {/* <span>{message.time}</span> */}
-              <MessageActions sender={message.sender}/>
+              <MessageActions sender={message.sender} />
             </div>
           </div>
         </div>

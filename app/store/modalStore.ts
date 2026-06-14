@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ModalState } from "../types/type";
+import { ModalState } from "../interface/type";
 
 // zustand/dashboard
 
