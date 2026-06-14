@@ -3,7 +3,7 @@
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
 import { useBackdrop } from "@/app/hooks/useBackdrop";
-import { useThemeStore } from "@/app/zustand/useThemeStore";
+import { useThemeStore } from "@/app/store/useThemeStore";
 import { Props } from "@/app/types/type";
 import { Link } from "@/i18n/routing";
 

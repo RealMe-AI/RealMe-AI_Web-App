@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
-import { useUserStore } from "@/app/zustand/useUserStore";
+import { useUserStore } from "@/app/store/useUserStore";
 
 interface UpdateProfileResponse {
   name?: string;
@@ -40,7 +40,8 @@ export default function useUpdateProfile() {
       setUser({ fullName: data.name || name });
       return true;
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Failed to update profile";
+      const msg =
+        err instanceof Error ? err.message : "Failed to update profile";
       setError(msg);
       return false;
     } finally {

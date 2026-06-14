@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useThemeStore } from "../../zustand/useThemeStore";
+import { useThemeStore } from "../../store/useThemeStore";
 
 import CustomSelect from "./CustomSelect";
 

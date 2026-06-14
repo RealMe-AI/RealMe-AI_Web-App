@@ -11,7 +11,7 @@ import useLogout from "@/app/hooks/auth/useLogout";
 import Image from "next/image";
 import AccountInfoModal from "./../../account/AccountInfoModal";
 import SettingsPanel from "./../../setting/SettingsPanel";
-import useModalStore from "../../../zustand/modalStore";
+import useModalStore from "../../../store/modalStore";
 
 export default function ProfileFooter() {
   const {

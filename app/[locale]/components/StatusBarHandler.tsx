@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useThemeStore } from "@/app/zustand/useThemeStore";
+import { useThemeStore } from "@/app/store/useThemeStore";
 
 export function StatusBarHandler() {
   const resolvedTheme = useThemeStore((s) => s.resolvedTheme);

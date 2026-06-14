@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useChatStore } from "@/app/zustand/useChatStore";
+import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";

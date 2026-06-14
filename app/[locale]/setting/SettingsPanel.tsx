@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Trash2, Pencil } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
-import { useUserStore } from "../../zustand/useUserStore";
+import { useUserStore } from "../../store/useUserStore";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import useDeleteAccount from "@/app/hooks/user/useDeleteAccount";

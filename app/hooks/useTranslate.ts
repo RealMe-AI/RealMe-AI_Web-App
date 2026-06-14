@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useLanguageStore, type Language } from "../zustand/useLanguageStore";
+import { useLanguageStore, type Language } from "../store/useLanguageStore";
 import { useEffect } from "react";
 
 const SUPPORTED_LANGS: Language[] = ["en", "ha", "ig", "yo"];
@@ -19,7 +19,9 @@ export function useTranslate(): UseTranslateReturn {
   useEffect(() => {
     if (language === "en" && !localStorage.getItem("realme-language")) {
       const browserLang = (navigator.language.slice(0, 2) as Language) ?? "en";
-      const langToSet = SUPPORTED_LANGS.includes(browserLang) ? browserLang : "en";
+      const langToSet = SUPPORTED_LANGS.includes(browserLang)
+        ? browserLang
+        : "en";
       setLanguage(langToSet);
     }
   }, [language, setLanguage]);

@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { useAuthStore } from "@/app/store/useAuthStore";
 import { baseUrl } from "./baseUrl";
 
 let isRefreshing = false;
@@ -69,7 +69,7 @@ function redirectToAuth() {
 
 export async function authFetch(
   input: RequestInfo | URL,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<Response> {
   const token = await getFreshToken();
 
@@ -80,7 +80,11 @@ export async function authFetch(
 
   const headers = new Headers(init?.headers);
   headers.set("Authorization", `Bearer ${token}`);
-  if (!headers.has("Content-Type") && init?.method !== "GET" && !(init?.body instanceof FormData)) {
+  if (
+    !headers.has("Content-Type") &&
+    init?.method !== "GET" &&
+    !(init?.body instanceof FormData)
+  ) {
     headers.set("Content-Type", "application/json");
   }
 
@@ -96,7 +100,11 @@ export async function authFetch(
 
     const retryHeaders = new Headers(init?.headers);
     retryHeaders.set("Authorization", `Bearer ${newToken}`);
-    if (!retryHeaders.has("Content-Type") && init?.method !== "GET" && !(init?.body instanceof FormData)) {
+    if (
+      !retryHeaders.has("Content-Type") &&
+      init?.method !== "GET" &&
+      !(init?.body instanceof FormData)
+    ) {
       retryHeaders.set("Content-Type", "application/json");
     }
 

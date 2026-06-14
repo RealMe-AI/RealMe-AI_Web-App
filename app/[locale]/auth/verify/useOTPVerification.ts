@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { useSignUpStore } from "@/app/zustand/useSignUpStore";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { useSignUpStore } from "@/app/store/useSignUpStore";
+import { useAuthStore } from "@/app/store/useAuthStore";
 import { baseUrl } from "@/app/lib/baseUrl";
 
 export function useOTPVerification() {
@@ -85,10 +85,9 @@ export function useOTPVerification() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        const msg =
-          Array.isArray(data.message)
-            ? data.message.join(", ")
-            : data.error || data.message || "Invalid code";
+        const msg = Array.isArray(data.message)
+          ? data.message.join(", ")
+          : data.error || data.message || "Invalid code";
         throw new Error(msg);
       }
 

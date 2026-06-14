@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { useAuthStore } from "@/app/store/useAuthStore";
 import { baseUrl } from "@/app/lib/baseUrl";
 
 export default function useLogout() {

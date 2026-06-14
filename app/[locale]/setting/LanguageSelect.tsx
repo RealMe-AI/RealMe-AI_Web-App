@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
-import { useLanguageStore, type Language } from "@/app/zustand/useLanguageStore";
+import { useLanguageStore, type Language } from "@/app/store/useLanguageStore";
 
 import CustomSelect from "./CustomSelect";
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslate } from "../useTranslate";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useRouter } from "@/i18n/routing";
-import { useSignUpStore } from "@/app/zustand/useSignUpStore";
+import { useSignUpStore } from "@/app/store/useSignUpStore";
 
 type FieldErrors = {
   login: string | null;

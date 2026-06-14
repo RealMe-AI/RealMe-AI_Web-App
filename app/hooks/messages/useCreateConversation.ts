@@ -2,7 +2,7 @@ import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
 import { Chat } from "@/app/types/type";
-import { useLanguageStore } from "@/app/zustand/useLanguageStore";
+import { useLanguageStore } from "@/app/store/useLanguageStore";
 
 export function useCreateConversation() {
   const [isCreating, setIsCreating] = useState(false);
@@ -35,7 +35,9 @@ export function useCreateConversation() {
       return safeChat;
     } catch (err) {
       console.error("Create conversation error:", err);
-      setError(err instanceof Error ? err.message : "Failed to create conversation");
+      setError(
+        err instanceof Error ? err.message : "Failed to create conversation",
+      );
       return null;
     } finally {
       setIsCreating(false);

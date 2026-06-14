@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 import { useState, useEffect } from "react";
 import { useSplashScreen } from "../hooks/useSplashScreen";
 import { useRouter } from "@/i18n/routing";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export default function Home() {
   const { mounted, showSplash, finishSplash } = useSplashScreen();

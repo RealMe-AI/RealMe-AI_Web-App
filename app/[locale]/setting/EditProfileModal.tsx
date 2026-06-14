@@ -2,14 +2,19 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useUserStore } from "../../zustand/useUserStore";
+import { useUserStore } from "../../store/useUserStore";
 import { useTranslations } from "next-intl";
 import useUpdateProfile from "@/app/hooks/user/useUpdateProfile";
 
 export default function EditProfileModal() {
   const t = useTranslations();
 
-  const { editProfileName, setEditProfileName, isEditProfileOpen, closeEditProfile } = useUserStore();
+  const {
+    editProfileName,
+    setEditProfileName,
+    isEditProfileOpen,
+    closeEditProfile,
+  } = useUserStore();
   const { updateProfile, isUpdating, error } = useUpdateProfile();
 
   const handleSave = async () => {
