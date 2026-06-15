@@ -186,7 +186,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               )}
             >
               {/* <span>{message.time}</span> */}
-              <MessageActions sender={message.sender} />
+              <MessageActions sender={message.sender} text={message.text} />
             </div>
           </div>
         </div>
