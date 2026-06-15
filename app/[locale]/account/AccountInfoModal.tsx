@@ -24,19 +24,22 @@ export default function AccountInfoModal({
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-        >
+        <>
           <motion.div
-            initial={{ y: 50, opacity: 0, scale: 0.95 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 50, opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.25 }}
-            className="relative w-[90%] max-w-md bg-white/70 dark:bg-slate-800/80 
-                       backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20"
+            onClick={close}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+            <motion.div
+              initial={{ y: 50, opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 50, opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+              className="relative w-[90%] max-w-md bg-white/70 dark:bg-slate-800/80 
+                       backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 pointer-events-auto"
           >
             {/* Close Button */}
             <button
@@ -120,7 +123,8 @@ export default function AccountInfoModal({
               {t("account_info.manage_subscription")}
             </button>
           </motion.div>
-        </motion.div>
+        </div>
+      </>
       )}
     </AnimatePresence>
   );

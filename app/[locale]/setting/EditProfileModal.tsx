@@ -29,17 +29,20 @@ export default function EditProfileModal() {
   return (
     <AnimatePresence>
       {isEditProfileOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-        >
+        <>
           <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 40, opacity: 0 }}
-            className="w-[90%] max-w-md bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl relative"
+            onClick={closeEditProfile}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-60 bg-black/40 backdrop-blur-sm"
+          />
+          <div className="fixed inset-0 z-60 flex items-center justify-center pointer-events-none">
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 40, opacity: 0 }}
+              className="w-[90%] max-w-md bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-6 rounded-2xl shadow-xl relative pointer-events-auto"
           >
             <button
               onClick={closeEditProfile}
@@ -84,7 +87,8 @@ export default function EditProfileModal() {
               </button>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
+      </>
       )}
     </AnimatePresence>
   );

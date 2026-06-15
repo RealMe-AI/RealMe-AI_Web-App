@@ -33,17 +33,19 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
       {open && (
         <>
           <motion.div
+            onClick={close}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-          >
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
             <motion.div
               initial={{ y: 50, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 50, opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="relative w-[95%] max-w-2xl bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto lg:overflow-y-hidden max-h-[90vh]"
+              className="relative w-[95%] max-w-2xl bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto lg:overflow-y-hidden max-h-[90vh] pointer-events-auto"
             >
               <button
                 onClick={close}
@@ -113,7 +115,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                 </button>
               </Section>
             </motion.div>
-          </motion.div>
+          </div>
 
           <EditProfileModal />
 
