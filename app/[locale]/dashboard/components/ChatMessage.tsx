@@ -130,12 +130,12 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       transition={{ duration: 0.25 }}
       className="w-full"
     >
-      <div className="max-w-3xl mx-auto px-4 py-2 group">
+      <div className="max-w-3xl mx-auto py-2 group">
         <div className={cn("flex items-start gap-4", isUser && "justify-end")}>
           {/* Message */}
           <div
             className={cn(
-              "flex flex-col gap-1",
+              "flex flex-col gap-1 min-w-0",
               isUser ? "items-end" : "items-start",
             )}
           >

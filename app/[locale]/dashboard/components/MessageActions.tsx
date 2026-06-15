@@ -28,9 +28,11 @@ export default function MessageActions({
         </button>
       </Tooltip>
       {sender === "user" && (
-        <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
-          <Pencil size={14} className="text-slate-700 dark:text-slate-200" />
-        </button>
+        <Tooltip content="Edit Message">
+          <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
+            <Pencil size={14} className="text-slate-700 dark:text-slate-200" />
+          </button>
+        </Tooltip>
       )}
     </div>
   );
