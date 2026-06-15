@@ -7,9 +7,11 @@ import Tooltip from "@/app/[locale]/components/ui/Tooltip";
 export default function MessageActions({
   sender,
   text,
+  onEdit,
 }: {
   sender: "user" | "ai";
   text?: string;
+  onEdit?: () => void;
 }) {
   const { copied, copy } = useCopyToClipboard();
 
@@ -29,7 +31,10 @@ export default function MessageActions({
       </Tooltip>
       {sender === "user" && (
         <Tooltip content="Edit Message">
-          <button className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
+          <button
+            onClick={onEdit}
+            className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"
+          >
             <Pencil size={14} className="text-slate-700 dark:text-slate-200" />
           </button>
         </Tooltip>

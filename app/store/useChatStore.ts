@@ -33,6 +33,10 @@ export const useChatStore = create<ChatState>((set) => ({
         msg.id === id ? { ...msg, ...updates } : msg,
       ),
     })),
+  removeMessage: (id) =>
+    set((state) => ({
+      messages: state.messages.filter((msg) => msg.id !== id),
+    })),
   setIsLoading: (isLoading) => set({ isLoading }),
   setActiveConversationId: (id) => set({ activeConversationId: id }),
 

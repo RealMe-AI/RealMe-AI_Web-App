@@ -66,6 +66,7 @@ export type ChatState = {
   updateChatTitle: (id: number, title: string) => void;
   addMessage: (message: Message) => void;
   updateMessage: (id: string, updates: Partial<Message>) => void;
+  removeMessage: (id: string) => void;
   setIsLoading: (isLoading: boolean) => void;
   setActiveConversationId: (id: number | null) => void;
   chatsRefreshSignal: number;
