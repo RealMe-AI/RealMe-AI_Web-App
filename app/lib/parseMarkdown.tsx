@@ -1,7 +1,7 @@
 import React from "react";
 import hljs from "highlight.js";
 import { Copy, Check } from "lucide-react";
-import { useCopyToClipboard } from "@/app/hooks/useCopyToClipboard";
+import { useCopyToClipboard } from "@/app/hooks/copyToClipboard/useCopyToClipboard";
 
 type ParsedSegment =
   | { type: "code"; language: string; code: string }
@@ -231,13 +231,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
   });
 }
 
-function CodeBlock({
-  language,
-  code,
-}: {
-  language: string;
-  code: string;
-}) {
+function CodeBlock({ language, code }: { language: string; code: string }) {
   const { copied, copy } = useCopyToClipboard();
 
   let highlighted: string;
@@ -285,7 +279,9 @@ export default function parseMarkdown(text: string): React.ReactNode[] {
     // Code block
     const codeMatch = block.match(/^```(\w*)\n([\s\S]*?)```$/);
     if (codeMatch) {
-      elements.push(<CodeBlock key={key++} language={codeMatch[1]} code={codeMatch[2]} />);
+      elements.push(
+        <CodeBlock key={key++} language={codeMatch[1]} code={codeMatch[2]} />,
+      );
       continue;
     }
 
