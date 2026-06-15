@@ -144,7 +144,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               className={cn(
                 "flex gap-3 rounded-2xl min-w-0 select-text outline-none focus:ring-0 caret-transparent",
                 isUser
-                  ? "py-2 max-w-[85%] sm:max-w-[75%] wrap-break-words [word-break:break-word] wrap-anywhere px-4 bg-slate-100 dark:bg-slate-700/40 text-slate-900 dark:text-white"
+                  ? "py-2 max-w-sm wrap-break-words [word-break:break-word] wrap-anywhere px-4 bg-slate-100 dark:bg-slate-700/40 text-slate-900 dark:text-white"
                   : "w-full text-slate-900 dark:text-white",
               )}
             >
@@ -181,7 +181,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
             <div
               className={cn(
-                "flex w-full text-[10px] opacity-60 px-1 max-md:hidden lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",
+                "flex w-full text-[10px] opacity-60 px-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",
                 isUser ? "justify-end" : "justify-start",
               )}
             >
