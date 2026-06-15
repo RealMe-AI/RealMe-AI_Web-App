@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Trash2, Pencil } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
-import { useUserStore } from "../../zustand/useUserStore";
+import { useUserStore } from "../../store/useUserStore";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import useDeleteAccount from "@/app/hooks/user/useDeleteAccount";
+import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 
 import ThemeSelect from "./ThemeSelect";
 import EditProfileModal from "./EditProfileModal";
@@ -22,23 +25,27 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
   const { notifications, setNotifications } = useSettings();
 
   const openEditProfile = useUserStore((s) => s.openEditProfile);
+  const { handleDeleteAccount, isDeleting } = useDeleteAccount();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
     <AnimatePresence>
       {open && (
         <>
           <motion.div
+            onClick={close}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-          >
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
             <motion.div
               initial={{ y: 50, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 50, opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="relative w-[95%] max-w-2xl bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto lg:overflow-y-hidden max-h-[90vh]"
+              className="relative w-[95%] max-w-2xl bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto lg:overflow-y-hidden max-h-[90vh] pointer-events-auto"
             >
               <button
                 onClick={close}
@@ -100,14 +107,26 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
 
               {/* Danger */}
               <Section title={t("settings.danger_zone.label")}>
-                <button className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/20 transition">
+                <button
+                  onClick={() => setIsDeleteModalOpen(true)}
+                  className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/20 transition"
+                >
                   <Trash2 size={16} /> {t("settings.delete_account")}
                 </button>
               </Section>
             </motion.div>
-          </motion.div>
+          </div>
 
           <EditProfileModal />
+
+          <DeleteConfirmationModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            onConfirm={handleDeleteAccount}
+            title="Delete Account?"
+            message="This will permanently delete your account and all associated data. This action cannot be undone."
+            isLoading={isDeleting}
+          />
         </>
       )}
     </AnimatePresence>

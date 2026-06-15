@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import OTPInput from "./OTPInput";
 import { useOTPVerification } from "./useOTPVerification";
-import { useSignUpStore } from "@/app/zustand/useSignUpStore";
+import { useSignUpStore } from "@/app/store/useSignUpStore";
 
 export default function VerifyPage() {
   const {

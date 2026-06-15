@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslate } from "../useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useAuthStore } from "@/app/zustand/useAuthStore";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 interface LoginErrorResponse {
   error?: string;
@@ -42,7 +42,6 @@ export default function useSignIn() {
   const isPhone = (v: string) => /^\+?[1-9]\d{1,14}$/.test(v.trim());
 
   const validate = () => {
-
     const errs = {
       identifier: null as string | null,
       password: null as string | null,
@@ -73,10 +72,10 @@ export default function useSignIn() {
   const verifyToken = async (token: string): Promise<boolean> => {
     try {
       console.log("[SignIn] Verifying token with test request...");
-      
+
       const res = await fetch(`${baseUrl}/conversations?page=1&limit=1`, {
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -96,7 +95,6 @@ export default function useSignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
 
     if (!validate()) {
       console.warn("[SignIn] Validation failed");
@@ -153,7 +151,6 @@ export default function useSignIn() {
         return;
       }
 
-
       //  Store token
       useAuthStore.getState().setTokens({
         accessToken,
@@ -166,7 +163,9 @@ export default function useSignIn() {
       if (!isTokenValid) {
         console.error("[SignIn] Token verification failed");
         useAuthStore.getState().clearAuth(); // Clean up invalid token
-        setError("Login successful but unable to access dashboard. Please try again.");
+        setError(
+          "Login successful but unable to access dashboard. Please try again.",
+        );
         setLoading(false);
         return;
       }

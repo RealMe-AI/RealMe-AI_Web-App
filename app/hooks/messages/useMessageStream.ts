@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useChatStore } from "@/app/zustand/useChatStore";
+import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";
-import { Message } from "@/app/types/type";
+import { Message } from "@/app/interface/type";
 
 function now() {
   return new Date().toLocaleTimeString([], {

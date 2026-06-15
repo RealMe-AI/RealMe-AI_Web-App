@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, File } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useSendFileMessage } from "../../../zustand/sendFileMessage";
+import { useSendFileMessage } from "../../../store/sendFileMessage";
 import { useTranslations } from "next-intl";
 
 interface FileUploadPopupProps {
@@ -17,7 +17,9 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
 
   const addPendingFile = useSendFileMessage((state) => state.addPendingFile);
-  const dailyUploadCount = useSendFileMessage((state) => state.dailyUploadCount);
+  const dailyUploadCount = useSendFileMessage(
+    (state) => state.dailyUploadCount,
+  );
   const plan = useSendFileMessage((state) => state.plan);
 
   const freeLimitReached = plan === "free" && dailyUploadCount >= 3;
@@ -33,7 +35,10 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
   // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
         close();
       }
     };
@@ -55,8 +60,10 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
                    border border-white/20 shadow-xl text-center z-50"
       >
         {/* Arrow Pointer */}
-        <div className="absolute -bottom-2 left-6 w-3 h-3 rotate-45 
-                        bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20" />
+        <div
+          className="absolute -bottom-2 left-6 w-3 h-3 rotate-45 
+                        bg-white/30 dark:bg-slate-800/50 border-r border-b border-white/20"
+        />
 
         <File size={36} className="mx-auto text-indigo-500 mb-2" />
 

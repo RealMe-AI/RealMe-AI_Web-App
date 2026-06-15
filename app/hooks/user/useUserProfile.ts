@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useUserStore } from "@/app/zustand/useUserStore";
+import { useUserStore } from "@/app/store/useUserStore";
 import { authFetch } from "@/app/lib/apiClient";
 
 interface BackendUser {

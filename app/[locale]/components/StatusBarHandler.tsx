@@ -1,27 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useThemeStore } from "@/app/store/useThemeStore";
 
 export function StatusBarHandler() {
-  const { theme, systemTheme } = useTheme();
+  const resolvedTheme = useThemeStore((s) => s.resolvedTheme);
 
   useEffect(() => {
-    // Determine the active theme
-    const activeTheme = theme === "system" ? systemTheme : theme;
+    if (!resolvedTheme) return;
 
-    if (!activeTheme) return;
-
-    // Define colors for each theme
     const colors = {
       light: "#ffffff",
       dark: "#0f172a",
     };
 
-    // Select the appropriate color
-    const color = activeTheme === "dark" ? colors.dark : colors.light;
+    const color = resolvedTheme === "dark" ? colors.dark : colors.light;
 
-    // Update or create the theme-color meta tag
     let metaTag = document.querySelector('meta[name="theme-color"]');
 
     if (!metaTag) {
@@ -31,7 +25,7 @@ export function StatusBarHandler() {
     }
 
     metaTag.setAttribute("content", color);
-  }, [theme, systemTheme]);
+  }, [resolvedTheme]);
 
   return null;
 }

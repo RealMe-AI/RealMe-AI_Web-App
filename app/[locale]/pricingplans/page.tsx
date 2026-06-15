@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { freeFeatures, proFeatures } from "../../data/planData";
+import { freeFeatures, proFeatures } from "../../constants/planData";
 import { useRouter } from "@/i18n/routing";
 
 export default function PricingPlans() {

@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
-import { getCroppedImg } from "../../utils/cropUtils";
+import { getCroppedImg } from "../../lib/cropUtils";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import hljs from "highlight.js";
 import { Copy, Check } from "lucide-react";
+import { useCopyToClipboard } from "@/app/hooks/copyToClipboard/useCopyToClipboard";
 
 type ParsedSegment =
   | { type: "code"; language: string; code: string }
@@ -230,14 +231,8 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
   });
 }
 
-function CodeBlock({
-  language,
-  code,
-}: {
-  language: string;
-  code: string;
-}) {
-  const [copied, setCopied] = useState(false);
+function CodeBlock({ language, code }: { language: string; code: string }) {
+  const { copied, copy } = useCopyToClipboard();
 
   let highlighted: string;
 
@@ -251,18 +246,12 @@ function CodeBlock({
     highlighted = hljs.highlightAuto(code).value;
   }
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
   return (
     <div className="my-3 rounded-lg overflow-hidden">
       <div className="relative bg-gray-200 dark:bg-slate-700 px-4 py-1 text-xs font-mono text-gray-600 dark:text-gray-300 uppercase">
         <span>{language || "code"}</span>
         <button
-          onClick={handleCopy}
+          onClick={() => copy(code)}
           className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
           title="Copy code"
         >
@@ -290,7 +279,9 @@ export default function parseMarkdown(text: string): React.ReactNode[] {
     // Code block
     const codeMatch = block.match(/^```(\w*)\n([\s\S]*?)```$/);
     if (codeMatch) {
-      elements.push(<CodeBlock key={key++} language={codeMatch[1]} code={codeMatch[2]} />);
+      elements.push(
+        <CodeBlock key={key++} language={codeMatch[1]} code={codeMatch[2]} />,
+      );
       continue;
     }
 

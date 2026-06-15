@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
-import { useChatStore } from "@/app/zustand/useChatStore";
+import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
-import { RawMessage, Message, MessageResponse } from "@/app/types/type";
+import { RawMessage, Message, MessageResponse } from "@/app/interface/type";
 
 export const useFetchMessages = () => {
   const { setMessages, setIsLoading } = useChatStore();
@@ -13,9 +13,12 @@ export const useFetchMessages = () => {
       useChatStore.setState({ activeConversationId: conversationId });
 
       try {
-        const res = await authFetch(`${baseUrl}/conversations/${conversationId}`, {
-          method: "GET",
-        });
+        const res = await authFetch(
+          `${baseUrl}/conversations/${conversationId}`,
+          {
+            method: "GET",
+          },
+        );
 
         if (!res.ok) throw new Error(`Failed to fetch messages: ${res.status}`);
         const data: MessageResponse = await res.json();

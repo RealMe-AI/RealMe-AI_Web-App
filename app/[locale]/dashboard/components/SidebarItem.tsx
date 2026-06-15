@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import ChatActionsModal from "../chatEdit/ChatActionsModal";
 import { useChatActionsModal } from "../chatEdit/useChatActionsModal";
-import DeleteConfirmationModal from "../chatEdit/DeleteConfirmationModal";
+import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 // import { Check, X as XIcon } from "lucide-react";
 
 interface Chat {

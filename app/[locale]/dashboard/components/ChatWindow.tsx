@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useChatStore } from "@/app/zustand/useChatStore";
+import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
-import { useSendFileMessage } from "@/app/zustand/sendFileMessage";
+import { useSendFileMessage } from "@/app/store/sendFileMessage";
 import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { useUserStore } from "@/app/zustand/useUserStore";
+import { useUserStore } from "@/app/store/useUserStore";
 
 import Image from "next/image";
 import ChatMessage from "./ChatMessage";

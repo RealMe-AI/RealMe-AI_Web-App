@@ -1,4 +1,4 @@
-import { Features } from "../types/type";
+import { Features } from "../interface/type";
 
 export const items: Features[] = [
   { key: "intelligence", icon: "Brain" },

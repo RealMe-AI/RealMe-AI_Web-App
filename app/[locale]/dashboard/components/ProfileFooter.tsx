@@ -11,7 +11,7 @@ import useLogout from "@/app/hooks/auth/useLogout";
 import Image from "next/image";
 import AccountInfoModal from "./../../account/AccountInfoModal";
 import SettingsPanel from "./../../setting/SettingsPanel";
-import useModalStore from "../../../zustand/modalStore";
+import useModalStore from "../../../store/modalStore";
 
 export default function ProfileFooter() {
   const {
@@ -83,14 +83,22 @@ export default function ProfileFooter() {
       {/* Popover Menu */}
       <AnimatePresence>
         {isProfileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.2 }}
-            className="absolute bottom-16 left-0 w-64 bg-white/60 dark:bg-slate-800/90 
+          <>
+            <motion.div
+              onClick={closeAll}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px]"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute bottom-16 left-0 w-64 bg-white/60 dark:bg-slate-800/90 
                        backdrop-blur-xl shadow-lg rounded-xl p-2 z-50"
-          >
+            >
             <button
               onClick={openAccountInfo}
               className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
@@ -126,6 +134,7 @@ export default function ProfileFooter() {
               <LogOut size={16} /> {t("dashboard.sidebar.logout")}
             </button>
           </motion.div>
+        </>
         )}
       </AnimatePresence>
 

@@ -1,33 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { useSettings } from "../../hooks/useSettings";
-import { useThemeStore } from "../../zustand/useThemeStore";
+import { useThemeStore } from "../../store/useThemeStore";
 
 import CustomSelect from "./CustomSelect";
 
 export default function ThemeSelect() {
   const t = useTranslations();
 
-  const { theme, setTheme } = useSettings();
-  const applyTheme = useThemeStore((s) => s.setTheme);
-
-  // Apply saved theme on mount/when theme changes
-  useEffect(() => {
-    if (theme === "system") {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      applyTheme(prefersDark ? "dark" : "light");
-    } else {
-      applyTheme(theme);
-    }
-  }, [theme, applyTheme]);
-
-  const handleThemeChange = (selected: "light" | "dark" | "system") => {
-    setTheme(selected);
-  };
+  const theme = useThemeStore((s) => s.theme);
+  const setTheme = useThemeStore((s) => s.setTheme);
 
   return (
     <CustomSelect
@@ -38,7 +20,7 @@ export default function ThemeSelect() {
         { label: t("settings.theme.System"), value: "system" },
       ]}
       value={theme}
-      onChange={(v) => handleThemeChange(v as "light" | "dark" | "system")}
+      onChange={(v) => setTheme(v as "light" | "dark" | "system")}
       icon={""}
     />
   );

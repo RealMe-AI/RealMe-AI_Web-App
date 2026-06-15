@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ChatState } from "../types/type";
+import { ChatState } from "../interface/type";
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
@@ -32,6 +32,10 @@ export const useChatStore = create<ChatState>((set) => ({
       messages: state.messages.map((msg) =>
         msg.id === id ? { ...msg, ...updates } : msg,
       ),
+    })),
+  removeMessage: (id) =>
+    set((state) => ({
+      messages: state.messages.filter((msg) => msg.id !== id),
     })),
   setIsLoading: (isLoading) => set({ isLoading }),
   setActiveConversationId: (id) => set({ activeConversationId: id }),

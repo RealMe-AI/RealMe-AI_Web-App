@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
-import { useAuthStore, getUserIdFromToken } from "@/app/zustand/useAuthStore";
+import { useAuthStore, getUserIdFromToken } from "@/app/store/useAuthStore";
 
 export default function useDeleteAccount() {
   const router = useRouter();

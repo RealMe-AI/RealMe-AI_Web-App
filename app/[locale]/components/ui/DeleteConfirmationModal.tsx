@@ -8,6 +8,7 @@ interface DeleteConfirmationModalProps {
   onClose: () => void;
   onConfirm: () => void;
   title: string;
+  message?: string;
   isLoading?: boolean;
 }
 
@@ -16,6 +17,7 @@ const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
   onClose,
   onConfirm,
   title,
+  message,
   isLoading = false,
 }) => {
   return (
@@ -45,16 +47,20 @@ const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
                     <AlertTriangle size={24} />
                   </div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    Delete Chat?
+                    {title}
                   </h3>
                 </div>
 
                 <p className="text-slate-600 dark:text-slate-300 mb-6">
-                  This will permanently delete{" "}
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">
-                    `{title}`
-                  </span>
-                  . This action cannot be undone.
+                  {message || (
+                    <>
+                      This will permanently delete{" "}
+                      <span className="font-semibold text-slate-800 dark:text-slate-200">
+                        {title}
+                      </span>
+                      . This action cannot be undone.
+                    </>
+                  )}
                 </p>
 
                 <div className="flex gap-3 justify-end">

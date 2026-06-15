@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { navItems } from "@/app/data/NavData";
+import { navItems } from "@/app/constants/NavData";
 import { Link } from "@/i18n/routing";
 
 import useNavigateToAuth from "@/app/hooks/useNavigateToAuth";
