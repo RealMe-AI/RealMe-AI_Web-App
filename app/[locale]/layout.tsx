@@ -66,7 +66,7 @@ export async function generateMetadata({
       apple: "/logo2.jpeg",
     },
     verification: {
-      google: '1dcR4sLpYgRGy9b8Lmd4ran4XTMuEZhp_sfjRtxGzhI',
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     },
     
     alternates: {
