@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useSendFileMessage } from "@/app/store/sendFileMessage";
-import { Plus, Mic, FileIcon, ArrowUp, Square } from "lucide-react";
+import { Plus, Mic, FileIcon, FileText, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
@@ -153,40 +153,56 @@ export default function ChatWindow() {
         >
           {/* Pending Files Preview */}
           {pendingFiles.length > 0 && (
-            <div className="flex gap-2 overflow-x-auto py-1">
+            <div className="flex gap-2 overflow-x-auto py-2">
               {pendingFiles.map((file, index) => {
                 const ext = file.name.split(".").pop()?.toLowerCase();
                 const isImage = ["png", "jpg", "jpeg", "webp"].includes(
                   ext || "",
                 );
+                const isPdf = ext === "pdf";
+                const fileSize =
+                  file.size < 1024 * 1024
+                    ? `${(file.size / 1024).toFixed(1)} KB`
+                    : `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
                 return (
                   <div
                     key={index}
-                    className="relative shrink-0 w-12 h-12 bg-white/40 dark:bg-slate-700/40 
-                               rounded-lg shadow"
+                    className="relative flex items-center gap-3 bg-white/50 dark:bg-slate-700/50 
+                               rounded-xl shadow-sm p-2 pr-7 shrink-0"
                   >
                     <button
                       onClick={() => removePendingFile(index)}
-                      className="absolute -top-1 -right-2 w-5 h-5 flex items-center 
-                                 justify-center rounded-full bg-red-500 text-white text-xs 
-                                 hover:bg-red-600"
+                      className="absolute -top-2 -right-2 z-10 w-4 h-4 flex items-center 
+                                 justify-center rounded-full bg-red-500 text-white text-sm 
+                                 hover:bg-red-600 shadow"
                     >
                       ×
                     </button>
 
-                    {isImage ? (
-                      <Image
-                        src={URL.createObjectURL(file)}
-                        alt="preview"
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-white/40 dark:bg-slate-700/40 flex items-center justify-center">
+                      {isImage ? (
+                        <Image
+                          src={URL.createObjectURL(file)}
+                          alt="preview"
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : isPdf ? (
+                        <FileText className="w-6 h-6 text-red-500" />
+                      ) : (
                         <FileIcon className="w-6 h-6 text-indigo-500" />
-                      </div>
-                    )}
+                      )}
+                    </div>
+
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-xs font-medium text-slate-800 dark:text-slate-200 truncate max-w-[120px] leading-tight">
+                        {file.name}
+                      </span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+                        {fileSize}
+                      </span>
+                    </div>
                   </div>
                 );
               })}

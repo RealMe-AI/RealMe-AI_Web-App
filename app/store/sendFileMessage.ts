@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-
 export type FileMessage = {
   id: string;
   type: "file";
@@ -10,6 +9,7 @@ export type FileMessage = {
   fileObject: File;
   sender: "user";
   time: string;
+  fileUrl?: string;
 };
 
 export type TextMessage = {
@@ -37,8 +37,12 @@ interface SendFileMessageStore {
 export const useSendFileMessage = create<SendFileMessageStore>((set, get) => {
   const today = new Date().toISOString().split("T")[0];
   const isBrowser = typeof window !== "undefined";
-  const storedCount = isBrowser ? Number(localStorage.getItem("dailyUploadCount") || "0") : 0;
-  const storedDate = isBrowser ? localStorage.getItem("lastUploadDate") || today : null;
+  const storedCount = isBrowser
+    ? Number(localStorage.getItem("dailyUploadCount") || "0")
+    : 0;
+  const storedDate = isBrowser
+    ? localStorage.getItem("lastUploadDate") || today
+    : null;
 
   return {
     messages: [],
@@ -60,10 +64,10 @@ export const useSendFileMessage = create<SendFileMessageStore>((set, get) => {
         date = todayStr;
       }
 
-      if (plan === "free" && count >= 3) {
-        alert("Free plan allows only 3 documents per day.");
-        return;
-      }
+      // if (plan === "free" && count >= 3) {
+      //   alert("Free plan allows only 3 documents per day.");
+      //   return;
+      // }
 
       set((state) => ({
         pendingFiles: [...state.pendingFiles, file],
@@ -86,16 +90,19 @@ export const useSendFileMessage = create<SendFileMessageStore>((set, get) => {
 
     sendFilesWithText: (text) =>
       set((state) => {
-        const newFileMessages: FileMessage[] = state.pendingFiles.map((file) => ({
-          id: Date.now().toString(),
-          type: "file",
-          fileName: file.name,
-          fileSize: file.size,
-          fileType: file.type,
-          fileObject: file,
-          sender: "user",
-          time: new Date().toLocaleTimeString(),
-        }));
+        const newFileMessages: FileMessage[] = state.pendingFiles.map(
+          (file) => ({
+            id: Date.now().toString(),
+            type: "file",
+            fileName: file.name,
+            fileSize: file.size,
+            fileType: file.type,
+            fileObject: file,
+            sender: "user",
+            time: new Date().toLocaleTimeString(),
+            fileUrl: URL.createObjectURL(file),
+          }),
+        );
 
         const newTextMessage: TextMessage[] = text
           ? [
