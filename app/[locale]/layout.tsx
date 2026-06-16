@@ -8,11 +8,8 @@ import type { Metadata } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
 import { ToastProvider } from "@/app/lib/ToastProvider";
 import { AuthProvider } from "./components/AuthProvider";
-
 import StructuredData from "./components/StructuredData";
-
 import "../globals.css";
-
 import { SUPPORTED_LOCALES, type Locale } from "@/app/lib/locales";
 
 const poppins = Poppins({
@@ -63,6 +60,9 @@ export async function generateMetadata({
       icon: "/logo2.jpeg",
       apple: "/logo2.jpeg",
     },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
     alternates: {
       canonical: canonical.toString(),
       languages,
@@ -79,13 +79,7 @@ export async function generateMetadata({
       title,
       description,
       images: images.map((i) => i.url),
-    },
-    other: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-      ? {
-          "google-site-verification":
-            process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-        }
-      : {},
+    }
   };
 }
 

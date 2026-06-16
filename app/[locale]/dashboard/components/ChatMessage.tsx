@@ -96,13 +96,15 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     // IMAGES
     if (["png", "jpg", "jpeg", "webp"].includes(ext || "")) {
       return (
-        <div className="rounded-xl overflow-hidden mb-2">
+        <div className="rounded-xl overflow-hidden mb-2 max-w-[280px]">
           <Image
             src={message.fileUrl}
             alt={message.fileName}
-            width={280}
-            height={280}
-            className="object-cover rounded-xl"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto rounded-xl"
+            unoptimized
           />
         </div>
       );
