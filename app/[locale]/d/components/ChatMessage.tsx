@@ -7,7 +7,7 @@ import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
-import MessageActions from "../components/MessageActions";
+import MessageActions from "./MessageActions";
 import parseMarkdown from "@/app/lib/parseMarkdown";
 import { useEditMessage } from "@/app/hooks/messages/useEditMessage";
 
