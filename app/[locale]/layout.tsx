@@ -66,8 +66,9 @@ export async function generateMetadata({
       apple: "/logo2.jpeg",
     },
     verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      google: '1dcR4sLpYgRGy9b8Lmd4ran4XTMuEZhp_sfjRtxGzhI',
     },
+    
     alternates: {
       canonical: canonical.toString(),
       languages,
