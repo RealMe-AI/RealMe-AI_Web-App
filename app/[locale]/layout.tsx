@@ -37,11 +37,6 @@ export async function generateMetadata({
   const description =
     "RealMe AI — Conversational AI for personal and professional growth.";
 
-  console.log(
-    "GOOGLE VERIFY:",
-    process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-  );
-
   const images = [
     {
       url: `${SITE_URL}/logo2.jpeg`,
@@ -68,7 +63,7 @@ export async function generateMetadata({
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     },
-    
+
     alternates: {
       canonical: canonical.toString(),
       languages,

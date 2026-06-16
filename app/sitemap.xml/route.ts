@@ -2,7 +2,7 @@ import { SUPPORTED_LOCALES } from "@/app/lib/locales";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-const PAGES = ["", "about", "pricingplans", "help", "auth"];
+const PAGES = ["", "about", "pricingplans", "help"];
 
 function buildUrl(path: string, locale: string) {
   const prefix = locale === "en" ? "" : `/${locale}`;
