@@ -60,6 +60,9 @@ export async function generateMetadata({
       icon: "/logo2.jpeg",
       apple: "/logo2.jpeg",
     },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
     alternates: {
       canonical: canonical.toString(),
       languages,
@@ -76,13 +79,7 @@ export async function generateMetadata({
       title,
       description,
       images: images.map((i) => i.url),
-    },
-    other: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-      ? {
-          "google-site-verification":
-            process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-        }
-      : {},
+    }
   };
 }
 
