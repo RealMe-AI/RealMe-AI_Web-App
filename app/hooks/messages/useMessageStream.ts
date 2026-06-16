@@ -4,7 +4,7 @@ import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";
-import { Message } from "@/app/interface/type";
+import { Message, Attachment } from "@/app/interface/type";
 
 function now() {
   return new Date().toLocaleTimeString([], {
@@ -38,15 +38,16 @@ export const useMessageStream = () => {
   const { updateConversation } = useUpdateConversation();
 
   const sendMessage = useCallback(
-    async (content: string) => {
-      if (!content.trim()) return;
+    async (content: string, attachmentIds?: string[], attachments?: Attachment[]) => {
+      if (!content.trim() && (!attachmentIds || attachmentIds.length === 0)) return;
 
       let currentConversationId = activeConversationId;
 
       // Auto-create conversation if none active
       if (!currentConversationId) {
-        const title =
-          content.substring(0, 50) + (content.length > 50 ? "..." : "");
+        const title = content.trim()
+          ? content.substring(0, 50) + (content.length > 50 ? "..." : "")
+          : attachments?.[0]?.fileName ?? "File message";
         const newConv = await createConversation(title);
         if (!newConv) {
           console.error("Failed to create conversation");
@@ -61,9 +62,10 @@ export const useMessageStream = () => {
       const userMsg: Message = {
         id: Date.now().toString(),
         sender: "user",
-        type: "text",
+        type: attachments?.length ? "file" : "text",
         text: content,
         time: now(),
+        attachments: attachments && attachments.length > 0 ? attachments : undefined,
       };
       addMessage(userMsg);
 
@@ -73,13 +75,18 @@ export const useMessageStream = () => {
       setAbortController(controller);
 
       try {
+        const body: Record<string, unknown> = {
+          conversationId: currentConversationId,
+          content,
+          model: "llama-3.1-8b-instant",
+        };
+        if (attachmentIds?.length) {
+          body.attachmentIds = attachmentIds;
+        }
+
         const res = await authFetch(`${baseUrl}/messages/stream`, {
           method: "POST",
-          body: JSON.stringify({
-            conversationId: currentConversationId,
-            content,
-            model: "llama-3.1-8b-instant",
-          }),
+          body: JSON.stringify(body),
         });
 
         if (!res.ok) throw new Error(`Failed to send message: ${res.status}`);
@@ -147,7 +154,7 @@ export const useMessageStream = () => {
         // Update conversation metadata
         if (currentConversationId) {
           await updateConversation(currentConversationId, {
-            lastMessage: content,
+            lastMessage: content || attachments?.[0]?.fileName || "File message",
             updatedAt: new Date().toISOString(),
           });
           triggerChatsRefresh();

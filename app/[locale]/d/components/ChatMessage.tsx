@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChatMessageProps } from "@/app/interface/type";
+import { ChatMessageProps, Attachment } from "@/app/interface/type";
 import { cn } from "@/app/lib/utils";
 import { FileIcon, Mic, FileText } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
-import MessageActions from "./MessageActions";
+import MessageActions from "../components/MessageActions";
 import parseMarkdown from "@/app/lib/parseMarkdown";
 import { useEditMessage } from "@/app/hooks/messages/useEditMessage";
 
@@ -87,13 +87,50 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     e.target.style.height = e.target.scrollHeight + "px";
   };
 
-  // FILE PREVIEW
+  // FILE / ATTACHMENT RENDERER
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const renderAttachment = (att: Attachment) => {
+    const ext = att.fileName.split(".").pop()?.toLowerCase();
+    const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
+
+    if (isImage) {
+      return (
+        <div key={att.id} className="rounded-xl overflow-hidden mb-2 max-w-[280px]">
+          <Image
+            src={att.url}
+            alt={att.fileName}
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto rounded-xl"
+            unoptimized
+          />
+        </div>
+      );
+    }
+
+    const isPdf = ext === "pdf";
+    return (
+      <div key={att.id} className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
+        {isPdf ? <FileText className="w-5 h-5 text-red-500 shrink-0" /> : <FileIcon className="w-5 h-5 text-indigo-500 shrink-0" />}
+        <div className="min-w-0">
+          <span className="text-sm font-medium block truncate max-w-[200px]">{att.fileName}</span>
+          <span className="text-[10px] text-slate-400 dark:text-slate-500">{formatFileSize(att.fileSize)}</span>
+        </div>
+      </div>
+    );
+  };
+
+  // LEGACY FILE PREVIEW (for messages without attachments array)
   const renderFilePreview = () => {
     if (!message.fileUrl || !message.fileName) return null;
 
     const ext = message.fileName.split(".").pop()?.toLowerCase();
 
-    // IMAGES
     if (["png", "jpg", "jpeg", "webp"].includes(ext || "")) {
       return (
         <div className="rounded-xl overflow-hidden mb-2 max-w-[280px]">
@@ -110,7 +147,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       );
     }
 
-    // PDF
     if (ext === "pdf") {
       return (
         <div className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
@@ -120,7 +156,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       );
     }
 
-    // OTHERS (ZIP, DOCX, TXT, PPTX, etc.)
     return (
       <div className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
         <FileIcon className="text-indigo-500" />
@@ -210,7 +245,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
               {/* message container */}
               <div className="min-w-0">
-                {message.type === "file" && renderFilePreview()}
+                {message.attachments?.length
+                  ? message.attachments.map(renderAttachment)
+                  : message.type === "file" && renderFilePreview()}
                 {message.type === "audio" && renderAudioBubble()}
 
                 {message.text &&

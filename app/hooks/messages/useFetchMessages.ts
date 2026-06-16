@@ -40,7 +40,7 @@ export const useFetchMessages = () => {
         const mapRaw = (m: RawMessage): Message => ({
           id: m.id ?? Date.now().toString(),
           sender: getSenderType(m),
-          type: "text",
+          type: m.attachments?.length ? "file" : "text",
           text:
             getSenderType(m) === "ai"
               ? m.content || m.text || ""
@@ -54,6 +54,7 @@ export const useFetchMessages = () => {
                 hour: "2-digit",
                 minute: "2-digit",
               }),
+          attachments: m.attachments?.length ? m.attachments : undefined,
         });
 
         const sortRawMessages = (rawMsgs: RawMessage[]): RawMessage[] => {

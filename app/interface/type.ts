@@ -13,6 +13,16 @@ export type Active = {
   active: string;
 };
 
+export type Attachment = {
+  id: string;
+  type: "image" | "document";
+  mimeType: string;
+  url: string;
+  fileName: string;
+  fileSize: number;
+  extractedContent?: string | null;
+};
+
 // Raw API message type
 export interface RawMessage {
   id: string;
@@ -21,6 +31,7 @@ export interface RawMessage {
   text?: string;
   content?: string;
   createdAt: string;
+  attachments?: Attachment[];
 }
 
 // API response for single message send
@@ -54,6 +65,7 @@ export type Message = {
   mimeType?: string;
   imageUrl?: string;
   audioUrl?: string;
+  attachments?: Attachment[];
 };
 
 export type ChatState = {
@@ -82,22 +94,16 @@ export type ChatMessageProps = {
   message: {
     id: string;
     sender: "user" | "ai";
-    type: "text" | "file" | "image" | "audio"; // NEW
-    // optional because file/image may have no text
+    type: "text" | "file" | "image" | "audio";
     text?: string;
-    // NEW – for uploaded file
     fileUrl?: string;
-    // NEW – original filename
     fileName?: string;
-    // NEW – in bytes
     fileSize?: number;
-    // NEW – e.g. "application/pdf"
     mimeType?: string;
-    // NEW – for image messages
     imageUrl?: string;
-    // NEW – for voice messages
     audioUrl?: string;
     time: string;
+    attachments?: Attachment[];
   };
 };
 
