@@ -105,7 +105,7 @@ export function useOTPVerification() {
       });
 
       //  REDIRECT ONLY AFTER TOKEN EXISTS
-      router.push("/dashboard");
+      router.push("/d");
     } catch (err) {
       console.error("OTP verification error:", err);
       setInvalidCode(true);

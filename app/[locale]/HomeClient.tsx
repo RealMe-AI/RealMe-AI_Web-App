@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const { accessToken } = useAuthStore.getState();
     if (accessToken) {
-      router.push("/dashboard");
+      router.push("/d");
     }
   }, [router]);
 

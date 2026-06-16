@@ -20,6 +20,7 @@ export default function FileUploadPopup({ close, onFileSelected }: FileUploadPop
     const file = e.target.files?.[0];
     if (file) {
       onFileSelected(file);
+      close();
     }
   };
 

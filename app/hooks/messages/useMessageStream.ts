@@ -77,8 +77,7 @@ export const useMessageStream = () => {
       try {
         const body: Record<string, unknown> = {
           conversationId: currentConversationId,
-          content,
-          model: "llama-3.1-8b-instant",
+          content
         };
         if (attachmentIds?.length) {
           body.attachmentIds = attachmentIds;

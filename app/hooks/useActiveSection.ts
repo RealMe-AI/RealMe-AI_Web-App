@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 export function useActiveSection() {
-  const [active, setActive] = useState("#dashboard");
+  const [active, setActive] = useState("#d");
 
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");

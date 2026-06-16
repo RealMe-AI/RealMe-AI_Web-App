@@ -3,7 +3,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export async function GET() {
   const lines = [
     "User-agent: *",
-    "Disallow: /dashboard",
+    "Disallow: /d",
     "Disallow: /api/private",
     "Allow: /",
     `Sitemap: ${SITE_URL}/sitemap.xml`,
