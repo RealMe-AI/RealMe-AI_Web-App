@@ -150,7 +150,7 @@ export default function ChatWindow() {
         >
           {hasAttachmentsOrUploading && (
             <div className="flex gap-2 overflow-x-auto py-2">
-              {Array.from(uploadingFiles.entries()).map(([tempId, file]) => {
+              {Array.from(uploadingFiles.entries()).map(([tempId, { file, progress }]) => {
                 return (
                   <div
                     key={tempId}
@@ -158,14 +158,14 @@ export default function ChatWindow() {
                                rounded-xl shadow-sm p-2 shrink-0"
                   >
                     <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-white/40 dark:bg-slate-700/40 flex items-center justify-center">
-                      <CustomLoader size={20} />
+                      <CustomLoader size={20} progress={progress} />
                     </div>
                     <div className="flex flex-col min-w-0">
                       <span className="text-xs font-medium text-slate-800 dark:text-slate-200 truncate max-w-[120px] leading-tight">
                         {file.name}
                       </span>
                       <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
-                        Uploading…
+                        {progress < 100 ? `Uploading… ${progress}%` : "Processing…"}
                       </span>
                     </div>
                   </div>
