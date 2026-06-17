@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
-import { useAttachmentUpload } from "@/app/hooks/useAttachmentUpload";
-import { useAttachmentDelete } from "@/app/hooks/useAttachmentDelete";
+import { useAttachmentUpload } from "@/app/hooks/attachments/useAttachmentUpload";
+import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete";
 import { Plus, Mic, FileIcon, FileText, ArrowUp, Square } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
