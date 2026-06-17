@@ -1,30 +1,35 @@
-
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useLanguageStore } from "../store/useLanguageStore";
+import {
+  SpeechRecognition,
+  SpeechRecognitionConstructor,
+  SpeechRecognitionEvent,
+  SpeechRecognitionErrorEvent,
+} from "../interface/voiceInput";
 
-function getSpeechRecognition(): any {
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+}
+
+function getSpeechRecognition(): SpeechRecognitionConstructor | null {
   if (typeof window === "undefined") return null;
-  return (
-    (window as any).SpeechRecognition ??
-    (window as any).webkitSpeechRecognition ??
-    null
-  );
+  return window.SpeechRecognition ?? window.webkitSpeechRecognition ?? null;
 }
 
 export const useVoiceInput = () => {
-  const [isSupported, setIsSupported] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [transcript, setTranscript] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const timerRef = useRef<number | null>(null);
-  const recognitionRef = useRef<any>(null);
+  const isSupported = typeof window !== "undefined" && !!getSpeechRecognition();
 
-  useEffect(() => {
-    setIsSupported(!!getSpeechRecognition());
-  }, []);
+  const timerRef = useRef<number | null>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -64,7 +69,7 @@ export const useVoiceInput = () => {
       const { language } = useLanguageStore.getState();
       recognition.lang = speechLangMap[language] || "en-US";
 
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         let finalText = "";
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
@@ -76,7 +81,7 @@ export const useVoiceInput = () => {
         }
       };
 
-      recognition.onerror = (event: any) => {
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
         setError(`Speech recognition error: ${event.error}`);
       };
 
