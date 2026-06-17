@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useThemeStore } from "@/app/store/useThemeStore";
+import { usePathname } from "next/navigation";
+import { useThemeStore, applyThemeClass } from "@/app/store/useThemeStore";
 
 export function StatusBarHandler() {
   const resolvedTheme = useThemeStore((s) => s.resolvedTheme);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!resolvedTheme) return;
@@ -26,6 +28,10 @@ export function StatusBarHandler() {
 
     metaTag.setAttribute("content", color);
   }, [resolvedTheme]);
+
+  useEffect(() => {
+    applyThemeClass(resolvedTheme);
+  }, [pathname, resolvedTheme]);
 
   return null;
 }

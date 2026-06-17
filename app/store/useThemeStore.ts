@@ -21,7 +21,7 @@ function resolveTheme(theme: Theme): "light" | "dark" {
   return theme === "system" ? getSystemTheme() : theme;
 }
 
-function applyThemeClass(resolved: "light" | "dark") {
+export function applyThemeClass(resolved: "light" | "dark") {
   if (typeof window !== "undefined") {
     document.documentElement.classList.toggle("dark", resolved === "dark");
   }
