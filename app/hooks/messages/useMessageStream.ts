@@ -160,11 +160,9 @@ export const useMessageStream = () => {
         }
       } catch (err: unknown) {
         if (err instanceof Error && err.name === "AbortError") {
-          console.log("Chat generation stopped by user");
           return;
         }
 
-        console.error("Stream error:", err);
         addMessage(errorMessage());
         setIsLoading(false);
       } finally {

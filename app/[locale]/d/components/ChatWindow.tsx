@@ -136,7 +136,7 @@ export default function ChatWindow() {
   return (
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
-                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 max-w-full h-full min-h-0"
+                 backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-4 max-w-full h-full min-h-0"
     >
       <div className="flex-1 pb-4 overflow-y-auto caret-transparent relative">
         <div className="max-w-3xl mx-auto h-full">
@@ -200,7 +200,7 @@ export default function ChatWindow() {
       <div className="max-w-3xl mx-auto w-full">
         <div
           className={`flex flex-col gap-1 bg-white/90 dark:bg-slate-700/60 
-                      rounded-2xl px-3 py-1 sm:py-2 border border-slate-300 
+                      rounded-2xl mt-5 px-3 py-1 sm:py-2 border border-slate-300 
                       dark:border-0 backdrop-blur-xl transition
                       ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
         >
@@ -284,13 +284,13 @@ export default function ChatWindow() {
             </div>
           )}
 
-          <div className="flex items-center gap-2 w-full">
+          <div className="flex items-center gap-2 w-full py-1">
             <div
               onClick={() => setShowUploadPopup(true)}
               className="rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
-              <Plus size={22} className="text-indigo-500 dark:text-white/40" />
+              <Plus size={27} className="text-indigo-500 dark:text-white/40" />
               {showUploadPopup && (
                 <FileUploadPopup
                   close={() => setShowUploadPopup(false)}
@@ -323,7 +323,7 @@ export default function ChatWindow() {
                 className="rounded-full hover:bg-white/30 
                            dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
               >
-                <Mic size={20} className="text-indigo-500 dark:text-white/40" />
+                <Mic size={27} className="text-indigo-500 dark:text-white/40" />
                 {showVoicePopup && (
                   <VoiceInput
                     close={() => setShowVoicePopup(false)}
@@ -343,7 +343,7 @@ export default function ChatWindow() {
                     : handleSend
                 }
                 className={cn(
-                  "flex items-center justify-center shrink-0 w-8 h-8 rounded-full transition-all duration-200",
+                  "flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
                   isLoading
                     ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
                     : "bg-indigo-500 hover:bg-indigo-600 text-white",
@@ -352,7 +352,7 @@ export default function ChatWindow() {
                 {isLoading ? (
                   <Square size={16} fill="currentColor" />
                 ) : (
-                  <ArrowUp size={20} />
+                  <ArrowUp size={28} />
                 )}
               </button>
             )}

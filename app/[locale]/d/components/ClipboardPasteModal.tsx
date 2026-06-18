@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 interface Props {
   text: string;
@@ -9,6 +10,16 @@ interface Props {
 }
 
 export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
+
+  useEffect(() => {
+  const handler = (e: KeyboardEvent) => {
+    if (e.key === "Enter") onSend();
+    if (e.key === "Escape") onCancel();
+  };
+  window.addEventListener("keydown", handler);
+  return () => window.removeEventListener("keydown", handler);
+}, [onSend, onCancel]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -16,7 +27,7 @@ export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
       exit={{ opacity: 0 }}
       onClick={onCancel}
       className="fixed inset-0 z-50 flex items-center justify-center
-                 bg-black/20 dark:bg-black/50 backdrop-blur-sm"
+                 bg-black/20 dark:bg-black/50"
     >
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
@@ -26,12 +37,12 @@ export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
         className="bg-white dark:bg-slate-800 rounded-xl p-5 max-w-sm w-[90%]
                    shadow-xl border border-gray-200 dark:border-slate-700"
       >
-        <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-          Clipboard content
+        <p className="text-sm font-medium text-gray-800 dark:text-gray-200 uppercase tracking-wide mb-6">
+          Do you want to send this to the chat?
         </p>
 
         <div className="max-h-40 overflow-y-auto text-sm text-gray-800 dark:text-gray-200
-                        bg-gray-50 dark:bg-slate-900/50 rounded-lg p-3 mb-4
+                        bg-gray-50 dark:bg-slate-900/50 rounded-lg p-3 my-4
                         border border-gray-100 dark:border-slate-700/50 whitespace-pre-wrap wrap-break-word">
           {text}
         </div>

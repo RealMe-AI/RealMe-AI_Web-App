@@ -60,7 +60,6 @@ export default function Page() {
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
         onSelectChat={(chat) => {
-          console.log("Selected chat:", chat.id);
           setActiveConversationId(chat.id);
           fetchMessages(chat.id);
         }}

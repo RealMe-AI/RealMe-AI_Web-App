@@ -17,7 +17,6 @@ export default function useForgotPassword() {
   const handleSendCode = async (onSuccess: () => void) => {
     setError("");
 
-    console.log("handleSendCode called with email:", email);
     if (!email.trim()) {
       setError("Please enter your email address");
       return;

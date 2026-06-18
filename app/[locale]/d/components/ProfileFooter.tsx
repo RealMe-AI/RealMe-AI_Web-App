@@ -35,12 +35,6 @@ export default function ProfileFooter() {
       ? user.avatar.replace("http://", "https://")
       : "/avatar.png";
 
-  console.log("Dashboard ProfileFooter user state →", {
-    userPresent: !!user,
-    avatar: user?.avatar,
-    avatarSrc,
-  });
-
   return (
     <div className="relative">
       {/* Profile Header */}

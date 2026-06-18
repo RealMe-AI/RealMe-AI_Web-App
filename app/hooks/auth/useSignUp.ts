@@ -98,8 +98,7 @@ export default function useSignUp() {
       });
 
       const json = await res.json();
-      console.log(json);
-
+      
       if (!res.ok) {
         if (json.fieldErrors)
           setFieldErrors((prev) => ({ ...prev, ...json.fieldErrors }));
