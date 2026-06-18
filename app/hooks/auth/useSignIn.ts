@@ -176,7 +176,7 @@ export default function useSignIn() {
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
 
-      router.push("/dashboard");
+      router.push("/d");
 
       setTimeout(() => setSuccess(false), 1500);
     } catch (err) {

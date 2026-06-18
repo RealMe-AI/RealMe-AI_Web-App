@@ -9,8 +9,8 @@ import { cn } from "@/app/lib/utils";
 import useLogout from "@/app/hooks/auth/useLogout";
 
 import Image from "next/image";
-import AccountInfoModal from "./../../account/AccountInfoModal";
-import SettingsPanel from "./../../setting/SettingsPanel";
+import AccountInfoModal from "../../account/AccountInfoModal";
+import SettingsPanel from "../../setting/SettingsPanel";
 import useModalStore from "../../../store/modalStore";
 
 export default function ProfileFooter() {
@@ -99,42 +99,42 @@ export default function ProfileFooter() {
               className="absolute bottom-16 left-0 w-64 bg-white/60 dark:bg-slate-800/90 
                        backdrop-blur-xl shadow-lg rounded-xl p-2 z-50"
             >
-            <button
-              onClick={openAccountInfo}
-              className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
+              <button
+                onClick={openAccountInfo}
+                className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
-            >
-              <User size={16} /> {t("account_info.title")}
-            </button>
+              >
+                <User size={16} /> {t("account_info.title")}
+              </button>
 
-            <button
-              onClick={() => router.push("/pricingplans")}
-              className="flex items-center gap-2 w-full px-3 py-2 mt-1 rounded-md text-sm font-medium
+              <button
+                onClick={() => router.push("/pricingplans")}
+                className="flex items-center gap-2 w-full px-3 py-2 mt-1 rounded-md text-sm font-medium
                          text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
-            >
-              <ArrowUpCircle size={16} /> {t("dashboard.sidebar.upgrade")}
-            </button>
+              >
+                <ArrowUpCircle size={16} /> {t("dashboard.sidebar.upgrade")}
+              </button>
 
-            <button
-              onClick={openSettings}
-              className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
+              <button
+                onClick={openSettings}
+                className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm 
                          text-slate-700 dark:text-slate-200 hover:bg-indigo-100/50 
                          dark:hover:bg-slate-700/60 transition"
-            >
-              <Settings size={16} /> {t("settings.title")}
-            </button>
+              >
+                <Settings size={16} /> {t("settings.title")}
+              </button>
 
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600 
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600 
                          hover:bg-red-100/50 dark:hover:bg-red-800/60 transition"
-            >
-              <LogOut size={16} /> {t("dashboard.sidebar.logout")}
-            </button>
-          </motion.div>
-        </>
+              >
+                <LogOut size={16} /> {t("dashboard.sidebar.logout")}
+              </button>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 

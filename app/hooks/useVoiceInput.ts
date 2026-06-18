@@ -1,21 +1,35 @@
+import { useRef, useState } from "react";
+import { useLanguageStore } from "../store/useLanguageStore";
+import {
+  SpeechRecognition,
+  SpeechRecognitionConstructor,
+  SpeechRecognitionEvent,
+  SpeechRecognitionErrorEvent,
+} from "../interface/voiceInput";
 
-import { useEffect, useRef, useState } from "react";
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+}
 
-interface TranscriptionResponse {
-  text: string;
+function getSpeechRecognition(): SpeechRecognitionConstructor | null {
+  if (typeof window === "undefined") return null;
+  return window.SpeechRecognition ?? window.webkitSpeechRecognition ?? null;
 }
 
 export const useVoiceInput = () => {
   const [isRecording, setIsRecording] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
-  const [chunks, setChunks] = useState<Blob[]>([]);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [seconds, setSeconds] = useState(0);
   const [transcript, setTranscript] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const isSupported = typeof window !== "undefined" && !!getSpeechRecognition();
+
   const timerRef = useRef<number | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -29,109 +43,86 @@ export const useVoiceInput = () => {
     }
   };
 
-  const startRecording = async () => {
+  const startRecording = () => {
     setError(null);
     setTranscript(null);
-    setChunks([]);
     setSeconds(0);
+    setIsTranscribing(false);
+
+    const SpeechRecognition = getSpeechRecognition();
+    if (!SpeechRecognition) {
+      setError("Speech recognition is not supported in this browser.");
+      return;
+    }
+
+    const speechLangMap: Record<string, string> = {
+      en: "en-US",
+      ha: "ha-NG",
+      ig: "ig-NG",
+      yo: "yo-NG",
+    };
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = stream;
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      const { language } = useLanguageStore.getState();
+      recognition.lang = speechLangMap[language] || "en-US";
 
-      const mr = new MediaRecorder(stream, { mimeType: "audio/webm" });
-      const localChunks: Blob[] = [];
-
-      mr.ondataavailable = (e: BlobEvent) => {
-        if (e.data.size > 0) localChunks.push(e.data);
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
+        let finalText = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            finalText += event.results[i][0].transcript;
+          }
+        }
+        if (finalText) {
+          setTranscript((prev) => (prev || "") + finalText);
+        }
       };
 
-      mr.onstop = () => setChunks(localChunks);
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+        setError(`Speech recognition error: ${event.error}`);
+      };
 
-      mr.start();
-      setMediaRecorder(mr);
+      recognition.onend = () => {
+        setIsRecording(false);
+        stopTimer();
+      };
+
+      recognition.start();
+      recognitionRef.current = recognition;
       setIsRecording(true);
       startTimer();
     } catch (err) {
-      console.error("Microphone access error:", err);
-      setError("Microphone access denied or unavailable.");
+      console.error("Speech recognition error:", err);
+      setError("Failed to start speech recognition.");
     }
   };
 
   const stopRecording = () => {
-    if (mediaRecorder && mediaRecorder.state !== "inactive") mediaRecorder.stop();
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((t) => t.stop());
-      streamRef.current = null;
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      recognitionRef.current = null;
     }
     setIsRecording(false);
     stopTimer();
-  };
-
-  const transcribe = async () => {
-    if (chunks.length === 0) {
-      setError("Nothing recorded.");
-      return;
-    }
-
     setIsTranscribing(true);
-    setError(null);
-
-    try {
-      const blob = new Blob(chunks, { type: "audio/webm" });
-      const fd = new FormData();
-      fd.append("file", blob, "recording.webm");
-
-      const res = await fetch("/api/transcribe", { method: "POST", body: fd });
-
-      const contentType = res.headers.get("content-type") || "";
-      if (!res.ok || !contentType.includes("application/json")) {
-        const txt = await res.text();
-        throw new Error(txt || `Transcription failed with status ${res.status}`);
-      }
-
-      const data: TranscriptionResponse = await res.json();
-
-      if (!data?.text || typeof data.text !== "string") {
-        throw new Error("Invalid transcription result.");
-      }
-
-      setTranscript(data.text.trim());
-    } catch (err) {
-      const e = err instanceof Error ? err.message : "Transcription failed.";
-      console.error("Transcribe error:", e);
-      setError(e);
-    } finally {
-      setIsTranscribing(false);
-    }
+    setTimeout(() => setIsTranscribing(false), 400);
   };
 
   const cleanup = () => {
-    stopTimer();
-    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    if (recognitionRef.current) {
       try {
-        mediaRecorder.stop();
+        recognitionRef.current.stop();
       } catch {}
-    }
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((t) => t.stop());
-      streamRef.current = null;
+      recognitionRef.current = null;
     }
     setIsRecording(false);
     setSeconds(0);
-    setChunks([]);
-    setMediaRecorder(null);
-    setIsTranscribing(false);
     setTranscript(null);
     setError(null);
   };
-
-  useEffect(() => {
-    if (!isRecording && chunks.length > 0 && !isTranscribing && !transcript) {
-      transcribe();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chunks]);
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
@@ -140,9 +131,10 @@ export const useVoiceInput = () => {
   };
 
   return {
+    isSupported,
     isRecording,
-    seconds,
     isTranscribing,
+    seconds,
     transcript,
     error,
     startRecording,

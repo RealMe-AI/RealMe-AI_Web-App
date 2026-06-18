@@ -24,7 +24,7 @@ export default function AuthCallbackPage() {
       refreshToken: refreshToken ?? undefined,
     });
 
-    router.replace("/dashboard");
+    router.replace("/d");
   }, [searchParams, router]);
 
   return (

@@ -12,7 +12,6 @@ interface Props {
   onSave: (img: string) => void;
 }
 
-// Define types
 interface Area {
   x: number;
   y: number;
@@ -30,7 +29,9 @@ interface PixelCrop {
 export default function AvatarCropper({ src, onClose, onSave }: Props) {
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<PixelCrop | null>(
+    null,
+  );
 
   const t = useTranslations();
 
@@ -40,8 +41,14 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
 
   const handleSave = async () => {
     if (!croppedAreaPixels) return;
-    const img = await getCroppedImg(src, croppedAreaPixels);
-    onSave(img);
+    const area = croppedAreaPixels;
+    onClose();
+    try {
+      const img = await getCroppedImg(src, area);
+      onSave(img);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -70,6 +77,7 @@ export default function AvatarCropper({ src, onClose, onSave }: Props) {
         {/* Save Button */}
         <button
           onClick={handleSave}
+          disabled={!croppedAreaPixels}
           className="w-full mt-4 py-2 rounded-lg bg-indigo-600 text-white text-sm 
           hover:bg-indigo-700 transition"
         >

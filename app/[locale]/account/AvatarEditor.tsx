@@ -7,6 +7,7 @@ import Image from "next/image";
 
 import AvatarCropper from "./AvatarCropper";
 import { useAvatarEditor } from "@/app/hooks/user/useAvatarEditor";
+import { AvatarSkeleton } from "../components/ui/accountInfoLoader/Skeleton";
 
 interface Props {
   src: string;
@@ -40,22 +41,22 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
   };
 
   console.log("AvatarEditor src value →", {
-  src,
-  type: typeof src,
-  length: src?.length,
-});
+    src,
+    type: typeof src,
+    length: src?.length,
+  });
 
- const avatarSrc =
-  typeof src === "string" && src.trim().length > 0
-    ? src.replace("http://", "https://")
-    : "/avatar.png";
-    
-    console.log("Avatar src:", src);
+  const avatarSrc =
+    typeof src === "string" && src.trim().length > 0
+      ? src.replace("http://", "https://")
+      : "/avatar.png";
+
+  console.log("Avatar src:", src);
   return (
     <div className="relative group">
       {avatarSrc && (
         <Image
-          key={avatarSrc}      
+          key={avatarSrc}
           src={avatarSrc}
           alt={t("account_info.avatar_alt", { name: "User" })}
           width={70}
@@ -93,7 +94,7 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
 
       {loading && (
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-2xl">
-          <span className="text-white text-sm">{t("modal.uploading")}</span>
+          <AvatarSkeleton />
         </div>
       )}
     </div>

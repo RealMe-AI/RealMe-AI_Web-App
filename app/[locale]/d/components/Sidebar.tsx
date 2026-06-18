@@ -8,7 +8,7 @@ import { Chat } from "@/app/interface/type";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useChats } from "@/app/hooks/messages/useChats";
 
-import LanguageSelect from "./../../setting/LanguageSelect";
+import LanguageSelect from "../../setting/LanguageSelect";
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";

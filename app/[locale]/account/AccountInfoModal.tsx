@@ -7,6 +7,10 @@ import { useTranslations } from "next-intl";
 import { useUserProfile } from "@/app/hooks/user/useUserProfile";
 
 import AvatarEditor from "./AvatarEditor";
+import {
+  AvatarSkeleton,
+  BodySkeleton,
+} from "../components/ui/accountInfoLoader/Skeleton";
 
 interface AccountInfoModalProps {
   open: boolean;
@@ -40,91 +44,96 @@ export default function AccountInfoModal({
               transition={{ duration: 0.25 }}
               className="relative w-[90%] max-w-md bg-white/70 dark:bg-slate-800/80 
                        backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 pointer-events-auto"
-          >
-            {/* Close Button */}
-            <button
-              onClick={close}
-              className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 
-              dark:hover:text-slate-300 transition"
             >
-              <X size={18} />
-            </button>
+              {/* Close Button */}
+              <button
+                onClick={close}
+                className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 
+              dark:hover:text-slate-300 transition"
+              >
+                <X size={18} />
+              </button>
 
-            {/* Header */}
-            <div className="flex flex-col items-center text-center space-y-3">
-              <AvatarEditor
-                src={user?.avatar || "/avatar.png"}
-                onChange={(newImg) => setUser({ avatar: newImg })}
-                onSuccess={close}
-              />
+              {/* Header */}
+              <div className="flex flex-col items-center text-center space-y-3">
+                {loading ? (
+                  <AvatarSkeleton />
+                ) : (
+                  <AvatarEditor
+                    src={user?.avatar || "/avatar.png"}
+                    onChange={(newImg) => setUser({ avatar: newImg })}
+                    onSuccess={close}
+                  />
+                )}
 
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                {t("account_info.signed_in_with")}{" "}
-                {user?.provider ? t(user.provider) : "—"}
-              </p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  {t("account_info.signed_in_with")}{" "}
+                  {user?.provider ? t(user.provider) : "—"}
+                </p>
 
-              <span
-                className={`px-3 py-1 text-xs rounded-full border
+                <span
+                  className={`px-3 py-1 text-xs rounded-full border
                 ${
                   user?.accountType === "Pro"
                     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-700/30 dark:text-emerald-300 border-emerald-300/20"
                     : "bg-indigo-100 text-indigo-700 dark:bg-indigo-700/30 dark:text-indigo-300 border-indigo-300/20"
                 }`}
-              >
-                {user?.plan || "—"}
-              </span>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
-
-            {/* Body */}
-            {loading ? (
-              <p className="text-center text-sm text-slate-500 dark:text-slate-400 py-6">
-                {t("account_info.loading")}
-              </p>
-            ) : error ? (
-              <p className="text-center text-sm text-red-400 bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
-                {error}
-              </p>
-            ) : user ? (
-              <div className="space-y-2 text-sm">
-                <InfoItem
-                  label={t("account_info.full_name")}
-                  value={user.fullName}
-                />
-                <InfoItem label={t("account_info.email")} value={user.email} />
-                <InfoItem
-                  label={t("account_info.account_type")}
-                  value={user.accountType}
-                />
-                <InfoItem
-                  label={t("account_info.date_joined")}
-                  value={user.dateJoined}
-                />
-                <InfoItem
-                  label={t("account_info.last_login")}
-                  value={user.lastLogin}
-                />
+                >
+                  {user?.plan || "—"}
+                </span>
               </div>
-            ) : null}
 
-            {/* Divider */}
-            <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
+              {/* Divider */}
+              <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
 
-            {/* Billing */}
-            <button
-              onClick={() => router.push("/pricingplans")}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg 
+              {/* Body */}
+              {loading ? (
+                <BodySkeleton />
+              ) : error ? (
+                <p className="text-center text-sm text-red-400 bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
+                  {error}
+                </p>
+              ) : user ? (
+                <div className="space-y-2 text-sm">
+                  <InfoItem
+                    label={t("account_info.full_name")}
+                    value={user.fullName}
+                  />
+                  <InfoItem
+                    label={t("account_info.email")}
+                    value={user.email}
+                  />
+                  <InfoItem
+                    label={t("account_info.account_type")}
+                    value={user.accountType}
+                  />
+                  <InfoItem
+                    label={t("account_info.date_joined")}
+                    value={user.dateJoined}
+                  />
+                  <InfoItem
+                    label={t("account_info.last_login")}
+                    value={user.lastLogin}
+                  />
+                </div>
+              ) : null}
+
+              {/* Divider */}
+              <div className="border-t border-white/20 dark:border-slate-700/60 my-4" />
+
+              {/* Billing */}
+              <button
+                onClick={() => router.push("/pricingplans")}
+                className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg 
                          text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 
                          dark:bg-indigo-700 dark:hover:bg-indigo-800 transition"
-            >
-              <CreditCard size={16} />
-              {t("account_info.manage_subscription")}
-            </button>
-          </motion.div>
-        </div>
-      </>
+              >
+                <CreditCard size={16} />
+                {t("account_info.manage_subscription")}
+              </button>
+            </motion.div>
+          </div>
+        </>
       )}
     </AnimatePresence>
   );

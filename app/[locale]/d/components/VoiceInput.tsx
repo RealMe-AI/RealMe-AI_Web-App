@@ -12,6 +12,10 @@ interface VoiceInputProps {
 
 export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
   const popupRef = useRef<HTMLDivElement>(null);
+  const onTranscriptRef = useRef(onTranscript);
+  useEffect(() => {
+    onTranscriptRef.current = onTranscript;
+  }, [onTranscript]);
 
   const {
     isRecording,
@@ -45,10 +49,10 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
     if (!isRecording && transcript && !isTranscribing && !error) {
       const safeText = transcript.trim();
       if (safeText.length > 0) {
-        onTranscript(safeText);
+        onTranscriptRef.current(safeText);
       }
     }
-  }, [isRecording, transcript, isTranscribing, error, onTranscript]);
+  }, [isRecording, transcript, isTranscribing, error]);
 
   const t = useTranslations();
 
@@ -61,7 +65,7 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
         exit={{ opacity: 0, y: 10, scale: 0.96 }}
         transition={{ duration: 0.18 }}
         className="absolute bottom-full right-0 mb-3 w-50 rounded-2xl p-4
-                   bg-white/30 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 
+                   bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border border-white/20 
                    shadow-xl flex flex-col items-center z-50"
       >
         {/* Arrow pointer */}
@@ -80,7 +84,7 @@ export default function VoiceInput({ close, onTranscript }: VoiceInputProps) {
         <p className="mt-3 text-sm text-slate-700 dark:text-slate-300">
           {isRecording
             ? `${t("dashboard.record_voice.in_process")} (${formatTime(
-                seconds
+                seconds,
               )})`
             : t("dashboard.voice_input.start_recording")}
         </p>

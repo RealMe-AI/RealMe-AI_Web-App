@@ -3,31 +3,23 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, File } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useSendFileMessage } from "../../../store/sendFileMessage";
 import { useTranslations } from "next-intl";
 
 interface FileUploadPopupProps {
   close: () => void;
+  onFileSelected: (file: File) => void;
 }
 
-export default function FileUploadPopup({ close }: FileUploadPopupProps) {
+export default function FileUploadPopup({ close, onFileSelected }: FileUploadPopupProps) {
   const t = useTranslations();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const addPendingFile = useSendFileMessage((state) => state.addPendingFile);
-  const dailyUploadCount = useSendFileMessage(
-    (state) => state.dailyUploadCount,
-  );
-  const plan = useSendFileMessage((state) => state.plan);
-
-  const freeLimitReached = plan === "free" && dailyUploadCount >= 3;
-
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      addPendingFile(file);
+      onFileSelected(file);
       close();
     }
   };
@@ -56,7 +48,7 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
         exit={{ opacity: 0, y: 10, scale: 0.95 }}
         transition={{ duration: 0.22 }}
         className="absolute bottom-full mb-3 left-0 w-44 p-4 rounded-2xl
-                   bg-white/30 dark:bg-slate-800/50 backdrop-blur-xl
+                   bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl
                    border border-white/20 shadow-xl text-center z-50"
       >
         {/* Arrow Pointer */}
@@ -67,25 +59,13 @@ export default function FileUploadPopup({ close }: FileUploadPopupProps) {
 
         <File size={36} className="mx-auto text-indigo-500 mb-2" />
 
-        {freeLimitReached ? (
-          <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
-            {t("fileupload.limit_reached")}
-          </span>
-        ) : (
-          <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
-            {t("fileupload.upload_title")}
-          </h3>
-        )}
+        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+          {t("fileupload.upload_title")}
+        </h3>
 
         <button
-          onClick={() => !freeLimitReached && fileInputRef.current?.click()}
-          disabled={freeLimitReached}
-          className={`p-2 rounded-lg text-sm transition flex items-center justify-center mx-auto
-            ${
-              freeLimitReached
-                ? "bg-gray-400 cursor-not-allowed text-white/70"
-                : "bg-indigo-500 hover:bg-indigo-600 text-white shadow"
-            }`}
+          onClick={() => fileInputRef.current?.click()}
+          className="p-2 rounded-lg text-sm transition flex items-center justify-center mx-auto bg-indigo-500 hover:bg-indigo-600 text-white shadow"
         >
           <Upload size={14} className="mr-1" />
           {t("fileupload.button_label")}
