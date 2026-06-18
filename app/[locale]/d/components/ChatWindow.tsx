@@ -290,7 +290,7 @@ export default function ChatWindow() {
               className="rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
-              <Plus size={22} className="text-indigo-500 dark:text-white/40" />
+              <Plus size={27} className="text-indigo-500 dark:text-white/40" />
               {showUploadPopup && (
                 <FileUploadPopup
                   close={() => setShowUploadPopup(false)}
@@ -323,7 +323,7 @@ export default function ChatWindow() {
                 className="rounded-full hover:bg-white/30 
                            dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
               >
-                <Mic size={20} className="text-indigo-500 dark:text-white/40" />
+                <Mic size={27} className="text-indigo-500 dark:text-white/40" />
                 {showVoicePopup && (
                   <VoiceInput
                     close={() => setShowVoicePopup(false)}
@@ -343,7 +343,7 @@ export default function ChatWindow() {
                     : handleSend
                 }
                 className={cn(
-                  "flex items-center justify-center shrink-0 w-8 h-8 rounded-full transition-all duration-200",
+                  "flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
                   isLoading
                     ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
                     : "bg-indigo-500 hover:bg-indigo-600 text-white",
@@ -352,7 +352,7 @@ export default function ChatWindow() {
                 {isLoading ? (
                   <Square size={16} fill="currentColor" />
                 ) : (
-                  <ArrowUp size={20} />
+                  <ArrowUp size={28} />
                 )}
               </button>
             )}
