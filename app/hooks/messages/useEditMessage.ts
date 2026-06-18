@@ -12,8 +12,13 @@ function now() {
 }
 
 export const useEditMessage = () => {
-  const { messages, setMessages, updateMessage, setIsLoading, setAbortController } =
-    useChatStore();
+  const {
+    messages,
+    setMessages,
+    updateMessage,
+    setIsLoading,
+    setAbortController,
+  } = useChatStore();
 
   const editMessage = useCallback(
     async (messageId: string, newContent: string) => {
@@ -23,7 +28,9 @@ export const useEditMessage = () => {
       if (msgIndex === -1) return;
 
       // Find the AI response immediately after the edited user message
-      const nextMsg = messages.slice(msgIndex + 1).find((m) => m.sender === "ai");
+      const nextMsg = messages
+        .slice(msgIndex + 1)
+        .find((m) => m.sender === "ai");
 
       const tempId = "ai-temp";
       const tempMsg: Message = {
@@ -108,23 +115,15 @@ export const useEditMessage = () => {
         setIsLoading(false);
       } catch (err: unknown) {
         if (err instanceof Error && err.name === "AbortError") {
-          console.log("Edit generation stopped by user");
           return;
         }
 
-        console.error("Edit stream error:", err);
         setIsLoading(false);
       } finally {
         setAbortController(null);
       }
     },
-    [
-      messages,
-      setMessages,
-      updateMessage,
-      setIsLoading,
-      setAbortController,
-    ],
+    [messages, setMessages, updateMessage, setIsLoading, setAbortController],
   );
 
   return { editMessage };

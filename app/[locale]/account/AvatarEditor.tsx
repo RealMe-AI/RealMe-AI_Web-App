@@ -40,18 +40,11 @@ export default function AvatarEditor({ src, onChange, onSuccess }: Props) {
     setImageToCrop(null);
   };
 
-  console.log("AvatarEditor src value →", {
-    src,
-    type: typeof src,
-    length: src?.length,
-  });
-
   const avatarSrc =
     typeof src === "string" && src.trim().length > 0
       ? src.replace("http://", "https://")
       : "/avatar.png";
 
-  console.log("Avatar src:", src);
   return (
     <div className="relative group">
       {avatarSrc && (

@@ -63,7 +63,6 @@ export default function useSignIn() {
     setFieldErrors(errs);
 
     const valid = !Object.values(errs).some(Boolean);
-    console.log("[SignIn] Validation result:", valid, errs);
 
     return valid;
   };
@@ -71,8 +70,6 @@ export default function useSignIn() {
   //  Verify token works by making a test API call
   const verifyToken = async (token: string): Promise<boolean> => {
     try {
-      console.log("[SignIn] Verifying token with test request...");
-
       const res = await fetch(`${baseUrl}/conversations?page=1&limit=1`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -81,14 +78,11 @@ export default function useSignIn() {
       });
 
       if (res.ok) {
-        console.log("[SignIn] Token verified successfully");
         return true;
       } else {
-        console.error("[SignIn] Token verification failed:", res.status);
         return false;
       }
     } catch (err) {
-      console.error("[SignIn] Token verification error:", err);
       return false;
     }
   };
@@ -106,8 +100,6 @@ export default function useSignIn() {
     setSuccess(false);
 
     try {
-      console.log("[SignIn] Sending login request…");
-
       const res = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -117,12 +109,9 @@ export default function useSignIn() {
         }),
       });
 
-      console.log("[SignIn] Response status:", res.status);
-
       let json: LoginErrorResponse | LoginSuccessResponse;
       try {
         json = await res.json();
-        console.log("[SignIn] Response body:", json);
       } catch {
         throw new Error("Invalid JSON response from server");
       }
