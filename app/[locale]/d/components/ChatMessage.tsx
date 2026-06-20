@@ -302,6 +302,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                   sender={message.sender}
                   text={message.text}
                   onEdit={handleEditStart}
+                  message={message}
                 />
               </div>
             )}

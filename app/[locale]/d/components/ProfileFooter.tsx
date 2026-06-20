@@ -10,7 +10,6 @@ import useLogout from "@/app/hooks/auth/useLogout";
 
 import Image from "next/image";
 import AccountInfoModal from "../../account/AccountInfoModal";
-import SettingsPanel from "../../setting/SettingsPanel";
 import useModalStore from "../../../store/modalStore";
 
 export default function ProfileFooter() {
@@ -134,9 +133,6 @@ export default function ProfileFooter() {
 
       {/* Account Info Modal */}
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />
-
-      {/* Settings Panel */}
-      <SettingsPanel open={isSettingsOpen} close={closeAll} />
     </div>
   );
 }

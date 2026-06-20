@@ -240,6 +240,12 @@ const ig = {
     notifications: {
       label: "Mgbasa ozi Email",
     },
+    voice: {
+      label: "Olu",
+      allow: "Kwe ka Olu AI",
+      speed: "Ọsọ",
+      autoRead: "Gụọ akpaaka nzaghachi AI",
+    },
     support: {
       label: "Nkwado & Enyemaka",
       contact: "Kpọtụrụ Nkwado",
