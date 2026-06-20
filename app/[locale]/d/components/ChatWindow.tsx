@@ -102,19 +102,18 @@ export default function ChatWindow() {
     } catch {}
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(checkClipboard, 0);
-    const interval = setInterval(checkClipboard, 1000);
+useEffect(() => {
+    // Factor 2: check when tab becomes visible
     const handleVisible = () => {
-      if (document.visibilityState === "visible") {
-        setTimeout(checkClipboard, 100);
-      }
+      if (document.visibilityState === "visible") checkClipboard();
     };
     document.addEventListener("visibilitychange", handleVisible);
+    // Factor 3: check when input is focused
+    const handleFocus = () => checkClipboard();
+    inputRef.current?.addEventListener("focus", handleFocus);
     return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
       document.removeEventListener("visibilitychange", handleVisible);
+      inputRef.current?.removeEventListener("focus", handleFocus);
     };
   }, [checkClipboard]);
 

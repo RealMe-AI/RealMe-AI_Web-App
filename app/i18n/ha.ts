@@ -240,6 +240,12 @@ const ha = {
     notifications: {
       label: "Sanarwar Imel",
     },
+    voice: {
+      label: "Murya",
+      allow: "Ba da izinin Muryar AI",
+      speed: "Gudu",
+      autoRead: "Karanta ta atomatik sakonnin AI",
+    },
     support: {
       label: "Tallafi & Taimako",
       contact: "Tuntuɓi Tallafi",

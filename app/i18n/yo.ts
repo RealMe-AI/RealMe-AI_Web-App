@@ -240,6 +240,12 @@ const yo = {
     notifications: {
       label: "Awọn Ifitonileti Imeeli",
     },
+    voice: {
+      label: "Ohùn",
+      allow: "Gba Ohùn AI laaye",
+      speed: "Iyara",
+      autoRead: "Ka awọn idahun AI laifọwọyi",
+    },
     support: {
       label: "Atilẹyin & Iranlọwọ",
       contact: "Kan si Atilẹyin",

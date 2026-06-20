@@ -241,6 +241,12 @@ const en = {
     notifications: {
       label: "Email Notifications",
     },
+    voice: {
+      label: "Voice",
+      allow: "Allow AI Voice",
+      speed: "Speed",
+      autoRead: "Auto-read AI responses",
+    },
     support: {
       label: "Support & Help",
       contact: "Contact Support",

@@ -13,6 +13,7 @@ import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirma
 import ThemeSelect from "./ThemeSelect";
 import EditProfileModal from "./EditProfileModal";
 import EmailToggle from "./EmailToggle";
+import VoiceSettings from "./VoiceSettings";
 
 interface SettingsPanelProps {
   open: boolean;
@@ -45,75 +46,86 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 50, opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="relative w-[95%] max-w-2xl bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto lg:overflow-y-hidden max-h-[90vh] pointer-events-auto"
+              className="relative w-full max-w-md h-[90vh] bg-white/70 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-white/20 overflow-y-auto pointer-events-auto"
             >
               <button
                 onClick={close}
-                className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition"
+                className="absolute top-4 right-4 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition z-10"
               >
                 <X size={20} />
               </button>
 
-              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4">
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6">
                 {t("settings.title")}
               </h2>
 
-              {/* Account */}
-              <Section title={t("settings.account.label")}>
-                <button
-                  onClick={openEditProfile}
-                  className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
-                >
-                  <Pencil size={16} /> {t("settings.account.sync")}
-                </button>
-              </Section>
+              <div className="grid grid-cols-1 gap-6">
+                {/* Left Column */}
+                <div className="flex flex-col gap-6">
+                  {/* Account */}
+                  <Section title={t("settings.account.label")}>
+                    <button
+                      onClick={openEditProfile}
+                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                    >
+                      <Pencil size={16} /> {t("settings.account.sync")}
+                    </button>
+                  </Section>
 
-              {/* Preferences */}
-              <Section title={t("settings.preferences.label")}>
-                <span className="flex items-center gap-2 px-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
-                  <Globe size={16} />
-                  {t("settings.theme.label")}:
-                  <ThemeSelect />
-                </span>
+                  {/* Voice */}
+                  <VoiceSettings />
+                </div>
 
-                <EmailToggle
-                  enabled={notifications.email}
-                  onToggle={() =>
-                    setNotifications({
-                      ...notifications,
-                      email: !notifications.email,
-                    })
-                  }
-                  className="text-slate-800 dark:text-slate-100"
-                />
-              </Section>
+                {/* Right Column */}
+                <div className="flex flex-col gap-6">
+                  {/* Preferences */}
+                  <Section title={t("settings.preferences.label")}>
+                    <span className="flex items-center gap-2 px-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                      <Globe size={16} />
+                      {t("settings.theme.label")}:
+                      <ThemeSelect />
+                    </span>
 
-              {/* Support */}
-              <Section title={t("settings.support.label")}>
-                <Link
-                  href={""}
-                  className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
-                >
-                  <Globe size={16} /> {t("settings.support.contact")}
-                </Link>
+                    <EmailToggle
+                      enabled={notifications.email}
+                      onToggle={() =>
+                        setNotifications({
+                          ...notifications,
+                          email: !notifications.email,
+                        })
+                      }
+                      className="text-slate-800 dark:text-slate-100"
+                    />
+                  </Section>
 
-                <Link
-                  href={""}
-                  className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
-                >
-                  <Globe size={16} /> {t("settings.support.faq")}
-                </Link>
-              </Section>
+                  {/* Support */}
+                  <Section title={t("settings.support.label")}>
+                    <Link
+                      href={""}
+                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                    >
+                      <Globe size={16} /> {t("settings.support.contact")}
+                    </Link>
 
-              {/* Danger */}
-              <Section title={t("settings.danger_zone.label")}>
-                <button
-                  onClick={() => setIsDeleteModalOpen(true)}
-                  className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/20 transition"
-                >
-                  <Trash2 size={16} /> {t("settings.delete_account")}
-                </button>
-              </Section>
+                    <Link
+                      href={""}
+                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                    >
+                      <Globe size={16} /> {t("settings.support.faq")}
+                    </Link>
+                  </Section>
+
+                  {/* Danger */}
+                  <Section title={t("settings.danger_zone.label")}>
+                    <button
+                      onClick={() => setIsDeleteModalOpen(true)}
+                      className="flex items-center gap-2 p-2 rounded-lg w-full text-red-600 hover:bg-red-100/50 dark:hover:bg-red-800/20 transition"
+                    >
+                      <Trash2 size={16} /> {t("settings.delete_account")}
+                    </button>
+                  </Section>
+                </div>
+              </div>
             </motion.div>
           </div>
 

@@ -8,9 +8,10 @@ import { useSidebarStore } from "../../store/useSidebarStore";
 import { useChatStore } from "../../store/useChatStore";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useFetchMessages } from "@/app/hooks/messages/useFetchMessages";
-// import useGoogleAuth from "@/app/hooks/useGoogleAuth";
+import useModalStore from "../../store/modalStore";
 import Sidebar from "./components/Sidebar";
 import ChatWindow from "./components/ChatWindow";
+import SettingsPanel from "../setting/SettingsPanel";
 
 export default function Page() {
   // useGoogleAuth();
@@ -18,6 +19,8 @@ export default function Page() {
   const accessToken = useAuthStore((s) => s.accessToken);
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
+  const isSettingsOpen = useModalStore((s) => s.isSettingsOpen);
+  const closeAll = useModalStore((s) => s.closeAll);
   const setActiveConversationId = useChatStore(
     (s) => s.setActiveConversationId,
   );
@@ -64,6 +67,9 @@ export default function Page() {
           fetchMessages(chat.id);
         }}
       />
+
+      {/* Settings Modal */}
+      <SettingsPanel open={isSettingsOpen} close={closeAll} />
     </div>
   );
 }
