@@ -102,6 +102,7 @@ const en = {
       create_account: "Create Account",
       continue_email: "Continue with Email",
       continue_google: "Continue with Google",
+      redirecting: "Redirecting…",
       creating: "Creating…",
       signing_in: "Signing in…",
       success: "Success",
