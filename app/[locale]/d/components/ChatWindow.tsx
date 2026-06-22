@@ -5,7 +5,7 @@ import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useAttachmentUpload } from "@/app/hooks/attachments/useAttachmentUpload";
 import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete";
-import { Plus, Mic, FileIcon, FileText, ArrowUp, Square } from "lucide-react";
+import { Plus, Mic, FileIcon, FileText, ArrowUp, Square, ArrowDown } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
@@ -33,6 +33,8 @@ export default function ChatWindow() {
   const dismissedTexts = useRef(new Set<string>());
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   const {
     messages: chatMessages,
@@ -90,8 +92,19 @@ export default function ChatWindow() {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages.length, isLoading]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+  }, [chatMessages.length]);
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
 
   const checkClipboard = useCallback(async () => {
     try {
@@ -137,7 +150,10 @@ useEffect(() => {
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-4 max-w-full h-full min-h-0"
     >
-      <div className="flex-1 pb-4 overflow-y-auto caret-transparent relative">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 pb-4 overflow-y-auto caret-transparent relative"
+      >
         <div className="max-w-3xl mx-auto h-full">
           {chatMessages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
@@ -186,7 +202,23 @@ useEffect(() => {
             }}
           />
         )}
+
       </div>
+
+      {showScrollBtn && (
+        <motion.button
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          onClick={() =>
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 w-10 h-10
+                     rounded-full bg-white/80 dark:bg-slate-700/80 backdrop-blur-md border border-slate-300 dark:border-white/40 text-slate-900 dark:text-slate-100
+                     shadow-lg flex items-center justify-center transition-colors hover:bg-white/10"
+        >
+          <ArrowDown size={20} />
+        </motion.button>
+      )}
 
       {isLoading && (
         <div className="max-w-3xl mx-auto w-full">
