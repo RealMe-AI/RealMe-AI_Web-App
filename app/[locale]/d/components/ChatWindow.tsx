@@ -5,7 +5,15 @@ import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useAttachmentUpload } from "@/app/hooks/attachments/useAttachmentUpload";
 import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete";
-import { Plus, Mic, FileIcon, FileText, ArrowUp, Square, ArrowDown } from "lucide-react";
+import {
+  Plus,
+  Mic,
+  FileIcon,
+  FileText,
+  ArrowUp,
+  Square,
+  ArrowDown,
+} from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
@@ -115,7 +123,7 @@ export default function ChatWindow() {
     } catch {}
   }, []);
 
-useEffect(() => {
+  useEffect(() => {
     // Factor 2: check when tab becomes visible
     const handleVisible = () => {
       if (document.visibilityState === "visible") checkClipboard();
@@ -202,7 +210,6 @@ useEffect(() => {
             }}
           />
         )}
-
       </div>
 
       {showScrollBtn && (
@@ -221,10 +228,14 @@ useEffect(() => {
       )}
 
       {isLoading && (
-        <div className="max-w-3xl mx-auto w-full">
-          <div className="text-sm text-slate-600 dark:text-slate-400 mb-3 animate-pulse">
-            RealMe {t("dashboard.realMeThinking")}…
-          </div>
+        <div className="max-w-3xl mx-auto w-full flex items-center gap-3 mb-3 animate-bounce">
+            <Image
+              src="/logo.png"
+              alt="RealMe AI"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
+            />
         </div>
       )}
 

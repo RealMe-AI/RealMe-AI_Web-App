@@ -2,6 +2,14 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+interface AuthState {
+  accessToken: string | null;
+  refreshToken: string | null;
+  expiresAt: number | null;
+  setTokens: (tokens: { accessToken: string; refreshToken?: string }) => void;
+  clearAuth: () => void;
+  isTokenExpired: () => boolean;
+}
 
 function decodeTokenPayload(token: string): Record<string, unknown> | null {
   try {
@@ -23,14 +31,6 @@ export function getUserIdFromToken(): string | null {
   return (payload?.sub as string) || (payload?.id as string) || null;
 }
 
-interface AuthState {
-  accessToken: string | null;
-  refreshToken: string | null;
-  expiresAt: number | null;
-  setTokens: (tokens: { accessToken: string; refreshToken?: string }) => void;
-  clearAuth: () => void;
-  isTokenExpired: () => boolean;
-}
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -60,7 +60,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: "realme-auth",
+      name: "ah",
       storage: createJSONStorage(() => localStorage),
     }
   )
