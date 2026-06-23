@@ -17,7 +17,7 @@ export function useTranslate(): UseTranslateReturn {
 
   // Detect browser language on first load
   useEffect(() => {
-    if (language === "en" && !localStorage.getItem("realme-language")) {
+    if (language === "en" && !localStorage.getItem("lang")) {
       const browserLang = (navigator.language.slice(0, 2) as Language) ?? "en";
       const langToSet = SUPPORTED_LANGS.includes(browserLang)
         ? browserLang

@@ -60,7 +60,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: "ah",
+      name: "au",
       storage: createJSONStorage(() => localStorage),
     }
   )
