@@ -14,7 +14,7 @@ interface ChatActionsModalProps {
   onDelete?: () => void;
 }
 
-const ChatActionsModal: FC<ChatActionsModalProps> = ({
+const ChatActionsModal = ({
   isOpen,
   onClose,
   className,
@@ -23,7 +23,7 @@ const ChatActionsModal: FC<ChatActionsModalProps> = ({
   onPin,
   onDelete,
   chatId,
-}) => {
+}: ChatActionsModalProps) => {
   const {
     handleDelete: defaultDelete,
     handleRename: defaultRename,
