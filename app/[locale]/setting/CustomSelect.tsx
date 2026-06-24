@@ -9,6 +9,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import { Check, ChevronDown } from "lucide-react";
+import { cn } from "@/app/lib/utils";
 
 interface Option {
   label: string;
@@ -22,6 +23,7 @@ interface CustomSelectProps {
   value: string;
   onChange: (value: string) => void;
   icon?: React.ReactNode;
+  className?: string;
 }
 
 export default function CustomSelect({
@@ -30,20 +32,21 @@ export default function CustomSelect({
   value,
   onChange,
   icon,
+  className
 }: CustomSelectProps) {
   const selected = options.find((opt) => opt.value === value);
 
   return (
-    <div>
+    <div className={className}>
       <span>
         {icon} {label}
       </span>
       <Listbox value={value} onChange={onChange}>
         <div className="relative">
           <ListboxButton
-            className="relative w-16 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
+            className={cn(`relative w-16 cursor-pointer rounded-lg bg-white/60 dark:bg-slate-700/60 
                        border border-slate-300 dark:border-slate-600 py-1.5 pl-2 pr-6 text-left
-                       shadow-sm focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                       shadow-sm focus:outline-none focus:ring-2 focus:ring-opacity-50 ${className}`)}
           >
             <span className="block truncate text-slate-800 dark:text-slate-100">
               {selected?.shortLabel || selected?.label}

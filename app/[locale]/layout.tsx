@@ -10,6 +10,7 @@ import { ToastProvider } from "@/app/lib/ToastProvider";
 import { AuthProvider } from "./components/AuthProvider";
 import StructuredData from "./components/StructuredData";
 import "../globals.css";
+import "highlight.js/styles/atom-one-dark.css";
 import { SUPPORTED_LOCALES, type Locale } from "@/app/lib/locales";
 
 const poppins = Poppins({

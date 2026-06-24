@@ -10,6 +10,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useFetchMessages } from "@/app/hooks/messages/useFetchMessages";
 import useModalStore from "../../store/modalStore";
 import Sidebar from "./components/Sidebar";
+import MiniSidebar from "./components/MiniSidebar";
 import ChatWindow from "./components/ChatWindow";
 import SettingsPanel from "../setting/SettingsPanel";
 
@@ -40,11 +41,14 @@ export default function Page() {
       {!isSidebarOpen && (
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="fixed top-4 right-4 z-50  hover:text-slate-700 text-slate-500 shadow-lg transition"
+          className="fixed top-4 right-4 z-50 lg:hidden hover:text-slate-700 text-slate-500 shadow-lg transition"
         >
           <PanelLeft size={20} />
         </button>
       )}
+
+      {/* Mini Sidebar */}
+      {!isSidebarOpen && <MiniSidebar />}
 
       {/* Chat Section */}
       <motion.div

@@ -102,6 +102,7 @@ const yo = {
       create_account: "Ṣẹda Account",
       continue_email: "Tẹsiwaju pẹlu Imeeli",
       continue_google: "Tẹsiwaju pẹlu Google",
+      redirecting: "Ṣiṣe atunṣe…",
       creating: "Ṣiṣẹda…",
       signing_in: "Wọle…",
       success: "Aseyori",

@@ -13,6 +13,7 @@ export default function ThemeSelect() {
 
   return (
     <CustomSelect
+    className="w-25"
       label={""}
       options={[
         { label: t("settings.theme.Light"), value: "light" },

@@ -31,7 +31,7 @@ export function useSettings() {
   useEffect(() => {
     if (!isInitialized) return;
 
-    localStorage.setItem("user-notifications", JSON.stringify(notifications));
+    localStorage.setItem("usr-nt", JSON.stringify(notifications));
   }, [notifications, isInitialized]);
 
   return {

@@ -17,7 +17,7 @@ export const useLanguageStore = create<LanguageState>()(
       setLanguage: (lang) => set({ language: lang }),
     }),
     {
-      name: "realme-language",
+      name: "lang",
       storage: createJSONStorage(() => localStorage),
     }
   )

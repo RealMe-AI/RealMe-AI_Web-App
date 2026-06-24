@@ -102,6 +102,7 @@ const ha = {
       create_account: "Ƙirƙiri Asusu",
       continue_email: "Ci gaba da Imel",
       continue_google: "Ci gaba da Google",
+      redirecting: "Ana tura…",
       creating: "Ana ƙirƙira…",
       signing_in: "Ana shiga…",
       success: "Nasara",

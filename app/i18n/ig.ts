@@ -102,6 +102,7 @@ const ig = {
       create_account: "Mepụta Akaụntụ",
       continue_email: "Gaa n’ihu na Email",
       continue_google: "Gaa n’ihu na Google",
+      redirecting: "Na-eduzi…",
       creating: "Na-emepụta…",
       signing_in: "Na-abanye…",
       success: "Mmeri",
