@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, SquarePen } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Chat } from "@/app/interface/type";
 import { useChatStore } from "@/app/store/useChatStore";
@@ -13,6 +13,7 @@ import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import useModalStore from "../../../store/modalStore";
+import { useSidebarStore } from "@/app/store/useSidebarStore";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -26,9 +27,20 @@ export default function Sidebar({
   onSelectChat,
 }: SidebarProps) {
   const { chats } = useChats();
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const t = useTranslations();
+
+  const autoFocusSearch = useSidebarStore((s) => s.autoFocusSearch);
+  const setAutoFocusSearch = useSidebarStore((s) => s.setAutoFocusSearch);
+
+  useEffect(() => {
+    if (autoFocusSearch && searchInputRef.current) {
+      searchInputRef.current.focus();
+      setAutoFocusSearch(false);
+    }
+  }, [autoFocusSearch, setAutoFocusSearch]);
 
   const {
     activeConversationId,
@@ -156,6 +168,7 @@ export default function Sidebar({
                 size={16}
               />
               <input
+                ref={searchInputRef}
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

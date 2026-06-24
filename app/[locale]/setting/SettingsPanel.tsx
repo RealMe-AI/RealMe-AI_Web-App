@@ -80,7 +80,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                 <div className="flex flex-col gap-6">
                   {/* Preferences */}
                   <Section title={t("settings.preferences.label")}>
-                    <span className="flex items-center gap-2 px-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition">
+                    <span className="flex items-center gap-2 px-2 rounded-lg w-full text-slate-800 dark:text-slate-100">
                       <Globe size={16} />
                       {t("settings.theme.label")}:
                       <ThemeSelect />
@@ -102,14 +102,14 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   <Section title={t("settings.support.label")}>
                     <Link
                       href={""}
-                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100"
                     >
                       <Globe size={16} /> {t("settings.support.contact")}
                     </Link>
 
                     <Link
                       href={""}
-                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100 hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
+                      className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100"
                     >
                       <Globe size={16} /> {t("settings.support.faq")}
                     </Link>
