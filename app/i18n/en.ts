@@ -191,6 +191,11 @@ const en = {
     },
 
     transcribing: "Transcribing…",
+
+    offline: {
+      title: "You are offline",
+      subtitle: "Turn on your internet connection",
+    },
   },
 
   fileupload: {

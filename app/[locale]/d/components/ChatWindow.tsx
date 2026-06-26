@@ -26,6 +26,7 @@ import ChatMessage from "./ChatMessage";
 import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
 import ClipboardPasteModal from "./ClipboardPasteModal";
+import OfflineBanner from "./OfflineBanner";
 
 export default function ChatWindow() {
   const t = useTranslations();
@@ -49,7 +50,7 @@ export default function ChatWindow() {
     isLoading,
     inputFocusSignal,
   } = useChatStore();
-  const { sendMessage } = useMessageStream();
+  const { sendMessage, isOnline } = useMessageStream();
   const { uploadFile, uploadingFiles } = useAttachmentUpload();
   const { deleteAttachment } = useAttachmentDelete();
 
@@ -78,6 +79,7 @@ export default function ChatWindow() {
   };
 
   const handleSend = async () => {
+    if (!isOnline) return;
     const textContent = input.trim();
     if (!textContent && attachments.length === 0) return;
 
@@ -158,6 +160,8 @@ export default function ChatWindow() {
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-4 max-w-full h-full min-h-0"
     >
+      <OfflineBanner />
+
       <div
         ref={scrollContainerRef}
         className="flex-1 pb-4 overflow-y-auto caret-transparent relative"
@@ -228,15 +232,25 @@ export default function ChatWindow() {
       )}
 
       {isLoading && (
-        <div className="max-w-3xl mx-auto w-full flex items-center gap-3 mb-3 animate-bounce">
-            <Image
-              src="/logo.png"
-              alt="RealMe AI"
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
+        <motion.div
+          animate={{ opacity: [1, 0.4, 1] }}
+          transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex gap-1"
+        >
+          {[1, 2, 3].map((i) => (
+            <motion.div
+              key={i}
+              className="w-1.5 h-1.5 bg-slate-400 dark:bg-slate-500 rounded-full"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{
+                delay: i * 0.15,
+                duration: 0.6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             />
-        </div>
+          ))}
+        </motion.div>
       )}
 
       <div className="max-w-3xl mx-auto w-full">

@@ -190,6 +190,11 @@ const ig = {
       },
     },
     transcribing: "Na-ede ihe e kwuru…",
+
+    offline: {
+      title: "Ị dịghị offline",
+      subtitle: "Jikọọ ọnụọrọ nnyocha gị",
+    },
   },
 
   fileupload: {

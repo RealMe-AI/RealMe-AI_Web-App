@@ -190,6 +190,11 @@ const yo = {
       },
     },
     transcribing: "Ntọka…",
+
+    offline: {
+      title: "O ko ni intanẹti",
+      subtitle: "Ṣọkan si intanẹti rẹ",
+    },
   },
 
   fileupload: {

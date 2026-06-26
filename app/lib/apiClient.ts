@@ -88,7 +88,15 @@ export async function authFetch(
     headers.set("Content-Type", "application/json");
   }
 
-  const res = await fetch(input, { ...init, headers });
+  let res: Response;
+  try {
+    res = await fetch(input, { ...init, headers });
+  } catch (err) {
+    if (err instanceof TypeError && err.message === "Failed to fetch") {
+      throw new Error("No internet connection. Please check your network.");
+    }
+    throw err;
+  }
 
   if (res.status === 401) {
     const newToken = await doRefresh();
@@ -108,7 +116,14 @@ export async function authFetch(
       retryHeaders.set("Content-Type", "application/json");
     }
 
-    return fetch(input, { ...init, headers: retryHeaders });
+    try {
+      return await fetch(input, { ...init, headers: retryHeaders });
+    } catch (err) {
+      if (err instanceof TypeError && err.message === "Failed to fetch") {
+        throw new Error("No internet connection. Please check your network.");
+      }
+      throw err;
+    }
   }
 
   return res;

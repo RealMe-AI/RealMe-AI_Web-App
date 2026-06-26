@@ -4,6 +4,7 @@ import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";
+import { useNetworkStatus } from "@/app/hooks/useNetworkStatus";
 import { Message, Attachment } from "@/app/interface/type";
 
 function now() {
@@ -36,9 +37,11 @@ export const useMessageStream = () => {
 
   const { createConversation } = useCreateConversation();
   const { updateConversation } = useUpdateConversation();
+  const { isOnline } = useNetworkStatus();
 
   const sendMessage = useCallback(
     async (content: string, attachmentIds?: string[], attachments?: Attachment[]) => {
+      if (!isOnline) return;
       if (!content.trim() && (!attachmentIds || attachmentIds.length === 0)) return;
 
       let currentConversationId = activeConversationId;
@@ -179,8 +182,9 @@ export const useMessageStream = () => {
       setAbortController,
       createConversation,
       updateConversation,
+      isOnline,
     ],
   );
 
-  return { sendMessage };
+  return { sendMessage, isOnline };
 };

@@ -190,6 +190,11 @@ const ha = {
       },
     },
     transcribing: "Ana rubuta abin da aka faɗa…",
+
+    offline: {
+      title: "Ba ka da haɗin intanet",
+      subtitle: "Haɗa haɗin intanet ka",
+    },
   },
 
   fileupload: {
