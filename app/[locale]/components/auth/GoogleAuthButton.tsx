@@ -22,7 +22,7 @@ export default function GoogleAuthButton() {
       whileTap={{ scale: 0.98 }}
       onClick={handleGoogleSignIn}
       disabled={isLoading}
-      className="flex items-center justify-center gap-3 w-full py-3 px-4 rounded-lg 
+      className="flex items-center text-sm md:text-base justify-center gap-3 w-full py-3 px-4 rounded-lg 
                  bg-white dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 
                  text-slate-700 dark:text-white font-semibold shadow-sm 
                  hover:bg-gray-50 dark:hover:bg-slate-700 transition
