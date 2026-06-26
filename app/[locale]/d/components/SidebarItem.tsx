@@ -71,7 +71,7 @@ export default function SidebarItem({
   return (
     <>
       <div
-        className={`relative w-70 max-sm:w-full flex items-center justify-between px-2 rounded-xl cursor-pointer transition group ${
+        className={`relative w-70 md:w-full max-sm:w-full flex items-center justify-between px-2 rounded-lg cursor-pointer transition group ${
           isActive
             ? "bg-slate-100 dark:bg-slate-700/40 text-slate-700 dark:text-white"
             : "text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700/40"
@@ -108,7 +108,7 @@ export default function SidebarItem({
         {!isRenaming && (
           <button
             ref={buttonRef}
-            className={"dark:text-slate-300 text-slate-600 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 text-lg font-bold leading-none "}
+            className={"dark:text-slate-300 text-slate-600 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-200 text-lg font-bold leading-none "}
             onClick={(e) => {
               e.stopPropagation();
               const rect = buttonRef.current?.getBoundingClientRect();

@@ -198,6 +198,12 @@ const en = {
     },
   },
 
+  clipboard: {
+    title: "Paste from clipboard?",
+    yes: "Yes",
+    no: "No",
+  },
+
   fileupload: {
     upload_title: "Upload a file",
     button_label: "Upload",

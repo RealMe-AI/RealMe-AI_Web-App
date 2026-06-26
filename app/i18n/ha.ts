@@ -197,6 +197,12 @@ const ha = {
     },
   },
 
+  clipboard: {
+    title: "Liqa daga clipboard?",
+    yes: "Eh",
+    no: "A'a",
+  },
+
   fileupload: {
     upload_title: "Loda fayil",
     button_label: "Loda",

@@ -197,6 +197,12 @@ const yo = {
     },
   },
 
+  clipboard: {
+    title: "Fi si clipboard?",
+    yes: "Bẹẹni",
+    no: "Rara",
+  },
+
   fileupload: {
     upload_title: "Gbe faili soke",
     button_label: "Gbe soke",

@@ -197,6 +197,12 @@ const ig = {
     },
   },
 
+  clipboard: {
+    title: "Tinye si clipboard?",
+    yes: "Ee",
+    no: "Mba",
+  },
+
   fileupload: {
     upload_title: "Bulite faịlụ",
     button_label: "Bulite",

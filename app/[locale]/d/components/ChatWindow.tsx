@@ -49,6 +49,7 @@ export default function ChatWindow() {
     messages: chatMessages,
     isLoading,
     inputFocusSignal,
+    triggerInputFocus,
   } = useChatStore();
   const { sendMessage, isOnline } = useMessageStream();
   const { uploadFile, uploadingFiles } = useAttachmentUpload();
@@ -203,10 +204,16 @@ export default function ChatWindow() {
         {clipboardText && (
           <ClipboardPasteModal
             text={clipboardText}
-            onSend={() => {
+            onPaste={() => {
               dismissedTexts.current.add(clipboardText.trim());
-              sendMessage(clipboardText, [], []);
+              setInput(clipboardText);
+              if (inputRef.current) inputRef.current.textContent = clipboardText;
               setClipboardText(null);
+              if (inputFocusSignal > 0) {
+                inputRef.current?.focus();
+              } else {
+                triggerInputFocus();
+              }
             }}
             onCancel={() => {
               dismissedTexts.current.add(clipboardText.trim());
