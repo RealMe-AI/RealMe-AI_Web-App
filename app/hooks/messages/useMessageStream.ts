@@ -5,6 +5,7 @@ import { authFetch } from "@/app/lib/apiClient";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";
 import { useNetworkStatus } from "@/app/hooks/useNetworkStatus";
+import { useTranslations } from "next-intl";
 import { Message, Attachment } from "@/app/interface/type";
 
 function now() {
@@ -12,16 +13,6 @@ function now() {
     hour: "2-digit",
     minute: "2-digit",
   });
-}
-
-function errorMessage(): Message {
-  return {
-    id: (Date.now() + 1).toString(),
-    sender: "ai",
-    type: "text",
-    text: "Sorry, something went wrong. Please try again.",
-    time: now(),
-  };
 }
 
 export const useMessageStream = () => {
@@ -38,6 +29,7 @@ export const useMessageStream = () => {
   const { createConversation } = useCreateConversation();
   const { updateConversation } = useUpdateConversation();
   const { isOnline } = useNetworkStatus();
+  const t = useTranslations();
 
   const sendMessage = useCallback(
     async (content: string, attachmentIds?: string[], attachments?: Attachment[]) => {
@@ -166,7 +158,13 @@ export const useMessageStream = () => {
           return;
         }
 
-        addMessage(errorMessage());
+        addMessage({
+          id: (Date.now() + 1).toString(),
+          sender: "ai",
+          type: "text",
+          text: t("error.message.failed"),
+          time: now(),
+        });
         setIsLoading(false);
       } finally {
         setAbortController(null);
@@ -183,6 +181,7 @@ export const useMessageStream = () => {
       createConversation,
       updateConversation,
       isOnline,
+      t,
     ],
   );
 

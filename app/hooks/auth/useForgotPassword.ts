@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useTranslations } from "next-intl";
 
 export default function useForgotPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const t = useTranslations();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,12 +20,12 @@ export default function useForgotPassword() {
     setError("");
 
     if (!email.trim()) {
-      setError("Please enter your email address");
+      setError(t("error.forgot_password.enter_email"));
       return;
     }
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
+      setError(t("error.forgot_password.invalid_email"));
       return;
     }
 
@@ -51,7 +53,7 @@ export default function useForgotPassword() {
 
       onSuccess();
     } catch (err) {
-      setError("Failed to send verification code. Please try again.");
+      setError(t("error.forgot_password.send_failed"));
     } finally {
       setLoading(false);
     }

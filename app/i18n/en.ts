@@ -158,6 +158,20 @@ const en = {
     },
 
     network: "Network error. Please try again.",
+
+    message: {
+      failed: "Sorry, something went wrong. Please try again.",
+    },
+    forgot_password: {
+      enter_email: "Please enter your email address",
+      invalid_email: "Please enter a valid email address",
+      send_failed: "Failed to send verification code. Please try again.",
+    },
+    voice: {
+      not_supported: "Speech recognition is not supported in this browser.",
+      recognition_error: "Speech recognition error: {error}",
+      start_failed: "Failed to start speech recognition.",
+    },
   },
 
   dashboard: {

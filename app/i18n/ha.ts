@@ -158,6 +158,20 @@ const ha = {
     },
 
     network: "Kuskuren haɗin intanet. Sake gwadawa.",
+
+    message: {
+      failed: "Yi haufuri, wani abu ya faru. Da fatan za a sake gwadawa.",
+    },
+    forgot_password: {
+      enter_email: "Shigar da adireshin imel ka",
+      invalid_email: "Shigar da ingantaccen adireshin imel",
+      send_failed: "An kasa aika da lambar tabbatarwa. Da fatan za a sake gwadawa.",
+    },
+    voice: {
+      not_supported: "Ba a goyon bayan gane murya a wannan yanar gizo ba.",
+      recognition_error: "Kuskuren gane murya: {error}",
+      start_failed: "An kasa fara gane murya.",
+    },
   },
 
   dashboard: {

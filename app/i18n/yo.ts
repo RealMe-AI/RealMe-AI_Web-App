@@ -158,6 +158,20 @@ const yo = {
     },
 
     network: "Aṣiṣe nẹtiwọọki. Jọwọ gbiyanju lẹẹkansi.",
+
+    message: {
+      failed: "Ma binu, ohunkohun kan wa. Jọwọ gbiyanju lẹẹkansi.",
+    },
+    forgot_password: {
+      enter_email: "Tẹ adirẹsi imeeli rẹ",
+      invalid_email: "Tẹ adirẹsi imeeli to wulo",
+      send_failed: "Ko le fi koodu ijẹrisi ranṣẹ. Jọwọ gbiyanju lẹẹkansi.",
+    },
+    voice: {
+      not_supported: "Ko si atilẹyin fun ọrọ-si-ohùn ninu browser yii.",
+      recognition_error: "Aṣiṣe ọrọ-si-ohùn: {error}",
+      start_failed: "Ko le bẹrẹ ọrọ-si-ohùn.",
+    },
   },
 
   dashboard: {
