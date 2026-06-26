@@ -242,7 +242,7 @@ export default function ChatWindow() {
         <motion.div
           animate={{ opacity: [1, 0.4, 1] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex gap-1"
+          className="max-w-3xl mx-auto w-full flex items-center gap-1 mb-3 animate-bounce"
         >
           {[1, 2, 3].map((i) => (
             <motion.div
