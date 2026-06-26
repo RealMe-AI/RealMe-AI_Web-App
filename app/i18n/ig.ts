@@ -158,6 +158,20 @@ const ig = {
     },
 
     network: "Njehie netwọk. Biko nwaa ọzọ.",
+
+    message: {
+      failed: "Nnwụrụ anwụ, ihe mere emezila. Biko nwaa ọzọ.",
+    },
+    forgot_password: {
+      enter_email: "Tinye adreesị email gị",
+      invalid_email: "Tinye adreesị email ziri ezi",
+      send_failed: "Enweghị ike rụọ ọrụ koodu nyochaa. Biko nwaa ọzọ.",
+    },
+    voice: {
+      not_supported: "Enweghị nkwado maka mmụta olu na web browser a.",
+      recognition_error: "Njehie mmụta olu: {error}",
+      start_failed: "Enweghị ike malite mmụta olu.",
+    },
   },
 
   dashboard: {
@@ -190,6 +204,17 @@ const ig = {
       },
     },
     transcribing: "Na-ede ihe e kwuru…",
+
+    offline: {
+      title: "Ị dịghị offline",
+      subtitle: "Jikọọ ọnụọrọ nnyocha gị",
+    },
+  },
+
+  clipboard: {
+    title: "Tinye si clipboard?",
+    yes: "Ee",
+    no: "Mba",
   },
 
   fileupload: {

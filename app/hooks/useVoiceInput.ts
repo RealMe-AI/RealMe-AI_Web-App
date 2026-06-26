@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useLanguageStore } from "../store/useLanguageStore";
+import { useTranslations } from "next-intl";
 import {
   SpeechRecognition,
   SpeechRecognitionConstructor,
@@ -25,6 +26,7 @@ export const useVoiceInput = () => {
   const [seconds, setSeconds] = useState(0);
   const [transcript, setTranscript] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations();
 
   const isSupported = typeof window !== "undefined" && !!getSpeechRecognition();
 
@@ -51,7 +53,7 @@ export const useVoiceInput = () => {
 
     const SpeechRecognition = getSpeechRecognition();
     if (!SpeechRecognition) {
-      setError("Speech recognition is not supported in this browser.");
+      setError(t("error.voice.not_supported"));
       return;
     }
 
@@ -82,7 +84,7 @@ export const useVoiceInput = () => {
       };
 
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-        setError(`Speech recognition error: ${event.error}`);
+        setError(t("error.voice.recognition_error", { error: event.error }));
       };
 
       recognition.onend = () => {
@@ -96,7 +98,7 @@ export const useVoiceInput = () => {
       startTimer();
     } catch (err) {
       console.error("Speech recognition error:", err);
-      setError("Failed to start speech recognition.");
+      setError(t("error.voice.start_failed"));
     }
   };
 

@@ -2,23 +2,25 @@
 
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   text: string;
-  onSend: () => void;
+  onPaste: () => void;
   onCancel: () => void;
 }
 
-export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
+export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) {
+  const t = useTranslations("clipboard");
 
   useEffect(() => {
-  const handler = (e: KeyboardEvent) => {
-    if (e.key === "Enter") onSend();
-    if (e.key === "Escape") onCancel();
-  };
-  window.addEventListener("keydown", handler);
-  return () => window.removeEventListener("keydown", handler);
-}, [onSend, onCancel]);
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Enter") onPaste();
+      if (e.key === "Escape") onCancel();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onPaste, onCancel]);
 
   return (
     <motion.div
@@ -38,7 +40,7 @@ export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
                    shadow-xl border border-gray-200 dark:border-slate-700"
       >
         <p className="text-sm font-medium text-gray-800 dark:text-gray-200 uppercase tracking-wide mb-6">
-          Do you want to send this to the chat?
+          {t("title")}
         </p>
 
         <div className="max-h-40 overflow-y-auto text-sm text-gray-800 dark:text-gray-200
@@ -49,11 +51,11 @@ export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
 
         <div className="flex gap-2">
           <button
-            onClick={onSend}
+            onClick={onPaste}
             className="flex-1 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700
                        text-white text-sm font-medium transition"
           >
-            Send
+            {t("yes")}
           </button>
           <button
             onClick={onCancel}
@@ -61,7 +63,7 @@ export default function ClipboardPasteModal({ text, onSend, onCancel }: Props) {
                        hover:bg-gray-200 dark:hover:bg-slate-600
                        text-gray-700 dark:text-gray-300 text-sm font-medium transition"
           >
-            Cancel
+            {t("no")}
           </button>
         </div>
       </motion.div>

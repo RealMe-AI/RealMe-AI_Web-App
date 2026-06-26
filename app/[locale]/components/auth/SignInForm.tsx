@@ -116,7 +116,7 @@ export default function SignInForm() {
         type="submit"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className={`mt-2 flex items-center justify-center gap-2 
+        className={`mt-2 flex text-sm md:text-base items-center justify-center gap-2 
           bg-indigo-400  dark:bg-indigo-600 text-white 
           font-semibold py-3 rounded-lg shadow-md transition
           ${loading ? "opacity-70 pointer-events-none" : ""}

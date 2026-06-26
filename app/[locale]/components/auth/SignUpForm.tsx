@@ -178,7 +178,7 @@ export default function SignUpForm() {
         disabled={loading || strengthScore < 3}
         whileHover={{ scale: loading ? 1 : 1.02 }}
         whileTap={{ scale: loading ? 1 : 0.98 }}
-        className={`mt-2 flex items-center justify-center gap-2 
+        className={`mt-2 text-sm md:text-base flex items-center justify-center gap-2 
           font-semibold py-3 rounded-lg shadow-md transition
           ${
             loading || strengthScore < 3
