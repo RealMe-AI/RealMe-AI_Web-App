@@ -1,86 +1,125 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { TeamCard } from "./components/TeamCard";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function AboutPage() {
-  const router = useRouter();
-
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/50 backdrop-blur-md
-                 flex items-center justify-center px-4 py-6"
-    >
-      <motion.div
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-        className="
-          relative w-full max-w-3xl
-          bg-white dark:bg-slate-900
-          rounded-2xl shadow-2xl
-          px-6 py-8 sm:px-8 sm:py-10 md:px-12
-          max-h-[90vh] overflow-y-auto
-          text-center
-        "
-      >
-        {/* Close Button */}
-        <button
-          onClick={() => router.back()}
-          className="
-            absolute right-4 top-4
-            p-2 rounded-full
-            bg-gray-200 dark:bg-slate-700
-            hover:bg-gray-300 dark:hover:bg-slate-600
-            transition
-          "
-        >
-          <X className="text-slate-800 dark:text-gray-200" size={18} />
-        </button>
+    <main className="bg-white dark:bg-[#05070C]">
+      <section className="relative flex h-screen w-full items-center overflow-hidden bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+        <Image
+          src="/realme-banner.png"
+          alt="RealMe AI"
+          fill
+          priority
+          className="object-cover hidden sm:block"
+        />
+        <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/55 to-black/10 hidden md:block" />
 
-        {/* Avatar */}
-        <div className="flex justify-center">
-          <Image
-            src="/owen.jpg"
-            alt="OwenVisuals"
-            width={96}
-            height={96}
-            className="
-              rounded-full object-cover
-              shadow-lg border-4
-              border-indigo-500/40
-              sm:w-[120px] sm:h-[120px]
-            "
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{ show: { transition: { staggerChildren: 0.12 } } }}
+          className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32 sm:px-10 lg:px-16"
+        >
+          <motion.h1
+            variants={fadeUp}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="max-w-2xl text-4xl leading-[1.1] sm:text-5xl lg:text-6xl"
+          >
+            <span className="block font-bold text-slate-900 dark:text-white md:text-white">
+              Human centered AI
+            </span>
+            <span className="block font-light text-slate-700 dark:text-white/85 md:text-white/85">
+              for how you speak, think, and create
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-6 max-w-md text-sm font-medium text-slate-600 dark:text-white/85 md:text-white/75 sm:text-ba"
+          >
+            RealMe AI brings real-time voice, adaptive conversation, and
+            multilingual understanding together in one platform designed to
+            feel less like software, and more like you.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-9"
+          >
+            <Link
+              href="/auth"
+              className="group inline-flex items-center gap-2 rounded-md bg-indigo-400 md:bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-400/20 transition hover:bg-indigo-500"
+            >
+              Get started
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      <section className="bg-white px-6 py-20 sm:px-10 lg:px-16 dark:bg-[#0B0E15]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mx-auto max-w-7xl"
+        >
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <h2 className="text-2xl font-medium text-slate-900 sm:text-3xl lg:col-span-4 dark:text-white">
+              Empowering{" "}
+              <span className="font-bold text-indigo-400 md:text-indigo-600 dark:text-indigo-400">
+                expression
+              </span>
+            </h2>
+
+            <p className="text-sm leading-relaxed text-slate-600 sm:text-base lg:col-span-7 lg:col-start-6 dark:text-slate-300">
+              <span className="font-semibold text-slate-900 dark:text-white">
+                RealMe AI
+              </span>{" "}
+              is a multilingual intelligence platform built to help people
+              communicate, create, and express themselves without friction. By
+              pairing real-time voice synthesis with adaptive chat
+              personalities, RealMe AI turns everyday conversation into
+              something more natural across language, tone, and context. Every
+              interaction is shaped around one principle: technology should
+              adapt to people, not the other way around.
+            </p>
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="px-6 py-20 sm:px-10 lg:px-16 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-2">
+          <TeamCard
+            quote="We believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to."
+            image="/agunwa.jpeg"
+            name="Agunwa Chidiebele Calistus"
+            role="Founder & CEO at RealMe"
+          />
+          <TeamCard
+            quote="Great products live at the intersection of design and engineering. RealMe AI is built right there, on purpose."
+            image="/daniel.jpg"
+            name="Daniel Chidubem"
+            role="Co-Founder at RealMe"
           />
         </div>
-
-        {/* Name */}
-        <h2 className="mt-5 text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-          OwenVisuals
-        </h2>
-
-        <p className="text-indigo-500 font-medium text-sm sm:text-base">
-          Founder & CEO, RealMe AI
-        </p>
-
-        {/* Content */}
-        <p className="mt-5 text-sm sm:text-base text-slate-700 dark:text-gray-300 leading-relaxed">
-          RealMe AI is a next generation multilingual intelligence system built
-          to help people communicate, learn, create, and express themselves
-          with unmatched clarity. Designed by OwenVisuals, RealMe AI merges
-          beautiful visual design with cutting edge AI to deliver a premium
-          user experience across chat, voice, and productivity tools.
-        </p>
-
-        <p className="mt-4 text-sm sm:text-base text-slate-700 dark:text-gray-300 leading-relaxed">
-          From real time voice synthesis to adaptive chat personalities,
-          RealMe AI represents the future of human centered AI. This project
-          is powered by creativity, innovation, and a commitment to building
-          tools that empower millions worldwide.
-        </p>
-      </motion.div>
-    </div>
+      </section>
+    </main>
   );
 }

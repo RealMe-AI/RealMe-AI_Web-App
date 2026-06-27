@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import ChatActionsModal from "../chatEdit/ChatActionsModal";
-import { useChatActionsModal } from "../chatEdit/useChatActionsModal";
+import { useDeleteConversation } from "@/app/hooks/chatModal/useDeleteConversation";
+import { useRenameConversation } from "@/app/hooks/chatModal/useRenameConversation";
 import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 // import { Check, X as XIcon } from "lucide-react";
 
@@ -35,7 +36,8 @@ export default function SidebarItem({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { handleDelete, handleRename, isLoading } = useChatActionsModal();
+  const { deleteConversation, isDeleting } = useDeleteConversation();
+  const { renameConversation } = useRenameConversation();
 
   // Focus input when renaming starts
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function SidebarItem({
       setIsRenaming(false);
       return;
     }
-    await handleRename(chat.id, renameValue.trim());
+    await renameConversation(chat.id, renameValue.trim());
     setIsRenaming(false);
   };
 
@@ -64,7 +66,7 @@ export default function SidebarItem({
   };
 
   const handleConfirmDelete = async () => {
-    await handleDelete(chat.id);
+    await deleteConversation(chat.id);
     setIsDeleteModalOpen(false);
   };
 
@@ -150,7 +152,7 @@ export default function SidebarItem({
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
         title={chat.title}
-        isLoading={isLoading}
+        isLoading={isDeleting}
       />
     </>
   );

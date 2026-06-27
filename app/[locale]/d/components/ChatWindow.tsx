@@ -185,11 +185,11 @@ export default function ChatWindow() {
                     className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
                   />
                   <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
-                    Hi, {user?.fullName?.split(" ")[0] || "there"}
+                    Hi, {user?.fullName?.split(" ")[0] || t("dashboard.greeting.fallback_name")}
                   </h1>
                 </div>
                 <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
-                  I&apos;m RealMe, your AI assistant. How can I help you today?
+                  {t("dashboard.greeting.subtitle")}
                 </p>
               </motion.div>
             </div>
@@ -286,8 +286,8 @@ export default function ChatWindow() {
                         </span>
                         <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
                           {progress < 100
-                            ? `Uploading… ${progress}%`
-                            : "Processing…"}
+                            ? `${t("modal.uploading")} ${progress}%`
+                            : t("chat.file.processing")}
                         </span>
                       </div>
                     </div>
@@ -365,7 +365,7 @@ export default function ChatWindow() {
             <div className="flex-1 relative">
               {!input && (
                 <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
-                  Type a message...
+                  {t("chat.input.placeholder")}
                 </div>
               )}
               <div

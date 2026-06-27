@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LogOut, Settings, User, ArrowUpCircle } from "lucide-react";
 import { useTranslate } from "@/app/hooks/useTranslate";
@@ -7,6 +9,7 @@ import { useRouter } from "@/i18n/routing";
 import { useUserProfile } from "@/app/hooks/user/useUserProfile";
 import { cn } from "@/app/lib/utils";
 import useLogout from "@/app/hooks/auth/useLogout";
+import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 
 import Image from "next/image";
 import AccountInfoModal from "../../account/AccountInfoModal";
@@ -26,7 +29,9 @@ export default function ProfileFooter() {
   const { user } = useUserProfile();
   const router = useRouter();
   const { t } = useTranslate();
-  const { handleLogout } = useLogout();
+  const tRich = useTranslations();
+  const { handleLogout, isLoggingOut } = useLogout();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   // Robust avatar source logic
   const avatarSrc =
@@ -120,7 +125,7 @@ export default function ProfileFooter() {
               </button>
 
               <button
-                onClick={handleLogout}
+                onClick={() => setIsLogoutModalOpen(true)}
                 className="flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600 
                          hover:bg-red-100/50 dark:hover:bg-red-800/60 transition"
               >
@@ -133,6 +138,23 @@ export default function ProfileFooter() {
 
       {/* Account Info Modal */}
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />
+
+      {/* Logout Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+        title={t("dashboard.sidebar.logout_confirm_title")}
+        message={tRich.rich("dashboard.sidebar.logout_confirm_message", {
+          name: user?.fullName?.split(" ")[0] || t("dashboard.greeting.fallback_name"),
+          styled: (chunks) => (
+            <span className="font-semibold text-slate-800 dark:text-slate-200">
+              {chunks}
+            </span>
+          ),
+        })}
+        isLoading={isLoggingOut}
+      />
     </div>
   );
 }

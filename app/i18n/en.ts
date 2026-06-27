@@ -13,8 +13,8 @@ const en = {
       subtitle:
         "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
       offer1: "Real-time AI chat",
-      offer2: "Personalized settings",
-      offer3: "Voice input",
+      offer2: "Real-Time Voice",
+      offer3: "Multilingual Understanding",
       badge1: "AI Model",
       badge2: "Languages",
     },
@@ -175,12 +175,20 @@ const en = {
   },
 
   dashboard: {
+    greeting: {
+      fallback_name: "there",
+      subtitle: "I'm RealMe, your AI assistant. How can I help you today?",
+    },
+    rename: "Rename",
     realMeThinking: "is thinking",
     sidebar: {
       chat_button: "New Chat",
       footer_full: "By",
       upgrade: "Upgrade",
       logout: "Log out",
+      logout_confirm_title: "Log Out?",
+      logout_confirm_message:
+        'Are you sure you want to log out <styled>{name}</styled> ?',
     },
     search: {
       chats_placeholder: "Search chats...",
@@ -210,6 +218,14 @@ const en = {
       title: "You are offline",
       subtitle: "Turn on your internet connection",
     },
+
+    delete_modal: {
+      title: "Delete Conversation",
+      description: "Are you sure you want to delete this conversation?",
+      cancel: "Cancel",
+      confirm: "Delete",
+      default_message: 'This will permanently delete <styled>{title}</styled>. This action cannot be undone.',
+    },
   },
 
   clipboard: {
@@ -226,6 +242,12 @@ const en = {
 
   chat: {
     send_button: "Send",
+    input: {
+      placeholder: "Type a message...",
+    },
+    file: {
+      processing: "Processing…",
+    },
   },
 
   account_info: {
@@ -282,6 +304,9 @@ const en = {
       label: "Danger Zone",
     },
     delete_account: "Delete Account",
+    delete_account_title: "Delete Account?",
+    delete_account_message:
+      "This will permanently delete your account and all associated data. This action cannot be undone.",
   },
 
   modal: {
@@ -339,6 +364,12 @@ const en = {
       billing_note:
         "All plans include secure authentication, persistent chat history, and multilingual support.",
     },
+  },
+
+  message_actions: {
+    copy: "Copy Message",
+    read_aloud: "Read aloud",
+    edit: "Edit Message",
   },
 
   ai: {

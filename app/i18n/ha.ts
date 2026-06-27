@@ -13,8 +13,8 @@ const ha = {
       subtitle:
         "Samu amsoshi cikin sauri da basira tare da goyon bayan harsuna da dama. RealMe AI na dacewa da salon sadarwarka don tattaunawa ta ƙwararru a Turanci, Hausa, Igbo, da Yarbanci.",
       offer1: "Tattaunawa kai-tsaye da AI",
-      offer2: "Saituna na musamman",
-      offer3: "Shigar da murya",
+      offer2: "Murya Kai Tsaye",
+      offer3: "Fahimtar Harsuna Da Dama",
       badge1: "Samfurin AI",
       badge2: "Harsuna",
     },
@@ -165,7 +165,8 @@ const ha = {
     forgot_password: {
       enter_email: "Shigar da adireshin imel ka",
       invalid_email: "Shigar da ingantaccen adireshin imel",
-      send_failed: "An kasa aika da lambar tabbatarwa. Da fatan za a sake gwadawa.",
+      send_failed:
+        "An kasa aika da lambar tabbatarwa. Da fatan za a sake gwadawa.",
     },
     voice: {
       not_supported: "Ba a goyon bayan gane murya a wannan yanar gizo ba.",
@@ -175,12 +176,20 @@ const ha = {
   },
 
   dashboard: {
+    greeting: {
+      fallback_name: "can",
+      subtitle: "Ni RealMe ne, mataimakin AI naka. Ta yaya zan taimaka maka a yau?",
+    },
+    rename: "Sake suna",
     realMeThinking: "yana tunani",
     sidebar: {
       chat_button: "Sabuwar Tattaunawa",
       footer_full: "Ta",
       upgrade: "Haɓakawa",
       logout: "Fita",
+      logout_confirm_title: "Fita?",
+      logout_confirm_message:
+        'Ka tabbata kana son fita <styled>{name}</styled> ?',
     },
     search: {
       chats_placeholder: "Bincika tattaunawa...",
@@ -209,15 +218,22 @@ const ha = {
       title: "Ba ka da haɗin intanet",
       subtitle: "Haɗa haɗin intanet ka",
     },
+    delete_modal: {
+      title: "Goge Tattaunawa",
+      description: "Ka tabbata kana son goge wannan tattaunawar?",
+      cancel: "Soke",
+      confirm: "Goge",
+      default_message: 'Za a goge <styled>{title}</styled> har abada. Ba za a iya mayar da shi ba.',
+    },
   },
 
   clipboard: {
-    title: "Liqa daga clipboard?",
+    title: "Manna daga clipboard?",
     yes: "Eh",
     no: "A'a",
   },
 
-  fileupload: {
+   fileupload: {
     upload_title: "Loda fayil",
     button_label: "Loda",
     limit_reached: "Haɓaka zuwa Pro",
@@ -225,6 +241,12 @@ const ha = {
 
   chat: {
     send_button: "Aika",
+    input: {
+      placeholder: "Rubuta sako...",
+    },
+    file: {
+      processing: "Ana sarrafa…",
+    },
   },
 
   account_info: {
@@ -281,6 +303,9 @@ const ha = {
       label: "Wurin Hadari",
     },
     delete_account: "Goge Asusu",
+    delete_account_title: "Goge Asusu?",
+    delete_account_message:
+      "Wannan zai goge asusunka da duk bayanan da ke tattare da shi har abada. Ba za a iya mayar da shi ba.",
   },
 
   modal: {
@@ -338,6 +363,12 @@ const ha = {
       billing_note:
         "Duk tsare-tsare suna ɗauke da tsaron shiga, tarihin tattaunawa mai dorewa, da tallafin harsuna da dama.",
     },
+  },
+
+  message_actions: {
+    copy: "Kwafi Sako",
+    read_aloud: "Karanta da ƙarfi",
+    edit: "Gyara Sako",
   },
 
   ai: {
