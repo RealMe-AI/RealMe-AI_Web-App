@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
 
-      <div className="max-w-7xl mx-auto px-6 py-15 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto min-h-screen px-6 py-15 grid lg:grid-cols-2 gap-12 items-center">
 
         {/* LEFT SECTION */}
         <motion.div
