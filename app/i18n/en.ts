@@ -13,8 +13,8 @@ const en = {
       subtitle:
         "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
       offer1: "Real-time AI chat",
-      offer2: "Personalized settings",
-      offer3: "Voice input",
+      offer2: "Real-Time Voice",
+      offer3: "Multilingual Understanding",
       badge1: "AI Model",
       badge2: "Languages",
     },

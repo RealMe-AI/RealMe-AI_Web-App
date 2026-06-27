@@ -13,8 +13,8 @@ const ha = {
       subtitle:
         "Samu amsoshi cikin sauri da basira tare da goyon bayan harsuna da dama. RealMe AI na dacewa da salon sadarwarka don tattaunawa ta ƙwararru a Turanci, Hausa, Igbo, da Yarbanci.",
       offer1: "Tattaunawa kai-tsaye da AI",
-      offer2: "Saituna na musamman",
-      offer3: "Shigar da murya",
+      offer2: "Murya Kai Tsaye",
+      offer3: "Fahimtar Harsuna Da Dama",
       badge1: "Samfurin AI",
       badge2: "Harsuna",
     },

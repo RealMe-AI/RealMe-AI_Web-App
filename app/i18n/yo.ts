@@ -13,8 +13,8 @@ const yo = {
       subtitle:
         "Gba awọn idahun lẹsẹkẹsẹ, ọlọgbọn pẹlu atilẹyin ede pupọ. RealMe AI n ṣe deede si aṣa ibaraẹnisọrọ rẹ fun awọn ibaraẹnisọrọ amọdaju gidi ni English, Hausa, Igbo, ati Yoruba.",
       offer1: "Ijiroro AI akoko gidi",
-      offer2: "Awọn eto ti ara ẹni",
-      offer3: "Ifaara Ohùn",
+      offer2: "Ohùn Ní Àkókò Gidi",
+      offer3: "Ìmọ̀ Èdè Púpọ̀",
       badge1: "Apẹrẹ AI",
       badge2: "Awọn Ede",
     },

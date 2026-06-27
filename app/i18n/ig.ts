@@ -13,8 +13,8 @@ const ig = {
       subtitle:
         "Nweta azịza n’ụzọ ozugbo na amamihe yana nkwado ọtụtụ asụsụ. RealMe AI na-eme ka ụkpụrụ nkwurịta okwu gị nwee nhata maka mkparịta ụka nke ọkachamara n’English, Hausa, Igbo, na Yoruba.",
       offer1: "Mkparịta ụka AI ozugbo",
-      offer2: "Nhazi ahaziri iche",
-      offer3: "Ntinye olu",
+      offer2: "Olu Oge-N'ezie",
+      offer3: "Nghọta Asụsụ Dị Iche Iche",
       badge1: "Ụdị AI",
       badge2: "Asụsụ",
     },
