@@ -186,6 +186,9 @@ const yo = {
       footer_full: "Nípa",
       upgrade: "Mu dara si",
       logout: "Jade",
+      logout_confirm_title: "Jade?",
+      logout_confirm_message:
+        'Ṣé o dá ọ lójú pé o fẹ́ jáde <styled>{name}</styled> ?',
     },
     search: {
       chats_placeholder: "Ṣawari awọn ijiroro...",

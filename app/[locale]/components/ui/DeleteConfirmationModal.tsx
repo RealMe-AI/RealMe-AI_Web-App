@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { FC } from "react";
+import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 
@@ -9,18 +9,18 @@ interface DeleteConfirmationModalProps {
   onClose: () => void;
   onConfirm: () => void;
   title: string;
-  message?: string;
+  message?: ReactNode;
   isLoading?: boolean;
 }
 
-const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
+const DeleteConfirmationModal = ({
   isOpen,
   onClose,
   onConfirm,
   title,
   message,
   isLoading = false,
-}) => {
+}:DeleteConfirmationModalProps) => {
   const t = useTranslations();
 
   return (

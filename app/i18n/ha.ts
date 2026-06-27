@@ -187,6 +187,9 @@ const ha = {
       footer_full: "Ta",
       upgrade: "Haɓakawa",
       logout: "Fita",
+      logout_confirm_title: "Fita?",
+      logout_confirm_message:
+        'Ka tabbata kana son fita <styled>{name}</styled> ?',
     },
     search: {
       chats_placeholder: "Bincika tattaunawa...",

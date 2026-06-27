@@ -186,6 +186,9 @@ const ig = {
       footer_full: "Site na",
       upgrade: "Melite",
       logout: "Pụọ",
+      logout_confirm_title: "Pụọ?",
+      logout_confirm_message:
+        'Ị ji n\'aka na ịchọrọ ịpụ <styled>{name}</styled> ?',
     },
     search: {
       chats_placeholder: "Chọgharịa mkparịta ụka...",

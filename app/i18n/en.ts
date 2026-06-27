@@ -186,6 +186,9 @@ const en = {
       footer_full: "By",
       upgrade: "Upgrade",
       logout: "Log out",
+      logout_confirm_title: "Log Out?",
+      logout_confirm_message:
+        'Are you sure you want to log out <styled>{name}</styled> ?',
     },
     search: {
       chats_placeholder: "Search chats...",
