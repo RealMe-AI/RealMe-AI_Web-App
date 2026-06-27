@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Share, Pencil, Pin, Trash2 } from "lucide-react";
 import { useDeleteConversation } from "@/app/hooks/chatModal/useDeleteConversation";
@@ -25,6 +26,7 @@ const ChatActionsModal = ({
   onDelete,
   chatId,
 }: ChatActionsModalProps) => {
+  const t = useTranslations();
   const { deleteConversation: defaultDelete } = useDeleteConversation();
   const { renameConversation: defaultRename } = useRenameConversation();
 
@@ -79,7 +81,7 @@ const ChatActionsModal = ({
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Pencil size={16} />
-                <span>Rename</span>
+                <span>{t("dashboard.rename")}</span>
               </li>
 
               {/* Pin */}
@@ -97,7 +99,7 @@ const ChatActionsModal = ({
                 className="flex items-center gap-2 px-4 py-2 hover:bg-red-100 dark:hover:bg-red-800/20 text-red-600 dark:text-red-400 cursor-pointer transition"
               >
                 <Trash2 size={16} />
-                <span>Delete</span>
+                <span>{t("dashboard.delete_modal.confirm")}</span>
               </li>
             </ul>
           </motion.div>

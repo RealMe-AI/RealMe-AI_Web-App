@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ChatMessageProps, Attachment } from "@/app/interface/type";
 import { cn } from "@/app/lib/utils";
@@ -12,6 +13,7 @@ import parseMarkdown from "@/app/lib/parseMarkdown";
 import { useEditMessage } from "@/app/hooks/messages/useEditMessage";
 
 export default function ChatMessage({ message }: ChatMessageProps) {
+  const t = useTranslations();
   const isUser = message.sender === "user";
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(message.text || "");
@@ -266,7 +268,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                           onClick={handleCancel}
                           className="px-2 py-1 text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700/40 rounded-md hover:bg-slate-200 dark:hover:bg-slate-600 transition"
                         >
-                          Cancel
+                          {t("dashboard.delete_modal.cancel")}
                         </button>
                         <button
                           onClick={handleSendEdit}
@@ -275,7 +277,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                           }
                           className="px-2 py-1 text-sm font-medium text-indigo-200 bg-slate-500 dark:bg-slate-60 rounded-md transition disabled:opacity-40"
                         >
-                          Send
+                          {t("chat.send_button")}
                         </button>
                       </div>
                     </div>

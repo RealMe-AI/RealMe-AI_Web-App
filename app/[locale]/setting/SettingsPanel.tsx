@@ -135,8 +135,8 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
             isOpen={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}
             onConfirm={handleDeleteAccount}
-            title="Delete Account?"
-            message="This will permanently delete your account and all associated data. This action cannot be undone."
+            title={t("settings.delete_account_title")}
+            message={t("settings.delete_account_message")}
             isLoading={isDeleting}
           />
         </>

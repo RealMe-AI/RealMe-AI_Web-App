@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Copy, Pencil, Check, Volume2, Square } from "lucide-react";
 import { useCopyToClipboard } from "@/app/hooks/copyToClipboard/useCopyToClipboard";
 import Tooltip from "@/app/[locale]/components/ui/Tooltip";
@@ -20,6 +21,7 @@ export default function MessageActions({
   onEdit?: () => void;
   message: Message;
 }) {
+  const t = useTranslations();
   const { copied, copy } = useCopyToClipboard();
 
   // READ ALOUD
@@ -47,7 +49,7 @@ export default function MessageActions({
 
   return (
     <div className="flex flex-row gap-1 bg-white/70 dark:bg-slate-800/80 backdrop-blur-md rounded-lg p-1 shadow-md border border-white/20">
-      <Tooltip content="Copy Message">
+      <Tooltip content={t("message_actions.copy")}>
         <button
           onClick={() => text && copy(text)}
           className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"
@@ -68,7 +70,7 @@ export default function MessageActions({
                                  hover:bg-indigo-100 dark:hover:bg-slate-600
                                  transition opacity-0 group-hover:opacity-100
                                  text-slate-600 dark:text-slate-300"
-          title={isSpeaking ? "Stop" : "Read aloud"}
+          title={isSpeaking ? t("dashboard.voice.button.stop") : t("message_actions.read_aloud")}
         >
           {isSpeaking ? (
             <Square size={10} fill="currentColor" />
@@ -79,7 +81,7 @@ export default function MessageActions({
       )}
 
       {sender === "user" && (
-        <Tooltip content="Edit Message">
+        <Tooltip content={t("message_actions.edit")}>
           <button
             onClick={onEdit}
             className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"

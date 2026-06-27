@@ -121,7 +121,7 @@ const ig = {
     identifier: {
       email: "Email",
       phone: "Ekwentị",
-      google: "Google"
+      google: "Google",
     },
   },
 
@@ -175,6 +175,11 @@ const ig = {
   },
 
   dashboard: {
+    greeting: {
+      fallback_name: "ebe",
+      subtitle: "Abụ m RealMe, onye enyemaka AI gị. Kedu ka m ga-esi nyere gị aka taa?",
+    },
+    rename: "Deba aha ọzọ",
     realMeThinking: "ọ na-eche",
     sidebar: {
       chat_button: "Mkparịta ụka Ọhụrụ",
@@ -192,7 +197,7 @@ const ig = {
     },
 
     voice_input: {
-      start_recording: "Malite idekọ",
+      start_recording: "Malite ndekọ",
     },
     record_voice: {
       in_process: "Na-edekọ…",
@@ -206,13 +211,21 @@ const ig = {
     transcribing: "Na-ede ihe e kwuru…",
 
     offline: {
-      title: "Ị dịghị offline",
-      subtitle: "Jikọọ ọnụọrọ nnyocha gị",
+      title: "Ị nọghị n'ịntanetị",
+      subtitle: "Biko gbanye njikọ ịntanetị gị",
+    },
+
+    delete_modal: {
+      title: "Hichapụ Mkparịta Ụka",
+      description: "Ị ji n'aka na ịchọrọ ihichapụ mkparịta ụka a?",
+      cancel: "Kagbuo",
+      confirm: "Hichapụ",
+      default_message: 'Nke a ga-ehichapụ <styled>{title}</styled> kpamkpam. Enweghị ike ịtụgharị ya.',
     },
   },
 
   clipboard: {
-    title: "Tinye si clipboard?",
+    title: "Tapawa site na clipboard?",
     yes: "Ee",
     no: "Mba",
   },
@@ -225,6 +238,12 @@ const ig = {
 
   chat: {
     send_button: "Zipu",
+    input: {
+      placeholder: "Dee ozi...",
+    },
+    file: {
+      processing: "Na-ahazi…",
+    },
   },
 
   account_info: {
@@ -281,6 +300,9 @@ const ig = {
       label: "Ebe ize ndụ",
     },
     delete_account: "Hichapụ Akaụntụ",
+    delete_account_title: "Hichapụ Akaụntụ?",
+    delete_account_message:
+      "Nke a ga-ehichapụ akaụntụ gị na data niile metụtara ya kpamkpam. Enweghị ike ịtụgharị ya.",
   },
 
   modal: {
@@ -338,6 +360,12 @@ const ig = {
       billing_note:
         "Atụmatụ niile gụnyere nbanye echekwara, akụkọ mkparịta ụka na-adịgide adịgide, na nkwado ọtụtụ asụsụ.",
     },
+  },
+
+  message_actions: {
+    copy: "Detuo Ozi",
+    read_aloud: "Gụọ Ya N'Ọnụ",
+    edit: "Dezie Ozi",
   },
 
   ai: {

@@ -175,6 +175,11 @@ const yo = {
   },
 
   dashboard: {
+    greeting: {
+      fallback_name: "nibẹ",
+      subtitle: "Emi ni RealMe, oluranlọwọ AI rẹ. Bawo ni mo ṣe le ran ọ lọwọ loni?",
+    },
+    rename: "Tún orukọ",
     realMeThinking: "ó ń ronú",
     sidebar: {
       chat_button: "Ijiroro Tuntun",
@@ -209,22 +214,35 @@ const yo = {
       title: "O ko ni intanẹti",
       subtitle: "Ṣọkan si intanẹti rẹ",
     },
+    delete_modal: {
+      title: "Pa Ìjíròrò Rẹ́",
+      description: "Ṣé o dá ọ lójú pé o fẹ́ pa ìjíròrò yìí?",
+      cancel: "Fagilé",
+      confirm: "Pa",
+      default_message: 'Èyí yóò pa <styled>{title}</styled> run patapata. Kò sí ọ̀nà àtúndá.',
+    },
   },
 
-  clipboard: {
-    title: "Fi si clipboard?",
-    yes: "Bẹẹni",
-    no: "Rara",
+    clipboard: {
+    title: "Lẹ mọ́ láti clipboard?",
+    yes: "Bẹ́ẹ̀ni",
+    no: "Rárá",
   },
 
-  fileupload: {
-    upload_title: "Gbe faili soke",
-    button_label: "Gbe soke",
-    limit_reached: "Mu dara si Pro",
+    fileupload: {
+    upload_title: "Ṣe àgbéyẹ̀wò fáìlì",
+    button_label: "Ṣe Àgbéyẹ̀wò",
+    limit_reached: "Ṣe ìgbéga sí Pro",
   },
 
   chat: {
     send_button: "Firanṣẹ",
+    input: {
+      placeholder: "Tẹ ìfiránṣẹ́ kan...",
+    },
+    file: {
+      processing: "Ni ṣiṣe…",
+    },
   },
 
   account_info: {
@@ -281,6 +299,9 @@ const yo = {
       label: "Agbegbe Ewu",
     },
     delete_account: "Pa Account",
+    delete_account_title: "Pa Account?",
+    delete_account_message:
+      "Èyí yóò pa àkọ́kọ́ rẹ̀ àti gbogbo àwọn dátà tí ó ní ṣe pẹ̀lú rẹ̀ run. Kò sí ọ̀nà àtúndá.",
   },
 
   modal: {
@@ -338,6 +359,12 @@ const yo = {
       billing_note:
         "Gbogbo awọn eto pẹlu aabo wiwọle, itan ijiroro ti o wa titi, ati atilẹyin ede pupọ.",
     },
+  },
+
+  message_actions: {
+    copy: "Daakọ Ifiranṣẹ",
+    read_aloud: "Ka soke",
+    edit: "Ṣatunkọ Ifiranṣẹ",
   },
 
   ai: {
