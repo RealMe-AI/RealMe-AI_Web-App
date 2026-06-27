@@ -1,7 +1,8 @@
-import { FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Share, Pencil, Pin, Trash2 } from "lucide-react";
-import { useChatActionsModal } from "./useChatActionsModal";
+import { useDeleteConversation } from "@/app/hooks/chatModal/useDeleteConversation";
+
+import { useRenameConversation } from "@/app/hooks/chatModal/useRenameConversation";
 
 interface ChatActionsModalProps {
   isOpen: boolean;
@@ -24,16 +25,12 @@ const ChatActionsModal = ({
   onDelete,
   chatId,
 }: ChatActionsModalProps) => {
-  const {
-    handleDelete: defaultDelete,
-    handleRename: defaultRename,
-    handleShare: defaultShare,
-    handlePin: defaultPin,
-  } = useChatActionsModal();
+  const { deleteConversation: defaultDelete } = useDeleteConversation();
+  const { renameConversation: defaultRename } = useRenameConversation();
 
   const handleItemClick = (
     action?: () => void,
-    defaultAction?: (id: number) => void
+    defaultAction?: (id: number) => void,
   ) => {
     if (action) {
       action();
@@ -62,14 +59,14 @@ const ChatActionsModal = ({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`z-50 w-48 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden ${
+            className={`z-50 w-40 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden ${
               className || ""
             }`}
           >
             <ul className="flex flex-col">
               {/* Share */}
               <li
-                onClick={() => handleItemClick(onShare, defaultShare)}
+                onClick={() => handleItemClick(onShare)}
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Share size={16} />
@@ -87,7 +84,7 @@ const ChatActionsModal = ({
 
               {/* Pin */}
               <li
-                onClick={() => handleItemClick(onPin, defaultPin)}
+                onClick={() => handleItemClick(onPin)}
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Pin size={16} />
