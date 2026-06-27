@@ -60,7 +60,7 @@ export default function AboutPage() {
           >
             <Link
               href="/auth"
-              className="group inline-flex items-center gap-2 rounded-md bg-indigo-400 md:bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-400/20 transition hover:bg-indigo-500"
+              className="group inline-flex items-center gap-2 rounded-md bg-indigo-400 md:bg-indigo-400 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-400/20 transition hover:bg-indigo-500"
             >
               Get started
               <ArrowRight
@@ -83,7 +83,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <h2 className="text-2xl font-medium text-slate-900 sm:text-3xl lg:col-span-4 dark:text-white">
               Empowering{" "}
-              <span className="font-bold text-indigo-400 md:text-indigo-600 dark:text-indigo-400">
+              <span className="font-bold text-indigo-400 md:text-indigo-400 dark:text-indigo-400">
                 expression
               </span>
             </h2>
@@ -107,7 +107,7 @@ export default function AboutPage() {
       <section className="px-6 py-20 sm:px-10 lg:px-16 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-2">
           <TeamCard
-            quote="We believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to."
+            quote="I believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to."
             image="/agunwa.jpeg"
             name="Agunwa Chidiebele Calistus"
             role="Founder & CEO at RealMe"
@@ -115,7 +115,7 @@ export default function AboutPage() {
           <TeamCard
             quote="Great products live at the intersection of design and engineering. RealMe AI is built right there, on purpose."
             image="/daniel.jpg"
-            name="Daniel Chidubem"
+            name="Ezechukwu Chukwudubem Daniel"
             role="Co-Founder at RealMe"
           />
         </div>
