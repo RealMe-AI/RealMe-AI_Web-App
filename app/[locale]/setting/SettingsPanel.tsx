@@ -108,10 +108,10 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                     </Link>
 
                     <Link
-                      href={""}
+                      href={"/about"}
                       className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100"
                     >
-                      <Globe size={16} /> {t("settings.support.faq")}
+                      <Globe size={16} /> {t("navbar.about")}
                     </Link>
                   </Section>
 
