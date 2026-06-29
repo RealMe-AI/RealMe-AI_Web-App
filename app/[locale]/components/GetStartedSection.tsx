@@ -15,7 +15,7 @@ export default function GetStarted() {
         {/* LEFT: IMAGE */}
         <div className="order-2 lg:order-1">
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <div className="rounded-xl overflow-hidden shadow-2xl">
               <Image
                 src="/get-started.png"
                 alt={t("landing.get_started.image.title")}

@@ -19,7 +19,7 @@ export function TeamCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm dark:border-white/5 dark:bg-[#1B1F2B] dark:shadow-none"
+      className="rounded-lg border border-indigo-100 dark:border-indigo-900/30 bg-white p-8 shadow-sm dark:bg-gray-900 dark:shadow-none"
     >
       <p className="text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-200">
         “{quote}”

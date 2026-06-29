@@ -21,7 +21,7 @@ export default function Features(): JSX.Element {
     <section className="bg-white dark:bg-gray-800 max-w-full mx-auto px-6 py-12">
       <h2 className="text-3xl sm:text-4xl lg:text-5xl text-slate-600 dark:text-white/80 font-bold text-center mb-6 leading-tight">
         {t("landing.features.title")}{" "}
-        <span className="bg-linear-to-b from-indigo-300 to-indigo-600 bg-clip-text text-transparent">
+        <span className="text-indigo-300 dark:text-indigo-600 ">
           RealMe AI?
         </span>
       </h2>
@@ -34,10 +34,10 @@ export default function Features(): JSX.Element {
         {items.map((it) => (
           <div
             key={it.key}
-            className="p-8 rounded-2xl border border-indigo-100 dark:border-indigo-900/30 bg-linear-to-br from-indigo-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 glass hover:shadow-2xl hover:-translate-y-2 transition-all duration-900"
+            className="p-8 rounded-xl border border-indigo-100 dark:border-indigo-900/30 bg-linear-to-br from-indigo-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 glass hover:shadow-2xl hover:-translate-y-2 transition-all duration-900"
           >
             <div className="w-12 h-12 bg-primary-200 rounded-lg flex items-center justify-center mb-4 text-primary-700">
-              <span className="p-4 rounded-2xl bg-linear-to-b from-indigo-300 to-indigo-600">
+              <span className="p-4 rounded-xl bg-indigo-300 dark:bg-indigo-600 text-slate-900 dark:text-white">
                 {iconMap[it.icon]}
               </span>
             </div>
