@@ -296,8 +296,8 @@ const en = {
       autoRead: "Auto-read AI responses",
     },
     support: {
-      label: "Support & Help",
-      contact: "Contact Support",
+      label: "Support & About",
+      contact: "Help & Support",
       faq: "FAQs / Help Center",
     },
     danger_zone: {

@@ -101,7 +101,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   {/* Support */}
                   <Section title={t("settings.support.label")}>
                     <Link
-                      href={""}
+                      href={"/help"}
                       className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100"
                     >
                       <Globe size={16} /> {t("settings.support.contact")}

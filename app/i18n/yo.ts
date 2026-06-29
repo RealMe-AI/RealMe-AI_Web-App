@@ -294,8 +294,8 @@ const yo = {
       autoRead: "Ka awọn idahun AI laifọwọyi",
     },
     support: {
-      label: "Atilẹyin & Iranlọwọ",
-      contact: "Kan si Atilẹyin",
+      label: "Atilẹyin & Nipa",
+      contact: "Iranlọwọ & Atilẹyin",
       faq: "Awọn ibeere / Ile-iṣẹ Iranlọwọ",
     },
     danger_zone: {

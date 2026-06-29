@@ -295,8 +295,8 @@ const ha = {
       autoRead: "Karanta ta atomatik sakonnin AI",
     },
     support: {
-      label: "Tallafi & Taimako",
-      contact: "Tuntuɓi Tallafi",
+      label: "Tallafi & Game da",
+      contact: "Taimako & Tallafi",
       faq: "Tambayoyi & Cibiyar Taimako",
     },
     danger_zone: {
