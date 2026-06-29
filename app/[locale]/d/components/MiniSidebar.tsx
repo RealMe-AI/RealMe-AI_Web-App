@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -26,7 +26,9 @@ import { useTranslate } from "@/app/hooks/useTranslate";
 import useModalStore from "@/app/store/modalStore";
 import { useLanguageStore, type Language } from "@/app/store/useLanguageStore";
 import useLogout from "@/app/hooks/auth/useLogout";
+import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 import AccountInfoModal from "../../account/AccountInfoModal";
+import { useTranslations } from "next-intl";
 
 const LANG_OPTIONS = [
   { label: "English", shortLabel: "EN", value: "en" },
@@ -50,7 +52,9 @@ export default function MiniSidebar() {
 
   const { user } = useUserProfile();
   const { t } = useTranslate();
-  const { handleLogout } = useLogout();
+  const tRich = useTranslations();
+  const { handleLogout, isLoggingOut } = useLogout();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const {
     isProfileOpen,
@@ -285,7 +289,7 @@ export default function MiniSidebar() {
                 <Settings size={16} /> {t("settings.title")}
               </button>
               <button
-                onClick={handleLogout}
+                onClick={() => setIsLogoutModalOpen(true)}
                 className="
                   flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600
                   hover:bg-red-100/50 dark:hover:bg-red-800/60
@@ -301,6 +305,23 @@ export default function MiniSidebar() {
 
       {/* Account Info Modal */}
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />
+
+      {/* Logout Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+        title={t("dashboard.sidebar.logout_confirm_title")}
+        message={tRich.rich("dashboard.sidebar.logout_confirm_message", {
+          name: user?.fullName?.split(" ")[0] || t("dashboard.greeting.fallback_name"),
+          styled: (chunks) => (
+            <span className="font-semibold text-slate-800 dark:text-slate-200">
+              {chunks}
+            </span>
+          ),
+        })}
+        isLoading={isLoggingOut}
+      />
     </>
   );
 }
