@@ -72,7 +72,7 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      <section className="bg-white px-6 py-20 sm:px-10 lg:px-16 dark:bg-[#0B0E15]">
+      <section className="bg-white px-6 py-20 sm:px-10 lg:px-16 dark:bg-gray-900">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

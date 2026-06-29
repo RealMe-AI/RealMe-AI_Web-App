@@ -37,7 +37,7 @@ export default function Features(): JSX.Element {
             className="p-8 rounded-xl border border-indigo-100 dark:border-indigo-900/30 bg-linear-to-br from-indigo-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 glass hover:shadow-2xl hover:-translate-y-2 transition-all duration-900"
           >
             <div className="w-12 h-12 bg-primary-200 rounded-lg flex items-center justify-center mb-4 text-primary-700">
-              <span className="p-4 rounded-xl bg-indigo-300 dark:bg-indigo-600">
+              <span className="p-4 rounded-xl bg-indigo-300 dark:bg-indigo-600 text-slate-900 dark:text-white">
                 {iconMap[it.icon]}
               </span>
             </div>

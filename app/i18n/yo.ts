@@ -3,7 +3,7 @@
 const yo = {
   navbar: {
     help: "Iranlọwọ & Atilẹyin",
-    about: "Nipa RealMe AI",
+    about: "Nipa RealMe",
   },
 
   landing: {

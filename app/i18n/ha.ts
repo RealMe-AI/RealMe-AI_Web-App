@@ -3,7 +3,7 @@
 const ha = {
   navbar: {
     help: "Taimako & Tallafi",
-    about: "Game da RealMe AI",
+    about: "Game da RealMe",
   },
 
   landing: {

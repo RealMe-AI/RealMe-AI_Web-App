@@ -3,7 +3,7 @@
 const ig = {
   navbar: {
     help: "Enyemaka & Nkwado",
-    about: "Banyere RealMe AI",
+    about: "Banyere RealMe",
   },
 
   landing: {

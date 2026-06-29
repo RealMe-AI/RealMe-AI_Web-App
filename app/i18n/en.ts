@@ -3,7 +3,7 @@
 const en = {
   navbar: {
     help: "Help & Support",
-    about: "About RealMe AI",
+    about: "About RealMe",
   },
 
   landing: {
