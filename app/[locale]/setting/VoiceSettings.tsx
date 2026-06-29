@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback } from "react";
-import { Volume2 } from "lucide-react";
+import { Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTtsStore } from "@/app/store/useTtsStore";
 
@@ -54,7 +54,7 @@ export default function VoiceSettings() {
           className="flex items-center justify-between p-2 rounded-lg cursor-pointer hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
         >
           <div className="flex items-center gap-2">
-            <Volume2 size={16} className="text-slate-800 dark:text-slate-100" />
+            <Mic size={16} className="text-slate-800 dark:text-slate-100" />
             <span className="text-slate-800 dark:text-slate-100">
               {t("settings.voice.allow")}
             </span>

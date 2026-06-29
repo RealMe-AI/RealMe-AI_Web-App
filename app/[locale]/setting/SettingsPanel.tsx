@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Globe, Trash2, Pencil } from "lucide-react";
+import { X, Trash2, Pencil, MoonStar, Info, CircleHelp } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../store/useUserStore";
 import { useTranslations } from "next-intl";
@@ -81,7 +81,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                   {/* Preferences */}
                   <Section title={t("settings.preferences.label")}>
                     <span className="flex items-center gap-2 px-2 rounded-lg w-full text-slate-800 dark:text-slate-100">
-                      <Globe size={16} />
+                      <MoonStar size={16} />
                       {t("settings.theme.label")}:
                       <ThemeSelect />
                     </span>
@@ -104,14 +104,14 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
                       href={"/help"}
                       className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100"
                     >
-                      <Globe size={16} /> {t("settings.support.contact")}
+                      <CircleHelp size={16} /> {t("settings.support.contact")}
                     </Link>
 
                     <Link
                       href={"/about"}
                       className="flex items-center gap-2 p-2 rounded-lg w-full text-slate-800 dark:text-slate-100"
                     >
-                      <Globe size={16} /> {t("navbar.about")}
+                      <Info size={16} /> {t("navbar.about")}
                     </Link>
                   </Section>
 
