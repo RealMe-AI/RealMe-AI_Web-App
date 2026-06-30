@@ -13,12 +13,13 @@ const fadeUp = {
 
 export default function AboutPage() {
   return (
-    <main className="bg-white dark:bg-[#05070C]">
-      <section className="relative flex h-screen w-full items-center overflow-hidden bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+    <main>
+      <section className="relative flex h-screen w-full items-center overflow-hidden">
         <Image
           src="/Realme-mobile-banner.jpeg"
           alt="RealMe AI"
           fill
+          sizes="100vw"
           priority
           className="object-fill lg:hidden"
         />
