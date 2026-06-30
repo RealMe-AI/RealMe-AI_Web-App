@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 export function HelpHero() {
   const t = useTranslations();
   return (
-    <section className="relative flex min-h-[70vh] lg:h-screen w-full items-center overflow-hidden">
+    <section className="relative flex min-h-[70svh] lg:h-screen w-full items-center overflow-hidden">
       <Image
         src="/Realme-mobile-banner.jpeg"
         alt="RealMe AI"
