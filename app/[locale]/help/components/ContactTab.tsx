@@ -28,7 +28,7 @@ export function ContactTab() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {contacts.map((item) => (
           <Link
-            key={item.label}
+            key={item.id}
             href={item.action}
             target={item.action.startsWith("http") ? "_blank" : undefined}
             rel={
@@ -45,19 +45,19 @@ export function ContactTab() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                  {item.label}
+                  {t(`help.contacts.${item.id}.label`)}
                 </h3>
                 {item.badge && (
                   <span className="text-[10px] font-medium px-2 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
-                    Coming Soon
+                    {t("help.coming_soon")}
                   </span>
                 )}
               </div>
               <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                {item.description}
+                {t(`help.contacts.${item.id}.description`)}
               </p>
               <span className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-indigo-400 group-hover:underline">
-                {item.cta}
+                {t(`help.contacts.${item.id}.cta`)}
                 <ExternalLink size={12} />
               </span>
             </div>

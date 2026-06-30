@@ -74,7 +74,7 @@ const ig = {
       },
       cta: "Malite Ugbu a",
       image: {
-        title: "Malite ikwu okwu na",
+        title: "Chatbọt RealMe AI na-akwado Bekee, Hausa, Igbo na Yoruba",
         desc: "Sekọnd",
       },
     },
@@ -177,7 +177,8 @@ const ig = {
   dashboard: {
     greeting: {
       fallback_name: "ebe",
-      subtitle: "Abụ m RealMe, onye enyemaka AI gị. Kedu ka m ga-esi nyere gị aka taa?",
+      subtitle:
+        "Abụ m RealMe, onye enyemaka AI gị. Kedu ka m ga-esi nyere gị aka taa?",
     },
     rename: "Deba aha ọzọ",
     realMeThinking: "ọ na-eche",
@@ -188,7 +189,7 @@ const ig = {
       logout: "Pụọ",
       logout_confirm_title: "Pụọ?",
       logout_confirm_message:
-        'Ị ji n\'aka na ịchọrọ ịpụ <styled>{name}</styled> ?',
+        "Ị ji n'aka na ịchọrọ ịpụ <styled>{name}</styled> ?",
     },
     search: {
       chats_placeholder: "Chọgharịa mkparịta ụka...",
@@ -223,7 +224,8 @@ const ig = {
       description: "Ị ji n'aka na ịchọrọ ihichapụ mkparịta ụka a?",
       cancel: "Kagbuo",
       confirm: "Hichapụ",
-      default_message: 'Nke a ga-ehichapụ <styled>{title}</styled> kpamkpam. Enweghị ike ịtụgharị ya.',
+      default_message:
+        "Nke a ga-ehichapụ <styled>{title}</styled> kpamkpam. Enweghị ike ịtụgharị ya.",
     },
   },
 
@@ -380,6 +382,242 @@ const ig = {
     prompt: {
       placeholder: "Tinye ozi gị ebe a...",
       send_button: "Zipu",
+    },
+  },
+
+  help: {
+    hero: {
+      title: "Enyemaka & Nkwado",
+      subtitle:
+        "Nnọọ na Nkwado RealMe AI. Nweta nduzi, ụzọ isi dozie nsogbu, na enyemaka sitere n'aka ndị ọkachamara iji hụ na ị nwere ahụmịhe kacha mma mgbe ị na-eji ikpo okwu anyị.",
+    },
+
+    mobile_drawer: {
+      title: "Isiokwu",
+    },
+
+    badge: {
+      currently_free: "N'efu Ugbu a",
+    },
+
+    coming_soon: "Na-abịa N'oge Na-adịghị Anya",
+
+    contacts: {
+      email_support: {
+        label: "Nkwado Site na Email",
+        description: "Nweta nzaghachi n'ime awa 24",
+        cta: "officialrealme.ai@gmail.com",
+      },
+
+      live_chat: {
+        label: "Mkparịta Ụka N'oge Dị Adị",
+        description: "Nkwado ozugbo sitere n'aka ndị otu anyị",
+        cta: "Na-abịa N'oge Na-adịghị Anya",
+      },
+
+      report_bug: {
+        label: "Kọọ Njehie",
+        description: "Nyere anyị aka imezi site n'ịkọ nsogbu",
+        cta: "Kọọ Ugbu a",
+      },
+
+      suggest_feature: {
+        label: "Tụpụta Njirimara Ọhụrụ",
+        description: "Kesaa echiche gị na ndị otu anyị",
+        cta: "Tụpụta",
+      },
+    },
+
+    faq: {
+      categories: {
+        getting_started: {
+          title: "Malite",
+        },
+
+        voice: {
+          title: "Njirimara Olu",
+        },
+
+        languages: {
+          title: "Asụsụ",
+        },
+        privacy: {
+          title: "Nzuzo & Nche",
+        },
+
+        account: {
+          title: "Ntọala Akaụntụ",
+        },
+
+        troubleshooting: {
+          title: "Idozi Nsogbu",
+        },
+
+        contact: {
+          title: "Kpọtụrụ Nkwado",
+        },
+      },
+
+      items: {
+        gs_1: {
+          question: "Kedu ka m ga-esi mepụta akaụntụ?",
+          answer:
+            "Ị nwere ike ịmepụta akaụntụ site na email gị, nọmba ekwentị gị, ma ọ bụ akaụntụ Google gị. Pịa bọtịnụ 'Malite' dị na ibe mbụ ma soro usoro ndebanye aha.",
+        },
+
+        gs_2: {
+          question: "Enwere m ike ịgbanwe paswọọdụ m?",
+          answer:
+            "Ee. Gaa na Ntọala → Nche iji melite paswọọdụ gị. Ị ga-achọ paswọọdụ gị ugbu a iji mepụta nke ọhụrụ.",
+        },
+
+        gs_3: {
+          question: "RealMe AI ọ bụ n'efu iji?",
+          answer:
+            "RealMe AI bụ n'efu kpamkpam ugbu a. Njirimara Premium, nzaghachi ngwa ngwa, oke ozi dị elu, na ụdị AI dị elu na-abịa n'oge na-adịghị anya. Nọgide na-echere!",
+        },
+
+        gs_4: {
+          question: "Enwere m ike iji RealMe AI na ngwaọrụ ọtụtụ?",
+          answer:
+            "Ee. Akaụntụ gị na-emekọrịta n'ọrụ n'ọrụ niile. Banye naanị na ngwaọrụ ọ bụla iji nweta mkparịta ụka na ntọala gị.",
+        },
+
+        vo_1: {
+          question: "Kedu ka m ga-esi jiri mkparịta ụka olu?",
+          answer:
+            "Pịa akara igwe okwu dị na mkparịta ụka ka ị gwa RealMe AI okwu n'ụzọ nkịtị. A ga-atụgharị okwu gị gaa na ederede ma zaghachi gị ozugbo.",
+        },
+
+        vo_2: {
+          question: "RealMe AI nwere ike ịgụ azịza n'olu?",
+          answer:
+            "Ee. Pịa akara igwe okwu dị na azịza AI ọ bụla ka e gụọ ya n'olu. Ị nwekwara ike ịgbanye ọgụgụ-akpaghị aka na Ntọala Olu maka ahụmịhe na-enweghị aka.",
+        },
+
+        vo_3: {
+          question: "Kedu asụsụ ka a na-akwado maka olu?",
+          answer:
+            "Ntinye na mmepụta olu ugbu a na-akwado Bekee, Hausa, Igbo, na Yoruba. A na-agbakwunye asụsụ ndị ọzọ mgbe niile.",
+        },
+
+        vo_4: {
+          question: "Enwere m ike ịgbanwe ọsọ olu?",
+          answer:
+            "Ee. Gaa na Ntọala → Ntọala Olu iji hazie ọsọ okwu site na ihe mmịfe ọsọ. Ị nwere ike ịhụ mgbanwe ahụ ozugbo.",
+        },
+        ln_1: {
+          question: "Kedu asụsụ ndị a na-akwado?",
+          answer:
+            "RealMe AI na-akwado Bekee, Hausa, Igbo, Yoruba, na ọtụtụ asụsụ mba ụwa. Anyị na-aga n'ihu na-agbakwunye asụsụ ọhụrụ.",
+        },
+
+        ln_2: {
+          question: "Kedu ka m ga-esi gbanwee asụsụ?",
+          answer:
+            "Jiri nhọrọ asụsụ dị na sidebar ma ọ bụ gaa na Ntọala ka ịhọrọ asụsụ masịrị gị. Interface ga-emelite ozugbo.",
+        },
+
+        ln_3: {
+          question: "RealMe AI ọ na-atụgharị asụsụ?",
+          answer:
+            "Ee. RealMe AI nwere ike ịghọta ma zaghachi n'ọtụtụ asụsụ, na-eme ka nkwurịta okwu dị mfe n'asụsụ ị họọrọ.",
+        },
+
+        pr_1: {
+          question: "Kedu ka e si echekwa data m?",
+          answer:
+            "A na-ezochi mkparịta ụka gị mgbe a na-ebufe ya na mgbe echekwara ya. Anyị na-agbaso ụkpụrụ nchekwa ụwa iji chekwaa nzuzo na nchekwa data gị.",
+        },
+
+        pr_2: {
+          question: "Mkparịta ụka m ọ bụ nke nzuzo?",
+          answer:
+            "Ee. A na-echekwa mkparịta ụka gị nke ọma ma naanị gị nwere ike ịhụ ha. Anyị anaghị ekekọrịta data mkparịta ụka gị na ndị ọzọ.",
+        },
+
+        pr_3: {
+          question: "Enwere m ike ihichapụ akụkọ mkparịta ụka m?",
+          answer:
+            "Ee. Ị nwere ike ihichapụ mkparịta ụka ọ bụla ma ọ bụ hichapụ akụkọ mkparịta ụka gị niile n'oge ọ bụla site na Ntọala.",
+        },
+
+        pr_4: {
+          question: "Kedu ka m ga-esi hichapụ akaụntụ m?",
+          answer:
+            "Gaa na Ntọala → Danger Zone iji hichapụ akaụntụ gị na data niile metụtara ya kpamkpam. Enweghị ike iweghachi omume a.",
+        },
+        ac_1: {
+          question: "Kedu ka m ga-esi melite profaịlụ m?",
+          answer:
+            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, email gị, na foto profaịlụ gị.",
+        },
+
+        ac_2: {
+          question: "Enwere m ike ịgbanwe adreesị email m?",
+          answer:
+            "Ee. Gaa na Ntọala Akaụntụ iji melite adreesị email gị. Ị ga-achọ ịkwado email ọhụrụ ahụ tupu mgbanwe ahụ amalite ịrụ ọrụ.",
+        },
+
+        ac_3: {
+          question: "Kedu ka m ga-esi tọgharịa paswọọdụ m?",
+          answer:
+            "Na ibe nbanye, pịa 'Chefuru Paswọọdụ' ma soro ntuziaka ezigara na email gị. Ị nwekwara ike ịtọgharịa ya site na Ntọala → Nche mgbe ị banyechara.",
+        },
+
+        tr_1: {
+          question: "Enweghị m ike ịbanye",
+          answer:
+            "Jide n'aka na ị na-eji email na paswọọdụ ziri ezi. Gbalịa ịtọgharịa paswọọdụ gị ma ọ bụ hichapụ cache nke ihe nchọgharị gị. Ọ bụrụ na nsogbu ahụ gara n'ihu, kpọtụrụ nkwado.",
+        },
+
+        tr_2: {
+          question: "Olu anaghị arụ ọrụ",
+          answer:
+            "Lelee na ihe nchọgharị gị enyela ikike iji igwe okwu. Jide n'aka na agbanyere njirimara olu na Ntọala → Ntọala Olu. Gbalịa iji ihe nchọgharị dịka Chrome ma ọ bụ Firefox.",
+        },
+
+        tr_3: {
+          question: "AI anaghị aza",
+          answer:
+            "Mee ka ibe ahụ dị ọhụrụ ma lelee njikọ ịntanetị gị. Ọ bụrụ na nsogbu ahụ gara n'ihu, malite mkparịta ụka ọhụrụ ma ọ bụ hichapụ akụkọ mkparịta ụka gị.",
+        },
+
+        tr_4: {
+          question: "Ozi m efuola",
+          answer:
+            "A na-echekwa mkparịta ụka gị nke ọma ma ha kwesịrị ịdị mgbe niile. Mee ka ibe ahụ dị ọhụrụ. Ọ bụrụ na ozi ahụ ka na-efu, lelee na ị banyere n'akaụntụ ziri ezi.",
+        },
+
+        tr_6: {
+          question: "Email nkwenye anaghị abịa",
+          answer:
+            "Lelee folda Spam ma ọ bụ Junk gị. Jide n'aka na ị tinyere email ziri ezi. Ị nwere ike ịrịọ ka ezigara gị email nkwenye ọhụrụ site na Ntọala Akaụntụ.",
+        },
+        ct_1: {
+          question: "Kedu ka m ga-esi kpọtụrụ ndị otu nkwado?",
+          answer:
+            "Ị nwere ike iziga anyị email na officialrealme.ai@gmail.com. Ndị otu anyị na-azakarị n'ime awa 24 n'oge ụbọchị ọrụ (Mọnde ruo Satọdee).",
+        },
+
+        ct_2: {
+          question: "Mkparịta ụka ozugbo ọ dị?",
+          answer:
+            "Mkparịta ụka ozugbo na-abịa n'oge na-adịghị anya! Anyị na-arụ ọrụ iji tinye nkwado mkparịta ụka ozugbo maka enyemaka ngwa ngwa.",
+        },
+
+        ct_3: {
+          question: "Kedu ka m ga-esi kọọ njehie?",
+          answer:
+            "Ziga nkọwa zuru ezu banyere njehie ahụ yana foto ihuenyo na officialrealme.ai@gmail.com. Tinye ụdị ngwaọrụ gị na ụdị ihe nchọgharị ị na-eji iji nyere anyị aka idozi nsogbu ahụ ngwa ngwa.",
+        },
+
+        ct_4: {
+          question: "Enwere m ike ịtụ aro njirimara ọhụrụ?",
+          answer:
+            "N'ezie! Anyị na-enwe mmasị ịnụ echiche sitere n'aka ndị ọrụ anyị. Ziga aro njirimara gị na officialrealme.ai@gmail.com, ndị otu anyị ga-enyocha ha.",
+        },
+      },
     },
   },
 };

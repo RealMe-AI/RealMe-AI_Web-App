@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { faqCategories } from "../data/faq";
 import { categoryIcons } from "../data/icons";
 
@@ -21,6 +22,8 @@ export function TabDrawer({
   activeTab,
   onTabChange,
 }: TabDrawerProps) {
+  const t = useTranslations();
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -55,7 +58,7 @@ export function TabDrawer({
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700">
               <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                Topics
+                {t("help.mobile_drawer.title")}
               </span>
               <button
                 onClick={onClose}
@@ -83,7 +86,7 @@ export function TabDrawer({
                     <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
                       {Icon && <Icon size={16} className="text-indigo-300 dark:text-indigo-600" />}
                     </div>
-                    <span>{cat.title}</span>
+                    <span>{t(`help.faq.categories.${cat.id.replace(/-/g, "_")}.title`)}</span>
                   </button>
                 );
               })}

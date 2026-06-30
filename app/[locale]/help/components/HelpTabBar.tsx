@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { faqCategories } from "../data/faq";
 import { categoryIcons } from "../data/icons";
 
@@ -17,11 +18,13 @@ export function HelpTabBar({
   onTabChange,
   onHamburgerClick,
 }: HelpTabBarProps) {
+  const t = useTranslations();
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-px">
-      <div className="flex items-center justify-between py-4 border-b border-slate-200 dark:border-slate-700/50">
-        {/* Desktop Tabs */}
-        <div className="hidden lg:flex flex-wrap gap-2">
+      {/* Desktop Tabs */}
+      <div className="hidden lg:flex justify-center py-4">
+        <div className="flex flex-wrap gap-2 pb-4 border-b border-slate-200 dark:border-slate-700/50">
           {visibleCategories.map((cat) => {
             const Icon = categoryIcons[cat.icon];
             return (
@@ -35,16 +38,18 @@ export function HelpTabBar({
                 }`}
               >
                 {Icon && <Icon size={16} />}
-                <span>{cat.title}</span>
+                <span>{t(`help.faq.categories.${cat.id.replace(/-/g, "_")}.title`)}</span>
               </button>
             );
           })}
         </div>
+      </div>
 
-        {/* Mobile Hamburger */}
+      {/* Mobile Hamburger */}
+      <div className="flex lg:hidden items-center justify-end py-4 border-b border-slate-200 dark:border-slate-700/50">
         <button
           onClick={onHamburgerClick}
-          className="lg:hidden ml-auto p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+          className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
           aria-label="Open navigation"
         >
           <Menu size={20} />

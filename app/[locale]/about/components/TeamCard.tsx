@@ -31,6 +31,7 @@ export function TeamCard({
           alt={name}
           width={48}
           height={48}
+          loading="lazy"
           className="h-12 w-12 rounded-xs object-cover"
         />
         <div>
