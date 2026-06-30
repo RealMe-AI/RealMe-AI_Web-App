@@ -1,36 +1,12 @@
-"use client";
+import type { Metadata } from "next";
+import { HelpSupport } from "./Help";
 
-import { useState } from "react";
-import { HelpHero } from "./components/HelpHero";
-import { HelpTabBar } from "./components/HelpTabBar";
-import { TabDrawer } from "./components/MobileTabDrawer";
-import { FaqCategory } from "./components/FaqCategory";
-import { ContactTab } from "./components/ContactTab";
+export const metadata: Metadata = {
+  title: "Help Center",
+  description:
+    "Find answers to common questions about RealMe AI.",
+};
 
-export default function HelpSupport() {
-  const [activeTab, setActiveTab] = useState("getting-started");
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  return (
-    <main className="bg-white dark:bg-[#05070C] min-h-screen">
-      <HelpHero />
-      <HelpTabBar
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        onHamburgerClick={() => setDrawerOpen(true)}
-      />
-      <TabDrawer
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
-
-      {activeTab === "contact" ? (
-        <ContactTab />
-      ) : (
-        <FaqCategory categoryId={activeTab} />
-      )}
-    </main>
-  );
+export default function HelpPage() {
+  return <HelpSupport />;
 }

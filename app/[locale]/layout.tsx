@@ -34,9 +34,12 @@ export async function generateMetadata({
   const pathname = locale === "en" ? "" : `/${locale}`;
   const canonical = new URL(`${SITE_URL}${pathname}/`);
 
-  const title = "RealMe AI";
+  const title = {
+    default: "RealMe AI | Multilingual AI Assistant",
+    template: "%s | RealMe AI",
+  };
   const description =
-    "RealMe AI — Conversational AI for personal and professional growth.";
+    "RealMe AI is a multilingual AI assistant powered by GPT-5 that helps you chat, write, translate, learn, create, and communicate naturally with voice and text in English, Hausa, Igbo, and Yoruba.";
 
   const images = [
     {

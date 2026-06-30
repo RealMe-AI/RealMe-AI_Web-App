@@ -74,7 +74,7 @@ const en = {
       },
       cta: "Get Started Now",
       image: {
-        title: "Start chatting in",
+        title: "RealMe AI chatbot supporting English, Hausa, Igbo and Yoruba",
         desc: "Seconds",
       },
     },

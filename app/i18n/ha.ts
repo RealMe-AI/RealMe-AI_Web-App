@@ -74,7 +74,7 @@ const ha = {
       },
       cta: "Fara Yanzu",
       image: {
-        title: "Fara tattaunawa cikin",
+        title: "Chatbot na RealMe AI mai tallafawa Turanci, Hausa, Igbo da Yoruba.",
         desc: "Dakikoki",
       },
     },
