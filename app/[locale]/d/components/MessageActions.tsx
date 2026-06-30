@@ -6,12 +6,12 @@ import { useCopyToClipboard } from "@/app/hooks/copyToClipboard/useCopyToClipboa
 import Tooltip from "@/app/[locale]/components/ui/Tooltip";
 import { Message } from "@/app/interface/type";
 import { useEffect } from "react";
-import { useTtsStore } from "@/app/store/useTtsStore";
-import {
-  isLanguageSupported,
-  useTextToSpeech,
-} from "@/app/hooks/useTextToSpeech";
-import { useLanguageStore } from "@/app/store/useLanguageStore";
+// import { useTtsStore } from "@/app/store/useTtsStore";
+// import {
+//   isLanguageSupported,
+//   useTextToSpeech,
+// } from "@/app/hooks/useTextToSpeech";
+// import { useLanguageStore } from "@/app/store/useLanguageStore";
 
 export default function MessageActions({
   sender,
@@ -28,35 +28,35 @@ export default function MessageActions({
   const { copied, copy } = useCopyToClipboard();
 
   // READ ALOUD
-  const { speak, stop, isSpeaking } = useTextToSpeech();
-  const ttsEnabled = useTtsStore((s) => s.enabled);
-  const autoRead = useTtsStore((s) => s.autoRead);
-  const language = useLanguageStore((s) => s.language);
-  const voiceSupported = isLanguageSupported(language);
+  // const { speak, stop, isSpeaking } = useTextToSpeech();
+  // const ttsEnabled = useTtsStore((s) => s.enabled);
+  // const autoRead = useTtsStore((s) => s.autoRead);
+  // const language = useLanguageStore((s) => s.language);
+  // const voiceSupported = isLanguageSupported(language);
 
-  const isUser = message.sender === "user";
+  // const isUser = message.sender === "user";
 
-  const handleReadAloud = () => {
-    if (isSpeaking) {
-      stop();
-    } else if (message.text) {
-      speak(message.text);
-    }
-  };
+  // const handleReadAloud = () => {
+  //   if (isSpeaking) {
+  //     stop();
+  //   } else if (message.text) {
+  //     speak(message.text);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (autoRead && !isUser && message.text && ttsEnabled && voiceSupported) {
-      speak(message.text);
-    }
-  }, [
-    message.text,
-    message.id,
-    autoRead,
-    isUser,
-    ttsEnabled,
-    voiceSupported,
-    speak,
-  ]);
+  // useEffect(() => {
+  //   if (autoRead && !isUser && message.text && ttsEnabled && voiceSupported) {
+  //     speak(message.text);
+  //   }
+  // }, [
+  //   message.text,
+  //   message.id,
+  //   autoRead,
+  //   isUser,
+  //   ttsEnabled,
+  //   voiceSupported,
+  //   speak,
+  // ]);
 
   return (
     <div className="flex flex-row gap-1 bg-white/70 dark:bg-slate-800/80 backdrop-blur-md rounded-lg p-1 shadow-md border border-white/20">
@@ -73,7 +73,7 @@ export default function MessageActions({
         </button>
       </Tooltip>
 
-      {ttsEnabled && !isUser && (
+      {/* {ttsEnabled && !isUser && (
         <Tooltip
           content={
             isSpeaking
@@ -96,7 +96,7 @@ export default function MessageActions({
             )}
           </button>
         </Tooltip>
-      )}
+      )} */}
 
       {sender === "user" && (
         <Tooltip content={t("message_actions.edit")}>
