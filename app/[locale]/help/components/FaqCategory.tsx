@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import FaqAccordion from "./FaqAccordion";
 import { faqCategories } from "../data/faq";
 import { categoryIcons } from "../data/icons";
@@ -11,6 +12,7 @@ interface FaqCategoryProps {
 }
 
 export function FaqCategory({ categoryId }: FaqCategoryProps) {
+  const t = useTranslations();
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
 
   const toggle = useCallback((id: string) => {
@@ -45,7 +47,7 @@ export function FaqCategory({ categoryId }: FaqCategoryProps) {
           )}
         </div>
         <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
-          {category.title}
+          {t(`help.faq.categories.${category.id.replace(/-/g, "_")}.title`)}
         </h2>
       </div>
       <FaqAccordion

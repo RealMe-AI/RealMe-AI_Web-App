@@ -14,7 +14,7 @@ const fadeUp = {
 export default function AboutPage() {
   return (
     <main>
-      <section className="relative flex h-svh lg:h-screen w-full items-center overflow-hidden">
+      <section className="relative flex min-h-[55vh] lg:h-screen w-full items-center overflow-hidden">
         <Image
           src="/Realme-mobile-banner.jpeg"
           alt="RealMe AI"

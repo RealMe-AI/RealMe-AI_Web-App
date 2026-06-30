@@ -178,7 +178,8 @@ const ha = {
   dashboard: {
     greeting: {
       fallback_name: "can",
-      subtitle: "Ni RealMe ne, mataimakin AI naka. Ta yaya zan taimaka maka a yau?",
+      subtitle:
+        "Ni RealMe ne, mataimakin AI naka. Ta yaya zan taimaka maka a yau?",
     },
     rename: "Sake suna",
     realMeThinking: "yana tunani",
@@ -189,7 +190,7 @@ const ha = {
       logout: "Fita",
       logout_confirm_title: "Fita?",
       logout_confirm_message:
-        'Ka tabbata kana son fita <styled>{name}</styled> ?',
+        "Ka tabbata kana son fita <styled>{name}</styled> ?",
     },
     search: {
       chats_placeholder: "Bincika tattaunawa...",
@@ -223,7 +224,8 @@ const ha = {
       description: "Ka tabbata kana son goge wannan tattaunawar?",
       cancel: "Soke",
       confirm: "Goge",
-      default_message: 'Za a goge <styled>{title}</styled> har abada. Ba za a iya mayar da shi ba.',
+      default_message:
+        "Za a goge <styled>{title}</styled> har abada. Ba za a iya mayar da shi ba.",
     },
   },
 
@@ -233,7 +235,7 @@ const ha = {
     no: "A'a",
   },
 
-   fileupload: {
+  fileupload: {
     upload_title: "Loda fayil",
     button_label: "Loda",
     limit_reached: "Haɓaka zuwa Pro",
@@ -380,6 +382,243 @@ const ha = {
     prompt: {
       placeholder: "Rubuta sakonka a nan...",
       send_button: "Aika",
+    },
+  },
+
+  help: {
+    hero: {
+      title: "Taimako & Tallafi",
+      subtitle:
+        "Barka da zuwa Tallafin RealMe AI. Sami jagora, hanyoyin warware matsaloli, da taimako daga ƙwararru domin samun mafi kyawun ƙwarewa yayin amfani da dandalinmu.",
+    },
+
+    mobile_drawer: {
+      title: "Batutuwa",
+    },
+
+    badge: {
+      currently_free: "Kyauta a Yanzu",
+    },
+
+    coming_soon: "Nan Ba Da Jimawa Ba",
+
+    contacts: {
+      email_support: {
+        label: "Tallafin Imel",
+        description: "Za ka samu amsa cikin awa 24",
+        cta: "officialrealme.ai@gmail.com",
+      },
+
+      live_chat: {
+        label: "Tattaunawa Kai Tsaye",
+        description: "Tallafi kai tsaye daga ƙungiyarmu",
+        cta: "Nan Ba Da Jimawa Ba",
+      },
+
+      report_bug: {
+        label: "Ba da Rahoton Matsala",
+        description:
+          "Taimaka mana mu inganta ta hanyar ba da rahoton matsaloli",
+        cta: "Ba da Rahoto Yanzu",
+      },
+
+      suggest_feature: {
+        label: "Ba da Shawarar Fasali",
+        description: "Raba ra'ayoyinka tare da ƙungiyarmu",
+        cta: "Ba da Shawara",
+      },
+    },
+
+    faq: {
+      categories: {
+        getting_started: {
+          title: "Farawa",
+        },
+
+        voice: {
+          title: "Siffofin Murya",
+        },
+
+        languages: {
+          title: "Harsuna",
+        },
+        privacy: {
+          title: "Sirri & Tsaro",
+        },
+
+        account: {
+          title: "Saitunan Asusu",
+        },
+
+        troubleshooting: {
+          title: "Magance Matsaloli",
+        },
+
+        contact: {
+          title: "Tuntuɓi Tallafi",
+        },
+      },
+
+      items: {
+        gs_1: {
+          question: "Ta yaya zan ƙirƙiri asusu?",
+          answer:
+            "Za ka iya ƙirƙirar asusu ta amfani da imel, lambar waya, ko asusun Google. Danna maɓallin 'Fara' a shafin farko sannan ka bi matakan rajista.",
+        },
+
+        gs_2: {
+          question: "Zan iya canza kalmar sirrina?",
+          answer:
+            "Eh. Je zuwa Saituna → Tsaro domin sabunta kalmar sirrinka. Za ka buƙaci kalmar sirrinka ta yanzu kafin ƙirƙirar sabuwa.",
+        },
+
+        gs_3: {
+          question: "Shin amfani da RealMe AI kyauta ne?",
+          answer:
+            "RealMe AI kyauta ne gaba ɗaya a yanzu. Siffofin Premium, amsoshi masu sauri, ƙarin iyakar saƙonni, da manyan nau'ikan AI za su zo nan ba da jimawa ba.",
+        },
+
+        gs_4: {
+          question: "Zan iya amfani da RealMe AI a na'urori da yawa?",
+          answer:
+            "Eh. Asusunka yana daidaitawa a dukkan na'urori. Ka shiga daga kowace na'ura domin samun damar tattaunawarka da saitunanka.",
+        },
+
+        vo_1: {
+          question: "Ta yaya zan yi amfani da tattaunawar murya?",
+          answer:
+            "Danna alamar makirufo a cikin tattaunawa domin yin magana da RealMe AI. Za a rubuta maganarka sannan a ba ka amsa kai tsaye.",
+        },
+
+        vo_2: {
+          question: "Shin RealMe AI zai iya karanta amsoshi da murya?",
+          answer:
+            "Eh. Danna alamar lasifika a kan kowace amsar AI domin a karanta ta da murya. Hakanan zaka iya kunna karantawa ta atomatik a Saitunan Murya.",
+        },
+
+        vo_3: {
+          question: "Wadanne harsuna ake tallafawa don murya?",
+          answer:
+            "Murya tana tallafawa Turanci, Hausa, Igbo, da Yoruba. Ana ƙara sababbin harsuna akai-akai.",
+        },
+
+        vo_4: {
+          question: "Zan iya canza saurin murya?",
+          answer:
+            "Eh. Je zuwa Saituna → Saitunan Murya domin daidaita saurin magana ta amfani da ma'aunin sauri.",
+        },
+        ln_1: {
+          question: "Wadanne harsuna ake tallafawa?",
+          answer:
+            "RealMe AI yana tallafawa Turanci, Hausa, Igbo, Yoruba, da sauran harsunan duniya. Muna ci gaba da ƙara sababbin harsuna.",
+        },
+
+        ln_2: {
+          question: "Ta yaya zan canza harshe?",
+          answer:
+            "Yi amfani da mai zaɓen harshe a sidebar ko je zuwa Saituna domin zaɓar harshen da ka fi so. Canjin zai bayyana nan take.",
+        },
+
+        ln_3: {
+          question: "Shin RealMe AI yana fassara tsakanin harsuna?",
+          answer:
+            "Eh. RealMe AI na iya fahimta da amsawa cikin harsuna da yawa, yana sauƙaƙa sadarwa da harshen da ka fi so.",
+        },
+
+        pr_1: {
+          question: "Ta yaya ake kare bayanana?",
+          answer:
+            "Ana ɓoye tattaunawarka yayin aikawa da kuma lokacin adanawa. Muna bin ƙa'idodin tsaro na duniya domin kare sirrinka.",
+        },
+
+        pr_2: {
+          question: "Shin tattaunawata sirri ce?",
+          answer:
+            "Eh. Ana adana tattaunawarka cikin tsaro kuma kai kaɗai ne ke iya ganin ta. Ba ma raba bayananka da wasu.",
+        },
+
+        pr_3: {
+          question: "Zan iya goge tarihin tattaunawata?",
+          answer:
+            "Eh. Za ka iya goge tattaunawa ɗaya ko kuma duk tarihin tattaunawarka daga Saituna a kowane lokaci.",
+        },
+
+        pr_4: {
+          question: "Ta yaya zan goge asusuna?",
+          answer:
+            "Je zuwa Saituna → Danger Zone domin goge asusunka da duk bayanan da ke cikinsa har abada. Wannan ba za a iya mayar da shi ba.",
+        },
+        ac_1: {
+          question: "Ta yaya zan sabunta bayanan martabata?",
+          answer:
+            "Danna hoton bayananka ko je zuwa Bayanin Asusu daga sidebar domin sabunta sunanka, imel ɗinka, da hoton bayananka.",
+        },
+
+        ac_2: {
+          question: "Zan iya canza adireshin imel ɗina?",
+          answer:
+            "Eh. Je zuwa Saitunan Asusu domin sabunta adireshin imel ɗinka. Za ka tabbatar da sabon imel kafin canjin ya fara aiki.",
+        },
+
+        ac_3: {
+          question: "Ta yaya zan sake saita kalmar sirrina?",
+          answer:
+            "A shafin shiga, danna 'Na Manta Kalmar Sirri' sannan ka bi umarnin da aka aika zuwa imel ɗinka. Hakanan zaka iya sake saita ta daga Saituna → Tsaro yayin da kake shiga.",
+        },
+
+        tr_1: {
+          question: "Ba zan iya shiga ba",
+          answer:
+            "Tabbatar kana amfani da imel da kalmar sirri daidai. Gwada sake saita kalmar sirrinka ko share cache na burauzarka. Idan matsalar ta ci gaba, tuntuɓi tallafi.",
+        },
+
+        tr_2: {
+          question: "Murya ba ta aiki",
+          answer:
+            "Tabbatar burauzarka ta ba da izinin amfani da makirufo. Duba cewa an kunna siffofin murya a Saituna → Saitunan Murya. Gwada amfani da Chrome ko Firefox.",
+        },
+
+        tr_3: {
+          question: "AI ba ya amsawa",
+          answer:
+            "Sabunta shafin sannan ka duba haɗin intanet ɗinka. Idan matsalar ta ci gaba, fara sabuwar tattaunawa ko share tarihin tattaunawarka.",
+        },
+
+        tr_4: {
+          question: "Saƙonnina sun ɓace",
+          answer:
+            "Ana adana tattaunawarka cikin tsaro kuma ya kamata ta kasance. Sabunta shafin. Idan har yanzu saƙonnin sun ɓace, tabbatar kana shiga da asusun da ya dace.",
+        },
+
+        tr_6: {
+          question: "Imel ɗin tabbatarwa bai iso ba",
+          answer:
+            "Duba Spam ko Junk folder ɗinka. Tabbatar ka shigar da adireshin imel daidai. Hakanan zaka iya neman a sake aiko maka da imel ɗin tabbatarwa daga Saitunan Asusu.",
+        },
+        ct_1: {
+          question: "Ta yaya zan tuntuɓi ƙungiyar tallafi?",
+          answer:
+            "Za ka iya tuntubar mu ta imel a officialrealme.ai@gmail.com. Ƙungiyarmu tana amsawa cikin awa 24 a ranakun aiki (Litinin zuwa Asabar).",
+        },
+
+        ct_2: {
+          question: "Shin ana da Live Chat?",
+          answer:
+            "Live Chat zai zo nan ba da jimawa ba! Muna aiki kan samar da tallafin tattaunawa kai tsaye domin samun taimako cikin sauri.",
+        },
+
+        ct_3: {
+          question: "Ta yaya zan ba da rahoton matsala?",
+          answer:
+            "Aika cikakken bayani game da matsalar tare da hotunan kariyar allo zuwa officialrealme.ai@gmail.com. Ka haɗa nau'in na'urarka da sigar burauzarka domin taimaka mana warware matsalar cikin sauri.",
+        },
+
+        ct_4: {
+          question: "Zan iya ba da shawarar sabon fasali?",
+          answer:
+            "Tabbas! Muna son jin ra'ayoyi daga masu amfani da mu. Aika shawarwarinka zuwa officialrealme.ai@gmail.com, kuma ƙungiyarmu za ta duba su.",
+        },
+      },
     },
   },
 };

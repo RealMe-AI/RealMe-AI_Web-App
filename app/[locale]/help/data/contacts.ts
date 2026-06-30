@@ -1,33 +1,32 @@
 import { Mail, MessageCircle, Bug, Lightbulb } from "lucide-react";
 
-export const contacts = [
+export interface ContactItem {
+  id: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  action: string;
+  badge?: boolean;
+}
+
+export const contacts: ContactItem[] = [
   {
+    id: "email_support",
     icon: Mail,
-    label: "Email Support",
-    description: "Get a response within 24 hours",
-    action: "https://mail.google.com/mail/?view=cm&fs=1&to=officialrealme.ai@gmail.com",
-    cta: "officialrealme.ai@gmail.com",
+    action: "mailto:officialrealme.ai@gmail.com",
   },
   {
+    id: "live_chat",
     icon: MessageCircle,
-    label: "Live Chat",
-    description: "Real-time support from our team",
     action: "#",
-    cta: "Coming Soon",
     badge: true,
   },
   {
+    id: "report_bug",
     icon: Bug,
-    label: "Report a Bug",
-    description: "Help us improve by reporting issues",
     action: "mailto:support@realmeai.com?subject=Bug Report",
-    cta: "Report Now",
   },
   {
+    id: "suggest_feature",
     icon: Lightbulb,
-    label: "Suggest a Feature",
-    description: "Share your ideas with our team",
     action: "mailto:support@realmeai.com?subject=Feature Suggestion",
-    cta: "Suggest",
   },
 ];
