@@ -11,7 +11,7 @@ export const contacts: ContactItem[] = [
   {
     id: "email_support",
     icon: Mail,
-    action: "mailto:officialrealme.ai@gmail.com",
+    action: "https://mail.google.com/mail/?view=cm&fs=1&to=officialrealme.ai@gmail.com",
   },
   {
     id: "live_chat",
