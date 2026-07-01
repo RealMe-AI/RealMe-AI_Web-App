@@ -74,7 +74,7 @@ const ig = {
       },
       cta: "Malite Ugbu a",
       image: {
-        title: "Chatbọt RealMe AI na-akwado Bekee, Hausa, Igbo na Yoruba",
+        title: "Malite Mkparịta Ụka na",
         desc: "Sekọnd",
       },
     },

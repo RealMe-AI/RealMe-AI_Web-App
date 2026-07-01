@@ -18,7 +18,7 @@ export default function GetStarted() {
             <div className="rounded-xl overflow-hidden shadow-2xl">
               <Image
                 src="/get-started.png"
-                alt={t("landing.get_started.image.title")}
+                alt="RealMe AI chatbot supporting English, Hausa, Igbo and Yoruba"
                 width={900}
                 height={900}
                 className="w-full h-auto object-center"

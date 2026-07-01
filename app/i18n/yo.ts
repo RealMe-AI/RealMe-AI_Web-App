@@ -74,7 +74,7 @@ const yo = {
       },
       cta: "Bẹrẹ Bayi",
       image: {
-        title: "Chatbot RealMe AI tí ń ṣe atilẹyin fún Gẹ̀ẹ́sì, Hausa, Igbo àti Yorùbá.",
+        title: "Bẹ̀rẹ̀ Ìjíròrò Ní",
         desc: "Aaya",
       },
     },
