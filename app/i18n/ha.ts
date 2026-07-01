@@ -469,7 +469,7 @@ const ha = {
         gs_2: {
           question: "Zan iya canza kalmar sirrina?",
           answer:
-            "Eh. Je zuwa Saituna → Tsaro domin sabunta kalmar sirrinka. Za ka buƙaci kalmar sirrinka ta yanzu kafin ƙirƙirar sabuwa.",
+            "Eh. Je zuwa Saituna → Tsaro domin sabunta kalmar sirrinka. Za ka buƙaci imel ɗinka domin ƙirƙirar sabuwar kalmar sirri.",
         },
 
         gs_3: {

@@ -468,7 +468,7 @@ const yo = {
         gs_2: {
           question: "Ṣé mo lè yí ọ̀rọ̀ aṣínà mi padà?",
           answer:
-            "Bẹ́ẹ̀ni. Lọ sí Ètò → Ààbò láti ṣe àtúnṣe ọ̀rọ̀ aṣínà rẹ. O gbọdọ̀ mọ ọ̀rọ̀ aṣínà rẹ lọwọlọwọ kí o tó ṣẹ̀dá tuntun.",
+            "Bẹ́ẹ̀ni. Lọ sí Ètò → Ààbò láti ṣe àtúnṣe ọ̀rọ̀ aṣínà rẹ. O máa nílò ímeèlì rẹ láti ṣẹ̀dá ọ̀rọ̀ aṣínà tuntun.",
         },
 
         gs_3: {

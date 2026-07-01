@@ -468,7 +468,7 @@ const ig = {
         gs_2: {
           question: "Enwere m ike ịgbanwe paswọọdụ m?",
           answer:
-            "Ee. Gaa na Ntọala → Nche iji melite paswọọdụ gị. Ị ga-achọ paswọọdụ gị ugbu a iji mepụta nke ọhụrụ.",
+            "Ee. Gaa na Ntọala → Nche iji melite paswọọdụ gị. Ị ga-achọ email gị iji mepụta paswọọdụ ọhụrụ.",
         },
 
         gs_3: {
