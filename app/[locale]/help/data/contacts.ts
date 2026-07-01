@@ -22,11 +22,11 @@ export const contacts: ContactItem[] = [
   {
     id: "report_bug",
     icon: Bug,
-    action: "mailto:support@realmeai.com?subject=Bug Report",
+    action: "/help/report?type=report_bug",
   },
   {
     id: "suggest_feature",
     icon: Lightbulb,
-    action: "mailto:support@realmeai.com?subject=Feature Suggestion",
+    action: "/help/report?type=suggest_feature",
   },
 ];
