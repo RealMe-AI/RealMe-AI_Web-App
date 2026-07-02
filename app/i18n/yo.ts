@@ -267,8 +267,11 @@ const yo = {
   settings: {
     title: "Eto",
     account: {
-      label: "Eto Account",
+      label: "Account",
       sync: "Ṣatunkọ Profaili",
+      name: "Orúkọ",
+      email: "Imeeli",
+      delete: "Pa",
     },
     preferences: {
       label: "Ayanfẹ",
@@ -294,6 +297,11 @@ const yo = {
       allow: "Gba Ohùn AI laaye",
       speed: "Iyara",
       autoRead: "Ka awọn idahun AI laifọwọyi",
+    },
+    security: {
+      label: "Ààbò",
+      update_password: "Ṣe Àtúnṣe Ọ̀rọ̀ Aṣínà Rẹ",
+      update: "Ṣe Àtúnṣe",
     },
     support: {
       label: "Atilẹyin & Nipa",

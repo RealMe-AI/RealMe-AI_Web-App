@@ -268,8 +268,11 @@ const ig = {
   settings: {
     title: "Ntọala",
     account: {
-      label: "Ntọala Akaụntụ",
+      label: "Akaụntụ",
       sync: "Hazie profaịlụ",
+      name: "Aha",
+      email: "Email",
+      delete: "Hichapụ",
     },
     preferences: {
       label: "Nhọrọ",
@@ -295,6 +298,11 @@ const ig = {
       allow: "Kwe ka Olu AI",
       speed: "Ọsọ",
       autoRead: "Gụọ akpaaka nzaghachi AI",
+    },
+    security: {
+      label: "Nche",
+      update_password: "Melite paswọọdụ gị",
+      update: "Melite",
     },
     support: {
       label: "Nkwado & Banyere",

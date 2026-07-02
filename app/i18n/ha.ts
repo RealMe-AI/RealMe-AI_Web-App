@@ -268,8 +268,11 @@ const ha = {
   settings: {
     title: "Saituna",
     account: {
-      label: "Saitunan Asusu",
+      label: "Asusu",
       sync: "Gyara Bayanai",
+      name: "Suna",
+      email: "Imel",
+      delete: "Goge",
     },
     preferences: {
       label: "Zaɓuka",
@@ -295,6 +298,11 @@ const ha = {
       allow: "Ba da izinin Muryar AI",
       speed: "Gudu",
       autoRead: "Karanta ta atomatik sakonnin AI",
+    },
+    security: {
+      label: "Tsaro",
+      update_password: "Sabunta kalmar sirrinka",
+      update: "Sabunta",
     },
     support: {
       label: "Tallafi & Game da",
