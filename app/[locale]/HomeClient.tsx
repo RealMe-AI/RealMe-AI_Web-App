@@ -11,19 +11,21 @@ import { useState, useEffect } from "react";
 import { useSplashScreen } from "../hooks/useSplashScreen";
 import { useRouter } from "@/i18n/routing";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { useAuthHydrated } from "@/app/hooks/useAuthHydrated";
 
 export default function Home() {
   const { mounted, showSplash, finishSplash } = useSplashScreen();
   const [isOpen, setIsOpen] = useState(false);
   const [active] = useState<string>("home");
   const router = useRouter();
+  const hydrated = useAuthHydrated();
+  const accessToken = useAuthStore((s) => s.accessToken);
 
   useEffect(() => {
-    const { accessToken } = useAuthStore.getState();
-    if (accessToken) {
+    if (hydrated && accessToken) {
       router.push("/d");
     }
-  }, [router]);
+  }, [hydrated, accessToken, router]);
 
   // Prevent SSR/client mismatch
   if (!mounted) return null;

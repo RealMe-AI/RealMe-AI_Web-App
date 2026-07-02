@@ -7,6 +7,7 @@ import { useRouter } from "@/i18n/routing";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { useChatStore } from "../../store/useChatStore";
 import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthHydrated } from "@/app/hooks/useAuthHydrated";
 import { useFetchMessages } from "@/app/hooks/messages/useFetchMessages";
 import useModalStore from "../../store/modalStore";
 import Sidebar from "./components/Sidebar";
@@ -17,6 +18,7 @@ import SettingsPanel from "../setting/SettingsPanel";
 export default function Page() {
   // useGoogleAuth();
   const router = useRouter();
+  const hydrated = useAuthHydrated();
   const accessToken = useAuthStore((s) => s.accessToken);
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
@@ -28,12 +30,12 @@ export default function Page() {
   const { fetchMessages } = useFetchMessages();
 
   useEffect(() => {
-    if (!accessToken) {
+    if (hydrated && !accessToken) {
       router.push("/auth");
     }
-  }, [accessToken, router]);
+  }, [hydrated, accessToken, router]);
 
-  if (!accessToken) return null;
+  if (!hydrated || !accessToken) return null;
 
   return (
     <div className="h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
