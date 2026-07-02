@@ -14,6 +14,7 @@ interface ChatActionsModalProps {
   onRename?: () => void;
   onPin?: () => void;
   onDelete?: () => void;
+  isPinned?: boolean;
 }
 
 const ChatActionsModal = ({
@@ -25,6 +26,7 @@ const ChatActionsModal = ({
   onPin,
   onDelete,
   chatId,
+  isPinned,
 }: ChatActionsModalProps) => {
   const t = useTranslations();
   const { deleteConversation: defaultDelete } = useDeleteConversation();
@@ -84,13 +86,13 @@ const ChatActionsModal = ({
                 <span>{t("dashboard.rename")}</span>
               </li>
 
-              {/* Pin */}
+              {/* Pin / Unpin */}
               <li
                 onClick={() => handleItemClick(onPin)}
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
-                <Pin size={16} />
-                <span>Pin</span>
+                <Pin size={16} fill={isPinned ? "currentColor" : "none"} />
+                <span>{isPinned ? "Unpin" : "Pin"}</span>
               </li>
 
               {/* Delete */}

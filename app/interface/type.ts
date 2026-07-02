@@ -81,6 +81,7 @@ export type ChatState = {
   removeMessage: (id: string) => void;
   setIsLoading: (isLoading: boolean) => void;
   setActiveConversationId: (id: number | null) => void;
+  togglePin: (chatId: number) => void;
   chatsRefreshSignal: number;
   triggerChatsRefresh: () => void;
   inputFocusSignal: number;
@@ -116,6 +117,7 @@ export type Chat = {
   id: number;
   title: string;
   lastMessage?: string;
+  isPinned?: boolean;
 };
 
 export type ModalState = {
