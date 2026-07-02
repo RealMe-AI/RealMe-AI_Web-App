@@ -74,7 +74,7 @@ const ha = {
       },
       cta: "Fara Yanzu",
       image: {
-        title: "Chatbot na RealMe AI mai tallafawa Turanci, Hausa, Igbo da Yoruba.",
+        title: "Fara Tattaunawa da",
         desc: "Dakikoki",
       },
     },
@@ -268,8 +268,11 @@ const ha = {
   settings: {
     title: "Saituna",
     account: {
-      label: "Saitunan Asusu",
+      label: "Asusu",
       sync: "Gyara Bayanai",
+      name: "Suna",
+      email: "Imel",
+      delete: "Goge",
     },
     preferences: {
       label: "Zaɓuka",
@@ -295,6 +298,11 @@ const ha = {
       allow: "Ba da izinin Muryar AI",
       speed: "Gudu",
       autoRead: "Karanta ta atomatik sakonnin AI",
+    },
+    security: {
+      label: "Tsaro",
+      update_password: "Sabunta kalmar sirrinka",
+      update: "Sabunta",
     },
     support: {
       label: "Tallafi & Game da",
@@ -469,7 +477,7 @@ const ha = {
         gs_2: {
           question: "Zan iya canza kalmar sirrina?",
           answer:
-            "Eh. Je zuwa Saituna → Tsaro domin sabunta kalmar sirrinka. Za ka buƙaci kalmar sirrinka ta yanzu kafin ƙirƙirar sabuwa.",
+            "Eh. Je zuwa Saituna → Tsaro domin sabunta kalmar sirrinka. Za ka buƙaci imel ɗinka domin ƙirƙirar sabuwar kalmar sirri.",
         },
 
         gs_3: {

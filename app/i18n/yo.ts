@@ -74,7 +74,7 @@ const yo = {
       },
       cta: "Bẹrẹ Bayi",
       image: {
-        title: "Chatbot RealMe AI tí ń ṣe atilẹyin fún Gẹ̀ẹ́sì, Hausa, Igbo àti Yorùbá.",
+        title: "Bẹ̀rẹ̀ Ìjíròrò Ní",
         desc: "Aaya",
       },
     },
@@ -267,8 +267,11 @@ const yo = {
   settings: {
     title: "Eto",
     account: {
-      label: "Eto Account",
+      label: "Account",
       sync: "Ṣatunkọ Profaili",
+      name: "Orúkọ",
+      email: "Imeeli",
+      delete: "Pa",
     },
     preferences: {
       label: "Ayanfẹ",
@@ -294,6 +297,11 @@ const yo = {
       allow: "Gba Ohùn AI laaye",
       speed: "Iyara",
       autoRead: "Ka awọn idahun AI laifọwọyi",
+    },
+    security: {
+      label: "Ààbò",
+      update_password: "Ṣe Àtúnṣe Ọ̀rọ̀ Aṣínà Rẹ",
+      update: "Ṣe Àtúnṣe",
     },
     support: {
       label: "Atilẹyin & Nipa",
@@ -468,7 +476,7 @@ const yo = {
         gs_2: {
           question: "Ṣé mo lè yí ọ̀rọ̀ aṣínà mi padà?",
           answer:
-            "Bẹ́ẹ̀ni. Lọ sí Ètò → Ààbò láti ṣe àtúnṣe ọ̀rọ̀ aṣínà rẹ. O gbọdọ̀ mọ ọ̀rọ̀ aṣínà rẹ lọwọlọwọ kí o tó ṣẹ̀dá tuntun.",
+            "Bẹ́ẹ̀ni. Lọ sí Ètò → Ààbò láti ṣe àtúnṣe ọ̀rọ̀ aṣínà rẹ. O máa nílò ímeèlì rẹ láti ṣẹ̀dá ọ̀rọ̀ aṣínà tuntun.",
         },
 
         gs_3: {

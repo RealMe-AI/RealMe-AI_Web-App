@@ -74,7 +74,7 @@ const ig = {
       },
       cta: "Malite Ugbu a",
       image: {
-        title: "Chatbọt RealMe AI na-akwado Bekee, Hausa, Igbo na Yoruba",
+        title: "Malite Mkparịta Ụka na",
         desc: "Sekọnd",
       },
     },
@@ -268,8 +268,11 @@ const ig = {
   settings: {
     title: "Ntọala",
     account: {
-      label: "Ntọala Akaụntụ",
+      label: "Akaụntụ",
       sync: "Hazie profaịlụ",
+      name: "Aha",
+      email: "Email",
+      delete: "Hichapụ",
     },
     preferences: {
       label: "Nhọrọ",
@@ -295,6 +298,11 @@ const ig = {
       allow: "Kwe ka Olu AI",
       speed: "Ọsọ",
       autoRead: "Gụọ akpaaka nzaghachi AI",
+    },
+    security: {
+      label: "Nche",
+      update_password: "Melite paswọọdụ gị",
+      update: "Melite",
     },
     support: {
       label: "Nkwado & Banyere",
@@ -468,7 +476,7 @@ const ig = {
         gs_2: {
           question: "Enwere m ike ịgbanwe paswọọdụ m?",
           answer:
-            "Ee. Gaa na Ntọala → Nche iji melite paswọọdụ gị. Ị ga-achọ paswọọdụ gị ugbu a iji mepụta nke ọhụrụ.",
+            "Ee. Gaa na Ntọala → Nche iji melite paswọọdụ gị. Ị ga-achọ email gị iji mepụta paswọọdụ ọhụrụ.",
         },
 
         gs_3: {

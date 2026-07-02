@@ -74,7 +74,7 @@ const en = {
       },
       cta: "Get Started Now",
       image: {
-        title: "RealMe AI chatbot supporting English, Hausa, Igbo and Yoruba",
+        title: "Start chatting in",
         desc: "Seconds",
       },
     },
@@ -267,14 +267,17 @@ const en = {
   settings: {
     title: "Settings",
     account: {
-      label: "Account Settings",
+      label: "Account",
       sync: "Edit Profile",
+      name: "Name",
+      email: "Email",
+      delete: "Delete",
     },
     preferences: {
       label: "Preferences",
     },
     theme: {
-      label: "Theme Mode",
+      label: "Appearance",
       Light: "Light",
       Dark: "Dark",
       System: "System",
@@ -294,6 +297,11 @@ const en = {
       allow: "Allow AI Voice",
       speed: "Speed",
       autoRead: "Auto-read AI responses",
+    },
+    security: {
+      label: "Security",
+      update_password: "Update your password",
+      update: "Update",
     },
     support: {
       label: "Support & About",
@@ -434,7 +442,7 @@ const en = {
           title: "Privacy & Security",
         },
         account: {
-          title: "Account Settings",
+          title: "Account",
         },
         troubleshooting: {
           title: "Troubleshooting",
@@ -527,7 +535,7 @@ const en = {
         ac_2: {
           question: "Can I change my email address?",
           answer:
-            "Yes. Visit Account Settings to update your email address. You will need to verify the new email before the change takes effect.",
+            "Yes. Visit Account to update your email address. You will need to verify the new email before the change takes effect.",
         },
         ac_3: {
           question: "How do I reset my password?",
