@@ -1,16 +1,42 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useState } from "react";
+import type { CredentialResponse } from "@react-oauth/google";
+import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useAuthStore } from "@/app/store/useAuthStore";
 
 export default function useGoogleAuth() {
-  const params = useParams();
-  const locale = params.locale as string;
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
-  const signInWithGoogle = () => {
-    const callbackUrl = `${window.location.origin}/${locale}/auth/google/callback`;
-    window.location.href = `${baseUrl}/auth/google?redirect_uri=${encodeURIComponent(callbackUrl)}`;
+  const handleCredentialResponse = async (
+    credentialResponse: CredentialResponse,
+  ) => {
+    const idToken = credentialResponse.credential;
+    if (!idToken) {
+      setError("No credential received");
+      return;
+    }
+
+    const res = await fetch(`${baseUrl}/auth/google`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+
+    if (!res.ok) {
+      setError("Login failed");
+      return;
+    }
+
+    const data = await res.json();
+    useAuthStore.getState().setTokens({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
+    router.replace("/d");
   };
 
-  return { signInWithGoogle };
+  return { handleCredentialResponse, error, clearError: () => setError(null) };
 }

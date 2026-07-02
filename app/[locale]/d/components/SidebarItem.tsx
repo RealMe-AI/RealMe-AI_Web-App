@@ -2,14 +2,16 @@
 
 import { useState, useRef, useEffect } from "react";
 import ChatActionsModal from "../chatEdit/ChatActionsModal";
+import { Pin } from "lucide-react";
 import { useDeleteConversation } from "@/app/hooks/chatModal/useDeleteConversation";
 import { useRenameConversation } from "@/app/hooks/chatModal/useRenameConversation";
+import { usePinConversation } from "@/app/hooks/chatModal/usePinConversation";
 import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
-// import { Check, X as XIcon } from "lucide-react";
 
 interface Chat {
   id: number;
   title: string;
+  isPinned?: boolean;
 }
 
 interface SidebarItemProps {
@@ -38,6 +40,7 @@ export default function SidebarItem({
 
   const { deleteConversation, isDeleting } = useDeleteConversation();
   const { renameConversation } = useRenameConversation();
+  const { pinConversation } = usePinConversation();
 
   // Focus input when renaming starts
   useEffect(() => {
@@ -102,7 +105,10 @@ export default function SidebarItem({
               />
             </div>
           ) : (
-            <p className="text-sm font-medium truncate p-3">{chat.title}</p>
+            <p className="text-sm font-medium truncate p-3 flex items-center gap-1.5">
+              {chat.isPinned && <Pin size={14} className="shrink-0 text-indigo-500" fill="currentColor" />}
+              {chat.title}
+            </p>
           )}
         </div>
 
@@ -132,12 +138,14 @@ export default function SidebarItem({
               isOpen={true}
               onClose={() => setIsMenuOpen(false)}
               chatId={chat.id}
+              isPinned={chat.isPinned}
               // Pass handlers to override default behavior
               onRename={() => {
                 setRenameValue(chat.title);
                 setIsRenaming(true);
               }}
               onDelete={() => setIsDeleteModalOpen(true)}
+              onPin={() => pinConversation(chat.id)}
               className={`absolute right-8 z-50 w-40 shadow-xl border border-slate-200 dark:border-slate-700 ${
                 openUpwards ? "bottom-8" : "top-8"
               }`}

@@ -44,6 +44,12 @@ export const useChatStore = create<ChatState>((set) => ({
   setActiveConversationId: (id) => set({ activeConversationId: id }),
 
   // Refresh signal for conversation list
+  togglePin: (chatId: number) =>
+    set((state) => ({
+      chats: state.chats.map((chat) =>
+        chat.id === chatId ? { ...chat, isPinned: !chat.isPinned } : chat
+      ),
+    })),
   chatsRefreshSignal: 0,
   triggerChatsRefresh: () =>
     set((state) => ({ chatsRefreshSignal: state.chatsRefreshSignal + 1 })),

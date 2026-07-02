@@ -6,6 +6,7 @@ interface UpdateConversationParams {
   title?: string;
   lastMessage?: string;
   updatedAt?: string;
+  isPinned?: boolean;
 }
 
 export const useUpdateConversation = () => {

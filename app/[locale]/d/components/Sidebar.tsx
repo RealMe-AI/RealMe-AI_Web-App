@@ -8,6 +8,7 @@ import { Chat } from "@/app/interface/type";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useChats } from "@/app/hooks/messages/useChats";
 
+import { sortPinnedFirst } from "@/app/utils/pin";
 import LanguageSelect from "../../setting/LanguageSelect";
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
@@ -193,7 +194,7 @@ export default function Sidebar({
             {/* Chat List */}
             <div className="flex-1 overflow-y-auto space-y-3 caret-transparent">
               {filteredChats.length ? (
-                filteredChats.map((chat) => (
+                sortPinnedFirst(filteredChats).map((chat) => (
                   <SidebarItem
                     key={chat.id}
                     chat={chat}
@@ -216,10 +217,6 @@ export default function Sidebar({
               </div>
             </div>
 
-            {/* Credits */}
-            <p className="text-[10px] text-center text-slate-500 dark:text-slate-500">
-              {t("dashboard.sidebar.footer_full")} OwenVisuels
-            </p>
           </motion.div>
         </>
       )}
