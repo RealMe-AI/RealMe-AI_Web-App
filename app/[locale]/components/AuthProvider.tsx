@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useAuthStore } from "@/app/store/useAuthStore";
+
+const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -13,5 +16,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  return <>{children}</>;
+  return (
+    <GoogleOAuthProvider clientId={clientId}>
+      {children}
+    </GoogleOAuthProvider>
+  );
 }
