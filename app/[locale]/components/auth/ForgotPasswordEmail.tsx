@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Send, ArrowLeft } from "lucide-react";
+import { Mail, Send } from "lucide-react";
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 interface ForgotPasswordEmailProps {
   email: string;
@@ -18,7 +19,6 @@ export default function ForgotPasswordEmail({
   error,
   loading,
   onSendCode,
-  onBack,
 }: ForgotPasswordEmailProps) {
   return (
     <motion.div
@@ -107,14 +107,7 @@ export default function ForgotPasswordEmail({
 
           <span className="relative flex items-center gap-2">
             {loading ? (
-              <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                />
-                Sending Code...
-              </>
+              <SpinnerIcon />
             ) : (
               <>
                 <Send className="w-5 h-5" />
@@ -122,17 +115,6 @@ export default function ForgotPasswordEmail({
               </>
             )}
           </span>
-        </motion.button>
-
-        {/* Back Link */}
-        <motion.button
-          type="button"
-          onClick={onBack}
-          whileHover={{ x: -4 }}
-          className="flex items-center justify-center gap-2 text-slate-400 text-sm font-medium transition-colors mt-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Sign In
         </motion.button>
       </motion.form>
     </motion.div>

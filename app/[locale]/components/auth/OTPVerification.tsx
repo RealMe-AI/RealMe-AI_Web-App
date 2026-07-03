@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, CheckCircle2, ArrowLeft, RefreshCw } from "lucide-react";
-import { MutableRefObject } from "react";
+import { CheckCircle2, ArrowLeft, RefreshCw, ShieldCheck } from "lucide-react";
+import { RefObject } from "react";
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 interface OTPVerificationProps {
   email: string;
@@ -15,7 +16,7 @@ interface OTPVerificationProps {
   expired: boolean;
   timerTextClass: string;
   isOtpComplete: boolean;
-  inputRefs: MutableRefObject<(HTMLInputElement | null)[]>;
+  inputRefs: RefObject<(HTMLInputElement | null)[]>;
   onChange: (index: number, value: string) => void;
   onKeyDown: (index: number, e: React.KeyboardEvent<HTMLInputElement>) => void;
   onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void;
@@ -60,7 +61,7 @@ export default function OTPVerification({
           className="inline-flex items-center justify-center w-16 h-16 rounded-full 
                     bg-indigo-300 text-slate-800 dark:bg-indigo-600 dark:text-white mb-4 shadow-lg shadow-indigo-300/30"
         >
-          <Shield className="w-8 h-8 text-white" />
+          <ShieldCheck className="w-8 h-8 text-white" />
         </motion.div>
         <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
           Verify Your Email
@@ -146,14 +147,7 @@ export default function OTPVerification({
         >
           <span className="relative flex items-center gap-2">
             {loading ? (
-              <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                />
-                Verifying...
-              </>
+              <SpinnerIcon />
             ) : (
               <>
                 <CheckCircle2 className="w-5 h-5" />

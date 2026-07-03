@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Lock, Eye, EyeOff, CheckCircle, ShieldCheck } from "lucide-react";
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 interface NewPasswordFormProps {
   password: string;
@@ -282,14 +283,7 @@ export default function NewPasswordForm({
 
           <span className="relative flex items-center gap-2">
             {loading ? (
-              <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                />
-                Updating Password...
-              </>
+              <SpinnerIcon />
             ) : (
               <>
                 <ShieldCheck className="w-5 h-5" />
