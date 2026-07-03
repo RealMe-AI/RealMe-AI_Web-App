@@ -20,12 +20,14 @@ interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onSelectChat: (chat: Chat) => void;
+  onShareChat?: (chatId: number, title: string, preview?: string) => void;
 }
 
 export default function Sidebar({
   isOpen,
   setIsOpen,
   onSelectChat,
+  onShareChat,
 }: SidebarProps) {
   const { chats } = useChats();
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -200,6 +202,7 @@ export default function Sidebar({
                     chat={chat}
                     isActive={activeConversationId === chat.id}
                     onClick={() => handleSelectChat(chat)}
+                    onShareChat={onShareChat}
                   />
                 ))
               ) : (

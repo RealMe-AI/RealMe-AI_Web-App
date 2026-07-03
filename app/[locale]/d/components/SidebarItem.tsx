@@ -11,6 +11,7 @@ import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirma
 interface Chat {
   id: number;
   title: string;
+  lastMessage?: string;
   isPinned?: boolean;
 }
 
@@ -18,12 +19,14 @@ interface SidebarItemProps {
   chat: Chat;
   isActive: boolean;
   onClick: () => void;
+  onShareChat?: (chatId: number, title: string, preview?: string) => void;
 }
 
 export default function SidebarItem({
   chat,
   isActive,
   onClick,
+  onShareChat,
 }: SidebarItemProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openUpwards, setOpenUpwards] = useState(false);
@@ -144,6 +147,7 @@ export default function SidebarItem({
                 setRenameValue(chat.title);
                 setIsRenaming(true);
               }}
+              onShare={() => onShareChat?.(chat.id, chat.title, chat.lastMessage)}
               onDelete={() => setIsDeleteModalOpen(true)}
               onPin={() => pinConversation(chat.id)}
               className={`absolute right-8 z-50 w-40 shadow-xl border border-slate-200 dark:border-slate-700 ${
