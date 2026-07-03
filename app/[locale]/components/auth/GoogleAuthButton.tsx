@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
@@ -12,7 +12,6 @@ export default function GoogleAuthButton() {
   const t = useTranslations();
   const { handleCredentialResponse, error, clearError } = useGoogleAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const onGoogleSuccess = async (response: CredentialResponse) => {
     await handleCredentialResponse(response);
@@ -21,34 +20,24 @@ export default function GoogleAuthButton() {
 
   const onGoogleError = () => setIsLoading(false);
 
-  const handleGoogleSignIn = () => {
-    if (isLoading) return;
-    clearError();
-    setIsLoading(true);
-
-    const btn =
-      containerRef.current?.querySelector<HTMLElement>('div[role="button"]');
-    if (btn) {
-      btn.click();
-    } else {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <div>
+    <div className="relative">
       <div
-        ref={containerRef}
-        className="fixed top-[-9999px] left-[-9999px]"
-        aria-hidden="true"
+        className="absolute inset-0 z-10 opacity-0"
+        onPointerDown={() => { clearError(); setIsLoading(true); }}
       >
-        <GoogleLogin onSuccess={onGoogleSuccess} onError={onGoogleError} />
+        <GoogleLogin
+          onSuccess={onGoogleSuccess}
+          onError={onGoogleError}
+          size="large"
+          shape="rectangular"
+          theme="outline"
+        />
       </div>
       <motion.button
         type="button"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        onClick={handleGoogleSignIn}
         disabled={isLoading}
         className="flex items-center text-sm md:text-base justify-center gap-3 w-full py-3 px-4 rounded-lg 
                  bg-white dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 
