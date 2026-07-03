@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PanelLeft } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
@@ -14,6 +14,7 @@ import Sidebar from "./components/Sidebar";
 import MiniSidebar from "./components/MiniSidebar";
 import ChatWindow from "./components/ChatWindow";
 import SettingsPanel from "../setting/SettingsPanel";
+import { ShareModal } from "./components/share/ShareModal";
 
 export default function Page() {
   // useGoogleAuth();
@@ -28,6 +29,11 @@ export default function Page() {
     (s) => s.setActiveConversationId,
   );
   const { fetchMessages } = useFetchMessages();
+  const [shareChat, setShareChat] = useState<{
+    chatId: number;
+    title: string;
+    preview?: string;
+  } | null>(null);
 
   useEffect(() => {
     if (hydrated && !accessToken) {
@@ -72,10 +78,20 @@ export default function Page() {
           setActiveConversationId(chat.id);
           fetchMessages(chat.id);
         }}
+        onShareChat={(chatId, title, preview) => setShareChat({ chatId, title, preview })}
       />
 
       {/* Settings Modal */}
       <SettingsPanel open={isSettingsOpen} close={closeAll} />
+
+      {/* Share Modal */}
+      <ShareModal
+        key={shareChat?.chatId ?? 0}
+        isOpen={shareChat !== null}
+        onClose={() => setShareChat(null)}
+        chatId={shareChat?.chatId ?? 0}
+        title={shareChat?.title ?? ""}
+      />
     </div>
   );
 }
