@@ -116,7 +116,7 @@ export function About() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-2">
           <TeamCard
             quote="I believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to."
-            image="/agunwa.png"
+            image="/agunwa.jpeg"
             name="Agunwa Chidiebele Calistus"
             role="Founder & CEO at RealMe"
           />
