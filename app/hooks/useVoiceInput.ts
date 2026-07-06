@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { useLanguageStore } from "../store/useLanguageStore";
 import { useTranslations } from "next-intl";
 import {
@@ -20,7 +20,7 @@ function getSpeechRecognition(): SpeechRecognitionConstructor | null {
   return window.SpeechRecognition ?? window.webkitSpeechRecognition ?? null;
 }
 
-export const useVoiceInput = () => {
+export const useVoiceInput = (onTranscript?: (text: string) => void) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [seconds, setSeconds] = useState(0);
@@ -30,8 +30,14 @@ export const useVoiceInput = () => {
 
   const isSupported = typeof window !== "undefined" && !!getSpeechRecognition();
 
+  const onTranscriptRef = useRef(onTranscript);
+  useEffect(() => {
+    onTranscriptRef.current = onTranscript;
+  }, [onTranscript]);
+
   const timerRef = useRef<number | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const transcriptRef = useRef("");
 
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -48,6 +54,7 @@ export const useVoiceInput = () => {
   const startRecording = () => {
     setError(null);
     setTranscript(null);
+    transcriptRef.current = "";
     setSeconds(0);
     setIsTranscribing(false);
 
@@ -79,7 +86,8 @@ export const useVoiceInput = () => {
           }
         }
         if (finalText) {
-          setTranscript((prev) => (prev || "") + finalText);
+          transcriptRef.current += finalText;
+          setTranscript(transcriptRef.current);
         }
       };
 
@@ -110,10 +118,16 @@ export const useVoiceInput = () => {
     setIsRecording(false);
     stopTimer();
     setIsTranscribing(true);
-    setTimeout(() => setIsTranscribing(false), 400);
+    setTimeout(() => {
+      setIsTranscribing(false);
+      const text = transcriptRef.current.trim();
+      if (text) {
+        onTranscriptRef.current?.(text);
+      }
+    }, 400);
   };
 
-  const cleanup = () => {
+  const cleanup = useCallback(() => {
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
@@ -124,7 +138,7 @@ export const useVoiceInput = () => {
     setSeconds(0);
     setTranscript(null);
     setError(null);
-  };
+  }, []);
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);

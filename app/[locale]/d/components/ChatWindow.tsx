@@ -23,8 +23,8 @@ import { CustomLoader } from "@/app/[locale]/components/ui/CustomLoader";
 
 import Image from "next/image";
 import ChatMessage from "./ChatMessage";
-import VoiceInput from "./VoiceInput";
 import FileUploadPopup from "./FileUploadPopup";
+import { useVoiceInput } from "@/app/hooks/useVoiceInput";
 import ClipboardPasteModal from "./ClipboardPasteModal";
 import OfflineBanner from "./OfflineBanner";
 
@@ -35,7 +35,6 @@ export default function ChatWindow() {
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showUploadPopup, setShowUploadPopup] = useState(false);
-  const [showVoicePopup, setShowVoicePopup] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [clipboardText, setClipboardText] = useState<string | null>(null);
 
@@ -66,6 +65,27 @@ export default function ChatWindow() {
       selection?.addRange(range);
     }
   }, [inputFocusSignal]);
+
+  const {
+    isRecording,
+    isTranscribing,
+    startRecording,
+    stopRecording,
+    cleanup,
+  } = useVoiceInput((text) => {
+    setInput(text);
+    if (inputRef.current) inputRef.current.textContent = text;
+  });
+
+  useEffect(() => {
+    return () => cleanup();
+  }, [cleanup]);
+
+  const handleMicClick = () => {
+    if (isTranscribing) return;
+    if (isRecording) stopRecording();
+    else startRecording();
+  };
 
   const handleFileSelected = async (file: File) => {
     const result = await uploadFile(file);
@@ -185,7 +205,9 @@ export default function ChatWindow() {
                     className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
                   />
                   <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
-                    Hi, {user?.fullName?.split(" ")[0] || t("dashboard.greeting.fallback_name")}
+                    Hi,{" "}
+                    {user?.fullName?.split(" ")[0] ||
+                      t("dashboard.greeting.fallback_name")}
                   </h1>
                 </div>
                 <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
@@ -207,7 +229,8 @@ export default function ChatWindow() {
             onPaste={() => {
               dismissedTexts.current.add(clipboardText.trim());
               setInput(clipboardText);
-              if (inputRef.current) inputRef.current.textContent = clipboardText;
+              if (inputRef.current)
+                inputRef.current.textContent = clipboardText;
               setClipboardText(null);
               if (inputFocusSignal > 0) {
                 inputRef.current?.focus();
@@ -382,19 +405,29 @@ export default function ChatWindow() {
 
             {input.trim() === "" && !hasAttachmentsOrUploading && !isLoading ? (
               <div
-                onClick={() => setShowVoicePopup(true)}
+                onClick={handleMicClick}
                 className="rounded-full hover:bg-white/30 
                            dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
               >
-                <Mic size={27} className="text-indigo-500 dark:text-white/40" />
-                {showVoicePopup && (
-                  <VoiceInput
-                    close={() => setShowVoicePopup(false)}
-                    onTranscript={(text) => {
-                      setInput(text);
-                      if (inputRef.current) inputRef.current.textContent = text;
-                      setShowVoicePopup(false);
-                    }}
+                {isTranscribing ? (
+                  <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900">
+                    <Square size={16} fill="currentColor" />
+                  </div>
+                ) : isRecording ? (
+                  <motion.div
+                    animate={{ scale: [1, 1.08, 1], opacity: [1, 0.9, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                    className="p-2 rounded-full bg-indigo-500/20 border border-indigo-400/30"
+                  >
+                    <Mic
+                      size={27}
+                      className="text-indigo-600 dark:text-indigo-400"
+                    />
+                  </motion.div>
+                ) : (
+                  <Mic
+                    size={27}
+                    className="text-indigo-600 dark:text-indigo-300"
                   />
                 )}
               </div>
