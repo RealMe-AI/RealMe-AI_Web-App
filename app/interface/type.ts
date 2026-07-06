@@ -120,6 +120,18 @@ export type Chat = {
   isPinned?: boolean;
 };
 
+export type PaginatedMeta = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
+export type PaginatedConversationsResponse = {
+  data: Chat[];
+  meta: PaginatedMeta;
+};
+
 export type ModalState = {
   isProfileOpen: boolean;
   isAccountInfoOpen: boolean;
