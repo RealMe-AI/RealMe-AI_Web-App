@@ -14,7 +14,9 @@ export const useShareConversation = () => {
       if (!res.ok) return null;
       const data = await res.json();
       if (data.shareUrl) {
-        return `${window.location.origin}${data.shareUrl}`;
+        return data.shareUrl.startsWith("http")
+          ? data.shareUrl
+          : `${window.location.origin}${data.shareUrl}`;
       }
       return null;
     } catch {

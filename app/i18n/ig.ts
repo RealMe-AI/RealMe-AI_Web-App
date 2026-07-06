@@ -628,6 +628,14 @@ const ig = {
       },
     },
   },
+
+  shared: {
+    not_found_title: "Ọ dịghị mkparịta ụka ahụ",
+    error_title: "Ihe ọjọọ emere",
+    retry: "Nwaa ọzọ",
+    shared_by: "Nke",
+    powered_by: "RealMe AI na-akwado ya",
+  },
 };
 
 export type Messages = typeof ig;
