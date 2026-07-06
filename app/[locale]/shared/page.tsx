@@ -10,7 +10,7 @@ import { ErrorState } from "./components/ErrorState";
 import { ConversationHeader } from "./components/ConversationHeader";
 import { ConversationFooter } from "./components/ConverstaionFooter";
 
-export function SharedConversationPage() {
+export default function SharedConversationPage() {
   const params = useParams();
   const shareId = params.shareId as string;
   const { conversation, isLoading, error, refetch } =
