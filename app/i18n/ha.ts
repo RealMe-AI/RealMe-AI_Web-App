@@ -630,6 +630,32 @@ const ha = {
     },
   },
 
+  report_form: {
+    title_report_bug: "Ba da Rahoton Matsala",
+    title_suggest_feature: "Ba da Shawarar Fasali",
+
+    subtitle_report_bug:
+      "Ka ga gano wata matsala? Faɗa mana abin da ya faru, za mu gyara ta.",
+
+    subtitle_suggest_feature:
+      "Kana da wata shawara da za ta inganta RealMe AI? Muna son jin ra'ayinka.",
+
+    name_placeholder: "Sunanka",
+    email_placeholder: "Imel ɗinka",
+    subject_placeholder: "Batun Saƙo",
+    message_placeholder: "Saƙonka",
+
+    send_button: "Aika Saƙo",
+
+    status: {
+      success_title: "An Aika Saƙo Cikin Nasara!",
+      success_message: "Mun gode! Za mu tuntube ka nan ba da jimawa ba.",
+
+      error_title: "An Kasa Aika Saƙo",
+      error_message: "Da fatan za a sake gwadawa daga baya.",
+    },
+  },
+
   shared: {
     not_found_title: "Ba a sami tattaunawar ba",
     error_title: "Wani abu ya tafi ba daidai ba",

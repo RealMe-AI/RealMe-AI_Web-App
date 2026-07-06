@@ -145,7 +145,7 @@ function InfoItem({ label, value }: { label: string; value: string }) {
       <span className="font-medium text-slate-600 dark:text-slate-400">
         {label}
       </span>
-      <span className="text-right text-slate-800 dark:text-slate-100">
+      <span className="text-right text-slate-800 dark:text-slate-100 truncate max-w-[130px]">
         {value}
       </span>
     </div>

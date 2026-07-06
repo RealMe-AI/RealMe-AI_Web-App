@@ -5,10 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface StatusPopupProps {
   status: "success" | "error" | null;
+  t: (key: string) => string;
 }
-// popup component to show success or error message for contact form
+
 export default function StatusPopup({
   status,
+  t,
 }: StatusPopupProps): JSX.Element | null {
   if (!status) return null;
 
@@ -33,13 +35,13 @@ export default function StatusPopup({
           >
             <p className="text-lg font-semibold mb-2">
               {status === "success"
-                ? "Message Sent Successfully!"
-                : "Failed to Send Message"}
+                ? t("status.success_title")
+                : t("status.error_title")}
             </p>
             <p className="text-sm opacity-80">
               {status === "success"
-                ? "Thank you! We’ll get back to you soon."
-                : "Please try again later."}
+                ? t("status.success_message")
+                : t("status.error_message")}
             </p>
           </motion.div>
         </motion.div>

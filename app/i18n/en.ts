@@ -591,6 +591,24 @@ const en = {
     },
   },
 
+  report_form: {
+    title_report_bug: "Report an Issue",
+    title_suggest_feature: "Suggest a Feature",
+    subtitle_report_bug: "Found something broken? Tell us what happened and we'll fix it.",
+    subtitle_suggest_feature: "Have an idea that would make RealMe AI better? We'd love to hear it.",
+    name_placeholder: "Your Name",
+    email_placeholder: "Your Email",
+    subject_placeholder: "Subject",
+    message_placeholder: "Your Message",
+    send_button: "Send Message",
+    status: {
+      success_title: "Message Sent Successfully!",
+      success_message: "Thank you! We'll get back to you soon.",
+      error_title: "Failed to Send Message",
+      error_message: "Please try again later.",
+    },
+  },
+
   shared: {
     not_found_title: "Conversation not found",
     error_title: "Something went wrong",
