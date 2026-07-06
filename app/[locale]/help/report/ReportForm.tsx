@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useAutoClose } from "@/app/hooks/popUp/useAutoClose";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useUserProfile } from "@/app/hooks/user/useUserProfile";
 
 import StatusPopup from "./StatusPopup";
 
@@ -16,9 +17,11 @@ export function ReportForm({
 }) {
   const [status, setStatus] = useState<"success" | "error" | null>(null);
 
+  const {user} = useUserProfile();
+
   const [formData, setFormData] = useState({
-    from_name: "",
-    from_email: "",
+    from_name: user?.fullName || "",
+    from_email: user?.email || "",
     subject: "",
     message: "",
   });
