@@ -27,7 +27,7 @@ export default function SharedConversationPage() {
         hour: "2-digit",
         minute: "2-digit",
       }),
-    }));
+    }));  
   }, [conversation]);
 
   if (isLoading) {
