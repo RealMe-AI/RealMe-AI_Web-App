@@ -5,10 +5,10 @@ import { useParams } from "next/navigation";
 import { useSharedConversation } from "@/app/hooks/chatModal/useSharedConversation";
 import ChatMessage from "@/app/[locale]/d/components/ChatMessage";
 import type { Message } from "@/app/interface/type";
-import { LoadingState } from "./components/LoadingState";
-import { ErrorState } from "./components/ErrorState";
-import { ConversationHeader } from "./components/ConversationHeader";
-import { ConversationFooter } from "./components/ConverstaionFooter";
+import { LoadingState } from "../components/LoadingState";
+import { ErrorState } from "../components/ErrorState";
+import { ConversationHeader } from "../components/ConversationHeader";
+import { ConversationFooter } from "../components/ConverstaionFooter";
 
 export default function SharedConversationPage() {
   const params = useParams();
