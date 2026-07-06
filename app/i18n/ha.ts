@@ -629,6 +629,14 @@ const ha = {
       },
     },
   },
+
+  shared: {
+    not_found_title: "Ba a sami tattaunawar ba",
+    error_title: "Wani abu ya tafi ba daidai ba",
+    retry: "Sake gwadawa",
+    shared_by: "An raba ta",
+    powered_by: "RealMe AI ke ƙarfafa shi",
+  },
 };
 
 export type Messages = typeof ha;

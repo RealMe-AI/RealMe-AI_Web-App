@@ -590,6 +590,14 @@ const en = {
       },
     },
   },
+
+  shared: {
+    not_found_title: "Conversation not found",
+    error_title: "Something went wrong",
+    retry: "Try again",
+    shared_by: "Shared by",
+    powered_by: "Powered by RealMe AI",
+  },
 };
 
 export type Messages = typeof en;

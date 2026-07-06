@@ -628,6 +628,14 @@ const yo = {
       },
     },
   },
+
+  shared: {
+    not_found_title: "A ko ri ijiroro naa",
+    error_title: "Ohun kan ti ko tọ ṣẹlẹ",
+    retry: "Gbiyanju leekansi",
+    shared_by: "Ti pin nipasẹ",
+    powered_by: "RealMe AI ni agbara",
+  },
 };
 
 export type Messages = typeof yo;
