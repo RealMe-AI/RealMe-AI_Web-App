@@ -13,6 +13,7 @@ import LanguageSelect from "../../setting/LanguageSelect";
 import ProfileFooter from "./ProfileFooter";
 import Image from "next/image";
 import SidebarItem from "./SidebarItem";
+import LazyLoading from "../../components/ui/LazyLoading";
 import useModalStore from "../../../store/modalStore";
 import { useSidebarStore } from "@/app/store/useSidebarStore";
 
@@ -29,10 +30,18 @@ export default function Sidebar({
   onSelectChat,
   onShareChat,
 }: SidebarProps) {
-  const { chats } = useChats();
+  const {
+    chats,
+    isLoading,
+    isLoadingMore,
+    error: apiError,
+    searchTerm,
+    setSearchTerm,
+    loadMore,
+    hasMore,
+  } = useChats();
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [error, setError] = useState("");
+  const sentinelRef = useRef<HTMLDivElement>(null);
   const t = useTranslations();
 
   const autoFocusSearch = useSidebarStore((s) => s.autoFocusSearch);
@@ -69,21 +78,36 @@ export default function Sidebar({
     }
   };
 
-  const filteredChats = chats.filter((chat) =>
-    chat.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const [showNoResults, setShowNoResults] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (searchTerm && filteredChats.length === 0) {
-        setError(t("dashboard.search.no_results", { searchTerm }));
-      } else {
-        setError("");
-      }
+      setShowNoResults(!!(searchTerm && chats.length === 0 && !isLoading));
     }, 200);
-
     return () => clearTimeout(timeout);
-  }, [searchTerm, filteredChats, t]);
+  }, [searchTerm, chats, isLoading]);
+
+  const loadMoreRef = useRef(loadMore);
+
+  useEffect(() => {
+    loadMoreRef.current = loadMore;
+  }, [loadMore]);
+
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+          loadMoreRef.current();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [hasMore, isLoadingMore]);
 
   const handleSelectChat = (chat: Chat) => {
     closeAll();
@@ -187,29 +211,39 @@ export default function Sidebar({
               />
             </div>
 
-            {error && (
+            {apiError && (
+              <p className="text-sm text-red-500 text-center mb-3">
+                {apiError}
+              </p>
+            )}
+
+            {showNoResults && (
               <p className="text-sm text-red-500 text-center mb-3 animate-pulse">
-                {error}
+                {t("dashboard.search.no_results", { searchTerm })}
               </p>
             )}
 
             {/* Chat List */}
             <div className="flex-1 overflow-y-auto space-y-3 caret-transparent">
-              {filteredChats.length ? (
-                sortPinnedFirst(filteredChats).map((chat) => (
-                  <SidebarItem
-                    key={chat.id}
-                    chat={chat}
-                    isActive={activeConversationId === chat.id}
-                    onClick={() => handleSelectChat(chat)}
-                    onShareChat={onShareChat}
-                  />
-                ))
-              ) : (
-                <p className="text-sm text-slate-500 italic text-center caret-transparent">
-                  {t("dashboard.search.no_chat")}
-                </p>
-              )}
+              {chats.length
+                ? sortPinnedFirst(chats).map((chat) => (
+                    <SidebarItem
+                      key={chat.id}
+                      chat={chat}
+                      isActive={activeConversationId === chat.id}
+                      onClick={() => handleSelectChat(chat)}
+                      onShareChat={onShareChat}
+                    />
+                  ))
+                : !isLoading && (
+                    <p className="text-sm text-slate-500 italic text-center caret-transparent">
+                      {t("dashboard.search.no_chat")}
+                    </p>
+                  )}
+
+              {isLoadingMore && <LazyLoading />}
+
+              {hasMore && <div ref={sentinelRef} />}
             </div>
 
             {/* Footer Area */}
@@ -219,7 +253,6 @@ export default function Sidebar({
                 <LanguageSelect />
               </div>
             </div>
-
           </motion.div>
         </>
       )}

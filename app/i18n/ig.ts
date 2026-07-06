@@ -629,6 +629,32 @@ const ig = {
     },
   },
 
+  report_form: {
+    title_report_bug: "Kọọ Nsogbu",
+    title_suggest_feature: "Tụpụta Njirimara Ọhụrụ",
+
+    subtitle_report_bug:
+      "Ị hụrụ ihe na-adịghị arụ ọrụ? Gwa anyị ihe mere, anyị ga-edozi ya.",
+
+    subtitle_suggest_feature:
+      "Ị nwere echiche ga-eme ka RealMe AI ka mma? Anyị ga-enwe obi ụtọ ịnụ ya.",
+
+    name_placeholder: "Aha Gị",
+    email_placeholder: "Email Gị",
+    subject_placeholder: "Isiokwu",
+    message_placeholder: "Ozi Gị",
+
+    send_button: "Zipu Ozi",
+
+    status: {
+      success_title: "Ezigara Ozi Nke Ọma!",
+      success_message: "Daalụ! Anyị ga-akpọtụrụ gị n'oge na-adịghị anya.",
+
+      error_title: "Enweghị Ike Izipu Ozi",
+      error_message: "Biko, gbalịa ọzọ ma emechaa.",
+    },
+  },
+
   shared: {
     not_found_title: "Ọ dịghị mkparịta ụka ahụ",
     error_title: "Ihe ọjọọ emere",

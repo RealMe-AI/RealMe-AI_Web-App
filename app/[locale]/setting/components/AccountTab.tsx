@@ -27,7 +27,7 @@ export function AccountTab({ user, openEditProfile, setIsDeleteModalOpen, t }: A
       </div>
       <div className="flex justify-between items-center py-3 border-b border-slate-100 dark:border-slate-700/50">
         <span className="text-slate-800 dark:text-slate-200 font-medium">{t("settings.account.email")}</span>
-        <span className="text-slate-600 text-sm md:text-base dark:text-slate-400">{user?.email}</span>
+        <span className="text-slate-600 text-sm md:text-base dark:text-slate-400 truncate max-w-[150px]">{user?.email}</span>
       </div>
       <div className="flex justify-between items-center py-3">
         <span className="text-slate-800 dark:text-slate-200 font-medium">{t("settings.delete_account")}</span>

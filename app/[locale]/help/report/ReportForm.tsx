@@ -4,6 +4,8 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useAutoClose } from "@/app/hooks/popUp/useAutoClose";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { useUserProfile } from "@/app/hooks/user/useUserProfile";
+import { useTranslations } from "next-intl";
 
 import StatusPopup from "./StatusPopup";
 
@@ -16,9 +18,12 @@ export function ReportForm({
 }) {
   const [status, setStatus] = useState<"success" | "error" | null>(null);
 
+  const { user } = useUserProfile();
+  const t = useTranslations("report_form");
+
   const [formData, setFormData] = useState({
-    from_name: "",
-    from_email: "",
+    from_name: user?.fullName || "",
+    from_email: user?.email || "",
     subject: "",
     message: "",
   });
@@ -61,7 +66,7 @@ export function ReportForm({
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {variant === "report_bug" ? "Report an Issue" : "Suggest a Feature"}
+          {t(variant === "report_bug" ? "title_report_bug" : "title_suggest_feature")}
         </motion.h3>
 
         <motion.p
@@ -71,9 +76,7 @@ export function ReportForm({
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {variant === "report_bug"
-            ? "Found something broken? Tell us what happened and we'll fix it."
-            : "Have an idea that would make RealMe AI better? We'd love to hear it."}
+          {t(variant === "report_bug" ? "subtitle_report_bug" : "subtitle_suggest_feature")}
         </motion.p>
 
         <motion.form
@@ -90,7 +93,7 @@ export function ReportForm({
               name="from_name"
               value={formData.from_name}
               onChange={handleChange}
-              placeholder="Your Name"
+              placeholder={t("name_placeholder")}
               required
               className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 outline-none"
             />
@@ -99,7 +102,7 @@ export function ReportForm({
               name="from_email"
               value={formData.from_email}
               onChange={handleChange}
-              placeholder="Your Email"
+              placeholder={t("email_placeholder")}
               required
               className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 outline-none"
             />
@@ -110,7 +113,7 @@ export function ReportForm({
             name="subject"
             value={formData.subject}
             onChange={handleChange}
-            placeholder="Subject"
+            placeholder={t("subject_placeholder")}
             required
             className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 outline-none"
           />
@@ -119,7 +122,7 @@ export function ReportForm({
             name="message"
             value={formData.message}
             onChange={handleChange}
-            placeholder="Your Message"
+            placeholder={t("message_placeholder")}
             required
             rows={5}
             className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 outline-none"
@@ -130,13 +133,12 @@ export function ReportForm({
             // disabled={loading}
             className="px-6 py-3 rounded-full bg-indigo-300 text-gray-800 hover:bg-indigo-400 dark:bg-indigo-500 dark:text-white dark:hover:bg-indigo-600 transition disabled:opacity-50"
           >
-            {/* {loading ? "Sending..." : "Send Message"} */}
-            Send Message
+            {t("send_button")}
           </button>
         </motion.form>
 
         {/* Popup Component */}
-        <StatusPopup status={status} />
+        <StatusPopup status={status} t={t} />
       </div>
     </section>
   );

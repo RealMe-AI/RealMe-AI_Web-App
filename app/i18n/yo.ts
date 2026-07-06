@@ -629,6 +629,32 @@ const yo = {
     },
   },
 
+  report_form: {
+    title_report_bug: "Ròyìn Ìṣòro",
+    title_suggest_feature: "Dábàá Ẹ̀yà Tuntun",
+
+    subtitle_report_bug:
+      "Ṣé o rí ohun kan tí kò ṣiṣẹ́? Sọ ohun tó ṣẹlẹ̀ fún wa, a ó sì tún un ṣe.",
+
+    subtitle_suggest_feature:
+      "Ṣé o ní èrò kan tó lè mú RealMe AI dára sí i? A máa fẹ́ gbọ́ ọ.",
+
+    name_placeholder: "Orúkọ Rẹ",
+    email_placeholder: "Ímeèlì Rẹ",
+    subject_placeholder: "Kókó Ọ̀rọ̀",
+    message_placeholder: "Ìfiránṣẹ́ Rẹ",
+
+    send_button: "Fi Ìfiránṣẹ́ Ránṣẹ́",
+
+    status: {
+      success_title: "A Ti Fi Ìfiránṣẹ́ Ránṣẹ́ Ní Àṣeyọrí!",
+      success_message: "O ṣeun! A ó kan sí ọ láìpẹ́.",
+
+      error_title: "Kò Ṣeé Fi Ìfiránṣẹ́ Ránṣẹ́",
+      error_message: "Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansi nígbà míì.",
+    },
+  },
+
   shared: {
     not_found_title: "A ko ri ijiroro naa",
     error_title: "Ohun kan ti ko tọ ṣẹlẹ",

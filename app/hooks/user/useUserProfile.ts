@@ -34,12 +34,6 @@ function formatLastLogin(date: string) {
   });
 }
 
-function truncateEmail(email: string, maxLength = 18) {
-  if (!email) return "";
-  if (email.length <= maxLength) return email;
-  return email.slice(0, maxLength - 3) + "...";
-}
-
 export function useUserProfile() {
   const { user, setFetchedUser, setUser } = useUserStore();
   const [loading, setLoading] = useState(false);
@@ -84,10 +78,7 @@ export function useUserProfile() {
 
         setFetchedUser({
           fullName: data.fullName,
-          email:
-            data.loginMethod === "Email" || data.loginMethod === "Google"
-              ? truncateEmail(data.email, 18)
-              : data.email,
+          email: data.email,
           accountType: data.accountType === "Pro" ? "Pro" : "Free",
           plan: data.accountType === "Pro" ? "Pro User" : "Free Plan",
           provider: providerKey,
