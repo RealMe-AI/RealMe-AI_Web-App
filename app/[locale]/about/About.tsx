@@ -118,13 +118,13 @@ export function About() {
             quote="I believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to."
             image="/agunwa.jpeg"
             name="Agunwa Chidiebele Calistus"
-            role="Founder & CEO at RealMe"
+            role="Founder & CEO at RealMe AI"
           />
           <TeamCard
             quote="Great products live at the intersection of design and engineering. RealMe AI is built right there, on purpose."
             image="/daniel.jpeg"
             name="Ezechukwu Chukwudubem Daniel"
-            role="Co-Founder at RealMe"
+            role="Co-Founder at RealMe AI"
           />
         </div>
       </section>
