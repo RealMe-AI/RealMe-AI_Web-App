@@ -416,6 +416,12 @@ const ha = {
       monthly: "Na Wata",
       yearly: "Na Shekara",
     },
+    coming_soon: {
+      title: "Nan Ba Da Jimawa Ba",
+      subtitle:
+        "Muna shirya tsare-tsare masu sassauƙa da za su dace da bukatunka. Za ka kasance cikin na farko da za su sani idan sun shirya.",
+    },
+
     pricing_footer: {
       billing_note:
         "Duk tsare-tsare suna ɗauke da tsaron shiga, tarihin tattaunawa mai dorewa, da tallafin harsuna da dama.",

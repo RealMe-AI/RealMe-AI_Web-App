@@ -146,8 +146,7 @@ const en = {
 
     reset_password: {
       title: "Create New Password",
-      subtitle:
-        "Your new password must be different from previous passwords",
+      subtitle: "Your new password must be different from previous passwords",
       new_placeholder: "Enter new password",
       confirm_placeholder: "Confirm new password",
       submit_button: "Reset Password",
@@ -414,6 +413,12 @@ const en = {
       monthly: "Monthly",
       yearly: "Yearly",
     },
+    coming_soon: {
+      title: "Coming Soon",
+      subtitle:
+        "We're crafting flexible plans to suit your needs. You'll be the first to know when they're ready.",
+    },
+
     pricing_footer: {
       billing_note:
         "All plans include secure authentication, persistent chat history, and multilingual support.",

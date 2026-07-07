@@ -414,6 +414,12 @@ const yo = {
       monthly: "Oṣooṣu",
       yearly: "Ọdun",
     },
+    coming_soon: {
+      title: "Ó ń Bọ̀ Láìpẹ́",
+      subtitle:
+        "A ń pèsè àwọn ètò tó rọrùn tí yóò bá àwọn àìní rẹ mu. Iwọ yóò jẹ́ ọ̀kan lára àwọn àkọ́kọ́ tí yóò mọ̀ nígbà tí wọ́n bá ti ṣetán.",
+    },
+
     pricing_footer: {
       billing_note:
         "Gbogbo awọn eto pẹlu aabo wiwọle, itan ijiroro ti o wa titi, ati atilẹyin ede pupọ.",

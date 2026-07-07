@@ -414,6 +414,12 @@ const ig = {
       monthly: "Kwa ọnwa",
       yearly: "Kwa afọ",
     },
+    coming_soon: {
+      title: "Na-abịa N'oge Na-adịghị Anya",
+      subtitle:
+        "Anyị na-arụpụta atụmatụ dị iche iche ga-adabara mkpa gị. Ị ga-abụ otu n'ime ndị mbụ ga-amata mgbe ha dị njikere.",
+    },
+
     pricing_footer: {
       billing_note:
         "Atụmatụ niile gụnyere nbanye echekwara, akụkọ mkparịta ụka na-adịgide adịgide, na nkwado ọtụtụ asụsụ.",
