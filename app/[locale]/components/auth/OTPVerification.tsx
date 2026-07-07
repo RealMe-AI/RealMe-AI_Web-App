@@ -2,28 +2,8 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowLeft, RefreshCw, ShieldCheck } from "lucide-react";
-import { RefObject } from "react";
 import SpinnerIcon from "../icons/SpinnerIcon";
-
-interface OTPVerificationProps {
-  email: string;
-  otp: string[];
-  otpError: string;
-  loading: boolean;
-  resendLoading: boolean;
-  resendTimer: string | number;
-  canResend: boolean;
-  expired: boolean;
-  timerTextClass: string;
-  isOtpComplete: boolean;
-  inputRefs: RefObject<(HTMLInputElement | null)[]>;
-  onChange: (index: number, value: string) => void;
-  onKeyDown: (index: number, e: React.KeyboardEvent<HTMLInputElement>) => void;
-  onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void;
-  onVerify: () => void;
-  onResend: () => void;
-  onBack: () => void;
-}
+import { OTPVerificationProps } from "@/app/interface/otpVerification";
 
 export default function OTPVerification({
   email,
@@ -160,9 +140,10 @@ export default function OTPVerification({
         {/* Countdown Timer / Expired */}
         <div className="text-center mt-4">
           {!expired && !canResend ? (
-            <p className={`text-sm font-light text-slate-600 dark:text-white ${timerTextClass}`}>
-              Expires in{" "}
-              <span className="font-semibold">{resendTimer}</span>
+            <p
+              className={`text-sm font-light text-slate-600 dark:text-white ${timerTextClass}`}
+            >
+              Expires in <span className="font-semibold">{resendTimer}</span>
             </p>
           ) : expired ? (
             <p className="text-red-500 dark:text-red-400 text-sm font-light">

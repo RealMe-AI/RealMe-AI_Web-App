@@ -3,28 +3,7 @@
 import { motion } from "framer-motion";
 import { Lock, Eye, EyeOff, CheckCircle, ShieldCheck } from "lucide-react";
 import SpinnerIcon from "../icons/SpinnerIcon";
-
-interface NewPasswordFormProps {
-  password: string;
-  setPassword: (val: string) => void;
-  confirmPassword: string;
-  setConfirmPassword: (val: string) => void;
-  showPassword: boolean;
-  setShowPassword: (val: boolean) => void;
-  showConfirmPassword: boolean;
-  setShowConfirmPassword: (val: boolean) => void;
-  error: string;
-  loading: boolean;
-  strengthScore: number;
-  checks: {
-    length: boolean;
-    uppercase: boolean;
-    lowercase: boolean;
-    number: boolean;
-    special: boolean;
-  };
-  onSubmit: (e: React.FormEvent) => void;
-}
+import { NewPasswordFormProps } from "@/app/interface/newPassword";
 
 export default function NewPasswordForm({
   password,
