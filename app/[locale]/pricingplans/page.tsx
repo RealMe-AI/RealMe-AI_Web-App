@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { PricingPlans } from "./PricingPlans";
+// import { PricingPlans } from "./PricingPlans";
+import { ComingSoon } from "./ComingSoon";
 
 export const metadata: Metadata = {
   title: "Pricing Plans",
@@ -8,5 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default function PricingPlansPage() {
-  return <PricingPlans />;
+  return <ComingSoon />;
+  // return <PricingPlans />;
 }
