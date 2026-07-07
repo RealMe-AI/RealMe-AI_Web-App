@@ -655,6 +655,36 @@ const yo = {
     },
   },
 
+  about: {
+    hero: {
+      title_line1: "AI Tó Dojúkọ Ènìyàn",
+      title_line2: "Fún bí o ṣe ń sọ̀rọ̀, ronú, tí o sì ń ṣẹ̀dá",
+      subtitle:
+        "RealMe AI ń darapọ̀ ohùn ní àkókò gidi, ìjíròrò tó lè bá ọ mu, àti ìmọ̀ ọ̀pọ̀ èdè sínú pẹpẹ kan tí a ṣe láti ní ìmọ̀lára bí olùrànlọ́wọ́ gidi, kì í ṣe sọfitiwia lasan.",
+    },
+
+    mission: {
+      heading_prefix: "Fífún",
+      heading_highlight: "Ìfihàn Ara Ẹni",
+      description:
+        "RealMe AI jẹ́ pẹpẹ AI tó ń ṣe atilẹyin fún ọ̀pọ̀ èdè, tí a kọ láti ràn àwọn ènìyàn lọ́wọ́ láti bá ara wọn sọ̀rọ̀, ṣẹ̀dá, àti fi ara wọn hàn láìsí ìdènà. Nípa dídarapọ̀ ohùn ní àkókò gidi pẹ̀lú àwọn ìjíròrò AI tó lè bá olùlò mu, RealMe AI ń jẹ́ kí ìjíròrò ojoojúmọ́ dà bí ohun àdánidá nípa èdè, ìró ohùn, àti àyíká. Ìlànà wa ni pé: imọ̀ ẹ̀rọ gbọ́dọ̀ bá ènìyàn mu, kì í ṣe kí ènìyàn bá imọ̀ ẹ̀rọ mu.",
+    },
+
+    team: {
+      member1: {
+        quote:
+          "Mo gbà pé imọ̀ ẹ̀rọ tó dára jù lọ kì í ṣe pé ó kan dáhùn nìkan, ó tún ń lóye. Ìyẹn ni ìpele tí a fi ń kọ gbogbo apá RealMe AI.",
+        role: "Olùdásílẹ̀ àti CEO ti RealMe AI",
+      },
+
+      member2: {
+        quote:
+          "Àwọn ọja tó dára jù lọ máa ń wà ní ibi tí ìṣètò àti ẹ̀rọ pàdé. Níbẹ̀ gan-an ni a fi ìfẹ́ kọ RealMe AI.",
+        role: "Alájọṣepọ̀ Olùdásílẹ̀ RealMe AI",
+      },
+    },
+  },
+
   shared: {
     not_found_title: "A ko ri ijiroro naa",
     error_title: "Ohun kan ti ko tọ ṣẹlẹ",

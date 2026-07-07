@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,6 +13,9 @@ const fadeUp = {
 };
 
 export function About() {
+  const t = useTranslations("about");
+  const tCTA = useTranslations("landing.cta");
+
   return (
     <main>
       <section className="relative flex min-h-[55vh] lg:h-screen w-full items-center overflow-hidden">
@@ -44,10 +48,10 @@ export function About() {
             className="max-w-2xl text-4xl leading-[1.1] sm:text-5xl lg:text-6xl"
           >
             <span className="block font-bold text-white">
-              Human centered AI
+              {t("hero.title_line1")}
             </span>
             <span className="block font-light text-white/85">
-              for how you speak, think, and create
+              {t("hero.title_line2")}
             </span>
           </motion.h1>
 
@@ -56,9 +60,7 @@ export function About() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-6 max-w-md text-sm font-medium text-white/75 sm:text-ba"
           >
-            RealMe AI brings real-time voice, adaptive conversation, and
-            multilingual understanding together in one platform designed to feel
-            less like software, and more like you.
+            {t("hero.subtitle")}
           </motion.p>
 
           <motion.div
@@ -68,9 +70,9 @@ export function About() {
           >
             <Link
               href="/auth"
-              className="group inline-flex items-center gap-2 rounded-md bg-indigo-400 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-400/20 transition hover:bg-indigo-500"
+              className="group inline-flex items-center gap-2 rounded-md bg-indigo-400 px-5 py-3 lg:text-sm font-semibold text-white shadow-lg shadow-indigo-400/20 transition hover:bg-indigo-500 text-[11px]"
             >
-              Get started
+              {tCTA("primary")}
               <ArrowRight
                 size={16}
                 className="transition-transform group-hover:translate-x-0.5"
@@ -90,23 +92,14 @@ export function About() {
         >
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <h2 className="text-2xl font-medium text-slate-900 sm:text-3xl lg:col-span-4 dark:text-white">
-              Empowering{" "}
+              {t("mission.heading_prefix")}{" "}
               <span className="font-bold text-indigo-400 md:text-indigo-400 dark:text-indigo-400">
-                expression
+                {t("mission.heading_highlight")}
               </span>
             </h2>
 
             <p className="text-sm leading-relaxed text-slate-600 sm:text-base lg:col-span-7 lg:col-start-6 dark:text-slate-300">
-              <span className="font-semibold text-slate-900 dark:text-white">
-                RealMe AI
-              </span>{" "}
-              is a multilingual intelligence platform built to help people
-              communicate, create, and express themselves without friction. By
-              pairing real-time voice synthesis with adaptive chat
-              personalities, RealMe AI turns everyday conversation into
-              something more natural across language, tone, and context. Every
-              interaction is shaped around one principle: technology should
-              adapt to people, not the other way around.
+              {t("mission.description")}
             </p>
           </div>
         </motion.div>
@@ -115,16 +108,16 @@ export function About() {
       <section className="px-6 py-20 sm:px-10 lg:px-16 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-2">
           <TeamCard
-            quote="I believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to."
+            quote={t("team.member1.quote")}
             image="/agunwa.jpeg"
             name="Agunwa Chidiebele Calistus"
-            role="Founder & CEO at RealMe AI"
+            role={t("team.member1.role")}
           />
           <TeamCard
-            quote="Great products live at the intersection of design and engineering. RealMe AI is built right there, on purpose."
+            quote={t("team.member2.quote")}
             image="/daniel.jpeg"
             name="Ezechukwu Chukwudubem Daniel"
-            role="Co-Founder at RealMe AI"
+            role={t("team.member2.role")}
           />
         </div>
       </section>

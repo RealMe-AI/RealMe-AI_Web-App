@@ -656,6 +656,36 @@ const ha = {
     },
   },
 
+  about: {
+    hero: {
+      title_line1: "AI Mai Mayar da Hankali Kan Mutane",
+      title_line2: "Don yadda kake magana, tunani, da ƙirƙira",
+      subtitle:
+        "RealMe AI yana haɗa murya kai tsaye, tattaunawa mai daidaitawa, da fahimtar harsuna da yawa a cikin dandali guda da aka tsara domin ya ji kamar abokin taimako, ba kawai software ba.",
+    },
+
+    mission: {
+      heading_prefix: "Ba da Ƙarfi Ga",
+      heading_highlight: "Bayyana Kai",
+      description:
+        "RealMe AI dandali ne na AI mai tallafawa harsuna da yawa, wanda aka gina domin taimaka wa mutane su sadarwa, su ƙirƙira, kuma su bayyana kansu cikin sauƙi. Ta hanyar haɗa murya kai tsaye da tattaunawar AI mai daidaitawa, RealMe AI yana sa tattaunawar yau da kullum ta zama ta halitta a cikin harshe, salo, da yanayi. Ka'idarmu ita ce: fasaha ta dace da mutane, ba mutane su dace da fasaha ba.",
+    },
+
+    team: {
+      member1: {
+        quote:
+          "Na yi imani cewa fasaha mafi kyau ba wai tana amsawa kawai ba ce, tana fahimta. Wannan shi ne ma'aunin da muke amfani da shi wajen gina duk wani ɓangare na RealMe AI.",
+        role: "Wanda Ya Kafa Kuma Shugaba na RealMe AI",
+      },
+
+      member2: {
+        quote:
+          "Manyan kayayyaki suna rayuwa ne a inda ƙira da injiniya suka haɗu. A nan ne aka gina RealMe AI da gangan.",
+        role: "Wanda Ya Taimaka Wajen Kafa RealMe AI",
+      },
+    },
+  },
+
   shared: {
     not_found_title: "Ba a sami tattaunawar ba",
     error_title: "Wani abu ya tafi ba daidai ba",

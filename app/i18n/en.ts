@@ -188,7 +188,7 @@ const en = {
       logout: "Log out",
       logout_confirm_title: "Log Out?",
       logout_confirm_message:
-        'Are you sure you want to log out <styled>{name}</styled> ?',
+        "Are you sure you want to log out <styled>{name}</styled> ?",
     },
     search: {
       chats_placeholder: "Search chats...",
@@ -224,7 +224,8 @@ const en = {
       description: "Are you sure you want to delete this conversation?",
       cancel: "Cancel",
       confirm: "Delete",
-      default_message: 'This will permanently delete <styled>{title}</styled>. This action cannot be undone.',
+      default_message:
+        "This will permanently delete <styled>{title}</styled>. This action cannot be undone.",
     },
   },
 
@@ -594,8 +595,10 @@ const en = {
   report_form: {
     title_report_bug: "Report an Issue",
     title_suggest_feature: "Suggest a Feature",
-    subtitle_report_bug: "Found something broken? Tell us what happened and we'll fix it.",
-    subtitle_suggest_feature: "Have an idea that would make RealMe AI better? We'd love to hear it.",
+    subtitle_report_bug:
+      "Found something broken? Tell us what happened and we'll fix it.",
+    subtitle_suggest_feature:
+      "Have an idea that would make RealMe AI better? We'd love to hear it.",
     name_placeholder: "Your Name",
     email_placeholder: "Your Email",
     subject_placeholder: "Subject",
@@ -606,6 +609,35 @@ const en = {
       success_message: "Thank you! We'll get back to you soon.",
       error_title: "Failed to Send Message",
       error_message: "Please try again later.",
+    },
+  },
+
+  about: {
+    hero: {
+      title_line1: "Human centered AI",
+      title_line2: "for how you speak, think, and create",
+      subtitle:
+        "RealMe AI brings real-time voice, adaptive conversation, and multilingual understanding together in one platform designed to feel less like software, and more like you.",
+    },
+
+    mission: {
+      heading_prefix: "Empowering",
+      heading_highlight: "expression",
+      description:
+        "RealMe AI is a multilingual intelligence platform built to help people communicate, create, and express themselves without friction. By pairing real-time voice synthesis with adaptive chat personalities, RealMe AI turns everyday conversation into something more natural across language, tone, and context. Every interaction is shaped around one principle: technology should adapt to people, not the other way around.",
+    },
+
+    team: {
+      member1: {
+        quote:
+          "I believe the best technology doesn't just respond it understands. That's the standard we hold every part of RealMe AI to.",
+        role: "Founder & CEO at RealMe AI",
+      },
+      member2: {
+        quote:
+          "Great products live at the intersection of design and engineering. RealMe AI is built right there, on purpose.",
+        role: "Co-Founder at RealMe AI",
+      },
     },
   },
 
