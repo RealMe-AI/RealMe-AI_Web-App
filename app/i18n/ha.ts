@@ -123,6 +123,52 @@ const ha = {
       phone: "Waya",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Sake Saita Kalmar Sirri",
+      subtitle:
+        "Shigar da adireshin imel ɗinka, za mu aiko maka da lambar tabbatarwa.",
+      email_placeholder: "Adireshin imel...",
+      send_code_button: "Aika Lambar Tabbatarwa",
+    },
+
+    otp: {
+      title: "Tabbatar da Imel ɗinka",
+      subtitle: "Mun aika lambar lambobi 6 zuwa",
+      verify_button: "Tabbatar da Lambar",
+      expires_in: "Za ta ƙare cikin {timer}",
+      code_expired: "Lambar ta ƙare.",
+      resend_prompt: "Ba ka karɓi lambar ba?",
+      resend_code: "Sake Aika Lambar",
+      resend_in: "Za a sake aikawa cikin {timer}",
+      back: "Komawa",
+    },
+
+    reset_password: {
+      title: "Ƙirƙiri Sabuwar Kalmar Sirri",
+      subtitle:
+        "Sabuwar kalmar sirrinka dole ta bambanta da waɗanda ka yi amfani da su a baya.",
+      new_placeholder: "Shigar da sabuwar kalmar sirri",
+      confirm_placeholder: "Tabbatar da sabuwar kalmar sirri",
+      submit_button: "Sake Saita Kalmar Sirri",
+      match: "Kalmomin sirri sun yi daidai",
+      no_match: "Kalmomin sirri ba su yi daidai ba",
+
+      checks: {
+        length: "Haruffa 6+",
+        uppercase: "Babban harafi",
+        lowercase: "Ƙaramin harafi",
+        number: "Lamba",
+        special: "Alama ta musamman",
+      },
+
+      strength: {
+        weak: "Rauni",
+        fair: "Matsakaici",
+        good: "Mai Kyau",
+        strong: "Mai Ƙarfi",
+      },
+    },
   },
 
   error: {
@@ -177,6 +223,7 @@ const ha = {
 
   dashboard: {
     greeting: {
+      hi: "Sannu",
       fallback_name: "can",
       subtitle:
         "Ni RealMe ne, mataimakin AI naka. Ta yaya zan taimaka maka a yau?",
@@ -653,6 +700,36 @@ const ha = {
 
       error_title: "An Kasa Aika Saƙo",
       error_message: "Da fatan za a sake gwadawa daga baya.",
+    },
+  },
+
+  about: {
+    hero: {
+      title_line1: "AI Mai Mayar da Hankali Kan Mutane",
+      title_line2: "Don yadda kake magana, tunani, da ƙirƙira",
+      subtitle:
+        "RealMe AI yana haɗa murya kai tsaye, tattaunawa mai daidaitawa, da fahimtar harsuna da yawa a cikin dandali guda da aka tsara domin ya ji kamar abokin taimako, ba kawai software ba.",
+    },
+
+    mission: {
+      heading_prefix: "Ba da Ƙarfi Ga",
+      heading_highlight: "Bayyana Kai",
+      description:
+        "RealMe AI dandali ne na AI mai tallafawa harsuna da yawa, wanda aka gina domin taimaka wa mutane su sadarwa, su ƙirƙira, kuma su bayyana kansu cikin sauƙi. Ta hanyar haɗa murya kai tsaye da tattaunawar AI mai daidaitawa, RealMe AI yana sa tattaunawar yau da kullum ta zama ta halitta a cikin harshe, salo, da yanayi. Ka'idarmu ita ce: fasaha ta dace da mutane, ba mutane su dace da fasaha ba.",
+    },
+
+    team: {
+      member1: {
+        quote:
+          "Na yi imani cewa fasaha mafi kyau ba wai tana amsawa kawai ba ce, tana fahimta. Wannan shi ne ma'aunin da muke amfani da shi wajen gina duk wani ɓangare na RealMe AI.",
+        role: "Wanda Ya Kafa Kuma Shugaba na RealMe AI",
+      },
+
+      member2: {
+        quote:
+          "Manyan kayayyaki suna rayuwa ne a inda ƙira da injiniya suka haɗu. A nan ne aka gina RealMe AI da gangan.",
+        role: "Wanda Ya Taimaka Wajen Kafa RealMe AI",
+      },
     },
   },
 

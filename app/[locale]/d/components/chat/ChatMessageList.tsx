@@ -50,9 +50,8 @@ export function ChatMessageList({
                     className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
                   />
                   <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
-                    Hi,{" "}
-                    {user?.fullName?.split(" ")[0] ||
-                      t("dashboard.greeting.fallback_name")}
+                    {t("dashboard.greeting.hi")},{" "}
+                    {user?.fullName?.split(" ")[0]}
                   </h1>
                 </div>
                 <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">

@@ -123,6 +123,50 @@ const ig = {
       phone: "Ekwentị",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Tọgharịa Paswọọdụ",
+      subtitle: "Tinye adreesị email gị, anyị ga-ezigara gị koodu nkwenye.",
+      email_placeholder: "Adreesị email...",
+      send_code_button: "Zipu Koodu Nkwenye",
+    },
+
+    otp: {
+      title: "Kwado Email Gị",
+      subtitle: "Anyị ezigala koodu ọnụọgụ isii na",
+      verify_button: "Kwado Koodu",
+      expires_in: "Ga-agwụ n'ime {timer}",
+      code_expired: "Koodu ahụ agwụla.",
+      resend_prompt: "Ị nataghị koodu ahụ?",
+      resend_code: "Zipu Koodu Ọzọ",
+      resend_in: "Zipu ọzọ n'ime {timer}",
+      back: "Laghachi",
+    },
+
+    reset_password: {
+      title: "Mepụta Paswọọdụ Ọhụrụ",
+      subtitle: "Paswọọdụ ọhụrụ gị ga-adị iche na paswọọdụ ndị i jiri mbụ.",
+      new_placeholder: "Tinye paswọọdụ ọhụrụ",
+      confirm_placeholder: "Kwenye paswọọdụ ọhụrụ",
+      submit_button: "Tọgharịa Paswọọdụ",
+      match: "Paswọọdụ kwekọrọ",
+      no_match: "Paswọọdụ adịghị kwekọọ",
+
+      checks: {
+        length: "Mkpụrụedemede 6+",
+        uppercase: "Mkpụrụedemede ukwu",
+        lowercase: "Mkpụrụedemede nta",
+        number: "Nọmba",
+        special: "Akara pụrụ iche",
+      },
+
+      strength: {
+        weak: "Adịghị Ike",
+        fair: "Nkezi",
+        good: "Dị Mma",
+        strong: "Siri Ike",
+      },
+    },
   },
 
   error: {
@@ -176,6 +220,7 @@ const ig = {
 
   dashboard: {
     greeting: {
+      hi: "Ndewo",
       fallback_name: "ebe",
       subtitle:
         "Abụ m RealMe, onye enyemaka AI gị. Kedu ka m ga-esi nyere gị aka taa?",
@@ -652,6 +697,36 @@ const ig = {
 
       error_title: "Enweghị Ike Izipu Ozi",
       error_message: "Biko, gbalịa ọzọ ma emechaa.",
+    },
+  },
+
+  about: {
+    hero: {
+      title_line1: "AI Maka Ndị Mmadụ",
+      title_line2: "Maka otu i si ekwu, eche echiche, ma mepụta",
+      subtitle:
+        "RealMe AI na-ejikọta olu oge n'ezie, mkparịta ụka na-agbanwe dabere na ọnọdụ, na nghọta ọtụtụ asụsụ n'otu ikpo okwu e mere ka ọ dị ka onye na-enyere gị aka karịa naanị sọftụwia.",
+    },
+
+    mission: {
+      heading_prefix: "Na-enye Ike Maka",
+      heading_highlight: "Nkwupụta Onwe",
+      description:
+        "RealMe AI bụ ikpo okwu AI na-akwado ọtụtụ asụsụ e wuru iji nyere ndị mmadụ aka ikwurịta okwu, imepụta, na ikwupụta onwe ha n'enweghị ihe mgbochi. Site n'ijikọ mmepụta olu oge n'ezie na mkparịta ụka AI na-agbanwe dabere na onye ọrụ, RealMe AI na-eme ka mkparịta ụka kwa ụbọchị bụrụ nke eke n'asụsụ, ụda olu, na ọnọdụ dị iche iche. Ihe niile anyị na-eme dabere n'otu ụkpụrụ: teknụzụ kwesịrị ịgbanwe dabere na mmadụ, ọ bụghị mmadụ ịgbanwe maka teknụzụ.",
+    },
+
+    team: {
+      member1: {
+        quote:
+          "Ekwenyere m na teknụzụ kacha mma abụghị naanị nke na-aza, kama nke na-aghọta. Nke ahụ bụ ụkpụrụ anyị ji arụ akụkụ ọ bụla nke RealMe AI.",
+        role: "Onye Guzobere & Onye Isi Oche nke RealMe AI",
+      },
+
+      member2: {
+        quote:
+          "Ngwaahịa kacha mma na-apụta ebe imewe na injinia na-ezukọta. Ọ bụ ebe ahụ ka e jiri nlezianya wuo RealMe AI.",
+        role: "Onye Mmekọ Guzobere RealMe AI",
+      },
     },
   },
 

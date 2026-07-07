@@ -29,10 +29,10 @@ export function TeamCard({
         <Image
           src={image}
           alt={name}
-          width={50}
-          height={50}
+          width={80}
+          height={80}
           loading="lazy"
-          className="h-15 w-15 rounded-sm object-cover"
+          className="h-20 w-20 rounded-sm object-cover"
         />
         <div>
           <p className="text-sm font-semibold text-slate-900 dark:text-white">

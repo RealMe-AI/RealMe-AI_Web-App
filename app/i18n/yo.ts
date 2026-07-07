@@ -123,6 +123,51 @@ const yo = {
       phone: "Foonu",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Tún Ọ̀rọ̀ Aṣínà Ṣe",
+      subtitle: "Tẹ àdírẹ́sì ímeèlì rẹ, a ó fi kóòdù ìjẹ́rìí ránṣẹ́ sí ọ.",
+      email_placeholder: "Àdírẹ́sì ímeèlì...",
+      send_code_button: "Fi Kóòdù Ìjẹ́rìí Ránṣẹ́",
+    },
+
+    otp: {
+      title: "Jẹ́rìí Ímeèlì Rẹ",
+      subtitle: "A ti fi kóòdù onínọ́mbà mẹ́fà ránṣẹ́ sí",
+      verify_button: "Jẹ́rìí Kóòdù",
+      expires_in: "Yóò parí ní {timer}",
+      code_expired: "Kóòdù náà ti parí.",
+      resend_prompt: "Ṣé o kò gba kóòdù náà?",
+      resend_code: "Tun Fi Kóòdù Ránṣẹ́",
+      resend_in: "Tun fi ránṣẹ́ ní {timer}",
+      back: "Padà",
+    },
+
+    reset_password: {
+      title: "Ṣẹ̀dá Ọ̀rọ̀ Aṣínà Tuntun",
+      subtitle:
+        "Ọ̀rọ̀ aṣínà tuntun rẹ gbọdọ̀ yàtọ̀ sí àwọn ọ̀rọ̀ aṣínà tí o ti lò tẹ́lẹ̀.",
+      new_placeholder: "Tẹ ọ̀rọ̀ aṣínà tuntun",
+      confirm_placeholder: "Jẹ́rìí ọ̀rọ̀ aṣínà tuntun",
+      submit_button: "Tún Ọ̀rọ̀ Aṣínà Ṣe",
+      match: "Àwọn ọ̀rọ̀ aṣínà bá ara wọn mu",
+      no_match: "Àwọn ọ̀rọ̀ aṣínà kò bá ara wọn mu",
+
+      checks: {
+        length: "Àmì 6+",
+        uppercase: "Lẹ́tà ńlá",
+        lowercase: "Lẹ́tà kékeré",
+        number: "Nọ́mbà",
+        special: "Àmì pàtàkì",
+      },
+
+      strength: {
+        weak: "Aláìlera",
+        fair: "Déédé",
+        good: "Dára",
+        strong: "Lágbára",
+      },
+    },
   },
 
   error: {
@@ -176,6 +221,7 @@ const yo = {
 
   dashboard: {
     greeting: {
+      hi: "Báwo",
       fallback_name: "nibẹ",
       subtitle:
         "Emi ni RealMe, oluranlọwọ AI rẹ. Bawo ni mo ṣe le ran ọ lọwọ loni?",
@@ -652,6 +698,36 @@ const yo = {
 
       error_title: "Kò Ṣeé Fi Ìfiránṣẹ́ Ránṣẹ́",
       error_message: "Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansi nígbà míì.",
+    },
+  },
+
+  about: {
+    hero: {
+      title_line1: "AI Tó Dojúkọ Ènìyàn",
+      title_line2: "Fún bí o ṣe ń sọ̀rọ̀, ronú, tí o sì ń ṣẹ̀dá",
+      subtitle:
+        "RealMe AI ń darapọ̀ ohùn ní àkókò gidi, ìjíròrò tó lè bá ọ mu, àti ìmọ̀ ọ̀pọ̀ èdè sínú pẹpẹ kan tí a ṣe láti ní ìmọ̀lára bí olùrànlọ́wọ́ gidi, kì í ṣe sọfitiwia lasan.",
+    },
+
+    mission: {
+      heading_prefix: "Fífún",
+      heading_highlight: "Ìfihàn Ara Ẹni",
+      description:
+        "RealMe AI jẹ́ pẹpẹ AI tó ń ṣe atilẹyin fún ọ̀pọ̀ èdè, tí a kọ láti ràn àwọn ènìyàn lọ́wọ́ láti bá ara wọn sọ̀rọ̀, ṣẹ̀dá, àti fi ara wọn hàn láìsí ìdènà. Nípa dídarapọ̀ ohùn ní àkókò gidi pẹ̀lú àwọn ìjíròrò AI tó lè bá olùlò mu, RealMe AI ń jẹ́ kí ìjíròrò ojoojúmọ́ dà bí ohun àdánidá nípa èdè, ìró ohùn, àti àyíká. Ìlànà wa ni pé: imọ̀ ẹ̀rọ gbọ́dọ̀ bá ènìyàn mu, kì í ṣe kí ènìyàn bá imọ̀ ẹ̀rọ mu.",
+    },
+
+    team: {
+      member1: {
+        quote:
+          "Mo gbà pé imọ̀ ẹ̀rọ tó dára jù lọ kì í ṣe pé ó kan dáhùn nìkan, ó tún ń lóye. Ìyẹn ni ìpele tí a fi ń kọ gbogbo apá RealMe AI.",
+        role: "Olùdásílẹ̀ àti CEO ti RealMe AI",
+      },
+
+      member2: {
+        quote:
+          "Àwọn ọja tó dára jù lọ máa ń wà ní ibi tí ìṣètò àti ẹ̀rọ pàdé. Níbẹ̀ gan-an ni a fi ìfẹ́ kọ RealMe AI.",
+        role: "Alájọṣepọ̀ Olùdásílẹ̀ RealMe AI",
+      },
     },
   },
 
