@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Lock, Eye, EyeOff, CheckCircle, ShieldCheck } from "lucide-react";
 import SpinnerIcon from "../icons/SpinnerIcon";
@@ -20,6 +21,8 @@ export default function NewPasswordForm({
   checks,
   onSubmit,
 }: NewPasswordFormProps) {
+  const t = useTranslations("auth.reset_password");
+
   const getStrengthColor = () => {
     if (strengthScore <= 2) return "bg-red-500";
     if (strengthScore <= 3) return "bg-yellow-500";
@@ -28,10 +31,10 @@ export default function NewPasswordForm({
   };
 
   const getStrengthLabel = () => {
-    if (strengthScore <= 2) return "Weak";
-    if (strengthScore <= 3) return "Fair";
-    if (strengthScore <= 4) return "Good";
-    return "Strong";
+    if (strengthScore <= 2) return t("strength.weak");
+    if (strengthScore <= 3) return t("strength.fair");
+    if (strengthScore <= 4) return t("strength.good");
+    return t("strength.strong");
   };
 
   return (
@@ -54,10 +57,10 @@ export default function NewPasswordForm({
           <ShieldCheck className="w-8 h-8 text-white" />
         </motion.div>
         <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
-          Create New Password
+          {t("title")}
         </h2>
         <p className="text-slate-400 text-sm">
-          Your new password must be different from previous passwords
+          {t("subtitle")}
         </p>
       </div>
 
@@ -74,7 +77,7 @@ export default function NewPasswordForm({
             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Enter new password"
+              placeholder={t("new_placeholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-12 pr-12 py-4 rounded-xl text-slate-600 bg-white dark:text-white dark:bg-slate-800 
@@ -129,13 +132,7 @@ export default function NewPasswordForm({
 
             {/* Requirements Checklist */}
             <div className="grid grid-cols-2 gap-2 text-xs">
-              {[
-                { key: "length", label: "6+ characters" },
-                { key: "uppercase", label: "Uppercase letter" },
-                { key: "lowercase", label: "Lowercase letter" },
-                { key: "number", label: "Number" },
-                { key: "special", label: "Special character" },
-              ].map(({ key, label }) => (
+              {(["length", "uppercase", "lowercase", "number", "special"] as const).map((key) => (
                 <motion.div
                   key={key}
                   initial={{ opacity: 0, x: -10 }}
@@ -153,7 +150,7 @@ export default function NewPasswordForm({
                         : "opacity-40"
                     }`}
                   />
-                  {label}
+                  {t(`checks.${key}`)}
                 </motion.div>
               ))}
             </div>
@@ -169,7 +166,7 @@ export default function NewPasswordForm({
             />
             <input
               type={showConfirmPassword ? "text" : "password"}
-              placeholder="Confirm new password"
+              placeholder={t("confirm_placeholder")}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={`w-full pl-12 pr-12 py-4 rounded-xl text-slate-600 bg-white dark:text-white dark:bg-slate-800 
@@ -215,8 +212,8 @@ export default function NewPasswordForm({
                 }`}
               />
               {password === confirmPassword
-                ? "Passwords match"
-                : "Passwords do not match"}
+                ? t("match")
+                : t("no_match")}
             </motion.p>
           )}
         </div>
@@ -266,7 +263,7 @@ export default function NewPasswordForm({
             ) : (
               <>
                 <ShieldCheck className="w-5 h-5" />
-                Reset Password
+                {t("submit_button")}
               </>
             )}
           </span>

@@ -123,6 +123,50 @@ const ig = {
       phone: "Ekwentị",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Tọgharịa Paswọọdụ",
+      subtitle: "Tinye adreesị email gị, anyị ga-ezigara gị koodu nkwenye.",
+      email_placeholder: "Adreesị email...",
+      send_code_button: "Zipu Koodu Nkwenye",
+    },
+
+    otp: {
+      title: "Kwado Email Gị",
+      subtitle: "Anyị ezigala koodu ọnụọgụ isii na",
+      verify_button: "Kwado Koodu",
+      expires_in: "Ga-agwụ n'ime {timer}",
+      code_expired: "Koodu ahụ agwụla.",
+      resend_prompt: "Ị nataghị koodu ahụ?",
+      resend_code: "Zipu Koodu Ọzọ",
+      resend_in: "Zipu ọzọ n'ime {timer}",
+      back: "Laghachi",
+    },
+
+    reset_password: {
+      title: "Mepụta Paswọọdụ Ọhụrụ",
+      subtitle: "Paswọọdụ ọhụrụ gị ga-adị iche na paswọọdụ ndị i jiri mbụ.",
+      new_placeholder: "Tinye paswọọdụ ọhụrụ",
+      confirm_placeholder: "Kwenye paswọọdụ ọhụrụ",
+      submit_button: "Tọgharịa Paswọọdụ",
+      match: "Paswọọdụ kwekọrọ",
+      no_match: "Paswọọdụ adịghị kwekọọ",
+
+      checks: {
+        length: "Mkpụrụedemede 6+",
+        uppercase: "Mkpụrụedemede ukwu",
+        lowercase: "Mkpụrụedemede nta",
+        number: "Nọmba",
+        special: "Akara pụrụ iche",
+      },
+
+      strength: {
+        weak: "Adịghị Ike",
+        fair: "Nkezi",
+        good: "Dị Mma",
+        strong: "Siri Ike",
+      },
+    },
   },
 
   error: {

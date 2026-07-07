@@ -123,6 +123,50 @@ const en = {
       phone: "Phone",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Reset Password",
+      subtitle:
+        "Enter your email address and we'll send you a verification code",
+      email_placeholder: "Email address...",
+      send_code_button: "Send Verification Code",
+    },
+
+    otp: {
+      title: "Verify Your Email",
+      subtitle: "We've sent a 6-digit code to",
+      verify_button: "Verify Code",
+      expires_in: "Expires in {timer}",
+      code_expired: "Code expired.",
+      resend_prompt: "Didn't receive the code?",
+      resend_code: "Resend Code",
+      resend_in: "Resend in {timer}",
+      back: "Back",
+    },
+
+    reset_password: {
+      title: "Create New Password",
+      subtitle:
+        "Your new password must be different from previous passwords",
+      new_placeholder: "Enter new password",
+      confirm_placeholder: "Confirm new password",
+      submit_button: "Reset Password",
+      match: "Passwords match",
+      no_match: "Passwords do not match",
+      checks: {
+        length: "6+ characters",
+        uppercase: "Uppercase letter",
+        lowercase: "Lowercase letter",
+        number: "Number",
+        special: "Special character",
+      },
+      strength: {
+        weak: "Weak",
+        fair: "Fair",
+        good: "Good",
+        strong: "Strong",
+      },
+    },
   },
 
   error: {

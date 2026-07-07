@@ -1,7 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowLeft, RefreshCw, ShieldCheck } from "lucide-react";
+import { RefObject } from "react";
 import SpinnerIcon from "../icons/SpinnerIcon";
 import { OTPVerificationProps } from "@/app/interface/otpVerification";
 
@@ -24,6 +26,7 @@ export default function OTPVerification({
   onResend,
   onBack,
 }: OTPVerificationProps) {
+  const t = useTranslations("auth.otp");
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -44,10 +47,10 @@ export default function OTPVerification({
           <ShieldCheck className="w-8 h-8 text-white" />
         </motion.div>
         <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
-          Verify Your Email
+          {t("title")}
         </h2>
         <p className="text-slate-400 text-sm">
-          We&apos;ve sent a 6-digit code to
+          {t("subtitle")}
           {email && (
             <span className="block text-indigo-400 font-medium mt-1">
               {email}
@@ -131,7 +134,7 @@ export default function OTPVerification({
             ) : (
               <>
                 <CheckCircle2 className="w-5 h-5" />
-                Verify Code
+                {t("verify_button")}
               </>
             )}
           </span>
@@ -143,11 +146,11 @@ export default function OTPVerification({
             <p
               className={`text-sm font-light text-slate-600 dark:text-white ${timerTextClass}`}
             >
-              Expires in <span className="font-semibold">{resendTimer}</span>
+              {t("expires_in", { timer: resendTimer })}
             </p>
           ) : expired ? (
             <p className="text-red-500 dark:text-red-400 text-sm font-light">
-              Code expired.
+              {t("code_expired")}
             </p>
           ) : null}
         </div>
@@ -156,7 +159,7 @@ export default function OTPVerification({
         {canResend && (
           <div className="text-center">
             <p className="text-slate-400 text-sm mb-2">
-              Didn&apos;t receive the code?
+              {t("resend_prompt")}
             </p>
             <motion.button
               onClick={onResend}
@@ -172,7 +175,7 @@ export default function OTPVerification({
               <RefreshCw
                 className={`w-4 h-4 ${resendLoading || !canResend ? "animate-spin" : ""}`}
               />
-              {canResend ? "Resend Code" : `Resend in ${resendTimer}`}
+              {canResend ? t("resend_code") : t("resend_in", { timer: resendTimer })}
             </motion.button>
           </div>
         )}
@@ -186,7 +189,7 @@ export default function OTPVerification({
                        text-sm font-medium transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back
+          {t("back")}
         </motion.button>
       </div>
     </motion.div>

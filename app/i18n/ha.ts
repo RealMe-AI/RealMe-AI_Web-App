@@ -123,6 +123,52 @@ const ha = {
       phone: "Waya",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Sake Saita Kalmar Sirri",
+      subtitle:
+        "Shigar da adireshin imel ɗinka, za mu aiko maka da lambar tabbatarwa.",
+      email_placeholder: "Adireshin imel...",
+      send_code_button: "Aika Lambar Tabbatarwa",
+    },
+
+    otp: {
+      title: "Tabbatar da Imel ɗinka",
+      subtitle: "Mun aika lambar lambobi 6 zuwa",
+      verify_button: "Tabbatar da Lambar",
+      expires_in: "Za ta ƙare cikin {timer}",
+      code_expired: "Lambar ta ƙare.",
+      resend_prompt: "Ba ka karɓi lambar ba?",
+      resend_code: "Sake Aika Lambar",
+      resend_in: "Za a sake aikawa cikin {timer}",
+      back: "Komawa",
+    },
+
+    reset_password: {
+      title: "Ƙirƙiri Sabuwar Kalmar Sirri",
+      subtitle:
+        "Sabuwar kalmar sirrinka dole ta bambanta da waɗanda ka yi amfani da su a baya.",
+      new_placeholder: "Shigar da sabuwar kalmar sirri",
+      confirm_placeholder: "Tabbatar da sabuwar kalmar sirri",
+      submit_button: "Sake Saita Kalmar Sirri",
+      match: "Kalmomin sirri sun yi daidai",
+      no_match: "Kalmomin sirri ba su yi daidai ba",
+
+      checks: {
+        length: "Haruffa 6+",
+        uppercase: "Babban harafi",
+        lowercase: "Ƙaramin harafi",
+        number: "Lamba",
+        special: "Alama ta musamman",
+      },
+
+      strength: {
+        weak: "Rauni",
+        fair: "Matsakaici",
+        good: "Mai Kyau",
+        strong: "Mai Ƙarfi",
+      },
+    },
   },
 
   error: {

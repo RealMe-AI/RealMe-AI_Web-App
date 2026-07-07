@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Mail, Send } from "lucide-react";
 import SpinnerIcon from "../icons/SpinnerIcon";
@@ -20,6 +21,7 @@ export default function ForgotPasswordEmail({
   loading,
   onSendCode,
 }: ForgotPasswordEmailProps) {
+  const t = useTranslations("auth.forgot_password");
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,10 +42,10 @@ export default function ForgotPasswordEmail({
           <Mail className="w-8 h-8 text-white" />
         </motion.div>
         <h2 className="text-2xl font-bold text-slate-600 dark:text-white mb-2">
-          Reset Password
+          {t("title")}
         </h2>
         <p className="text-slate-400 text-sm">
-          Enter your email address and we&apos;ll send you a verification code
+          {t("subtitle")}
         </p>
       </div>
 
@@ -60,7 +62,7 @@ export default function ForgotPasswordEmail({
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type="email"
-              placeholder="Email address..."
+              placeholder={t("email_placeholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-lg text-black dark:text-white bg-white dark:bg-transparent
@@ -111,7 +113,7 @@ export default function ForgotPasswordEmail({
             ) : (
               <>
                 <Send className="w-5 h-5" />
-                Send Verification Code
+                {t("send_code_button")}
               </>
             )}
           </span>

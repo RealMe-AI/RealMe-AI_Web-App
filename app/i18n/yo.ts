@@ -123,6 +123,51 @@ const yo = {
       phone: "Foonu",
       google: "Google",
     },
+
+    forgot_password: {
+      title: "Tún Ọ̀rọ̀ Aṣínà Ṣe",
+      subtitle: "Tẹ àdírẹ́sì ímeèlì rẹ, a ó fi kóòdù ìjẹ́rìí ránṣẹ́ sí ọ.",
+      email_placeholder: "Àdírẹ́sì ímeèlì...",
+      send_code_button: "Fi Kóòdù Ìjẹ́rìí Ránṣẹ́",
+    },
+
+    otp: {
+      title: "Jẹ́rìí Ímeèlì Rẹ",
+      subtitle: "A ti fi kóòdù onínọ́mbà mẹ́fà ránṣẹ́ sí",
+      verify_button: "Jẹ́rìí Kóòdù",
+      expires_in: "Yóò parí ní {timer}",
+      code_expired: "Kóòdù náà ti parí.",
+      resend_prompt: "Ṣé o kò gba kóòdù náà?",
+      resend_code: "Tun Fi Kóòdù Ránṣẹ́",
+      resend_in: "Tun fi ránṣẹ́ ní {timer}",
+      back: "Padà",
+    },
+
+    reset_password: {
+      title: "Ṣẹ̀dá Ọ̀rọ̀ Aṣínà Tuntun",
+      subtitle:
+        "Ọ̀rọ̀ aṣínà tuntun rẹ gbọdọ̀ yàtọ̀ sí àwọn ọ̀rọ̀ aṣínà tí o ti lò tẹ́lẹ̀.",
+      new_placeholder: "Tẹ ọ̀rọ̀ aṣínà tuntun",
+      confirm_placeholder: "Jẹ́rìí ọ̀rọ̀ aṣínà tuntun",
+      submit_button: "Tún Ọ̀rọ̀ Aṣínà Ṣe",
+      match: "Àwọn ọ̀rọ̀ aṣínà bá ara wọn mu",
+      no_match: "Àwọn ọ̀rọ̀ aṣínà kò bá ara wọn mu",
+
+      checks: {
+        length: "Àmì 6+",
+        uppercase: "Lẹ́tà ńlá",
+        lowercase: "Lẹ́tà kékeré",
+        number: "Nọ́mbà",
+        special: "Àmì pàtàkì",
+      },
+
+      strength: {
+        weak: "Aláìlera",
+        fair: "Déédé",
+        good: "Dára",
+        strong: "Lágbára",
+      },
+    },
   },
 
   error: {
