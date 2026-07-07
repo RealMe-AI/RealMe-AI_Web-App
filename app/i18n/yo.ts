@@ -221,6 +221,7 @@ const yo = {
 
   dashboard: {
     greeting: {
+      hi: "Báwo",
       fallback_name: "nibẹ",
       subtitle:
         "Emi ni RealMe, oluranlọwọ AI rẹ. Bawo ni mo ṣe le ran ọ lọwọ loni?",

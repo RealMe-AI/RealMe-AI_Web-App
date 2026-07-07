@@ -223,6 +223,7 @@ const ha = {
 
   dashboard: {
     greeting: {
+      hi: "Sannu",
       fallback_name: "can",
       subtitle:
         "Ni RealMe ne, mataimakin AI naka. Ta yaya zan taimaka maka a yau?",

@@ -220,6 +220,7 @@ const ig = {
 
   dashboard: {
     greeting: {
+      hi: "Ndewo",
       fallback_name: "ebe",
       subtitle:
         "Abụ m RealMe, onye enyemaka AI gị. Kedu ka m ga-esi nyere gị aka taa?",

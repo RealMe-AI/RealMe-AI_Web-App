@@ -220,6 +220,7 @@ const en = {
 
   dashboard: {
     greeting: {
+      hi: "Hi",
       fallback_name: "there",
       subtitle: "I'm RealMe, your AI assistant. How can I help you today?",
     },
