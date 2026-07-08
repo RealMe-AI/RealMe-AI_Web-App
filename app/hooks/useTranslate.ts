@@ -15,7 +15,7 @@ interface UseTranslateReturn {
 export function useTranslate(): UseTranslateReturn {
   const { language, setLanguage } = useLanguageStore();
 
-  // Detect browser language on first loa
+  // Detect browser language on first lo
   useEffect(() => {
     if (language === "en" && !localStorage.getItem("lang")) {
       const browserLang = (navigator.language.slice(0, 2) as Language) ?? "en";
