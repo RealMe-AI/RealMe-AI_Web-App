@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
+import { useStopMessageStream } from "@/app/hooks/messages/useStopMessageStream";
 import { useAttachmentUpload } from "@/app/hooks/attachments/useAttachmentUpload";
 import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete";
 import { useVoiceInput } from "@/app/hooks/useVoiceInput";
@@ -34,6 +35,7 @@ export default function ChatWindow() {
     triggerInputFocus,
   } = useChatStore();
   const { sendMessage, isOnline } = useMessageStream();
+  const { stopStream } = useStopMessageStream();
   const { uploadFile, uploadingFiles } = useAttachmentUpload();
   const { deleteAttachment } = useAttachmentDelete();
 
@@ -83,7 +85,7 @@ export default function ChatWindow() {
   };
 
   const handleAbort = () => {
-    useChatStore.getState().abortMessage();
+    stopStream();
   };
 
   const handleSend = async () => {
