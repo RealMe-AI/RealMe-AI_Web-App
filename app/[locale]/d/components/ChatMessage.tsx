@@ -307,7 +307,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                           onClick={() => setIsExpanded(true)}
                           className="mt-1 flex items-center gap-1 font-semibold text-sm text-black dark:text-white"
                         >
-                          Show more
+                          {t("chat.show_more")}
                           <ChevronDown size={18} />
                         </button>
                       )}
@@ -316,7 +316,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                           onClick={() => setIsExpanded(false)}
                           className="mt-1 flex items-center gap-1 font-semibold text-sm text-black dark:text-white"
                         >
-                          Show less
+                          {t("chat.show_less")}
                           <ChevronDown size={18} className="rotate-180" />
                         </button>
                       )}
