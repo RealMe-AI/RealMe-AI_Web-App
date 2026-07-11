@@ -102,7 +102,15 @@ export const useMessageStream = () => {
 
         // Parse SSE stream with typewriter pacing
         const reader = res.body.getReader();
-        await parseSSEStream(reader, (chunk) => typewriter.push(chunk));
+        await parseSSEStream(
+          reader,
+          (chunk) => typewriter.push(chunk),
+          (meta) => {
+            if (meta.type === "message_created" && meta.userMessageId) {
+              updateMessage(userMsg.id, { id: meta.userMessageId as string });
+            }
+          },
+        );
         typewriter.flush();
         typewriter.stop();
 

@@ -1,6 +1,7 @@
 export async function parseSSEStream(
   reader: ReadableStreamDefaultReader<Uint8Array>,
   onChunk: (chunk: string) => void,
+  onMeta?: (meta: Record<string, unknown>) => void,
 ): Promise<void> {
   const decoder = new TextDecoder();
   let buffer = "";
@@ -28,6 +29,8 @@ export async function parseSSEStream(
           parsed.content || parsed.text || parsed.delta?.content || "";
         if (chunk) {
           onChunk(chunk);
+        } else if (parsed.type) {
+          onMeta?.(parsed);
         }
       } catch {
         onChunk(data);
