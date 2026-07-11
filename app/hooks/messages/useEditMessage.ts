@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
+import { parseSSEStream } from "@/app/lib/parseSSEStream";
+import { useTypewriter } from "./useTypewriter";
 import { Message } from "@/app/interface/type";
 
 function now() {
@@ -19,6 +21,7 @@ export const useEditMessage = () => {
     setIsLoading,
     setAbortController,
   } = useChatStore();
+  const typewriter = useTypewriter((text) => updateMessage("ai-temp", { text }));
 
   const editMessage = useCallback(
     async (messageId: string, newContent: string) => {
@@ -64,66 +67,37 @@ export const useEditMessage = () => {
         const res = await authFetch(`${baseUrl}/messages/${messageId}/stream`, {
           method: "PATCH",
           body: JSON.stringify({ content: newContent }),
+          signal: controller.signal,
         });
 
         if (!res.ok) throw new Error(`Failed to edit message: ${res.status}`);
         if (!res.body) throw new Error("No response body received");
 
-        // Parse SSE stream
+        // Parse SSE stream with typewriter pacing
         const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let aiText = "";
-        let buffer = "";
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || !trimmed.startsWith("data: ")) continue;
-
-            const data = trimmed.slice(6);
-
-            if (data === "[DONE]") break;
-
-            try {
-              const parsed = JSON.parse(data);
-              const chunk =
-                parsed.content || parsed.text || parsed.delta?.content || "";
-              if (chunk) {
-                aiText += chunk;
-                updateMessage(tempId, { text: aiText });
-              }
-            } catch {
-              aiText += data;
-              updateMessage(tempId, { text: aiText });
-            }
-          }
-        }
+        await parseSSEStream(reader, (chunk) => typewriter.push(chunk));
+        typewriter.flush();
+        typewriter.stop();
 
         // Finalize AI message with real ID
         updateMessage(tempId, {
           id: (Date.now() + 1).toString(),
-          text: aiText,
+          text: typewriter.getShown(),
         });
         setIsLoading(false);
       } catch (err: unknown) {
+        typewriter.stop();
         if (err instanceof Error && err.name === "AbortError") {
           return;
         }
 
         setIsLoading(false);
       } finally {
+        typewriter.stop();
         setAbortController(null);
       }
     },
-    [messages, setMessages, updateMessage, setIsLoading, setAbortController],
+    [messages, setMessages, updateMessage, setIsLoading, setAbortController, typewriter],
   );
 
   return { editMessage };

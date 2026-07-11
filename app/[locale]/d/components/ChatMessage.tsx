@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ChatMessageProps, Attachment } from "@/app/interface/type";
 import { cn } from "@/app/lib/utils";
-import { FileIcon, Mic, FileText } from "lucide-react";
+import { FileIcon, Mic, FileText, ChevronDown } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
@@ -19,6 +19,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   const [editText, setEditText] = useState(message.text || "");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { editMessage } = useEditMessage();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [overflows, setOverflows] = useState(false);
+  const textRef = useRef<HTMLDivElement>(null);
 
   // AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -88,6 +91,14 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     e.target.style.height = "auto";
     e.target.style.height = e.target.scrollHeight + "px";
   };
+
+  // Overflow detection for "Show more"
+  useEffect(() => {
+    const el = textRef.current;
+    if (el) {
+      setOverflows(el.scrollHeight > el.clientHeight);
+    }
+  }, [message.text]);
 
   // FILE / ATTACHMENT RENDERER
   const formatFileSize = (bytes: number) => {
@@ -282,9 +293,34 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                       </div>
                     </div>
                   ) : isUser ? (
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200">
-                      {message.text}
-                    </p>
+                    <div>
+                      <div
+                        ref={textRef}
+                        className={cn(!isExpanded && "max-h-[300px] overflow-hidden")}
+                      >
+                        <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200">
+                          {message.text}
+                        </p>
+                      </div>
+                      {overflows && !isExpanded && (
+                        <button
+                          onClick={() => setIsExpanded(true)}
+                          className="mt-1 flex items-center gap-1 font-semibold text-sm text-black dark:text-white"
+                        >
+                          {t("chat.show_more")}
+                          <ChevronDown size={18} />
+                        </button>
+                      )}
+                      {overflows && isExpanded && (
+                        <button
+                          onClick={() => setIsExpanded(false)}
+                          className="mt-1 flex items-center gap-1 font-semibold text-sm text-black dark:text-white"
+                        >
+                          {t("chat.show_less")}
+                          <ChevronDown size={18} className="rotate-180" />
+                        </button>
+                      )}
+                    </div>
                   ) : (
                     <div className="text-sm leading-relaxed text-slate-800 dark:text-slate-200">
                       {parseMarkdown(message.text)}

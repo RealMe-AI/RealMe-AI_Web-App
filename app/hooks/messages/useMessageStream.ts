@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
+import { parseSSEStream } from "@/app/lib/parseSSEStream";
+import { useTypewriter } from "./useTypewriter";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";
 import { useNetworkStatus } from "@/app/hooks/useNetworkStatus";
@@ -30,6 +32,7 @@ export const useMessageStream = () => {
   const { updateConversation } = useUpdateConversation();
   const { isOnline } = useNetworkStatus();
   const t = useTranslations();
+  const typewriter = useTypewriter((text) => updateMessage("ai-temp", { text }));
 
   const sendMessage = useCallback(
     async (content: string, attachmentIds?: string[], attachments?: Attachment[]) => {
@@ -81,21 +84,15 @@ export const useMessageStream = () => {
         const res = await authFetch(`${baseUrl}/messages/stream`, {
           method: "POST",
           body: JSON.stringify(body),
+          signal: controller.signal,
         });
 
         if (!res.ok) throw new Error(`Failed to send message: ${res.status}`);
         if (!res.body) throw new Error("No response body received");
 
-        // Parse SSE stream
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let aiText = "";
-        let buffer = "";
-
         // Create temp AI message
-        const tempId = "ai-temp";
         const tempMsg: Message = {
-          id: tempId,
+          id: "ai-temp",
           sender: "ai",
           type: "text",
           text: "",
@@ -103,45 +100,24 @@ export const useMessageStream = () => {
         };
         addMessage(tempMsg);
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-
-          // Process SSE lines
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || !trimmed.startsWith("data: ")) continue;
-
-            const data = trimmed.slice(6);
-
-            // Handle end-of-stream sentinel
-            if (data === "[DONE]") break;
-
-            try {
-              const parsed = JSON.parse(data);
-              const chunk =
-                parsed.content || parsed.text || parsed.delta?.content || "";
-              if (chunk) {
-                aiText += chunk;
-                updateMessage(tempId, { text: aiText });
-              }
-            } catch {
-              // Plain text chunk, not JSON
-              aiText += data;
-              updateMessage(tempId, { text: aiText });
+        // Parse SSE stream with typewriter pacing
+        const reader = res.body.getReader();
+        await parseSSEStream(
+          reader,
+          (chunk) => typewriter.push(chunk),
+          (meta) => {
+            if (meta.type === "message_created" && meta.userMessageId) {
+              updateMessage(userMsg.id, { id: meta.userMessageId as string });
             }
-          }
-        }
+          },
+        );
+        typewriter.flush();
+        typewriter.stop();
 
         // Finalize AI message with real ID
-        updateMessage(tempId, {
+        updateMessage("ai-temp", {
           id: (Date.now() + 1).toString(),
-          text: aiText,
+          text: typewriter.getShown(),
         });
         setIsLoading(false);
 
@@ -154,6 +130,7 @@ export const useMessageStream = () => {
           triggerChatsRefresh();
         }
       } catch (err: unknown) {
+        typewriter.stop();
         if (err instanceof Error && err.name === "AbortError") {
           return;
         }
@@ -167,6 +144,7 @@ export const useMessageStream = () => {
         });
         setIsLoading(false);
       } finally {
+        typewriter.stop();
         setAbortController(null);
       }
     },
@@ -182,6 +160,7 @@ export const useMessageStream = () => {
       updateConversation,
       isOnline,
       t,
+      typewriter,
     ],
   );
 
