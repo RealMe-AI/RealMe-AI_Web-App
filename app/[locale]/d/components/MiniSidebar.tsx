@@ -29,6 +29,7 @@ import useLogout from "@/app/hooks/auth/useLogout";
 import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 import AccountInfoModal from "../../account/AccountInfoModal";
 import { useTranslations } from "next-intl";
+import Tooltip from "../../components/ui/Tooltip";
 
 const LANG_OPTIONS = [
   { label: "English", shortLabel: "EN", value: "en" },
@@ -109,23 +110,32 @@ export default function MiniSidebar() {
         "
       >
         {/* Logo */}
-        <button
-          onClick={handleLogoClick}
-          className="
-            p-2 rounded-lg
-            transition transform hover:scale-105
-          "
+        <Tooltip
+          className="bottom-1/2 -translate-x-1/1"
+          content={"Open sidebar"}
         >
-          <Image
-            src="/logo.png"
-            alt="RealMe AI"
-            width={32}
-            height={32}
-            className="rounded-full border border-gray-300 dark:border-white/20"
-          />
-        </button>
+          <button
+            onClick={handleLogoClick}
+            className="
+          p-2 rounded-lg
+          transition transform hover:scale-105
+          "
+          >
+            <Image
+              src="/logo.png"
+              alt="RealMe AI"
+              width={32}
+              height={32}
+              className="rounded-full border border-gray-300 dark:border-white/20"
+            />
+          </button>
+        </Tooltip>
 
         {/* New Chat */}
+        <Tooltip
+          className="bottom-1/2 -translate-x-1/1"
+          content={"New chat"}
+        >
         <button
           onClick={handleNewChat}
           className="
@@ -137,8 +147,13 @@ export default function MiniSidebar() {
         >
           <SquarePen size={18} />
         </button>
+        </Tooltip>
 
         {/* Search */}
+        <Tooltip
+          className="bottom-1/2 -translate-x-1/1"
+          content={"Search"}
+        >
         <button
           onClick={handleSearchClick}
           className="
@@ -150,11 +165,16 @@ export default function MiniSidebar() {
         >
           <Search size={18} />
         </button>
+        </Tooltip>
 
         {/* Spacer */}
         <div className="flex-1" />
 
         {/* Language Dropup */}
+        <Tooltip
+          className="bottom-1/2 -translate-x-1/1"
+          content={"Language"}
+        >
         <div className="mb-2">
           <Listbox value={currentLocale} onChange={handleLanguageChange}>
             <div className="relative">
@@ -213,8 +233,13 @@ export default function MiniSidebar() {
             </div>
           </Listbox>
         </div>
+        </Tooltip>
 
         {/* Avatar */}
+        <Tooltip
+          className="bottom-1/2 -translate-x-1/1"
+          content={"Profile"}
+        >
         <button
           onClick={() => (isProfileOpen ? closeAll() : openProfile())}
           className="p-1 transition transform hover:scale-105"
@@ -230,6 +255,7 @@ export default function MiniSidebar() {
             className="w-9 h-9 rounded-full object-cover"
           />
         </button>
+        </Tooltip>
       </aside>
 
       {/* Profile Popover */}
@@ -313,7 +339,9 @@ export default function MiniSidebar() {
         onConfirm={handleLogout}
         title={t("dashboard.sidebar.logout_confirm_title")}
         message={tRich.rich("dashboard.sidebar.logout_confirm_message", {
-          name: user?.fullName?.split(" ")[0] || t("dashboard.greeting.fallback_name"),
+          name:
+            user?.fullName?.split(" ")[0] ||
+            t("dashboard.greeting.fallback_name"),
           styled: (chunks) => (
             <span className="font-semibold text-slate-800 dark:text-slate-200">
               {chunks}
