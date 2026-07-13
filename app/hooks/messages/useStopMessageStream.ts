@@ -13,7 +13,6 @@ export const useStopMessageStream = () => {
       try {
         await authFetch(`${baseUrl}/messages/stream/stop`, {
           method: "POST",
-          body: JSON.stringify({ conversationId: activeConversationId }),
         });
       } catch {
         // Server-side stop is best-effort; client-side abort still works
