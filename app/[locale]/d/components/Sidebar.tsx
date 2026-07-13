@@ -16,6 +16,7 @@ import SidebarItem from "./SidebarItem";
 import LazyLoading from "../../components/ui/LazyLoading";
 import useModalStore from "../../../store/modalStore";
 import { useSidebarStore } from "@/app/store/useSidebarStore";
+import { BodySkeleton } from "../../components/ui/accountInfoLoader/Skeleton";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -225,21 +226,23 @@ export default function Sidebar({
 
             {/* Chat List */}
             <div className="flex-1 overflow-y-auto space-y-3 caret-transparent">
-              {chats.length
-                ? sortPinnedFirst(chats).map((chat) => (
-                    <SidebarItem
-                      key={chat.id}
-                      chat={chat}
-                      isActive={activeConversationId === chat.id}
-                      onClick={() => handleSelectChat(chat)}
-                      onShareChat={onShareChat}
-                    />
-                  ))
-                : !isLoading && (
-                    <p className="text-sm text-slate-500 italic text-center caret-transparent">
-                      {t("dashboard.search.no_chat")}
-                    </p>
-                  )}
+              {chats.length ? (
+                sortPinnedFirst(chats).map((chat) => (
+                  <SidebarItem
+                    key={chat.id}
+                    chat={chat}
+                    isActive={activeConversationId === chat.id}
+                    onClick={() => handleSelectChat(chat)}
+                    onShareChat={onShareChat}
+                  />
+                ))
+              ) : isLoading ? (
+                <BodySkeleton />
+              ) : (
+                <p className="text-sm text-slate-500 italic text-center caret-transparent">
+                  {t("dashboard.search.no_chat")}
+                </p>
+              )}
 
               {isLoadingMore && <LazyLoading />}
 

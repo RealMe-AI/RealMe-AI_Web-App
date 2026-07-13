@@ -228,6 +228,7 @@ const ig = {
     rename: "Deba aha ọzọ",
     realMeThinking: "ọ na-eche",
     sidebar: {
+      chats: "Mkparịta ụka",
       chat_button: "Mkparịta ụka Ọhụrụ",
       footer_full: "Site na",
       upgrade: "Melite",
@@ -235,6 +236,14 @@ const ig = {
       logout_confirm_title: "Pụọ?",
       logout_confirm_message:
         "Ị ji n'aka na ịchọrọ ịpụ <styled>{name}</styled> ?",
+      tooltips: {
+        open_sidebar: "Mepee Sidebar",
+        new_chat: "Mkparịta Ụka Ọhụrụ",
+        search: "Chọọ",
+        language: "Asụsụ",
+        profile: "Profaịlụ",
+        chats: "Mkparịta Ụka",
+      },
     },
     search: {
       chats_placeholder: "Chọgharịa mkparịta ụka...",
@@ -294,6 +303,8 @@ const ig = {
     file: {
       processing: "Na-ahazi…",
     },
+    show_more: "Gosi Ọzọ",
+    show_less: "Gosi Nke Pere Mpe",
   },
 
   account_info: {

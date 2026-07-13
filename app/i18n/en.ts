@@ -226,6 +226,7 @@ const en = {
     rename: "Rename",
     realMeThinking: "is thinking",
     sidebar: {
+      chats: "Chats",
       chat_button: "New Chat",
       footer_full: "By",
       upgrade: "Upgrade",
@@ -233,6 +234,14 @@ const en = {
       logout_confirm_title: "Log Out?",
       logout_confirm_message:
         "Are you sure you want to log out <styled>{name}</styled> ?",
+      tooltips: {
+        open_sidebar: "Open sidebar",
+        new_chat: "New chat",
+        search: "Search",
+        language: "Language",
+        profile: "Profile",
+        chats: "Chats",
+      },
     },
     search: {
       chats_placeholder: "Search chats...",
@@ -293,6 +302,8 @@ const en = {
     file: {
       processing: "Processing…",
     },
+    show_more: "Show more",
+    show_less: "Show less",
   },
 
   account_info: {

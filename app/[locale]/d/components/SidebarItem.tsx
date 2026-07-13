@@ -108,9 +108,9 @@ export default function SidebarItem({
               />
             </div>
           ) : (
-            <p className="text-sm font-medium truncate p-3 flex items-center gap-1.5">
+            <p className="text-sm font-medium p-3 flex items-center gap-1.5">
               {chat.isPinned && <Pin size={14} className="shrink-0 text-indigo-500" fill="currentColor" />}
-              {chat.title}
+              <span className="truncate">{chat.title}</span>
             </p>
           )}
         </div>

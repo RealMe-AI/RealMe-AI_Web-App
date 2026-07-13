@@ -231,6 +231,7 @@ const ha = {
     rename: "Sake suna",
     realMeThinking: "yana tunani",
     sidebar: {
+      chats: "Tattaunawa",
       chat_button: "Sabuwar Tattaunawa",
       footer_full: "Ta",
       upgrade: "Haɓakawa",
@@ -238,6 +239,14 @@ const ha = {
       logout_confirm_title: "Fita?",
       logout_confirm_message:
         "Ka tabbata kana son fita <styled>{name}</styled> ?",
+      tooltips: {
+        open_sidebar: "Buɗe Sidebar",
+        new_chat: "Sabuwar Tattaunawa",
+        search: "Bincika",
+        language: "Harshe",
+        profile: "Bayanan Martaba",
+        chats: "Tattaunawa",
+      },
     },
     search: {
       chats_placeholder: "Bincika tattaunawa...",
@@ -296,6 +305,8 @@ const ha = {
     file: {
       processing: "Ana sarrafa…",
     },
+    show_more: "Nuna Ƙari",
+    show_less: "Nuna Kaɗan",
   },
 
   account_info: {
