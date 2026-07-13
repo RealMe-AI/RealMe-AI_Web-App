@@ -3,11 +3,13 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useAutoClose } from "@/app/hooks/popUp/useAutoClose";
-import { baseUrl } from "@/app/lib/baseUrl";
 import { useUserProfile } from "@/app/hooks/user/useUserProfile";
+import { useContactSupport } from "@/app/hooks/support/useContactSupport";
 import { useTranslations } from "next-intl";
 
 import StatusPopup from "./StatusPopup";
+import { Loader2 } from "lucide-react";
+import LazyLoading from "../../components/ui/LazyLoading";
 
 type FormVariant = "report_bug" | "suggest_feature";
 
@@ -16,14 +18,11 @@ export function ReportForm({
 }: {
   variant?: FormVariant;
 }) {
-  const [status, setStatus] = useState<"success" | "error" | null>(null);
-
   const { user } = useUserProfile();
   const t = useTranslations("report_form");
+  const { submit, status, isLoading, setStatus } = useContactSupport();
 
   const [formData, setFormData] = useState({
-    from_name: user?.fullName || "",
-    from_email: user?.email || "",
     subject: "",
     message: "",
   });
@@ -36,17 +35,9 @@ export function ReportForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await fetch(`${baseUrl}/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) throw new Error("Failed to send");
-      setStatus("success");
-      setFormData({ from_name: "", from_email: "", subject: "", message: "" });
-    } catch {
-      setStatus("error");
+    const ok = await submit(formData.subject, formData.message);
+    if (ok) {
+      setFormData({ subject: "", message: "" });
     }
   };
 
@@ -66,7 +57,11 @@ export function ReportForm({
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {t(variant === "report_bug" ? "title_report_bug" : "title_suggest_feature")}
+          {t(
+            variant === "report_bug"
+              ? "title_report_bug"
+              : "title_suggest_feature",
+          )}
         </motion.h3>
 
         <motion.p
@@ -76,7 +71,11 @@ export function ReportForm({
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          {t(variant === "report_bug" ? "subtitle_report_bug" : "subtitle_suggest_feature")}
+          {t(
+            variant === "report_bug"
+              ? "subtitle_report_bug"
+              : "subtitle_suggest_feature",
+          )}
         </motion.p>
 
         <motion.form
@@ -88,24 +87,12 @@ export function ReportForm({
           viewport={{ once: true }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="from_name"
-              value={formData.from_name}
-              onChange={handleChange}
-              placeholder={t("name_placeholder")}
-              required
-              className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 outline-none"
-            />
-            <input
-              type="email"
-              name="from_email"
-              value={formData.from_email}
-              onChange={handleChange}
-              placeholder={t("email_placeholder")}
-              required
-              className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 outline-none"
-            />
+            <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 text-left">
+              {user ? user.fullName || "" : <LazyLoading />}
+            </div>
+            <div className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent text-gray-800 dark:text-gray-100 text-left">
+              {user ? user.email || "" : <LazyLoading />}
+            </div>
           </div>
 
           <input
@@ -130,10 +117,9 @@ export function ReportForm({
 
           <button
             type="submit"
-            // disabled={loading}
-            className="px-6 py-3 rounded-full bg-indigo-300 text-gray-800 hover:bg-indigo-400 dark:bg-indigo-500 dark:text-white dark:hover:bg-indigo-600 transition disabled:opacity-50"
+            className="px-6 py-3 rounded-full flex justify-center bg-indigo-300 text-gray-800 hover:bg-indigo-400 dark:bg-indigo-500 dark:text-white dark:hover:bg-indigo-600 transition disabled:opacity-50"
           >
-            {t("send_button")}
+            {isLoading ? <Loader2 className="animate-spin" size={20} /> : t("send_button")}
           </button>
         </motion.form>
 

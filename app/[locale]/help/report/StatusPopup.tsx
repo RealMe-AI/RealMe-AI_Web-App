@@ -27,7 +27,7 @@ export default function StatusPopup({
             initial={{ y: -30 }}
             animate={{ y: 0 }}
             exit={{ y: 30 }}
-            className={`p-6 rounded-2xl shadow-lg text-center ${
+            className={`p-6 rounded-lg shadow-lg text-center ${
               status === "success"
                 ? "bg-green-100 text-green-700"
                 : "bg-red-100 text-red-700"
