@@ -7,8 +7,8 @@ import { useFetchMessages } from "@/app/hooks/messages/useFetchMessages";
 import { sortPinnedFirst } from "@/app/utils/pin";
 import SidebarItem from "../SidebarItem";
 import { useChatStore } from "@/app/store/useChatStore";
-import { BodySkeleton } from "@/app/[locale]/components/ui/accountInfoLoader/Skeleton";
 import { useTranslations } from "next-intl";
+import { ChatsLoader } from "./ChatsLoader";
 
 interface ConversationsModalProps {
   isOpen: boolean;
@@ -92,7 +92,7 @@ export function ConversationsModal({
                 />
               ))}
 
-              {isLoading && <BodySkeleton />}
+              {isLoading && <ChatsLoader />}
 
               {!isLoading && recentChats.length === 0 && (
                 <p className="text-sm text-slate-500 italic text-center py-4 caret-transparent">
