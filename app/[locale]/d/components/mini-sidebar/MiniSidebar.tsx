@@ -1,24 +1,8 @@
 "use client";
 
-import { Fragment, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Search,
-  SquarePen,
-  LogOut,
-  Settings,
-  User,
-  ArrowUpCircle,
-  MessageCircle,
-} from "lucide-react";
+import { useState, useRef } from "react";
+import { Search, SquarePen, MessageCircle } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-  Transition,
-} from "@headlessui/react";
 import Image from "next/image";
 import { useSidebarStore } from "@/app/store/useSidebarStore";
 import { useChatStore } from "@/app/store/useChatStore";
@@ -27,20 +11,15 @@ import { useTranslate } from "@/app/hooks/useTranslate";
 import useModalStore from "@/app/store/modalStore";
 import { useLanguageStore, type Language } from "@/app/store/useLanguageStore";
 import useLogout from "@/app/hooks/auth/useLogout";
+import { useTranslations } from "next-intl";
 import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
 import AccountInfoModal from "../../../account/AccountInfoModal";
-import { useTranslations } from "next-intl";
-import Tooltip from "../../../components/ui/Tooltip";
-import ConversationsModal from "./ConversationsModal";
+import { NavButton } from "./NavButton";
+import { LanguageSelector } from "./LanguageSelector";
+import { ProfilePopover } from "./ProfilePopover";
+import { ConversationsModal } from "./ConversationsModal";
 
-const LANG_OPTIONS = [
-  { label: "English", shortLabel: "EN", value: "en" },
-  { label: "Hausa", shortLabel: "HA", value: "ha" },
-  { label: "Igbo", shortLabel: "IG", value: "ig" },
-  { label: "Yoruba", shortLabel: "YO", value: "yo" },
-];
-
-export default function MiniSidebar() {
+export function MiniSidebar() {
   const params = useParams();
   const router = useRouter();
   const currentLocale = params.locale as string;
@@ -122,157 +101,51 @@ export default function MiniSidebar() {
           py-4
         "
       >
-        {/* Logo */}
-        <Tooltip
-          className="bottom-1/2 -translate-x-1/1"
-          content={t("dashboard.sidebar.tooltips.open_sidebar")}
+        <NavButton
+          tooltip={t("dashboard.sidebar.tooltips.open_sidebar")}
+          onClick={handleLogoClick}
         >
-          <button
-            onClick={handleLogoClick}
-            className="
-          p-2 rounded-lg
-          transition transform hover:scale-105
-          "
-          >
-            <Image
-              src="/logo.png"
-              alt="RealMe AI"
-              width={32}
-              height={32}
-              className="rounded-full border border-gray-300 dark:border-white/20"
-            />
-          </button>
-        </Tooltip>
+          <Image
+            src="/logo.png"
+            alt="RealMe AI"
+            width={32}
+            height={32}
+            className="rounded-full border border-gray-300 dark:border-white/20"
+          />
+        </NavButton>
 
-        {/* New Chat */}
-        <Tooltip
-          className="bottom-1/2 -translate-x-1/1"
-          content={t("dashboard.sidebar.tooltips.new_chat")}
-        >
-        <button
+        <NavButton
+          tooltip={t("dashboard.sidebar.tooltips.new_chat")}
           onClick={handleNewChat}
-          className="
-            mt-6 p-2 rounded-lg
-            text-slate-500 hover:text-slate-700 dark:hover:text-slate-300
-            hover:bg-slate-100 dark:hover:bg-slate-700/40
-            transition transform hover:scale-105
-          "
+          className="mt-6 p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/40 transition transform hover:scale-105"
         >
           <SquarePen size={18} />
-        </button>
-        </Tooltip>
+        </NavButton>
 
-        {/* Search */}
-        <Tooltip
-          className="bottom-1/2 -translate-x-1/1"
-          content={t("dashboard.sidebar.tooltips.search")}
-        >
-        <button
+        <NavButton
+          tooltip={t("dashboard.sidebar.tooltips.search")}
           onClick={handleSearchClick}
-          className="
-            mt-3 p-2 rounded-lg
-            text-slate-500 hover:text-slate-700 dark:hover:text-slate-300
-            hover:bg-slate-100 dark:hover:bg-slate-700/40
-            transition transform hover:scale-105
-          "
         >
           <Search size={18} />
-        </button>
-        </Tooltip>
+        </NavButton>
 
-        {/* Conversations */}
-        <Tooltip
-          className="bottom-1/2 -translate-x-1/1"
-          content={t("dashboard.sidebar.tooltips.chats")}
-        >
-        <button
+        <NavButton
           ref={chatBtnRef}
+          tooltip={t("dashboard.sidebar.tooltips.chats")}
           onClick={toggleConversations}
-          className="
-            mt-3 p-2 rounded-lg
-            text-slate-500 hover:text-slate-700 dark:hover:text-slate-300
-            hover:bg-slate-100 dark:hover:bg-slate-700/40
-            transition transform hover:scale-105
-          "
         >
           <MessageCircle size={18} />
-        </button>
-        </Tooltip>
+        </NavButton>
 
-        {/* Spacer */}
         <div className="flex-1" />
 
-        {/* Language Dropup */}
-        <Tooltip
-          className="bottom-1/2 -translate-x-1/1"
-          content={t("dashboard.sidebar.tooltips.language")}
-        >
-        <div className="mb-2">
-          <Listbox value={currentLocale} onChange={handleLanguageChange}>
-            <div className="relative">
-              <ListboxButton
-                className="
-                  w-10 h-10 flex items-center justify-center
-                  rounded-lg text-xs font-semibold
-                  text-slate-600 dark:text-slate-300
-                  hover:bg-slate-100 dark:hover:bg-slate-700/40
-                  transition cursor-pointer transform hover:scale-105
-                "
-              >
-                {LANG_OPTIONS.find((o) => o.value === currentLocale)
-                  ?.shortLabel || "En"}
-              </ListboxButton>
-              <Transition
-                as={Fragment}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <ListboxOptions
-                  className="
-                    absolute bottom-full right-1/2 translate-x-1/2 mb-2
-                    w-15 overflow-auto rounded-md
-                    bg-white dark:bg-slate-800 py-1 text-sm
-                    shadow-lg ring-1 ring-black/10 dark:ring-white/20
-                    focus:outline-none z-50
-                  "
-                >
-                  {LANG_OPTIONS.map((opt) => (
-                    <ListboxOption
-                      key={opt.value}
-                      value={opt.value}
-                      className={({ active }) =>
-                        `relative cursor-pointer select-none py-1.5 text-center ${
-                          active
-                            ? "bg-indigo-100 dark:bg-indigo-700/50 text-indigo-900 dark:text-white"
-                            : "text-slate-800 dark:text-slate-100"
-                        }`
-                      }
-                    >
-                      {({ selected }) => (
-                        <span
-                          className={`block ${
-                            selected ? "font-semibold" : "font-normal"
-                          }`}
-                        >
-                          {opt.shortLabel}
-                        </span>
-                      )}
-                    </ListboxOption>
-                  ))}
-                </ListboxOptions>
-              </Transition>
-            </div>
-          </Listbox>
-        </div>
-        </Tooltip>
+        <LanguageSelector
+          currentLocale={currentLocale}
+          onChange={handleLanguageChange}
+        />
 
-        {/* Avatar */}
-        <Tooltip
-          className="bottom-1/2 -translate-x-1/1"
-          content={t("dashboard.sidebar.tooltips.profile")}
-        >
-        <button
+        <NavButton
+          tooltip={t("dashboard.sidebar.tooltips.profile")}
           onClick={() => (isProfileOpen ? closeAll() : openProfile())}
           className="p-1 transition transform hover:scale-105"
         >
@@ -286,92 +159,26 @@ export default function MiniSidebar() {
             loading="lazy"
             className="w-9 h-9 rounded-full object-cover"
           />
-        </button>
-        </Tooltip>
+        </NavButton>
       </aside>
 
-      {/* Profile Popover */}
-      <AnimatePresence>
-        {isProfileOpen && (
-          <>
-            <motion.div
-              onClick={closeAll}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-60 bg-black/20 backdrop-blur-[2px]"
-            />
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.2 }}
-              className="
-                fixed bottom-24 right-[72px] w-56
-                bg-white/60 dark:bg-slate-800/90
-                backdrop-blur-xl shadow-lg rounded-xl p-2
-                z-70
-              "
-            >
-              <button
-                onClick={openAccountInfo}
-                className="
-                  flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm
-                  text-slate-700 dark:text-slate-200
-                  hover:bg-indigo-100/50 dark:hover:bg-slate-700/60
-                  transition
-                "
-              >
-                <User size={16} /> {t("account_info.title")}
-              </button>
-              <button
-                onClick={() => router.push("/pricingplans")}
-                className="
-                  flex items-center gap-2 w-full px-3 py-2 mt-1 rounded-md text-sm font-medium
-                  text-indigo-600 dark:text-indigo-300
-                  hover:bg-indigo-100/50 dark:hover:bg-slate-700/60
-                  transition
-                "
-              >
-                <ArrowUpCircle size={16} /> {t("dashboard.sidebar.upgrade")}
-              </button>
-              <button
-                onClick={openSettings}
-                className="
-                  flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm
-                  text-slate-700 dark:text-slate-200
-                  hover:bg-indigo-100/50 dark:hover:bg-slate-700/60
-                  transition
-                "
-              >
-                <Settings size={16} /> {t("settings.title")}
-              </button>
-              <button
-                onClick={() => setIsLogoutModalOpen(true)}
-                className="
-                  flex items-center gap-2 w-full px-3 py-2 rounded-md text-sm text-red-600
-                  hover:bg-red-100/50 dark:hover:bg-red-800/60
-                  transition
-                "
-              >
-                <LogOut size={16} /> {t("dashboard.sidebar.logout")}
-              </button>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <ProfilePopover
+        isOpen={isProfileOpen}
+        onClose={closeAll}
+        onAccountInfo={openAccountInfo}
+        onUpgrade={() => router.push("/pricingplans")}
+        onSettings={openSettings}
+        onLogout={() => setIsLogoutModalOpen(true)}
+      />
 
-      {/* Conversations Modal */}
       <ConversationsModal
         isOpen={isConversationModalOpen}
         onClose={() => setIsConversationModalOpen(false)}
         anchorRect={chatAnchorRect}
       />
 
-      {/* Account Info Modal */}
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />
 
-      {/* Logout Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}

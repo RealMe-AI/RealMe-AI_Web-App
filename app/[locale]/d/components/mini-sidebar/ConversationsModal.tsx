@@ -17,7 +17,7 @@ interface ConversationsModalProps {
   onShareChat?: (chatId: number, title: string, preview?: string) => void;
 }
 
-export default function ConversationsModal({
+export function ConversationsModal({
   isOpen,
   onClose,
   anchorRect,
