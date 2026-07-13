@@ -16,7 +16,7 @@ import SidebarItem from "./SidebarItem";
 import LazyLoading from "../../components/ui/LazyLoading";
 import useModalStore from "../../../store/modalStore";
 import { useSidebarStore } from "@/app/store/useSidebarStore";
-import { BodySkeleton } from "../../components/ui/accountInfoLoader/Skeleton";
+import { ChatsLoader } from "./mini-sidebar/ChatsLoader";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -237,7 +237,7 @@ export default function Sidebar({
                   />
                 ))
               ) : isLoading ? (
-                <BodySkeleton />
+                <ChatsLoader />
               ) : (
                 <p className="text-sm text-slate-500 italic text-center caret-transparent">
                   {t("dashboard.search.no_chat")}
