@@ -229,6 +229,7 @@ const yo = {
     rename: "Tún orukọ",
     realMeThinking: "ó ń ronú",
     sidebar: {
+      chats: "Awọn ijiroro",
       chat_button: "Ijiroro Tuntun",
       footer_full: "Nípa",
       upgrade: "Mu dara si",
@@ -236,6 +237,14 @@ const yo = {
       logout_confirm_title: "Jade?",
       logout_confirm_message:
         "Ṣé o dá ọ lójú pé o fẹ́ jáde <styled>{name}</styled> ?",
+      tooltips: {
+        open_sidebar: "Ṣí Sidebar",
+        new_chat: "Ìjíròrò Tuntun",
+        search: "Wá",
+        language: "Èdè",
+        profile: "Profaili",
+        chats: "Àwọn Ìjíròrò",
+      },
     },
     search: {
       chats_placeholder: "Ṣawari awọn ijiroro...",
@@ -294,6 +303,8 @@ const yo = {
     file: {
       processing: "Ni ṣiṣe…",
     },
+    show_more: "Fi Díẹ̀ Síi Hàn",
+    show_less: "Fi Díẹ̀ Kù Hàn",
   },
 
   account_info: {

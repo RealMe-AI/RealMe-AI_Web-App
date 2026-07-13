@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -9,6 +9,7 @@ import {
   Settings,
   User,
   ArrowUpCircle,
+  MessageCircle,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -27,9 +28,10 @@ import useModalStore from "@/app/store/modalStore";
 import { useLanguageStore, type Language } from "@/app/store/useLanguageStore";
 import useLogout from "@/app/hooks/auth/useLogout";
 import DeleteConfirmationModal from "@/app/[locale]/components/ui/DeleteConfirmationModal";
-import AccountInfoModal from "../../account/AccountInfoModal";
+import AccountInfoModal from "../../../account/AccountInfoModal";
 import { useTranslations } from "next-intl";
-import Tooltip from "../../components/ui/Tooltip";
+import Tooltip from "../../../components/ui/Tooltip";
+import ConversationsModal from "./ConversationsModal";
 
 const LANG_OPTIONS = [
   { label: "English", shortLabel: "EN", value: "en" },
@@ -56,6 +58,9 @@ export default function MiniSidebar() {
   const tRich = useTranslations();
   const { handleLogout, isLoggingOut } = useLogout();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isConversationModalOpen, setIsConversationModalOpen] = useState(false);
+  const [chatAnchorRect, setChatAnchorRect] = useState<DOMRect | null>(null);
+  const chatBtnRef = useRef<HTMLButtonElement>(null);
 
   const {
     isProfileOpen,
@@ -97,6 +102,14 @@ export default function MiniSidebar() {
     router.push(newPath);
   };
 
+  const toggleConversations = () => {
+    closeAll();
+    if (chatBtnRef.current) {
+      setChatAnchorRect(chatBtnRef.current.getBoundingClientRect());
+    }
+    setIsConversationModalOpen((prev) => !prev);
+  };
+
   return (
     <>
       <aside
@@ -112,7 +125,7 @@ export default function MiniSidebar() {
         {/* Logo */}
         <Tooltip
           className="bottom-1/2 -translate-x-1/1"
-          content={"Open sidebar"}
+          content={t("dashboard.sidebar.tooltips.open_sidebar")}
         >
           <button
             onClick={handleLogoClick}
@@ -134,7 +147,7 @@ export default function MiniSidebar() {
         {/* New Chat */}
         <Tooltip
           className="bottom-1/2 -translate-x-1/1"
-          content={"New chat"}
+          content={t("dashboard.sidebar.tooltips.new_chat")}
         >
         <button
           onClick={handleNewChat}
@@ -152,7 +165,7 @@ export default function MiniSidebar() {
         {/* Search */}
         <Tooltip
           className="bottom-1/2 -translate-x-1/1"
-          content={"Search"}
+          content={t("dashboard.sidebar.tooltips.search")}
         >
         <button
           onClick={handleSearchClick}
@@ -167,13 +180,32 @@ export default function MiniSidebar() {
         </button>
         </Tooltip>
 
+        {/* Conversations */}
+        <Tooltip
+          className="bottom-1/2 -translate-x-1/1"
+          content={t("dashboard.sidebar.tooltips.chats")}
+        >
+        <button
+          ref={chatBtnRef}
+          onClick={toggleConversations}
+          className="
+            mt-3 p-2 rounded-lg
+            text-slate-500 hover:text-slate-700 dark:hover:text-slate-300
+            hover:bg-slate-100 dark:hover:bg-slate-700/40
+            transition transform hover:scale-105
+          "
+        >
+          <MessageCircle size={18} />
+        </button>
+        </Tooltip>
+
         {/* Spacer */}
         <div className="flex-1" />
 
         {/* Language Dropup */}
         <Tooltip
           className="bottom-1/2 -translate-x-1/1"
-          content={"Language"}
+          content={t("dashboard.sidebar.tooltips.language")}
         >
         <div className="mb-2">
           <Listbox value={currentLocale} onChange={handleLanguageChange}>
@@ -238,7 +270,7 @@ export default function MiniSidebar() {
         {/* Avatar */}
         <Tooltip
           className="bottom-1/2 -translate-x-1/1"
-          content={"Profile"}
+          content={t("dashboard.sidebar.tooltips.profile")}
         >
         <button
           onClick={() => (isProfileOpen ? closeAll() : openProfile())}
@@ -328,6 +360,13 @@ export default function MiniSidebar() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Conversations Modal */}
+      <ConversationsModal
+        isOpen={isConversationModalOpen}
+        onClose={() => setIsConversationModalOpen(false)}
+        anchorRect={chatAnchorRect}
+      />
 
       {/* Account Info Modal */}
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />

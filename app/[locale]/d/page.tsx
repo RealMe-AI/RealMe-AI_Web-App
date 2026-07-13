@@ -11,7 +11,7 @@ import { useAuthHydrated } from "@/app/hooks/useAuthHydrated";
 import { useFetchMessages } from "@/app/hooks/messages/useFetchMessages";
 import useModalStore from "../../store/modalStore";
 import Sidebar from "./components/Sidebar";
-import MiniSidebar from "./components/MiniSidebar";
+import MiniSidebar from "./components/mini-sidebar/MiniSidebar";
 import ChatWindow from "./components/ChatWindow";
 import SettingsPanel from "../setting/SettingsPanel";
 import { ShareModal } from "./components/share/ShareModal";
