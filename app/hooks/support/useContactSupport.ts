@@ -8,14 +8,14 @@ export function useContactSupport() {
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const submit = async (subject: string, message: string) => {
+  const submit = async (subject: string, message: string, type: string) => {
     setIsLoading(true);
     setStatus(null);
     try {
       const res = await authFetch(`${baseUrl}/support/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, message }),
+        body: JSON.stringify({ subject, message, type }),
       });
       if (!res.ok) throw new Error("Failed to send");
       setStatus("success");

@@ -35,7 +35,7 @@ export function ReportForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const ok = await submit(formData.subject, formData.message);
+    const ok = await submit(formData.subject, formData.message, variant);
     if (ok) {
       setFormData({ subject: "", message: "" });
     }
