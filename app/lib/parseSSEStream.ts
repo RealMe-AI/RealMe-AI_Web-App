@@ -1,8 +1,12 @@
+export type SSEStreamResult = {
+  stopped: boolean;
+};
+
 export async function parseSSEStream(
   reader: ReadableStreamDefaultReader<Uint8Array>,
   onChunk: (chunk: string) => void,
   onMeta?: (meta: Record<string, unknown>) => void,
-): Promise<void> {
+): Promise<SSEStreamResult> {
   const decoder = new TextDecoder();
   let buffer = "";
 
@@ -32,9 +36,14 @@ export async function parseSSEStream(
         } else if (parsed.type) {
           onMeta?.(parsed);
         }
+        if (parsed.done === true) {
+          return { stopped: parsed.stopped === true };
+        }
       } catch {
         onChunk(data);
       }
     }
   }
+
+  return { stopped: false };
 }
