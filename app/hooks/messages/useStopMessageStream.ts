@@ -6,21 +6,19 @@ import { useChatStore } from "@/app/store/useChatStore";
 export const useStopMessageStream = () => {
   const { setIsLoading, setAbortController } = useChatStore();
 
-  const stopStream = useCallback(async () => {
+  const stopStream = useCallback(() => {
     const { activeConversationId, abortController } = useChatStore.getState();
 
-    if (activeConversationId) {
-      try {
-        await authFetch(`${baseUrl}/messages/stream/stop`, {
-          method: "POST",
-        });
-      } catch {
-        // Server-side stop is best-effort; client-side abort still works
-      }
-    }
-
+    // 1. Abort immediately — closes the SSE connection client-side for instant UI feedback
     if (abortController) {
       abortController.abort();
+    }
+
+    // 2. Fire server stop in background (fire-and-forget) — backend saves partial response
+    if (activeConversationId) {
+      authFetch(`${baseUrl}/messages/stream/stop`, {
+        method: "POST",
+      }).catch(() => {});
     }
 
     setIsLoading(false);

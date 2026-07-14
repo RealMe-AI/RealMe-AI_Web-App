@@ -90,6 +90,9 @@ export const useMessageStream = () => {
         if (!res.ok) throw new Error(`Failed to send message: ${res.status}`);
         if (!res.body) throw new Error("No response body received");
 
+        // Reset typewriter — ensures no leaked text from previous aborted stream
+        typewriter.reset();
+
         // Create temp AI message
         const tempMsg: Message = {
           id: "ai-temp",
@@ -132,6 +135,10 @@ export const useMessageStream = () => {
       } catch (err: unknown) {
         typewriter.stop();
         if (err instanceof Error && err.name === "AbortError") {
+          updateMessage("ai-temp", {
+            id: (Date.now() + 1).toString(),
+            text: typewriter.getShown(),
+          });
           return;
         }
 
