@@ -46,6 +46,15 @@ export function useTypewriter(onUpdate: (text: string) => void) {
     }
   }, []);
 
+  const reset = useCallback(() => {
+    queueRef.current = "";
+    shownRef.current = "";
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
   const getShown = useCallback(() => shownRef.current, []);
 
   useEffect(() => {
@@ -57,5 +66,5 @@ export function useTypewriter(onUpdate: (text: string) => void) {
     };
   }, []);
 
-  return { push, flush, stop, getShown };
+  return { push, flush, stop, getShown, reset };
 }

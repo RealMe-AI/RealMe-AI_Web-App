@@ -73,6 +73,9 @@ export const useEditMessage = () => {
         if (!res.ok) throw new Error(`Failed to edit message: ${res.status}`);
         if (!res.body) throw new Error("No response body received");
 
+        // Reset typewriter — ensures no leaked text from previous aborted stream
+        typewriter.reset();
+
         // Parse SSE stream with typewriter pacing
         const reader = res.body.getReader();
         await parseSSEStream(reader, (chunk) => typewriter.push(chunk));
