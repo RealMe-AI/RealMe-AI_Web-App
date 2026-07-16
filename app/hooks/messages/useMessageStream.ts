@@ -124,7 +124,7 @@ export const useMessageStream = () => {
         });
         setIsLoading(false);
 
-        // Update conversation metadata
+        // Update conversation
         if (currentConversationId) {
           await updateConversation(currentConversationId, {
             lastMessage: content || attachments?.[0]?.fileName || "File message",
