@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Mic, FileIcon, FileText, ArrowUp, Square } from "lucide-react";
+import { Plus, Mic, FileIcon, FileText, ArrowUp, Square, Play, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { cn } from "@/app/lib/utils";
@@ -29,8 +29,13 @@ export function ChatInput({
   onFileSelected,
   onRemoveAttachment,
   isRecording,
-  isTranscribing,
+  isAudioRecorded,
+  audioDuration,
+  audioUrl,
+  isAudioPlaying,
   onMicClick,
+  onDeleteAudio,
+  onPlayAudio,
   onAbort,
   onSend,
   onKeyDown,
@@ -47,8 +52,8 @@ export function ChatInput({
                     dark:border-0 backdrop-blur-xl transition
                     ${isFocused ? "ring-1 ring-slate-300 dark:ring-slate-600" : ""}`}
       >
-        {hasAttachmentsOrUploading && (
-          <div className="flex gap-2 overflow-x-auto py-2">
+        {(hasAttachmentsOrUploading || audioUrl || isRecording) && (
+          <div className="flex gap-2 overflow-x-auto py-2 items-center">
             {Array.from(uploadingFiles.entries()).map(
               ([tempId, { file, progress }]) => (
                 <div
@@ -120,6 +125,59 @@ export function ChatInput({
                 </div>
               );
             })}
+
+            {(isRecording || audioUrl) && (
+              <div className="ml-auto flex items-center gap-2 bg-white/50 dark:bg-slate-700/50 rounded-xl shadow-sm px-3 py-2 shrink-0">
+                {isRecording ? (
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-0.5 h-6">
+                      {[1, 2, 3, 4].map((i) => (
+                        <motion.div
+                          key={i}
+                          animate={{ height: [6, 16, 10, 20, 6][i % 5] }}
+                          transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.1 }}
+                          className="w-0.5 bg-indigo-500 rounded-full"
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-[32px] tabular-nums">
+                      {`${Math.floor(audioDuration / 60)}:${(audioDuration % 60).toString().padStart(2, "0")}`}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={onPlayAudio}
+                      className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition shrink-0"
+                    >
+                      {isAudioPlaying ? (
+                        <Square size={10} fill="currentColor" className="text-indigo-600 dark:text-indigo-400" />
+                      ) : (
+                        <Play size={12} className="text-indigo-600 dark:text-indigo-400 ml-0.5" />
+                      )}
+                    </button>
+                    <div className="flex items-center gap-0.5 h-6">
+                      {[8, 12, 10, 14, 8].map((h, i) => (
+                        <div
+                          key={i}
+                          style={{ height: h }}
+                          className="w-0.5 bg-indigo-400/60 rounded-full"
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-[32px] tabular-nums">
+                      {`${Math.floor(audioDuration / 60)}:${(audioDuration % 60).toString().padStart(2, "0")}`}
+                    </span>
+                    <button
+                      onClick={onDeleteAudio}
+                      className="flex items-center justify-center w-6 h-6 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 transition shrink-0"
+                    >
+                      <Trash2 size={14} className="text-red-500" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -156,33 +214,26 @@ export function ChatInput({
             />
           </div>
 
-          {input.trim() === "" && !hasAttachmentsOrUploading && !isLoading ? (
+          {isRecording ? (
             <div
               onClick={onMicClick}
               className="rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
-              {isTranscribing ? (
-                <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900">
-                  <Square size={16} fill="currentColor" />
-                </div>
-              ) : isRecording ? (
-                <motion.div
-                  animate={{ scale: [1, 1.08, 1], opacity: [1, 0.9, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                  className="p-2 rounded-full bg-indigo-500/20 border border-indigo-400/30"
-                >
-                  <Mic
-                    size={27}
-                    className="text-indigo-600 dark:text-indigo-400"
-                  />
-                </motion.div>
-              ) : (
-                <Mic
-                  size={27}
-                  className="text-indigo-600 dark:text-indigo-300"
-                />
-              )}
+              <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900">
+                <Square size={16} fill="currentColor" />
+              </div>
+            </div>
+          ) : input.trim() === "" && !hasAttachmentsOrUploading && !audioUrl && !isLoading ? (
+            <div
+              onClick={onMicClick}
+              className="rounded-full hover:bg-white/30 
+                         dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
+            >
+              <Mic
+                size={27}
+                className="text-indigo-600 dark:text-indigo-300"
+              />
             </div>
           ) : (
             <button

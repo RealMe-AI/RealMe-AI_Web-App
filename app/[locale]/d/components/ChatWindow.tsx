@@ -6,7 +6,7 @@ import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useStopMessageStream } from "@/app/hooks/messages/useStopMessageStream";
 import { useAttachmentUpload } from "@/app/hooks/attachments/useAttachmentUpload";
 import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete";
-import { useVoiceInput } from "@/app/hooks/useVoiceInput";
+import { useAudioRecorder } from "@/app/hooks/useAudioRecorder";
 import { useUserStore } from "@/app/store/useUserStore";
 import type { Attachment } from "@/app/interface/type";
 import OfflineBanner from "./OfflineBanner";
@@ -53,23 +53,28 @@ export default function ChatWindow() {
 
   const {
     isRecording,
-    isTranscribing,
+    isPlaying: isAudioPlaying,
+    duration: audioDuration,
+    audioUrl,
     startRecording,
     stopRecording,
-    cleanup,
-  } = useVoiceInput((text) => {
-    setInput(text);
-    if (inputRef.current) inputRef.current.textContent = text;
-  });
+    resetRecording,
+    togglePlayback,
+  } = useAudioRecorder();
 
-  useEffect(() => {
-    return () => cleanup();
-  }, [cleanup]);
+  const isAudioRecorded = audioUrl !== null;
 
   const handleMicClick = () => {
-    if (isTranscribing) return;
     if (isRecording) stopRecording();
     else startRecording();
+  };
+
+  const handleDeleteAudio = () => {
+    resetRecording();
+  };
+
+  const handlePlayAudio = () => {
+    togglePlayback();
   };
 
   const handleFileSelected = async (file: File) => {
@@ -95,6 +100,7 @@ export default function ChatWindow() {
 
     setInput("");
     if (inputRef.current) inputRef.current.textContent = "";
+    resetRecording();
 
     const attachmentIds = attachments.map((a) => a.id);
     const attachmentData = [...attachments];
@@ -208,8 +214,13 @@ export default function ChatWindow() {
         onRemoveAttachment={handleRemoveAttachment}
         onAbort={handleAbort}
         isRecording={isRecording}
-        isTranscribing={isTranscribing}
+        isAudioRecorded={isAudioRecorded}
+        audioDuration={audioDuration}
+        audioUrl={audioUrl}
+        isAudioPlaying={isAudioPlaying}
         onMicClick={handleMicClick}
+        onDeleteAudio={handleDeleteAudio}
+        onPlayAudio={handlePlayAudio}
         onSend={handleSend}
         onKeyDown={handleKeyDown}
       />
