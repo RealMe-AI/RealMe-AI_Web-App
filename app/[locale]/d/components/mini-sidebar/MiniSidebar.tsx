@@ -172,7 +172,7 @@ export function MiniSidebar({
         isOpen={isProfileOpen}
         onClose={closeAll}
         onAccountInfo={openAccountInfo}
-        onUpgrade={() => router.push("/pricingplans")}
+        onUpgrade={() => router.push("/p")}
         onSettings={openSettings}
         onLogout={() => setIsLogoutModalOpen(true)}
       />
