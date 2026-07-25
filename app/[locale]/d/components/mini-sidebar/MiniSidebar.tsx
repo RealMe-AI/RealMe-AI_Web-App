@@ -75,6 +75,8 @@ export function MiniSidebar() {
 
   const handleLanguageChange = (value: string) => {
     useLanguageStore.getState().setLanguage(value as Language);
+    setActiveConversationId(null);
+    setMessages([]);
     const pathname = window.location.pathname;
     const pathnameWithoutLocale = pathname.replace(/^\/[a-z]{2}/, "");
     const newPath = `/${value}${pathnameWithoutLocale}`;

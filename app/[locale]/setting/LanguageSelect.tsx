@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useLanguageStore, type Language } from "@/app/store/useLanguageStore";
+import { useChatStore } from "@/app/store/useChatStore";
 
 import CustomSelect from "./CustomSelect";
 
@@ -14,8 +15,13 @@ export default function LanguageSelect() {
 
   const currentLocale = params.locale as string;
 
+  const setActiveConversationId = useChatStore((s) => s.setActiveConversationId);
+  const setMessages = useChatStore((s) => s.setMessages);
+
   const handleChange = (value: string) => {
     useLanguageStore.getState().setLanguage(value as Language);
+    setActiveConversationId(null);
+    setMessages([]);
 
     const pathname = window.location.pathname;
     const searchParams = new URLSearchParams(window.location.search);
