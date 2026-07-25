@@ -229,6 +229,9 @@ const ha = {
         "Ni RealMe ne, mataimakin AI naka. Ta yaya zan taimaka maka a yau?",
     },
     rename: "Sake suna",
+    share: "Raba",
+    pin: "Manna Sama",
+    unpin: "Cire Daga Sama",
     realMeThinking: "yana tunani",
     sidebar: {
       chats: "Tattaunawa",

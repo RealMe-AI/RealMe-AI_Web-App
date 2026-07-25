@@ -123,7 +123,7 @@ export default function AccountInfoModal({
 
               {/* Billing */}
               <button
-                onClick={() => router.push("/pricingplans")}
+                onClick={() => router.push("/p")}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg 
                          text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 
                          dark:bg-indigo-700 dark:hover:bg-indigo-800 transition"
