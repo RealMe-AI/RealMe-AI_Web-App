@@ -16,8 +16,13 @@ export interface ChatInputProps {
   onRemoveAttachment: (id: string) => Promise<void>;
   onAbort: () => void;
   isRecording: boolean;
-  isTranscribing: boolean;
+  isAudioRecorded: boolean;
+  audioDuration: number;
+  audioUrl: string | null;
+  isAudioPlaying: boolean;
   onMicClick: () => void;
+  onDeleteAudio: () => void;
+  onPlayAudio: () => void;
   onSend: () => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }
