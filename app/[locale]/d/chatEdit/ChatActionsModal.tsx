@@ -74,7 +74,7 @@ const ChatActionsModal = ({
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Share size={16} />
-                <span>Share</span>
+                <span>{t("dashboard.share")}</span>
               </li>
 
               {/* Rename */}
@@ -92,7 +92,7 @@ const ChatActionsModal = ({
                 className="flex items-center gap-2 px-4 py-2 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
               >
                 <Pin size={16} fill={isPinned ? "currentColor" : "none"} />
-                <span>{isPinned ? "Unpin" : "Pin"}</span>
+                <span>{isPinned ? t("dashboard.unpin") : t("dashboard.pin")}</span>
               </li>
 
               {/* Delete */}

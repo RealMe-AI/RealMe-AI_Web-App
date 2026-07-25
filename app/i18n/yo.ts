@@ -227,6 +227,9 @@ const yo = {
         "Emi ni RealMe, oluranlọwọ AI rẹ. Bawo ni mo ṣe le ran ọ lọwọ loni?",
     },
     rename: "Tún orukọ",
+    share: "Pín",
+    pin: "Di Mọ́",
+    unpin: "Yọ Kúrò Ní Mímọ́",
     realMeThinking: "ó ń ronú",
     sidebar: {
       chats: "Awọn ijiroro",

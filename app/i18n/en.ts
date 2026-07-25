@@ -224,6 +224,9 @@ const en = {
       subtitle: "I'm RealMe, your AI assistant. How can I help you today?",
     },
     rename: "Rename",
+    share: "Share",
+    pin: "Pin",
+    unpin: "Unpin",
     realMeThinking: "is thinking",
     sidebar: {
       chats: "Chats",
