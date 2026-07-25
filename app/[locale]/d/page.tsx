@@ -56,7 +56,11 @@ export default function Page() {
       )}
 
       {/* Mini Sidebar */}
-      {!isSidebarOpen && <MiniSidebar />}
+      {!isSidebarOpen && (
+        <MiniSidebar
+          onShareChat={(chatId, title, preview) => setShareChat({ chatId, title, preview })}
+        />
+      )}
 
       {/* Chat Section */}
       <motion.div

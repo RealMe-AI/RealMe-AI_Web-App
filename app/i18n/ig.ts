@@ -226,6 +226,9 @@ const ig = {
         "Abụ m RealMe, onye enyemaka AI gị. Kedu ka m ga-esi nyere gị aka taa?",
     },
     rename: "Deba aha ọzọ",
+    share: "Kesaa",
+    pin: "Tinye N'elu",
+    unpin: "Wepụ N'elu",
     realMeThinking: "ọ na-eche",
     sidebar: {
       chats: "Mkparịta ụka",

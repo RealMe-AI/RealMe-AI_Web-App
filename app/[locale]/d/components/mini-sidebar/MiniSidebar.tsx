@@ -19,7 +19,11 @@ import { LanguageSelector } from "./LanguageSelector";
 import { ProfilePopover } from "./ProfilePopover";
 import { ConversationsModal } from "./ConversationsModal";
 
-export function MiniSidebar() {
+export function MiniSidebar({
+  onShareChat,
+}: {
+  onShareChat?: (chatId: number, title: string, preview?: string) => void;
+}) {
   const params = useParams();
   const router = useRouter();
   const currentLocale = params.locale as string;
@@ -177,6 +181,7 @@ export function MiniSidebar() {
         isOpen={isConversationModalOpen}
         onClose={() => setIsConversationModalOpen(false)}
         anchorRect={chatAnchorRect}
+        onShareChat={onShareChat}
       />
 
       <AccountInfoModal open={isAccountInfoOpen} close={closeAll} />
