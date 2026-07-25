@@ -27,24 +27,24 @@ export default function Home() {
     }
   }, [hydrated, accessToken, router]);
 
-  // Prevent SSR/client mismatch
-  if (!mounted) return null;
-
   return (
     <>
-      <SplashScreen visible={showSplash} onFinish={finishSplash} />
-
-      {!showSplash && (
-        <div className="min-h-screen flex flex-col">
-          <Navbar isOpen={isOpen} setIsOpen={setIsOpen} active={active} />
-          <main className="flex-1">
-            <Hero />
-            <Features />
-            <GetStartedSection />
-          </main>
-          <Footer />
-        </div>
+      {mounted && showSplash && (
+        <SplashScreen visible={showSplash} onFinish={finishSplash} />
       )}
+      <div
+        className={`min-h-screen flex flex-col ${
+          !mounted || showSplash ? "invisible" : ""
+        }`}
+      >
+        <Navbar isOpen={isOpen} setIsOpen={setIsOpen} active={active} />
+        <main className="flex-1">
+          <Hero />
+          <Features />
+          <GetStartedSection />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
