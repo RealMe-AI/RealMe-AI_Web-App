@@ -15,10 +15,14 @@ export default function useLogout() {
       const { accessToken, clearAuth } = useAuthStore.getState();
 
       if (accessToken) {
-        fetch(`${baseUrl}/auth/logout`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }).catch(() => {});
+        try {
+          await fetch(`${baseUrl}/auth/logout`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+        } catch {
+          // Server-side logout is best-effort; local state is cleared regardless
+        }
       }
 
       clearAuth();

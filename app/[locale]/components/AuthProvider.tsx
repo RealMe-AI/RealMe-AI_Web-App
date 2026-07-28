@@ -1,24 +1,38 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { doRefresh } from "@/app/lib/apiClient";
 
 const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const { accessToken, refreshToken, isTokenExpired, clearAuth } =
-      useAuthStore.getState();
+  const [isReady, setIsReady] = useState(false);
 
-    if (accessToken && isTokenExpired() && !refreshToken) {
-      clearAuth();
-    }
+  useEffect(() => {
+    const init = async () => {
+      const { accessToken, refreshToken, isTokenExpired } =
+        useAuthStore.getState();
+
+      if (accessToken && !isTokenExpired()) {
+        setIsReady(true);
+        return;
+      }
+
+      if (refreshToken) {
+        await doRefresh();
+      }
+
+      setIsReady(true);
+    };
+
+    init();
   }, []);
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      {children}
+      {isReady ? children : null}
     </GoogleOAuthProvider>
   );
 }
