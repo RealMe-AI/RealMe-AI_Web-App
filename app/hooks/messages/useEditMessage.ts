@@ -78,13 +78,13 @@ export const useEditMessage = () => {
 
         // Parse SSE stream with typewriter pacing
         const reader = res.body.getReader();
-        await parseSSEStream(reader, (chunk) => typewriter.push(chunk));
+        const { messageId: assistantMessageId } = await parseSSEStream(reader, (chunk) => typewriter.push(chunk));
         typewriter.flush();
         typewriter.stop();
 
         // Finalize AI message with real ID
         updateMessage(tempId, {
-          id: (Date.now() + 1).toString(),
+          id: assistantMessageId,
           text: typewriter.getShown(),
         });
         setIsLoading(false);
