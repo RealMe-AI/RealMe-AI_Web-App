@@ -1,5 +1,6 @@
 export type SSEStreamResult = {
   stopped: boolean;
+  messageId?: string;
 };
 
 export async function parseSSEStream(
@@ -37,7 +38,10 @@ export async function parseSSEStream(
           onMeta?.(parsed);
         }
         if (parsed.done === true) {
-          return { stopped: parsed.stopped === true };
+          return {
+            stopped: parsed.stopped === true,
+            messageId: parsed.messageId as string | undefined,
+          };
         }
       } catch {
         onChunk(data);
