@@ -11,6 +11,8 @@ import Image from "next/image";
 import MessageActions from "../components/MessageActions";
 import parseMarkdown from "@/app/lib/parseMarkdown";
 import { useEditMessage } from "@/app/hooks/messages/useEditMessage";
+import { useTtsStore } from "@/app/store/useTtsStore";
+import { useTtsSpeak } from "@/app/hooks/tts/useTtsSpeak";
 
 export default function ChatMessage({ message }: ChatMessageProps) {
   const t = useTranslations();
@@ -39,6 +41,32 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       audioRef.current = null;
     };
   }, [message.audioUrl]);
+
+  // AUTO-READ
+  const ttsEnabled = useTtsStore((s) => s.enabled);
+  const ttsAutoRead = useTtsStore((s) => s.autoRead);
+  const { speak, currentMessageId } = useTtsSpeak();
+
+  useEffect(() => {
+    if (
+      ttsAutoRead &&
+      ttsEnabled &&
+      message.sender === "ai" &&
+      message.id !== "ai-temp" &&
+      message.text &&
+      currentMessageId !== message.id
+    ) {
+      speak(message.id);
+    }
+  }, [
+    message.id,
+    message.text,
+    message.sender,
+    ttsAutoRead,
+    ttsEnabled,
+    speak,
+    currentMessageId,
+  ]);
 
   const handleAudio = () => {
     if (!audioRef.current) return;
