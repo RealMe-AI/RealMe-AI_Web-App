@@ -5,6 +5,7 @@ import { useTranslate } from "../useTranslate";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { authFetch } from "@/app/lib/apiClient";
 
 interface LoginErrorResponse {
   error?: string;
@@ -67,22 +68,11 @@ export default function useSignIn() {
     return valid;
   };
 
-  //  Verify token works by making a test API call
-  const verifyToken = async (token: string): Promise<boolean> => {
+  const verifyToken = async (): Promise<boolean> => {
     try {
-      const res = await fetch(`${baseUrl}/conversations?page=1&limit=1`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (res.ok) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
+      const res = await authFetch(`${baseUrl}/conversations?page=1&limit=1`);
+      return res.ok;
+    } catch {
       return false;
     }
   };
@@ -146,8 +136,7 @@ export default function useSignIn() {
         refreshToken: successResponse.refreshToken,
       });
 
-      //  VERIFY TOKEN BEFORE REDIRECTING
-      const isTokenValid = await verifyToken(accessToken);
+      const isTokenValid = await verifyToken();
 
       if (!isTokenValid) {
         console.error("[SignIn] Token verification failed");

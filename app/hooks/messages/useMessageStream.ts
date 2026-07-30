@@ -105,7 +105,7 @@ export const useMessageStream = () => {
 
         // Parse SSE stream with typewriter pacing
         const reader = res.body.getReader();
-        await parseSSEStream(
+        const { messageId } = await parseSSEStream(
           reader,
           (chunk) => typewriter.push(chunk),
           (meta) => {
@@ -119,7 +119,7 @@ export const useMessageStream = () => {
 
         // Finalize AI message with real ID
         updateMessage("ai-temp", {
-          id: (Date.now() + 1).toString(),
+          id: messageId,
           text: typewriter.getShown(),
         });
         setIsLoading(false);

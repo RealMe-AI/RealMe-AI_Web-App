@@ -3,8 +3,20 @@ import { baseUrl } from "./baseUrl";
 
 let isRefreshing = false;
 let refreshPromise: Promise<string | null> | null = null;
+let failedQueue: Array<{
+  resolve: (token: string) => void;
+  reject: (err: unknown) => void;
+}> = [];
 
-async function doRefresh(): Promise<string | null> {
+function processQueue(error: unknown, token: string | null) {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (token) resolve(token);
+    else reject(error);
+  });
+  failedQueue = [];
+}
+
+export async function doRefresh(): Promise<string | null> {
   const { refreshToken, clearAuth } = useAuthStore.getState();
 
   if (!refreshToken) {
@@ -20,7 +32,9 @@ async function doRefresh(): Promise<string | null> {
     });
 
     if (!res.ok) {
-      clearAuth();
+      if (res.status >= 400 && res.status < 500) {
+        clearAuth();
+      }
       return null;
     }
 
@@ -39,7 +53,6 @@ async function doRefresh(): Promise<string | null> {
 
     return newAccessToken;
   } catch {
-    clearAuth();
     return null;
   }
 }
@@ -74,7 +87,10 @@ export async function authFetch(
   const token = await getFreshToken();
 
   if (!token) {
-    redirectToAuth();
+    const { accessToken, refreshToken } = useAuthStore.getState();
+    if (!accessToken && !refreshToken) {
+      redirectToAuth();
+    }
     throw new Error("Session expired");
   }
 
@@ -99,30 +115,62 @@ export async function authFetch(
   }
 
   if (res.status === 401) {
-    const newToken = await doRefresh();
-
-    if (!newToken) {
-      redirectToAuth();
-      throw new Error("Session expired");
+    if (isRefreshing) {
+      return new Promise<Response>((resolve, reject) => {
+        failedQueue.push({
+          resolve: (token: string) => {
+            const retryHeaders = new Headers(init?.headers);
+            retryHeaders.set("Authorization", `Bearer ${token}`);
+            if (
+              !retryHeaders.has("Content-Type") &&
+              init?.method !== "GET" &&
+              !(init?.body instanceof FormData)
+            ) {
+              retryHeaders.set("Content-Type", "application/json");
+            }
+            fetch(input, { ...init, headers: retryHeaders })
+              .then(resolve)
+              .catch(reject);
+          },
+          reject,
+        });
+      });
     }
 
-    const retryHeaders = new Headers(init?.headers);
-    retryHeaders.set("Authorization", `Bearer ${newToken}`);
-    if (
-      !retryHeaders.has("Content-Type") &&
-      init?.method !== "GET" &&
-      !(init?.body instanceof FormData)
-    ) {
-      retryHeaders.set("Content-Type", "application/json");
-    }
-
+    isRefreshing = true;
     try {
-      return await fetch(input, { ...init, headers: retryHeaders });
-    } catch (err) {
-      if (err instanceof TypeError && err.message === "Failed to fetch") {
-        throw new Error("No internet connection. Please check your network.");
+      const newToken = await doRefresh();
+      if (!newToken) {
+        processQueue(null, null);
+        const { accessToken, refreshToken } = useAuthStore.getState();
+        if (!accessToken && !refreshToken) {
+          redirectToAuth();
+        }
+        throw new Error("Session expired");
       }
-      throw err;
+
+      processQueue(null, newToken);
+
+      const retryHeaders = new Headers(init?.headers);
+      retryHeaders.set("Authorization", `Bearer ${newToken}`);
+      if (
+        !retryHeaders.has("Content-Type") &&
+        init?.method !== "GET" &&
+        !(init?.body instanceof FormData)
+      ) {
+        retryHeaders.set("Content-Type", "application/json");
+      }
+
+      try {
+        return await fetch(input, { ...init, headers: retryHeaders });
+      } catch (err) {
+        if (err instanceof TypeError && err.message === "Failed to fetch") {
+          throw new Error("No internet connection. Please check your network.");
+        }
+        throw err;
+      }
+    } finally {
+      isRefreshing = false;
     }
   }
 
