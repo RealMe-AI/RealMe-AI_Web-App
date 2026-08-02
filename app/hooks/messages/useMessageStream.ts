@@ -17,6 +17,24 @@ function now() {
   });
 }
 
+function getConversationLabel(
+  content: string,
+  attachments?: Attachment[],
+  truncate = true,
+) {
+  if (attachments?.some((a) => a.type === "audio")) {
+    return "Voice message";
+  }
+  const text = content.trim();
+  if (text) {
+    if (truncate) {
+      return text.substring(0, 50) + (text.length > 50 ? "..." : "");
+    }
+    return text;
+  }
+  return attachments?.[0]?.fileName ?? "File message";
+}
+
 export const useMessageStream = () => {
   const {
     activeConversationId,
@@ -43,9 +61,7 @@ export const useMessageStream = () => {
 
       // Auto-create conversation if none active
       if (!currentConversationId) {
-        const title = content.trim()
-          ? content.substring(0, 50) + (content.length > 50 ? "..." : "")
-          : attachments?.[0]?.fileName ?? "File message";
+        const title = getConversationLabel(content, attachments);
         const newConv = await createConversation(title);
         if (!newConv) {
           console.error("Failed to create conversation");
@@ -57,12 +73,14 @@ export const useMessageStream = () => {
       }
 
       // Add user message optimistically
+      const audioAtt = attachments?.find((a) => a.type === "audio");
       const userMsg: Message = {
         id: Date.now().toString(),
         sender: "user",
-        type: attachments?.length ? "file" : "text",
+        type: audioAtt ? "audio" : attachments?.length ? "file" : "text",
         text: content,
         time: now(),
+        audioUrl: audioAtt?.url,
         attachments: attachments && attachments.length > 0 ? attachments : undefined,
       };
       addMessage(userMsg);
@@ -126,8 +144,9 @@ export const useMessageStream = () => {
 
         // Update conversation
         if (currentConversationId) {
+          const lastMessage = getConversationLabel(content, attachments, false);
           await updateConversation(currentConversationId, {
-            lastMessage: content || attachments?.[0]?.fileName || "File message",
+            lastMessage,
             updatedAt: new Date().toISOString(),
           });
           triggerChatsRefresh();

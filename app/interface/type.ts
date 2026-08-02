@@ -15,7 +15,7 @@ export type Active = {
 
 export type Attachment = {
   id: string;
-  type: "image" | "document";
+  type: "image" | "document" | "audio";
   mimeType: string;
   url: string;
   fileName: string;

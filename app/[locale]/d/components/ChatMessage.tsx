@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ChatMessageProps, Attachment } from "@/app/interface/type";
 import { cn } from "@/app/lib/utils";
-import { FileIcon, Mic, FileText, ChevronDown } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { FileIcon, FileText, ChevronDown, Play, Square } from "lucide-react";
+import { Fragment, useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
 import MessageActions from "../components/MessageActions";
@@ -27,20 +27,37 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
   // AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [playingSrc, setPlayingSrc] = useState<string | null>(null);
+  const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
+    {},
+  );
+
+  const audioSrc =
+    message.audioUrl ??
+    message.attachments?.find((a) => a.type === "audio")?.url;
 
   useEffect(() => {
-    if (message.audioUrl) {
-      audioRef.current = new Audio(message.audioUrl);
+    if (!audioSrc) return;
+    const audio = new Audio(audioSrc);
+    audio.preload = "metadata";
+    const handleLoadedMetadata = () => {
+      if (!isNaN(audio.duration) && isFinite(audio.duration)) {
+        setAudioDurations((prev) => ({ ...prev, [audioSrc]: audio.duration }));
+      }
+    };
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.src = "";
+    };
+  }, [audioSrc]);
 
-      audioRef.current.onended = () => setIsPlaying(false);
-    }
-
+  useEffect(() => {
     return () => {
       audioRef.current?.pause();
       audioRef.current = null;
     };
-  }, [message.audioUrl]);
+  }, []);
 
   // AUTO-READ
   const ttsEnabled = useTtsStore((s) => s.enabled);
@@ -68,17 +85,34 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     currentMessageId,
   ]);
 
-  const handleAudio = () => {
-    if (!audioRef.current) return;
+  const handleAudio = (src: string) => {
+    if (!src) return;
 
-    if (!isPlaying) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else {
+    if (playingSrc === src && audioRef.current && !audioRef.current.paused) {
       audioRef.current.pause();
-      setIsPlaying(false);
+      setPlayingSrc(null);
+      return;
     }
+
+    audioRef.current = new Audio(src);
+    audioRef.current.onended = () => setPlayingSrc(null);
+    audioRef.current.play();
+    setPlayingSrc(src);
   };
+
+  const formatAudioTime = (s: number) => {
+    if (!s || isNaN(s)) return "0:00";
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, "0")}`;
+  };
+
+  const isAudioAttachment = (att: Attachment) =>
+    att.type === "audio" ||
+    att.mimeType?.startsWith("audio/") ||
+    ["webm", "wav", "ogg", "mp3", "m4a", "flac", "mp4", "aac"].includes(
+      att.fileName?.split(".").pop()?.toLowerCase() || "",
+    );
 
   // Auto-resize textarea
   useEffect(() => {
@@ -129,13 +163,18 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   }, [message.text]);
 
   // FILE / ATTACHMENT RENDERER
-  const formatFileSize = (bytes: number) => {
+  const formatFileSize = (bytes?: number) => {
+    if (bytes === undefined || bytes === null || isNaN(bytes)) return "";
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
   const renderAttachment = (att: Attachment) => {
-    const ext = att.fileName.split(".").pop()?.toLowerCase();
+    if (isAudioAttachment(att)) {
+      return renderAudioBubble(att.url);
+    }
+
+    const ext = att.fileName?.split(".").pop()?.toLowerCase();
     const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
 
     if (isImage) {
@@ -206,42 +245,47 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   };
 
   // AUDIO BUBBLE
-  const renderAudioBubble = () => {
-    if (!message.audioUrl) return null;
+  const renderAudioBubble = (src: string) => {
+    if (!src) return null;
+
+    const duration = audioDurations[src] ?? 0;
+    const isPlaying = playingSrc === src;
 
     return (
-      <div className="p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2 flex items-center gap-3">
+      <div className="p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2 flex items-center gap-3 max-w-[260px]">
         <button
-          onClick={handleAudio}
-          className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white"
+          onClick={() => handleAudio(src)}
+          className="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white shrink-0"
         >
-          {isPlaying ? <span>⏸</span> : <Mic size={16} />}
+          {isPlaying ? (
+            <Square size={14} fill="currentColor" />
+          ) : (
+            <Play size={16} className="ml-0.5" />
+          )}
         </button>
 
         {/* Wave animation */}
-        <motion.div
-          className="flex gap-1"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: { transition: { staggerChildren: 0.15 } },
-          }}
-        >
-          {[1, 2, 3, 4].map((i) => (
+        <motion.div className="flex gap-1 items-center">
+          {[1, 2, 3, 4, 5].map((i) => (
             <motion.div
               key={i}
-              className="w-1 h-4 bg-indigo-500 rounded-full"
+              className="w-1 rounded-full bg-indigo-500"
               animate={{
-                height: isPlaying ? ["6px", "18px", "8px"] : "6px",
+                height: isPlaying ? [6, 18, 10, 16, 8][i % 5] : 6,
               }}
               transition={{
                 repeat: Infinity,
                 duration: 0.7,
+                delay: i * 0.1,
                 ease: "easeInOut",
               }}
             />
           ))}
         </motion.div>
+
+        <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums ml-auto">
+          {formatAudioTime(duration)}
+        </span>
       </div>
     );
   };
@@ -287,9 +331,15 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               {/* message container */}
               <div className="min-w-0">
                 {message.attachments?.length
-                  ? message.attachments.map(renderAttachment)
+                  ? message.attachments.map((att) => (
+                      <Fragment key={att.id}>
+                        {renderAttachment(att)}
+                      </Fragment>
+                    ))
                   : message.type === "file" && renderFilePreview()}
-                {message.type === "audio" && renderAudioBubble()}
+                {message.type === "audio" &&
+                  !message.attachments?.length &&
+                  renderAudioBubble(message.audioUrl || "")}
 
                 {message.text &&
                   (isUser && isEditing ? (
