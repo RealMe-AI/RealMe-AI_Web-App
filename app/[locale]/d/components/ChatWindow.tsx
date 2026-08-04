@@ -108,7 +108,7 @@ export default function ChatWindow() {
         `recording_${Date.now()}.webm`,
         { type: "audio/webm" },
       );
-      const result = await uploadFile(audioFile);
+      const result = await uploadFile(audioFile, "audio");
       if (result) {
         attachmentIds.push(result.id);
         attachmentData.push(result);

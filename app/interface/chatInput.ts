@@ -9,7 +9,7 @@ export interface ChatInputProps {
   isOnline: boolean;
   isLoading: boolean;
   attachments: Attachment[];
-  uploadingFiles: Map<string, { file: File; progress: number }>;
+  uploadingFiles: Map<string, { file: File; progress: number; kind: "file" | "audio" }>;
   showUploadPopup: boolean;
   setShowUploadPopup: (value: boolean) => void;
   onFileSelected: (file: File) => Promise<void>;

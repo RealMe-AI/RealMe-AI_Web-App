@@ -17,6 +17,10 @@ import { useTtsSpeak } from "@/app/hooks/tts/useTtsSpeak";
 export default function ChatMessage({ message }: ChatMessageProps) {
   const t = useTranslations();
   const isUser = message.sender === "user";
+  const hasAudio =
+    message.type === "audio" ||
+    message.attachments?.some((att) => att.type === "audio");
+  const isUserAudioOnly = isUser && hasAudio && !message.text;
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(message.text || "");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -27,7 +31,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
   // AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playingSrc, setPlayingSrc] = useState<string | null>(null);
+  const [activeSrc, setActiveSrc] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
     {},
   );
@@ -36,18 +42,21 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     message.audioUrl ??
     message.attachments?.find((a) => a.type === "audio")?.url;
 
+  // Preload metadata so the total duration is known before playback
   useEffect(() => {
     if (!audioSrc) return;
     const audio = new Audio(audioSrc);
     audio.preload = "metadata";
-    const handleLoadedMetadata = () => {
+    const capture = () => {
       if (!isNaN(audio.duration) && isFinite(audio.duration)) {
         setAudioDurations((prev) => ({ ...prev, [audioSrc]: audio.duration }));
       }
     };
-    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("loadedmetadata", capture);
+    audio.addEventListener("durationchange", capture);
     return () => {
-      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("loadedmetadata", capture);
+      audio.removeEventListener("durationchange", capture);
       audio.src = "";
     };
   }, [audioSrc]);
@@ -58,6 +67,54 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       audioRef.current = null;
     };
   }, []);
+
+  const handleAudio = (src: string) => {
+    if (!src) return;
+
+    // Same bubble: toggle play/pause (resume from position, restart if finished)
+    if (activeSrc === src && audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+        return;
+      }
+      if (audioRef.current.ended) {
+        audioRef.current.currentTime = 0;
+      }
+      audioRef.current.play().catch(() => setIsPlaying(false));
+      setIsPlaying(true);
+      return;
+    }
+
+    // New bubble: fresh audio element wired to real playback events
+    const audio = new Audio(src);
+    audioRef.current = audio;
+    audio.onplay = () => setIsPlaying(true);
+    audio.onpause = () => setIsPlaying(false);
+    audio.onended = () => {
+      setIsPlaying(false);
+      if (isFinite(audio.duration)) {
+        setCurrentTime(audio.duration);
+      }
+    };
+    audio.onerror = () => {
+      setIsPlaying(false);
+      setActiveSrc(null);
+    };
+    audio.ontimeupdate = () => {
+      if (audioRef.current === audio) {
+        setCurrentTime(audio.currentTime);
+      }
+    };
+    audio.ondurationchange = () => {
+      if (isFinite(audio.duration)) {
+        setAudioDurations((prev) => ({ ...prev, [src]: audio.duration }));
+      }
+    };
+    setActiveSrc(src);
+    setCurrentTime(0);
+    audio.play().catch(() => setIsPlaying(false));
+  };
 
   // AUTO-READ
   const ttsEnabled = useTtsStore((s) => s.enabled);
@@ -84,21 +141,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     speak,
     currentMessageId,
   ]);
-
-  const handleAudio = (src: string) => {
-    if (!src) return;
-
-    if (playingSrc === src && audioRef.current && !audioRef.current.paused) {
-      audioRef.current.pause();
-      setPlayingSrc(null);
-      return;
-    }
-
-    audioRef.current = new Audio(src);
-    audioRef.current.onended = () => setPlayingSrc(null);
-    audioRef.current.play();
-    setPlayingSrc(src);
-  };
 
   const formatAudioTime = (s: number) => {
     if (!s || isNaN(s)) return "0:00";
@@ -179,7 +221,10 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
     if (isImage) {
       return (
-        <div key={att.id} className="rounded-xl overflow-hidden mb-2 max-w-[280px]">
+        <div
+          key={att.id}
+          className="rounded-xl overflow-hidden mb-2 max-w-[280px]"
+        >
           <Image
             src={att.url}
             alt={att.fileName}
@@ -195,11 +240,22 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
     const isPdf = ext === "pdf";
     return (
-      <div key={att.id} className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
-        {isPdf ? <FileText className="w-5 h-5 text-red-500 shrink-0" /> : <FileIcon className="w-5 h-5 text-indigo-500 shrink-0" />}
+      <div
+        key={att.id}
+        className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2"
+      >
+        {isPdf ? (
+          <FileText className="w-5 h-5 text-red-500 shrink-0" />
+        ) : (
+          <FileIcon className="w-5 h-5 text-indigo-500 shrink-0" />
+        )}
         <div className="min-w-0">
-          <span className="text-sm font-medium block truncate max-w-[200px]">{att.fileName}</span>
-          <span className="text-[10px] text-slate-400 dark:text-slate-500">{formatFileSize(att.fileSize)}</span>
+          <span className="text-sm font-medium block truncate max-w-[200px]">
+            {att.fileName}
+          </span>
+          <span className="text-[10px] text-slate-400 dark:text-slate-500">
+            {formatFileSize(att.fileSize)}
+          </span>
         </div>
       </div>
     );
@@ -249,42 +305,58 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     if (!src) return null;
 
     const duration = audioDurations[src] ?? 0;
-    const isPlaying = playingSrc === src;
+    const isBubbleActive = activeSrc === src;
+    const isBubblePlaying = isBubbleActive && isPlaying;
+    const shownTime = isBubbleActive ? currentTime : duration;
+
+    const barCount = 8;
 
     return (
-      <div className="p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2 flex items-center gap-3 max-w-[260px]">
-        <button
-          onClick={() => handleAudio(src)}
-          className="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white shrink-0"
-        >
-          {isPlaying ? (
-            <Square size={14} fill="currentColor" />
-          ) : (
-            <Play size={16} className="ml-0.5" />
-          )}
-        </button>
+      <div
+        className={cn(
+          "p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2 flex items-center justify-between gap-3",
+          "max-w-[150px] w-[150px]"
+        )}
+      >
+        <div className="flex items-center gap-2 flex-1 min-w-0">
+          <button
+            onClick={() => handleAudio(src)}
+            className="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white shrink-0"
+          >
+            {isBubblePlaying ? (
+              <Square size={14} fill="currentColor" />
+            ) : (
+              <Play size={16} className="ml-0.5" />
+            )}
+          </button>
 
-        {/* Wave animation */}
-        <motion.div className="flex gap-1 items-center">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <motion.div
-              key={i}
-              className="w-1 rounded-full bg-indigo-500"
-              animate={{
-                height: isPlaying ? [6, 18, 10, 16, 8][i % 5] : 6,
-              }}
-              transition={{
-                repeat: Infinity,
-                duration: 0.7,
-                delay: i * 0.1,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </motion.div>
-
-        <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums ml-auto">
-          {formatAudioTime(duration)}
+          {/* Wave animation — only animates while this bubble is playing */}
+          <motion.div className="flex gap-1 items-center flex-1 justify-between min-w-0 pr-2">
+            {Array.from({ length: barCount }).map((_, idx) => {
+              const i = idx + 1;
+              return isBubblePlaying ? (
+                <motion.div
+                  key={i}
+                  className="w-[3px] h-1.5 rounded-full bg-indigo-400 shrink-0"
+                  animate={{ height: [6, 18, 10, 16, 8][i % 5] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 0.7,
+                    delay: i * 0.1,
+                    ease: "easeInOut",
+                  }}
+                />
+              ) : (
+                <div
+                  key={i}
+                  className="w-[3px] h-1.5 rounded-full bg-indigo-400/60 shrink-0"
+                />
+              );
+            })}
+          </motion.div>
+        </div>
+        <span className="text-[10px] text-slate-400 dark:text-slate-500 tabular-nums shrink-0">
+          {formatAudioTime(shownTime)}
         </span>
       </div>
     );
@@ -329,12 +401,10 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               )}
 
               {/* message container */}
-              <div className="min-w-0">
+              <div className="min-w-0 w-full">
                 {message.attachments?.length
                   ? message.attachments.map((att) => (
-                      <Fragment key={att.id}>
-                        {renderAttachment(att)}
-                      </Fragment>
+                      <Fragment key={att.id}>{renderAttachment(att)}</Fragment>
                     ))
                   : message.type === "file" && renderFilePreview()}
                 {message.type === "audio" &&
@@ -374,7 +444,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                     <div>
                       <div
                         ref={textRef}
-                        className={cn(!isExpanded && "max-h-[300px] overflow-hidden")}
+                        className={cn(
+                          !isExpanded && "max-h-[300px] overflow-hidden",
+                        )}
                       >
                         <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200">
                           {message.text}
@@ -407,7 +479,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               </div>
             </div>
 
-            {!isEditing && (
+            {!isEditing && !isUserAudioOnly && (
               <div
                 className={cn(
                   "flex w-full text-[10px] opacity-60 px-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",
