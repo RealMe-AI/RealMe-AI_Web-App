@@ -115,12 +115,13 @@ export default function ChatWindow() {
       }
     }
 
+    // voice-only: clear any typed text so only the audio is sent
+    await sendMessage(audioBlob ? "" : textContent, attachmentIds, attachmentData);
+
     setInput("");
     if (inputRef.current) inputRef.current.textContent = "";
     resetRecording();
     setAttachments([]);
-
-    await sendMessage(textContent, attachmentIds, attachmentData);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

@@ -30,12 +30,15 @@ export async function parseSSEStream(
 
       try {
         const parsed = JSON.parse(data);
-        const chunk =
-          parsed.content || parsed.text || parsed.delta?.content || "";
-        if (chunk) {
-          onChunk(chunk);
-        } else if (parsed.type) {
+
+        if (parsed.type) {
           onMeta?.(parsed);
+        } else {
+          const chunk =
+            parsed.content || parsed.text || parsed.delta?.content || "";
+          if (chunk) {
+            onChunk(chunk);
+          }
         }
         if (parsed.done === true) {
           return {
