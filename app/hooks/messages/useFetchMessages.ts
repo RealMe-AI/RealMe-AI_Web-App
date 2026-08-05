@@ -39,14 +39,16 @@ export const useFetchMessages = () => {
 
         const mapRaw = (m: RawMessage): Message => {
           const audioAtt = m.attachments?.find((a) => a.type === "audio");
+          const isUserAudio = getSenderType(m) === "user" && audioAtt;
           return {
-            id: m.id ?? Date.now().toString(),
+            id: m.id,
             sender: getSenderType(m),
             type: audioAtt ? "audio" : m.attachments?.length ? "file" : "text",
-            text:
-              getSenderType(m) === "ai"
-                ? m.content || m.text || ""
-                : m.text || m.content || "",
+            text: isUserAudio
+              ? ""
+              : getSenderType(m) === "ai"
+              ? m.content || m.text || ""
+              : m.text || m.content || "",
             time: m.createdAt
               ? new Date(m.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",

@@ -128,7 +128,11 @@ export const useMessageStream = () => {
           (chunk) => typewriter.push(chunk),
           (meta) => {
             if (meta.type === "message_created" && meta.userMessageId) {
-              updateMessage(userMsg.id, { id: meta.userMessageId as string });
+              const text = (meta.content || meta.text || meta.userMessageContent || "") as string;
+              updateMessage(userMsg.id, {
+                id: meta.userMessageId as string,
+                ...(text ? { text } : {}),
+              });
             }
           },
         );
