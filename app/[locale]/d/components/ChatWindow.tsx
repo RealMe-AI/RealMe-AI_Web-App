@@ -55,6 +55,7 @@ export default function ChatWindow() {
     isRecording,
     isPlaying: isAudioPlaying,
     duration: audioDuration,
+    audioBlob,
     audioUrl,
     startRecording,
     stopRecording,
@@ -96,17 +97,31 @@ export default function ChatWindow() {
   const handleSend = async () => {
     if (!isOnline) return;
     const textContent = input.trim();
-    if (!textContent && attachments.length === 0) return;
+    if (!textContent && attachments.length === 0 && !audioBlob) return;
+
+    const attachmentIds = attachments.map((a) => a.id);
+    const attachmentData = [...attachments];
+
+    if (audioBlob) {
+      const audioFile = new File(
+        [audioBlob],
+        `recording_${Date.now()}.webm`,
+        { type: "audio/webm" },
+      );
+      const result = await uploadFile(audioFile, "audio");
+      if (result) {
+        attachmentIds.push(result.id);
+        attachmentData.push(result);
+      }
+    }
+
+    // voice-only: clear any typed text so only the audio is sent
+    await sendMessage(audioBlob ? "" : textContent, attachmentIds, attachmentData);
 
     setInput("");
     if (inputRef.current) inputRef.current.textContent = "";
     resetRecording();
-
-    const attachmentIds = attachments.map((a) => a.id);
-    const attachmentData = [...attachments];
     setAttachments([]);
-
-    await sendMessage(textContent, attachmentIds, attachmentData);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {

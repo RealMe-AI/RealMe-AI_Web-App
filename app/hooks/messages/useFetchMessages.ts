@@ -37,25 +37,31 @@ export const useFetchMessages = () => {
           return "user";
         };
 
-        const mapRaw = (m: RawMessage): Message => ({
-          id: m.id ?? Date.now().toString(),
-          sender: getSenderType(m),
-          type: m.attachments?.length ? "file" : "text",
-          text:
-            getSenderType(m) === "ai"
+        const mapRaw = (m: RawMessage): Message => {
+          const audioAtt = m.attachments?.find((a) => a.type === "audio");
+          const isUserAudio = getSenderType(m) === "user" && audioAtt;
+          return {
+            id: m.id,
+            sender: getSenderType(m),
+            type: audioAtt ? "audio" : m.attachments?.length ? "file" : "text",
+            text: isUserAudio
+              ? ""
+              : getSenderType(m) === "ai"
               ? m.content || m.text || ""
               : m.text || m.content || "",
-          time: m.createdAt
-            ? new Date(m.createdAt).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            : new Date().toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              }),
-          attachments: m.attachments?.length ? m.attachments : undefined,
-        });
+            time: m.createdAt
+              ? new Date(m.createdAt).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : new Date().toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }),
+            audioUrl: audioAtt?.url,
+            attachments: m.attachments?.length ? m.attachments : undefined,
+          };
+        };
 
         const sortRawMessages = (rawMsgs: RawMessage[]): RawMessage[] => {
           return [...rawMsgs].sort((a, b) => {

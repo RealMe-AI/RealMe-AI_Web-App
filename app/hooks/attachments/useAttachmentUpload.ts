@@ -49,12 +49,17 @@ function xhrUpload(
 
 export function useAttachmentUpload() {
   const [uploadingFiles, setUploadingFiles] = useState<
-    Map<string, { file: File; progress: number }>
+    Map<string, { file: File; progress: number; kind: "file" | "audio" }>
   >(new Map());
 
-  const uploadFile = async (file: File): Promise<Attachment | null> => {
+  const uploadFile = async (
+    file: File,
+    kind: "file" | "audio" = "file",
+  ): Promise<Attachment | null> => {
     const tempId = `upload-${Date.now()}-${file.name}`;
-    setUploadingFiles((prev) => new Map(prev).set(tempId, { file, progress: 0 }));
+    setUploadingFiles((prev) =>
+      new Map(prev).set(tempId, { file, progress: 0, kind }),
+    );
 
     try {
       const formData = new FormData();

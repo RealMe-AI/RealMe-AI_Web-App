@@ -2,12 +2,18 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { ChatMessageProps, Attachment } from "@/app/interface/type";
+import { ChatMessageProps } from "@/app/interface/type";
 import { cn } from "@/app/lib/utils";
-import { FileIcon, Mic, FileText, ChevronDown } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
+import { Fragment, useRef, useState, useEffect } from "react";
 
 import Image from "next/image";
+import {
+  renderAttachment,
+  renderFilePreview,
+  renderAudioBubble,
+  type AudioPlayerApi,
+} from "./message-renderers";
 import MessageActions from "../components/MessageActions";
 import parseMarkdown from "@/app/lib/parseMarkdown";
 import { useEditMessage } from "@/app/hooks/messages/useEditMessage";
@@ -17,6 +23,10 @@ import { useTtsSpeak } from "@/app/hooks/tts/useTtsSpeak";
 export default function ChatMessage({ message }: ChatMessageProps) {
   const t = useTranslations();
   const isUser = message.sender === "user";
+  const hasAudio =
+    message.type === "audio" ||
+    message.attachments?.some((att) => att.type === "audio");
+  const isUserAudioOnly = isUser && hasAudio && !message.text;
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(message.text || "");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -27,20 +37,98 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
   // AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [activeSrc, setActiveSrc] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [audioDurations, setAudioDurations] = useState<Record<string, number>>(
+    {},
+  );
+
+  const audioSrc =
+    message.audioUrl ??
+    message.attachments?.find((a) => a.type === "audio")?.url;
+
+  // Preload metadata so the total duration is known before playback
+  useEffect(() => {
+    if (!audioSrc) return;
+    const audio = new Audio(audioSrc);
+    audio.preload = "metadata";
+    const capture = () => {
+      if (!isNaN(audio.duration) && isFinite(audio.duration)) {
+        setAudioDurations((prev) => ({ ...prev, [audioSrc]: audio.duration }));
+      }
+    };
+    audio.addEventListener("loadedmetadata", capture);
+    audio.addEventListener("durationchange", capture);
+    return () => {
+      audio.removeEventListener("loadedmetadata", capture);
+      audio.removeEventListener("durationchange", capture);
+      audio.src = "";
+    };
+  }, [audioSrc]);
 
   useEffect(() => {
-    if (message.audioUrl) {
-      audioRef.current = new Audio(message.audioUrl);
-
-      audioRef.current.onended = () => setIsPlaying(false);
-    }
-
     return () => {
       audioRef.current?.pause();
       audioRef.current = null;
     };
-  }, [message.audioUrl]);
+  }, []);
+
+  const handleAudio = (src: string) => {
+    if (!src) return;
+
+    // Same bubble: toggle play/pause (resume from position, restart if finished)
+    if (activeSrc === src && audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+        return;
+      }
+      if (audioRef.current.ended) {
+        audioRef.current.currentTime = 0;
+      }
+      audioRef.current.play().catch(() => setIsPlaying(false));
+      setIsPlaying(true);
+      return;
+    }
+
+    // New bubble: fresh audio element wired to real playback events
+    const audio = new Audio(src);
+    audioRef.current = audio;
+    audio.onplay = () => setIsPlaying(true);
+    audio.onpause = () => setIsPlaying(false);
+    audio.onended = () => {
+      setIsPlaying(false);
+      if (isFinite(audio.duration)) {
+        setCurrentTime(audio.duration);
+      }
+    };
+    audio.onerror = () => {
+      setIsPlaying(false);
+      setActiveSrc(null);
+    };
+    audio.ontimeupdate = () => {
+      if (audioRef.current === audio) {
+        setCurrentTime(audio.currentTime);
+      }
+    };
+    audio.ondurationchange = () => {
+      if (isFinite(audio.duration)) {
+        setAudioDurations((prev) => ({ ...prev, [src]: audio.duration }));
+      }
+    };
+    setActiveSrc(src);
+    setCurrentTime(0);
+    audio.play().catch(() => setIsPlaying(false));
+  };
+
+  const audioPlayerApi: AudioPlayerApi = {
+    audioDurations,
+    activeSrc,
+    isPlaying,
+    currentTime,
+    onTogglePlay: handleAudio,
+  };
 
   // AUTO-READ
   const ttsEnabled = useTtsStore((s) => s.enabled);
@@ -67,18 +155,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     speak,
     currentMessageId,
   ]);
-
-  const handleAudio = () => {
-    if (!audioRef.current) return;
-
-    if (!isPlaying) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    } else {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    }
-  };
 
   // Auto-resize textarea
   useEffect(() => {
@@ -128,124 +204,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     }
   }, [message.text]);
 
-  // FILE / ATTACHMENT RENDERER
-  const formatFileSize = (bytes: number) => {
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
-
-  const renderAttachment = (att: Attachment) => {
-    const ext = att.fileName.split(".").pop()?.toLowerCase();
-    const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
-
-    if (isImage) {
-      return (
-        <div key={att.id} className="rounded-xl overflow-hidden mb-2 max-w-[280px]">
-          <Image
-            src={att.url}
-            alt={att.fileName}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto rounded-xl"
-            unoptimized
-          />
-        </div>
-      );
-    }
-
-    const isPdf = ext === "pdf";
-    return (
-      <div key={att.id} className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
-        {isPdf ? <FileText className="w-5 h-5 text-red-500 shrink-0" /> : <FileIcon className="w-5 h-5 text-indigo-500 shrink-0" />}
-        <div className="min-w-0">
-          <span className="text-sm font-medium block truncate max-w-[200px]">{att.fileName}</span>
-          <span className="text-[10px] text-slate-400 dark:text-slate-500">{formatFileSize(att.fileSize)}</span>
-        </div>
-      </div>
-    );
-  };
-
-  // LEGACY FILE PREVIEW (for messages without attachments array)
-  const renderFilePreview = () => {
-    if (!message.fileUrl || !message.fileName) return null;
-
-    const ext = message.fileName.split(".").pop()?.toLowerCase();
-
-    if (["png", "jpg", "jpeg", "webp"].includes(ext || "")) {
-      return (
-        <div className="rounded-xl overflow-hidden mb-2 max-w-[280px]">
-          <Image
-            src={message.fileUrl}
-            alt={message.fileName}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto rounded-xl"
-            unoptimized
-          />
-        </div>
-      );
-    }
-
-    if (ext === "pdf") {
-      return (
-        <div className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
-          <FileText className="text-red-500" />
-          <span className="text-sm font-medium">{message.fileName}</span>
-        </div>
-      );
-    }
-
-    return (
-      <div className="flex items-center gap-3 p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2">
-        <FileIcon className="text-indigo-500" />
-        <span className="text-sm font-medium">{message.fileName}</span>
-      </div>
-    );
-  };
-
-  // AUDIO BUBBLE
-  const renderAudioBubble = () => {
-    if (!message.audioUrl) return null;
-
-    return (
-      <div className="p-3 bg-white/20 dark:bg-slate-700/20 rounded-xl mb-2 flex items-center gap-3">
-        <button
-          onClick={handleAudio}
-          className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white"
-        >
-          {isPlaying ? <span>⏸</span> : <Mic size={16} />}
-        </button>
-
-        {/* Wave animation */}
-        <motion.div
-          className="flex gap-1"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: { transition: { staggerChildren: 0.15 } },
-          }}
-        >
-          {[1, 2, 3, 4].map((i) => (
-            <motion.div
-              key={i}
-              className="w-1 h-4 bg-indigo-500 rounded-full"
-              animate={{
-                height: isPlaying ? ["6px", "18px", "8px"] : "6px",
-              }}
-              transition={{
-                repeat: Infinity,
-                duration: 0.7,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </motion.div>
-      </div>
-    );
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -285,11 +243,19 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               )}
 
               {/* message container */}
-              <div className="min-w-0">
+              <div className="min-w-0 w-full">
                 {message.attachments?.length
-                  ? message.attachments.map(renderAttachment)
-                  : message.type === "file" && renderFilePreview()}
-                {message.type === "audio" && renderAudioBubble()}
+                  ? // eslint-disable-next-line react-hooks/refs -- playback handler only fires on user click
+                    message.attachments.map((att) => (
+                      <Fragment key={att.id}>
+                        {renderAttachment(att, audioPlayerApi)}
+                      </Fragment>
+                    ))
+                  : message.type === "file" && renderFilePreview(message)}
+                {message.type === "audio" &&
+                  !message.attachments?.length &&
+                  // eslint-disable-next-line react-hooks/refs -- playback handler only fires on user click
+                  renderAudioBubble(message.audioUrl || "", audioPlayerApi)}
 
                 {message.text &&
                   (isUser && isEditing ? (
@@ -324,7 +290,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                     <div>
                       <div
                         ref={textRef}
-                        className={cn(!isExpanded && "max-h-[300px] overflow-hidden")}
+                        className={cn(
+                          !isExpanded && "max-h-[300px] overflow-hidden",
+                        )}
                       >
                         <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-800 dark:text-slate-200">
                           {message.text}
@@ -357,7 +325,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               </div>
             </div>
 
-            {!isEditing && (
+            {!isEditing && !isUserAudioOnly && (
               <div
                 className={cn(
                   "flex w-full text-[10px] opacity-60 px-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",
