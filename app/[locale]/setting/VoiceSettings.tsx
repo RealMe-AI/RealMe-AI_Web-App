@@ -59,12 +59,12 @@ export default function VoiceSettings() {
           </div>
 
           <div
-            className={`w-10 h-5 rounded-full p-0.5 flex items-center transition-colors ${
-              enabled ? "bg-indigo-600" : "bg-slate-400"
+            className={`w-9 h-4 rounded-full flex items-center transition-colors ${
+              enabled ? "bg-indigo-600" : "bg-slate-400 p-0.5"
             }`}
           >
             <div
-              className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${
+              className={`flex items-center justify-center bg-white w-3.5 h-3.5 rounded-full shadow-md transform transition-transform ${
                 enabled ? "translate-x-5" : "translate-x-0"
               }`}
             />
@@ -76,13 +76,13 @@ export default function VoiceSettings() {
           <div className="px-2 py-3 relative">
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                {t("settings.voice.speed")}
+                {/* {t("settings.voice.speed")} */}
               </p>
             </div>
 
-            <div className="relative flex items-center h-6">
+            {/* <div className="relative flex items-center h-6"> */}
               {/* Speed badge */}
-              {showSpeed && (
+              {/* {showSpeed && (
                 <div
                   className="absolute -top-8 text-xs font-semibold text-white bg-indigo-600 dark:bg-indigo-500 rounded-md px-2 py-0.5 shadow pointer-events-none transition-opacity"
                   style={{ left: `calc(${pct}% - 12px)` }}
@@ -129,7 +129,7 @@ export default function VoiceSettings() {
                   background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${pct}%, #e2e8f0 ${pct}%, #e2e8f0 100%)`,
                 }}
               />
-            </div>
+            </div> */}
           </div>
         )}
 
@@ -139,7 +139,7 @@ export default function VoiceSettings() {
             onClick={() => setAutoRead(!autoRead)}
             className="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-indigo-100/50 dark:hover:bg-slate-700/60 transition"
           >
-            <div
+            {/* <div
               className={`w-4 h-4 rounded border-2 flex items-center justify-center transition ${
                 autoRead
                   ? "bg-indigo-600 border-indigo-600"
@@ -164,7 +164,7 @@ export default function VoiceSettings() {
             </div>
             <span className="text-sm text-slate-700 dark:text-slate-200">
               {t("settings.voice.autoRead")}
-            </span>
+            </span> */}
           </label>
         )}
       </div>
