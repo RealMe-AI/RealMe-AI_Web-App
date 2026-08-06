@@ -25,13 +25,13 @@ export default function EmailToggle({
       </div>
 
       <div
-        className={`w-10 h-5 rounded-full p-0.5 flex items-center transition-colors ${
+        className={`w-10 h-4 rounded-full p-0.5 flex items-center transition-colors ${
           enabled ? "bg-indigo-600" : "bg-slate-400"
         }`}
       >
         <div
-          className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${
-            enabled ? "translate-x-5" : "translate-x-0"
+          className={`bg-white w-3.5 h-3.5 rounded-full shadow-md transform transition-transform ${
+            enabled ? "translate-x-5" : "translate-x-0 pl-0.5"
           }`}
         />
       </div>
