@@ -14,6 +14,7 @@ export default function GoogleAuthButton() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onGoogleSuccess = async (response: CredentialResponse) => {
+    console.log("success fired, isLoading before:", isLoading);
     await handleCredentialResponse(response);
     setIsLoading(false);
   };
@@ -24,7 +25,7 @@ export default function GoogleAuthButton() {
     <div className="relative">
       <div
         className="absolute inset-0 z-10 opacity-0"
-        onPointerDown={() => { clearError(); setIsLoading(true); }}
+        onPointerDown={() => { console.log("pointerdown fired"); clearError(); setIsLoading(true); }}
       >
         <GoogleLogin
           onSuccess={onGoogleSuccess}
