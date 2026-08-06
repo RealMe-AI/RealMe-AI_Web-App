@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CircleHelp, Settings, User, ShieldCheck, Mic } from "lucide-react";
+import { X, CircleHelp, Settings, User, ShieldCheck, Volume2 } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
 import { useUserStore } from "../../store/useUserStore";
 import { useTranslations } from "next-intl";
@@ -41,7 +41,7 @@ export default function SettingsPanel({ open, close }: SettingsPanelProps) {
     { id: 'account' as TabId, label: t("settings.account.label"), icon: User },
     { id: 'preferences' as TabId, label: t("settings.preferences.label"), icon: Settings },
     { id: 'security' as TabId, label: t("settings.security.label"), icon: ShieldCheck },
-    { id: 'voice' as TabId, label: t("settings.voice.label"), icon: Mic },
+    { id: 'voice' as TabId, label: t("settings.voice.label"), icon: Volume2 },
     { id: 'support' as TabId, label: t("settings.support.label"), icon: CircleHelp },
   ];
 
