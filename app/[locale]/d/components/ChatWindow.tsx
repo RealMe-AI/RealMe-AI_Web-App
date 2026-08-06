@@ -102,6 +102,11 @@ export default function ChatWindow() {
     const attachmentIds = attachments.map((a) => a.id);
     const attachmentData = [...attachments];
 
+    setInput("");
+    if (inputRef.current) inputRef.current.textContent = "";
+    resetRecording();
+    setAttachments([]);
+
     if (audioBlob) {
       const audioFile = new File(
         [audioBlob],
@@ -117,11 +122,6 @@ export default function ChatWindow() {
 
     // voice-only: clear any typed text so only the audio is sent
     await sendMessage(audioBlob ? "" : textContent, attachmentIds, attachmentData);
-
-    setInput("");
-    if (inputRef.current) inputRef.current.textContent = "";
-    resetRecording();
-    setAttachments([]);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
