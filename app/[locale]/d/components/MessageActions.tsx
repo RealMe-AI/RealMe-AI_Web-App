@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Copy, Pencil, Check, Square, Mic } from "lucide-react";
+import { Copy, Pencil, Check, Square, Mic, Volume2 } from "lucide-react";
 import { useCopyToClipboard } from "@/app/hooks/copyToClipboard/useCopyToClipboard";
 import Tooltip from "@/app/[locale]/components/ui/Tooltip";
 import { Message } from "@/app/interface/type";
@@ -64,7 +64,7 @@ export default function MessageActions({
             {isSpeaking && currentMessageId === message.id ? (
               <Square size={14} className="text-slate-700 dark:text-slate-200" fill="currentColor" />
             ) : (
-              <Mic size={14} className="text-slate-700 dark:text-slate-200" />
+              <Volume2 size={14} className="text-slate-700 dark:text-slate-200" />
             )}
           </button>
         </Tooltip>
