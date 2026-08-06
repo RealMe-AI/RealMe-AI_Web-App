@@ -1,8 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/store/useChatStore";
-import { authFetch } from "@/app/lib/apiClient";
+import { fetchConversations } from "@/app/lib/conversations";
 import { useDebounce } from "../useDebounce";
+
+// Shared in-flight guard so identical initial fetches (Sidebar +
+// ConversationsModal, StrictMode remounts) share ONE request.
+const inFlightFetch = new Map<string, Promise<void>>();
 
 export function useChats() {
   const { chats, setConversations } = useChatStore();
@@ -18,7 +21,7 @@ export function useChats() {
   const totalPagesRef = useRef(1);
   const [hasMore, setHasMore] = useState(false);
 
-  const fetchChats = useCallback(
+  const runFetch = useCallback(
     async (page: number, append: boolean, q: string) => {
       try {
         if (append) {
@@ -27,30 +30,12 @@ export function useChats() {
           setIsLoading(true);
         }
 
-        const params = new URLSearchParams({
-          page: String(page),
-          limit: "20",
-        });
-        if (q) params.set("q", q);
+        const { chats: loadedChats, meta } = await fetchConversations(
+          page,
+          20,
+          q,
+        );
 
-        const res = await authFetch(`${baseUrl}/conversations?${params}`, {
-          method: "GET",
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json().catch(() => ({}));
-          throw new Error(
-            errorData.message || "Failed to fetch conversations",
-          );
-        }
-
-        const json = await res.json();
-
-        const loadedChats = Array.isArray(json)
-          ? json
-          : json.data || json.items || json.conversations || [];
-
-        const meta = json.meta;
         if (meta) {
           totalPagesRef.current = meta.totalPages;
           pageRef.current = meta.page;
@@ -79,11 +64,30 @@ export function useChats() {
     [setConversations],
   );
 
-  const isMountedRef = useRef(false);
+  const fetchChats = useCallback(
+    async (page: number, append: boolean, q: string) => {
+      if (append) {
+        await runFetch(page, true, q);
+        return;
+      }
 
-  useEffect(() => {
-    isMountedRef.current = true;
-  }, []);
+      const key = `${page}:${q}`;
+      const existing = inFlightFetch.get(key);
+      if (existing) {
+        await existing;
+        return;
+      }
+
+      const request = runFetch(page, false, q).finally(() => {
+        if (inFlightFetch.get(key) === request) {
+          inFlightFetch.delete(key);
+        }
+      });
+      inFlightFetch.set(key, request);
+      await request;
+    },
+    [runFetch],
+  );
 
   // Initial load + refresh signal
   useEffect(() => {
@@ -94,9 +98,14 @@ export function useChats() {
     fetchChats(1, false, "");
   }, [refreshSignal, fetchChats]);
 
-  // Search changes → reset to page 1
+  // Search changes → reset to page 1 (skip the initial mount, which the
+  // "Initial load" effect above already handles)
+  const didInitSearchRef = useRef(false);
   useEffect(() => {
-    if (!isMountedRef.current) return;
+    if (!didInitSearchRef.current) {
+      didInitSearchRef.current = true;
+      return;
+    }
     pageRef.current = 1;
     totalPagesRef.current = 1;
     setHasMore(false);

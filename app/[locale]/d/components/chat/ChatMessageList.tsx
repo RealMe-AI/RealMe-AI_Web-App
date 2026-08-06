@@ -28,60 +28,62 @@ export function ChatMessageList({
 
   return (
     <>
-      <div
-        ref={scrollContainerRef}
-        className="flex-1 pb-4 overflow-y-auto caret-transparent relative"
-      >
-        <div className="max-w-3xl mx-auto h-full">
-          {chatMessages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-center"
-              >
-                <div className="mb-1 flex items-center justify-center gap-3">
-                  <Image
-                    src="/logo.png"
-                    alt="RealMe AI"
-                    width={35}
-                    height={35}
-                    className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
-                  />
-                  <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
-                    {t("dashboard.greeting.hi")},{" "}
-                    {user?.fullName?.split(" ")[0]}
-                  </h1>
-                </div>
-                <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
-                  {t("dashboard.greeting.subtitle")}
-                </p>
-              </motion.div>
-            </div>
-          ) : (
-            chatMessages.map((msg) => (
-              <ChatMessage key={msg.id} message={msg} />
-            ))
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
-
-      {showScrollBtn && (
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          onClick={() =>
-            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-          }
-          className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 w-10 h-10
-                     rounded-full bg-white/80 dark:bg-slate-700/80 backdrop-blur-md border border-slate-300 dark:border-white/40 text-slate-900 dark:text-slate-100
-                     shadow-lg flex items-center justify-center transition-colors hover:bg-white/10"
+      <div className="relative flex-1 min-h-0">
+        <div
+          ref={scrollContainerRef}
+          className="h-full pb-4 overflow-y-auto caret-transparent"
         >
-          <ArrowDown size={20} />
-        </motion.button>
-      )}
+          <div className="max-w-3xl mx-auto h-full">
+            {chatMessages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center"
+                >
+                  <div className="mb-1 flex items-center justify-center gap-3">
+                    <Image
+                      src="/logo.png"
+                      alt="RealMe AI"
+                      width={35}
+                      height={35}
+                      className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20 object-cover"
+                    />
+                    <h1 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white">
+                      {t("dashboard.greeting.hi")},{" "}
+                      {user?.fullName?.split(" ")[0]}
+                    </h1>
+                  </div>
+                  <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                    {t("dashboard.greeting.subtitle")}
+                  </p>
+                </motion.div>
+              </div>
+            ) : (
+              chatMessages.map((msg) => (
+                <ChatMessage key={msg.id} message={msg} />
+              ))
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+
+        {showScrollBtn && (
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onClick={() =>
+              messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="absolute bottom-1 left-1/2 -translate-x-1/2 z-20 w-10 h-10
+                       rounded-full bg-white/80 dark:bg-slate-700/80 backdrop-blur-md border border-slate-300 dark:border-white/40 text-slate-900 dark:text-slate-100
+                       shadow-lg flex items-center justify-center transition-colors hover:bg-white/10"
+          >
+            <ArrowDown size={20} />
+          </motion.button>
+        )}
+      </div>
 
       {isLoading && (
         <motion.div
