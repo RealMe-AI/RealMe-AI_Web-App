@@ -42,7 +42,7 @@ export default function Sidebar({
     hasMore,
   } = useChats();
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const sentinelRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const t = useTranslations();
 
   const autoFocusSearch = useSidebarStore((s) => s.autoFocusSearch);
@@ -95,20 +95,30 @@ export default function Sidebar({
   }, [loadMore]);
 
   useEffect(() => {
-    if (!sentinelRef.current) return;
+    const list = listRef.current;
+    if (!list || !isOpen || !hasMore) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-          loadMoreRef.current();
-        }
-      },
-      { threshold: 0.1 },
-    );
+    let raf = 0;
+    const maybeLoad = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const { scrollTop, scrollHeight, clientHeight } = list;
+        if (scrollHeight - scrollTop - clientHeight < 250) loadMoreRef.current();
+      });
+    };
 
-    observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, [hasMore, isLoadingMore]);
+    list.addEventListener("scroll", maybeLoad, { passive: true });
+    window.addEventListener("scroll", maybeLoad, { passive: true });
+    const ro = new ResizeObserver(maybeLoad);
+    ro.observe(list);
+
+    return () => {
+      list.removeEventListener("scroll", maybeLoad);
+      window.removeEventListener("scroll", maybeLoad);
+      ro.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [isOpen, hasMore, isLoadingMore]);
 
   const handleSelectChat = (chat: Chat) => {
     closeAll();
@@ -225,7 +235,7 @@ export default function Sidebar({
             )}
 
             {/* Chat List */}
-            <div className="flex-1 overflow-y-auto space-y-3 caret-transparent">
+            <div ref={listRef} className="flex-1 overflow-y-auto space-y-3 caret-transparent">
               {chats.length ? (
                 sortPinnedFirst(chats).map((chat) => (
                   <SidebarItem
@@ -244,9 +254,8 @@ export default function Sidebar({
                 </p>
               )}
 
-              {isLoadingMore && <LazyLoading />}
+{isLoadingMore && <LazyLoading />}
 
-              {hasMore && <div ref={sentinelRef} />}
             </div>
 
             {/* Footer Area */}
