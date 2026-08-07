@@ -5,6 +5,7 @@ import type { CredentialResponse } from "@react-oauth/google";
 import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
 
 export default function useGoogleAuth() {
   const router = useRouter();
@@ -35,6 +36,7 @@ export default function useGoogleAuth() {
       accessToken: data.accessToken,
       refreshToken: data.refreshToken,
     });
+    resetDashboardUi();
     router.replace("/d");
   };
 

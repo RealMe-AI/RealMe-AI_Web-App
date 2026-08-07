@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
 import { baseUrl } from "@/app/lib/baseUrl";
 
 export default function useLogout() {
@@ -26,9 +27,11 @@ export default function useLogout() {
       }
 
       clearAuth();
+      resetDashboardUi();
       router.push("/auth");
     } catch {
       useAuthStore.getState().clearAuth();
+      resetDashboardUi();
       router.push("/auth");
     } finally {
       setIsLoggingOut(false);
