@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useSignUpStore } from "@/app/store/useSignUpStore";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
 import { baseUrl } from "@/app/lib/baseUrl";
 
 export function useOTPVerification() {
@@ -105,6 +106,7 @@ export function useOTPVerification() {
       });
 
       //  REDIRECT ONLY AFTER TOKEN EXISTS
+      resetDashboardUi();
       router.push("/d");
     } catch (err) {
       console.error("OTP verification error:", err);

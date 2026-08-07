@@ -6,6 +6,7 @@ import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import { authFetch } from "@/app/lib/apiClient";
+import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
 
 interface LoginErrorResponse {
   error?: string;
@@ -154,6 +155,7 @@ export default function useSignIn() {
       setPassword("");
       setFieldErrors({ identifier: null, password: null });
 
+      resetDashboardUi();
       router.push("/d");
 
       setTimeout(() => setSuccess(false), 1500);

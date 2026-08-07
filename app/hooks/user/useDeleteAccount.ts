@@ -6,6 +6,7 @@ import { baseUrl } from "@/app/lib/baseUrl";
 import { authFetch } from "@/app/lib/apiClient";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import { useUserStore } from "@/app/store/useUserStore";
+import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
 
 function requestGoogleAccessToken(): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -63,6 +64,7 @@ export default function useDeleteAccount() {
       }
 
       useAuthStore.getState().clearAuth();
+      resetDashboardUi();
       router.push("/auth");
     } catch (error) {
       console.error("Error deleting account:", error);

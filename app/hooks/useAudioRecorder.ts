@@ -2,6 +2,17 @@
 
 import { useState, useRef, useCallback } from "react";
 
+function pickSupportedMimeType(): string {
+  if (typeof MediaRecorder === "undefined") return "";
+  const candidates = [
+    "audio/webm;codecs=opus",
+    "audio/webm",
+    "audio/mp4",
+    "audio/aac",
+  ];
+  return candidates.find((t) => MediaRecorder.isTypeSupported(t)) || "";
+}
+
 export function useAudioRecorder() {
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,7 +31,10 @@ export function useAudioRecorder() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
-      const mediaRecorder = new MediaRecorder(stream);
+      const mimeType = pickSupportedMimeType();
+      const mediaRecorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       chunksRef.current = [];
 
@@ -29,7 +43,9 @@ export function useAudioRecorder() {
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const blob = new Blob(chunksRef.current, {
+          type: mediaRecorder.mimeType || mimeType || "audio/webm",
+        });
         const url = URL.createObjectURL(blob);
         setAudioBlob(blob);
         setAudioUrl(url);
@@ -77,7 +93,7 @@ export function useAudioRecorder() {
     setIsPlaying(false);
   }, [audioUrl]);
 
-  const togglePlayback = useCallback(() => {
+  const togglePlayback = useCallback(async () => {
     if (!audioUrl) return;
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
@@ -86,9 +102,24 @@ export function useAudioRecorder() {
     }
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
-    audio.onended = () => setIsPlaying(false);
-    audio.play();
-    setIsPlaying(true);
+    const reset = () => {
+      if (audioRef.current === audio) {
+        audioRef.current = null;
+        setIsPlaying(false);
+      }
+    };
+    audio.onended = reset;
+    audio.onerror = () => {
+      console.error("Voice-note preview playback failed", audioUrl);
+      reset();
+    };
+    try {
+      await audio.play();
+      setIsPlaying(true);
+    } catch (err) {
+      console.error("Voice-note preview playback rejected", err);
+      reset();
+    }
   }, [audioUrl, isPlaying]);
 
   return {

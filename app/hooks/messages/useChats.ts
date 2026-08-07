@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useChatStore } from "@/app/store/useChatStore";
 import { fetchConversations } from "@/app/lib/conversations";
+import type { PaginatedMeta } from "@/app/interface/type";
 import { useDebounce } from "../useDebounce";
 
 // Shared in-flight guard so identical initial fetches (Sidebar +
 // ConversationsModal, StrictMode remounts) share ONE request.
-const inFlightFetch = new Map<string, Promise<void>>();
+const inFlightFetch = new Map<string, Promise<PaginatedMeta | null>>();
 
 export function useChats() {
   const { chats, setConversations } = useChatStore();
@@ -51,11 +52,13 @@ export function useChats() {
         }
 
         setError(null);
+        return meta ?? null;
       } catch (err) {
         console.error("Error fetching chats:", err);
         setError(
           err instanceof Error ? err.message : "Failed to fetch chats",
         );
+        return null;
       } finally {
         setIsLoading(false);
         setIsLoadingMore(false);
@@ -74,7 +77,14 @@ export function useChats() {
       const key = `${page}:${q}`;
       const existing = inFlightFetch.get(key);
       if (existing) {
-        await existing;
+        const meta = await existing;
+        if (meta) {
+          totalPagesRef.current = meta.totalPages;
+          pageRef.current = meta.page;
+          setHasMore(meta.page < meta.totalPages);
+        } else {
+          setHasMore(false);
+        }
         return;
       }
 
