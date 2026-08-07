@@ -157,17 +157,12 @@ export default function ChatWindow() {
   }, []);
 
   useEffect(() => {
-    const handleVisible = () => {
-      if (document.visibilityState === "visible") checkClipboard();
-    };
-    document.addEventListener("visibilitychange", handleVisible);
-    const handleFocus = () => checkClipboard();
-    inputRef.current?.addEventListener("focus", handleFocus);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisible);
-      inputRef.current?.removeEventListener("focus", handleFocus);
-    };
-  }, [checkClipboard]);
+  const handleFocus = () => checkClipboard();
+  inputRef.current?.addEventListener("focus", handleFocus);
+  return () => {
+    inputRef.current?.removeEventListener("focus", handleFocus);
+  };
+}, [checkClipboard]);
 
   useEffect(() => {
     document.body.style.overflow = clipboardText ? "hidden" : "";
