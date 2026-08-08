@@ -197,10 +197,10 @@ export function ChatInput({
           </div>
         )}
 
-        <div className="flex items-center gap-2 w-full py-1">
+        <div className="flex items-end gap-2 w-full py-1">
           <div
             onClick={() => setShowUploadPopup(true)}
-            className="rounded-full hover:bg-white/30 
+            className="mb-0.5 rounded-full hover:bg-white/30 
                        dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
           >
             <Plus size={27} className="text-indigo-500 dark:text-white/40" />
@@ -233,7 +233,7 @@ export function ChatInput({
           {isRecording ? (
             <div
               onClick={onMicClick}
-              className="rounded-full hover:bg-white/30 
+              className="mb-0.5 rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
               <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900">
@@ -243,7 +243,7 @@ export function ChatInput({
           ) : input.trim() === "" && !hasAttachmentsOrUploading && !audioUrl && !isLoading ? (
             <div
               onClick={onMicClick}
-              className="rounded-full hover:bg-white/30 
+              className="mb-0.5 rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
               <Mic
@@ -255,7 +255,7 @@ export function ChatInput({
             <button
               onClick={isLoading ? onAbort : isOnline ? onSend : undefined}
               className={cn(
-                "flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
+                "mb-0.5 flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
                 !isOnline
                   ? "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
                   : isLoading
