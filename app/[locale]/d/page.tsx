@@ -44,7 +44,7 @@ export default function Page() {
   if (!hydrated || !accessToken) return null;
 
   return (
-    <div className="h-screen w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
+    <div className="h-dvh w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
       {/* Toggle Button */}
       {!isSidebarOpen && (
         <button
