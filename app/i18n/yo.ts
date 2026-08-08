@@ -394,6 +394,7 @@ const yo = {
       save_button: "Fipamọ",
     },
     uploading: "Npo…",
+    voice_message: "Ifiranṣẹ-Ohùn",
     avatar_upload_failed: "Ko le gbe Aworan soke.",
   },
 

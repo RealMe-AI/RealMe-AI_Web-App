@@ -394,6 +394,7 @@ const ig = {
       save_button: "Chekwaa",
     },
     uploading: "Na-ebunye…",
+    voice_message: "Ozi-Olu",
     avatar_upload_failed: "Enweghị ike bulite Foto.",
   },
 
