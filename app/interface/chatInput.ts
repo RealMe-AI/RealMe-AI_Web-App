@@ -18,6 +18,7 @@ export interface ChatInputProps {
   isRecording: boolean;
   isAudioRecorded: boolean;
   audioDuration: number;
+  audioCurrentTime: number;
   audioUrl: string | null;
   isAudioPlaying: boolean;
   onMicClick: () => void;
