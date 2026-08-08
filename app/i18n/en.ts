@@ -393,6 +393,7 @@ const en = {
       save_button: "Save",
     },
     uploading: "Uploading…",
+    voice_message: "Voice-Message",
     avatar_upload_failed: "Failed to upload Image.",
   },
 

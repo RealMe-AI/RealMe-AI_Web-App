@@ -84,7 +84,7 @@ export function ChatInput({
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className="text-xs font-medium text-slate-800 dark:text-slate-200 truncate max-w-[120px] leading-tight">
-                      {file.name}
+                      {kind === "audio" ? t("modal.voice_message") : file.name}
                     </span>
                     <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
                       {progress < 100
