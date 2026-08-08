@@ -8,6 +8,7 @@ import { CustomLoader } from "@/app/[locale]/components/ui/CustomLoader";
 import Image from "next/image";
 import FileUploadPopup from "../FileUploadPopup";
 import type { ChatInputProps } from "@/app/interface/chatInput";
+import { formatAudioTime } from "../message-renderers/renderAudioBubble";
 
 const formatFileSize = (bytes: number) => {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -30,6 +31,7 @@ export function ChatInput({
   onRemoveAttachment,
   isRecording,
   audioDuration,
+  audioCurrentTime,
   audioUrl,
   isAudioPlaying,
   onMicClick,
@@ -157,7 +159,7 @@ export function ChatInput({
                       ))}
                     </div>
                     <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-8 tabular-nums">
-                      {`${Math.floor(audioDuration / 60)}:${(audioDuration % 60).toString().padStart(2, "0")}`}
+                      {formatAudioTime(audioDuration)}
                     </span>
                   </div>
                 ) : (
@@ -182,7 +184,7 @@ export function ChatInput({
                       ))}
                     </div>
                     <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-8 tabular-nums">
-                      {`${Math.floor(audioDuration / 60)}:${(audioDuration % 60).toString().padStart(2, "0")}`}
+                      {formatAudioTime(isAudioPlaying ? audioCurrentTime : audioDuration)}
                     </span>
                     <button
                       onClick={onDeleteAudio}
@@ -258,12 +260,12 @@ export function ChatInput({
                 "mb-0.5 flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
                 !isOnline
                   ? "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
-                  : isLoading
+                  : isLoading || isAudioUploading
                     ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
                     : "bg-indigo-500 hover:bg-indigo-600 text-white",
               )}
             >
-              {isLoading ? (
+              {isLoading || isAudioUploading ? (
                 <Square size={16} fill="currentColor" />
               ) : (
                 <ArrowUp size={28} />

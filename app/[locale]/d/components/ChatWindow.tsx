@@ -55,6 +55,7 @@ export default function ChatWindow() {
     isRecording,
     isPlaying: isAudioPlaying,
     duration: audioDuration,
+    currentTime: audioCurrentTime,
     audioBlob,
     audioUrl,
     startRecording,
@@ -110,7 +111,7 @@ export default function ChatWindow() {
     if (audioBlob) {
       const audioFile = new File(
         [audioBlob],
-        `recording_${Date.now()}.webm`,
+        `Voice-Message.webm`,
         { type: "audio/webm" },
       );
       const result = await uploadFile(audioFile, "audio");
@@ -226,6 +227,7 @@ export default function ChatWindow() {
         isRecording={isRecording}
         isAudioRecorded={isAudioRecorded}
         audioDuration={audioDuration}
+        audioCurrentTime={audioCurrentTime}
         audioUrl={audioUrl}
         isAudioPlaying={isAudioPlaying}
         onMicClick={handleMicClick}
