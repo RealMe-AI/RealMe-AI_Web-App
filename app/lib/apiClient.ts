@@ -16,8 +16,22 @@ function processQueue(error: unknown, token: string | null) {
   failedQueue = [];
 }
 
+function readStoredRefreshToken(): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem("au");
+    if (!raw) return null;
+    return JSON.parse(raw).state?.refreshToken ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export async function doRefresh(): Promise<string | null> {
-  const { refreshToken, clearAuth } = useAuthStore.getState();
+  const { clearAuth } = useAuthStore.getState();
+  // Prefer the newest persisted refresh token: another tab may have
+  // rotated it (single-use), so the in-memory copy can be consumed/stale.
+  const refreshToken = readStoredRefreshToken() ?? useAuthStore.getState().refreshToken;
 
   if (!refreshToken) {
     clearAuth();
@@ -57,7 +71,7 @@ export async function doRefresh(): Promise<string | null> {
   }
 }
 
-async function getFreshToken(): Promise<string | null> {
+export async function ensureFreshToken(): Promise<string | null> {
   const { accessToken, isTokenExpired } = useAuthStore.getState();
 
   if (accessToken && !isTokenExpired()) {
@@ -84,7 +98,7 @@ export async function authFetch(
   input: RequestInfo | URL,
   init?: RequestInit,
 ): Promise<Response> {
-  const token = await getFreshToken();
+  const token = await ensureFreshToken();
 
   if (!token) {
     const { accessToken, refreshToken } = useAuthStore.getState();
