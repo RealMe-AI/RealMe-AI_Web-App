@@ -7,11 +7,13 @@ export function TeamCard({
   image,
   name,
   role,
+  alt,
 }: {
   quote: string;
   image: string;
   name: string;
   role: string;
+  alt: string;
 }) {
   return (
     <motion.div
@@ -28,10 +30,9 @@ export function TeamCard({
       <div className="mt-7 flex items-center gap-3">
         <Image
           src={image}
-          alt={name}
+          alt={alt}
           width={80}
           height={80}
-          loading="lazy"
           className="h-20 w-20 rounded-sm object-cover"
         />
         <div>
