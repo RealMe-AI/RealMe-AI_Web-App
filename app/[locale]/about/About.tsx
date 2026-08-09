@@ -111,12 +111,14 @@ export function About() {
             quote={t("team.member1.quote")}
             image="/agunwa.jpeg"
             name="Agunwa Chidiebele Calistus"
+            alt={`Agunwa Chidiebele Calistus — ${t("team.member1.role")}, RealMe AI`}
             role={t("team.member1.role")}
           />
           <TeamCard
             quote={t("team.member2.quote")}
             image="/daniel.jpeg"
             name="Ezechukwu Chukwudubem Daniel"
+            alt={`Ezechukwu Chukwudubem Daniel — ${t("team.member2.role")}, RealMe AI`}
             role={t("team.member2.role")}
           />
         </div>

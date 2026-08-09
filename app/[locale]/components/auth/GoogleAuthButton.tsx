@@ -14,7 +14,6 @@ export default function GoogleAuthButton() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onGoogleSuccess = async (response: CredentialResponse) => {
-    console.log("success fired, isLoading before:", isLoading);
     setIsLoading(true);
     clearError()
     await handleCredentialResponse(response);

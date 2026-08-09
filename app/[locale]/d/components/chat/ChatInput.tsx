@@ -8,6 +8,7 @@ import { CustomLoader } from "@/app/[locale]/components/ui/CustomLoader";
 import Image from "next/image";
 import FileUploadPopup from "../FileUploadPopup";
 import type { ChatInputProps } from "@/app/interface/chatInput";
+import { formatAudioTime } from "../message-renderers/renderAudioBubble";
 
 const formatFileSize = (bytes: number) => {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -30,6 +31,7 @@ export function ChatInput({
   onRemoveAttachment,
   isRecording,
   audioDuration,
+  audioCurrentTime,
   audioUrl,
   isAudioPlaying,
   onMicClick,
@@ -82,7 +84,7 @@ export function ChatInput({
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className="text-xs font-medium text-slate-800 dark:text-slate-200 truncate max-w-[120px] leading-tight">
-                      {file.name}
+                      {kind === "audio" ? t("modal.voice_message") : file.name}
                     </span>
                     <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
                       {progress < 100
@@ -157,7 +159,7 @@ export function ChatInput({
                       ))}
                     </div>
                     <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-8 tabular-nums">
-                      {`${Math.floor(audioDuration / 60)}:${(audioDuration % 60).toString().padStart(2, "0")}`}
+                      {formatAudioTime(audioDuration)}
                     </span>
                   </div>
                 ) : (
@@ -182,7 +184,7 @@ export function ChatInput({
                       ))}
                     </div>
                     <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-8 tabular-nums">
-                      {`${Math.floor(audioDuration / 60)}:${(audioDuration % 60).toString().padStart(2, "0")}`}
+                      {formatAudioTime(isAudioPlaying ? audioCurrentTime : audioDuration)}
                     </span>
                     <button
                       onClick={onDeleteAudio}
@@ -197,10 +199,10 @@ export function ChatInput({
           </div>
         )}
 
-        <div className="flex items-center gap-2 w-full py-1">
+        <div className="flex items-end gap-2 w-full py-1">
           <div
             onClick={() => setShowUploadPopup(true)}
-            className="rounded-full hover:bg-white/30 
+            className="mb-0.5 rounded-full hover:bg-white/30 
                        dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
           >
             <Plus size={27} className="text-indigo-500 dark:text-white/40" />
@@ -214,7 +216,7 @@ export function ChatInput({
 
           <div className="flex-1 relative">
             {!input && (
-              <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
+              <div className="absolute top-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
                 {t("chat.input.placeholder")}
               </div>
             )}
@@ -233,7 +235,7 @@ export function ChatInput({
           {isRecording ? (
             <div
               onClick={onMicClick}
-              className="rounded-full hover:bg-white/30 
+              className="mb-0.5 rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
               <div className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900">
@@ -243,7 +245,7 @@ export function ChatInput({
           ) : input.trim() === "" && !hasAttachmentsOrUploading && !audioUrl && !isLoading ? (
             <div
               onClick={onMicClick}
-              className="rounded-full hover:bg-white/30 
+              className="mb-0.5 rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
               <Mic
@@ -255,15 +257,15 @@ export function ChatInput({
             <button
               onClick={isLoading ? onAbort : isOnline ? onSend : undefined}
               className={cn(
-                "flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
+                "mb-0.5 flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
                 !isOnline
                   ? "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
-                  : isLoading
+                  : isLoading || isAudioUploading
                     ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
                     : "bg-indigo-500 hover:bg-indigo-600 text-white",
               )}
             >
-              {isLoading ? (
+              {isLoading || isAudioUploading ? (
                 <Square size={16} fill="currentColor" />
               ) : (
                 <ArrowUp size={28} />

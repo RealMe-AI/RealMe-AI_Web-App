@@ -17,7 +17,7 @@ export default function GetStarted() {
           <div className="relative">
             <div className="rounded-xl overflow-hidden shadow-2xl">
               <Image
-                src="/get-started.png"
+                src="/realme-ai-chatbot.webp"
                 alt="RealMe AI chatbot supporting English, Hausa, Igbo and Yoruba"
                 width={900}
                 height={900}

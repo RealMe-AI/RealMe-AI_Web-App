@@ -17,6 +17,7 @@ export function useAudioRecorder() {
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
@@ -90,6 +91,7 @@ export function useAudioRecorder() {
     setAudioBlob(null);
     setAudioUrl(null);
     setDuration(0);
+    setCurrentTime(0);
     setIsPlaying(false);
   }, [audioUrl]);
 
@@ -106,6 +108,12 @@ export function useAudioRecorder() {
       if (audioRef.current === audio) {
         audioRef.current = null;
         setIsPlaying(false);
+        setCurrentTime(0);
+      }
+    };
+    audio.ontimeupdate = () => {
+      if (audioRef.current === audio) {
+        setCurrentTime(audio.currentTime);
       }
     };
     audio.onended = reset;
@@ -126,6 +134,7 @@ export function useAudioRecorder() {
     isRecording,
     isPlaying,
     duration,
+    currentTime,
     audioBlob,
     audioUrl,
     startRecording,

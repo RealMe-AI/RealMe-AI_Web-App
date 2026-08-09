@@ -396,6 +396,7 @@ const ha = {
       save_button: "Ajiye",
     },
     uploading: "Ana lodawa…",
+    voice_message: "Sakon-Murya",
     avatar_upload_failed: "An kasa lodawa hoto.",
   },
 

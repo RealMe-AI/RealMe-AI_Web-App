@@ -1,4 +1,18 @@
 export function getStructuredData(SITE_URL: string) {
+  const founder = {
+    "@type": "Person",
+    name: "Agunwa Chidiebele Calistus",
+    jobTitle: "Founder",
+    image: `${SITE_URL}/agunwa.jpeg`,
+    worksFor: { "@type": "Organization", name: "RealMe AI", url: SITE_URL },
+  };
+  const coFounder = {
+    "@type": "Person",
+    name: "Ezechukwu Chukwudubem Daniel",
+    jobTitle: "Co-Founder",
+    image: `${SITE_URL}/daniel.jpeg`,
+    worksFor: { "@type": "Organization", name: "RealMe AI", url: SITE_URL },
+  };
   return [
     {
       "@context": "https://schema.org",
@@ -18,6 +32,8 @@ export function getStructuredData(SITE_URL: string) {
       name: "RealMe AI",
       url: SITE_URL,
       logo: `${SITE_URL}/logo2.jpeg`,
+      image: `${SITE_URL}/agunwa.jpeg`,
+      founder: [founder, coFounder],
     },
     {
       "@context": "https://schema.org",
@@ -27,10 +43,7 @@ export function getStructuredData(SITE_URL: string) {
       applicationCategory: "BusinessApplication",
       url: SITE_URL,
       description: "AI assistant for learning, conversation and productivity.",
-      author: {
-        "@type": "Person",
-        name: "Agunwa Chidiebele Calistus",
-      },
+      author: founder,
       publisher: {
         "@type": "Organization",
         name: "RealMe AI",
@@ -41,5 +54,7 @@ export function getStructuredData(SITE_URL: string) {
         target: SITE_URL,
       },
     },
+    founder,
+    coFounder,
   ];
 }
