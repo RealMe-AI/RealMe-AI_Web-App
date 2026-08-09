@@ -66,7 +66,7 @@ export default function Hero() {
         >
           <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-indigo-100 dark:ring-indigo-900/30 transform transition duration-900 hover:scale-105 hover:shadow-indigo-100/30">
             <Image
-              src="/hero-image.png"
+              src="/realme-ai-assistant.webp"
               alt="RealMe AI multilingual assistant interface"
               width={900}
               height={600}
