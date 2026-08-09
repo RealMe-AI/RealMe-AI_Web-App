@@ -9,7 +9,7 @@ export default function AuthPage() {
   const { t } = useTranslate();
 
   return (
-    <div className="relative min-h-screen overflow-hidden flex items-center justify-center">
+    <div className="relative min-h-dvh overflow-hidden flex items-center justify-center">
       {/* ===== Background Images ===== */}
 
       {/* Mobile Background */}
