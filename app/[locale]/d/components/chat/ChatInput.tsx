@@ -205,7 +205,7 @@ export function ChatInput({
             className="mb-0.5 rounded-full hover:bg-white/30 
                        dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
           >
-            <Plus size={27} className="text-indigo-500 dark:text-white/40" />
+            <Plus size={27} className="text-indigo-500 dark:text-indigo-300" />
             {showUploadPopup && (
               <FileUploadPopup
                 close={() => setShowUploadPopup(false)}
@@ -250,7 +250,7 @@ export function ChatInput({
             >
               <Mic
                 size={27}
-                className="text-indigo-600 dark:text-indigo-300"
+                className="text-indigo-500 dark:text-indigo-300"
               />
             </div>
           ) : (
