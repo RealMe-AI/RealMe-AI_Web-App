@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useAuthStore } from "@/app/store/useAuthStore";
-import { doRefresh } from "@/app/lib/apiClient";
+import { ensureFreshToken } from "@/app/lib/apiClient";
 
 const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
 
@@ -12,22 +12,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const init = async () => {
-      const { accessToken, refreshToken, isTokenExpired } =
-        useAuthStore.getState();
+      const { accessToken, isTokenExpired } = useAuthStore.getState();
 
       if (accessToken && !isTokenExpired()) {
         setIsReady(true);
         return;
       }
 
-      if (refreshToken) {
-        await doRefresh();
-      }
+      await ensureFreshToken();
 
       setIsReady(true);
     };
 
     init();
+  }, []);
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== "au" || !e.newValue) return;
+      try {
+        const state = JSON.parse(e.newValue).state;
+        if (state?.accessToken) {
+          useAuthStore.getState().setTokens({
+            accessToken: state.accessToken,
+            refreshToken: state.refreshToken,
+          });
+        }
+      } catch {
+        // ignore malformed storage payloads
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
   return (
