@@ -216,7 +216,7 @@ export function ChatInput({
 
           <div className="flex-1 relative">
             {!input && (
-              <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
+              <div className="absolute top-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
                 {t("chat.input.placeholder")}
               </div>
             )}
