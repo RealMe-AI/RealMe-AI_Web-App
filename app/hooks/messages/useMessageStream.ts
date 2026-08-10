@@ -41,6 +41,7 @@ export const useMessageStream = () => {
     setActiveConversationId,
     addMessage,
     updateMessage,
+    removeMessage,
     setIsLoading,
     triggerChatsRefresh,
     setAbortController,
@@ -59,20 +60,7 @@ export const useMessageStream = () => {
 
       let currentConversationId = activeConversationId;
 
-      // Auto-create conversation if none active
-      if (!currentConversationId) {
-        const title = getConversationLabel(content, attachments);
-        const newConv = await createConversation(title);
-        if (!newConv) {
-          console.error("Failed to create conversation");
-          return;
-        }
-        currentConversationId = newConv.id;
-        setActiveConversationId(newConv.id);
-        triggerChatsRefresh();
-      }
-
-      // Add user message optimistically
+      // Add user message optimistically — render immediately, before any API calls
       const audioAtt = attachments?.find((a) => a.type === "audio");
       const userMsg: Message = {
         id: Date.now().toString(),
@@ -84,6 +72,20 @@ export const useMessageStream = () => {
         attachments: attachments && attachments.length > 0 ? attachments : undefined,
       };
       addMessage(userMsg);
+
+      // Auto-create conversation if none active
+      if (!currentConversationId) {
+        const title = getConversationLabel(content, attachments);
+        const newConv = await createConversation(title);
+        if (!newConv) {
+          console.error("Failed to create conversation");
+          removeMessage(userMsg.id);
+          return;
+        }
+        currentConversationId = newConv.id;
+        setActiveConversationId(newConv.id);
+        triggerChatsRefresh();
+      }
 
       // Set up abort controller
       const controller = new AbortController();
@@ -182,6 +184,7 @@ export const useMessageStream = () => {
       activeConversationId,
       setActiveConversationId,
       addMessage,
+      removeMessage,
       updateMessage,
       setIsLoading,
       triggerChatsRefresh,
