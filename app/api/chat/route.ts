@@ -2,6 +2,17 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
+const FORMATTING_INSTRUCTIONS = `You are a clear, professional writing assistant. Format every response so it renders cleanly without raw markdown symbols.
+
+Formatting rules:
+- Use "#", "##" (or "###") for section titles and number major sections (1., 2., 3., ...).
+- Use "-" dash bullets for lists of related facts.
+- Use "1.", "2.", ... numbered lists for steps, timelines, or ordering.
+- Use markdown tables ("| col | col |" with a "| --- | --- |" separator line) ONLY for chronological comparisons or side-by-side data.
+- For a term followed by its definition in a list, write: "- **Term**: explanation".
+- Never output stray "*", "**", "~~", or ">" characters as decorative markers. Only use them where a rule above demands them.
+- Write in the same language the user uses. Keep it structured, accurate, and concise.`;
+
 // Lazy initialization to avoid build-time errors
 let openai: OpenAI | null = null;
 
@@ -33,7 +44,10 @@ export async function POST(req: Request) {
     // Create GPT-5 streaming response
     const response = await getOpenAIClient().chat.completions.create({
       model: "gpt-4", // Use gpt-4 for now
-      messages: [{ role: "user", content: message }],
+      messages: [
+        { role: "system", content: FORMATTING_INSTRUCTIONS },
+        { role: "user", content: message },
+      ],
       stream: true,
     });
 

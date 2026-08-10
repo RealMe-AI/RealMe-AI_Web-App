@@ -9,6 +9,7 @@ type ParsedSegment =
   | { type: "bold"; text: string }
   | { type: "inline-code"; text: string }
   | { type: "list"; ordered: boolean; items: string[] }
+  | { type: "table"; headers: string[]; rows: string[][] }
   | { type: "paragraph"; text: string };
 
 function parseInline(text: string): React.ReactNode[] {
@@ -46,8 +47,21 @@ function parseInline(text: string): React.ReactNode[] {
       continue;
     }
 
-    // No more patterns found, push remaining text
-    parts.push(remaining);
+    // Italic
+    const italicMatch = remaining.match(/^(.*?)\*([^*\n]+)\*/);
+    if (italicMatch) {
+      if (italicMatch[1]) parts.push(parseInline(italicMatch[1]));
+      parts.push(
+        <em key={key++} className="italic">
+          {italicMatch[2]}
+        </em>,
+      );
+      remaining = remaining.slice(italicMatch[0].length);
+      continue;
+    }
+
+    // No more patterns found, push remaining text (stripping residual markers)
+    parts.push(remaining.replace(/\*+/g, "").trim());
     break;
   }
 
@@ -102,11 +116,39 @@ function parseBlock(block: string): ParsedSegment[] {
       continue;
     }
 
-    // Unordered list: - item
-    if (line.match(/^\s*-\s+/)) {
+    // Table: | a | b |
+    if (line.startsWith("|")) {
+      const tableLines: string[] = [line];
+      let j = i + 1;
+      while (j < lines.length && lines[j].trim().startsWith("|")) {
+        tableLines.push(lines[j]);
+        j++;
+      }
+      if (tableLines.length >= 2 && /^\s*\|[\s:\-|]+\|\s*$/.test(tableLines[1])) {
+        const splitRow = (r: string) =>
+          r
+            .trim()
+            .replace(/^\|/, "")
+            .replace(/\|$/, "")
+            .split("|")
+            .map((cell) => cell.trim());
+        const headers = splitRow(tableLines[0]);
+        const rows = tableLines
+          .slice(2)
+          .filter((r) => r.trim() !== "")
+          .map(splitRow)
+          .filter((r) => r.some((c) => c !== ""));
+        segments.push({ type: "table", headers, rows });
+        i = j;
+        continue;
+      }
+    }
+
+    // Unordered list: - item, * item, + item
+    if (line.match(/^\s*[-*+]\s+/)) {
       const items: string[] = [];
-      while (i < lines.length && lines[i].match(/^\s*-\s+/)) {
-        items.push(lines[i].replace(/^\s*-\s+/, ""));
+      while (i < lines.length && lines[i].match(/^\s*[-*+]\s+/)) {
+        items.push(lines[i].replace(/^\s*[-*+]\s+/, ""));
         i++;
       }
       segments.push({ type: "list", ordered: false, items });
@@ -140,7 +182,8 @@ function parseBlock(block: string): ParsedSegment[] {
       i < lines.length &&
       lines[i].trim() !== "" &&
       !lines[i].match(/^(#{1,6})\s+/) &&
-      !lines[i].match(/^\s*-\s+/) &&
+      !lines[i].startsWith("|") &&
+      !lines[i].match(/^\s*[-*+]\s+/) &&
       !lines[i].match(/^\s*\d+\.\s+/) &&
       !lines[i].match(/^```/)
     ) {
@@ -209,10 +252,63 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
               seg.ordered ? "list-decimal" : "list-disc"
             } list-inside text-slate-800 dark:text-slate-200`}
           >
-            {seg.items.map((item, i) => (
-              <li key={i}>{parseInline(item)}</li>
-            ))}
+            {seg.items.map((item, i) => {
+              const defMatch = item.match(/^\*\*(.+?)\*\*\s*[:：\-–—]\s*(.+)$/);
+              if (defMatch) {
+                return (
+                  <li key={i}>
+                    <strong>{defMatch[1]}</strong>
+                    {defMatch[2] ? ` ${defMatch[2]}` : ""}
+                  </li>
+                );
+              }
+              return <li key={i}>{parseInline(item)}</li>;
+            })}
           </ListTag>
+        );
+
+      case "table":
+        return (
+          <div
+            key={idx}
+            className="my-3 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700"
+          >
+            <table className="w-full text-sm leading-relaxed border-collapse">
+              <thead>
+                <tr className="bg-slate-100 dark:bg-slate-800 text-left">
+                  {seg.headers.map((h, i) => (
+                    <th
+                      key={i}
+                      className="px-3 py-2 font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700"
+                    >
+                      {parseInline(h)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {seg.rows.map((row, ri) => (
+                  <tr
+                    key={ri}
+                    className={
+                      ri % 2
+                        ? "bg-slate-50 dark:bg-slate-800/40"
+                        : "bg-white dark:bg-slate-900/20"
+                    }
+                  >
+                    {row.map((cell, ci) => (
+                      <td
+                        key={ci}
+                        className="px-3 py-2 text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-800 align-top"
+                      >
+                        {parseInline(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         );
 
       case "paragraph":
