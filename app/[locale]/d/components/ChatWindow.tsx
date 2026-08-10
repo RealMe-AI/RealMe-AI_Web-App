@@ -12,6 +12,7 @@ import type { Attachment } from "@/app/interface/type";
 import OfflineBanner from "./OfflineBanner";
 import ClipboardPasteModal from "./ClipboardPasteModal";
 import { ChatMessageList, ChatInput } from "./chat";
+import markdownToPlainText from "@/app/lib/markdownToPlainText";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
@@ -161,7 +162,7 @@ export default function ChatWindow() {
     try {
       const text = await navigator.clipboard.readText();
       if (text.trim() && !dismissedTexts.current.has(text.trim())) {
-        setClipboardText(text);
+        setClipboardText(markdownToPlainText(text));
       }
     } catch {}
   }, []);
