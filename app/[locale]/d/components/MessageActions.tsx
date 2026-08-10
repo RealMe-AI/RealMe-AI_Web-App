@@ -7,6 +7,7 @@ import Tooltip from "@/app/[locale]/components/ui/Tooltip";
 import { Message } from "@/app/interface/type";
 import { useTtsStore } from "@/app/store/useTtsStore";
 import { useTtsSpeak } from "@/app/hooks/tts/useTtsSpeak";
+import markdownToPlainText from "@/app/lib/markdownToPlainText";
 
 export default function MessageActions({
   sender,
@@ -38,7 +39,7 @@ export default function MessageActions({
     <div className="flex flex-row gap-1 bg-white/70 dark:bg-slate-800/80 backdrop-blur-md rounded-lg p-1 shadow-md border border-white/20">
       <Tooltip content={t("message_actions.copy")}>
         <button
-          onClick={() => text && copy(text)}
+          onClick={() => text && copy(markdownToPlainText(text))}
           className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"
         >
           {copied ? (
