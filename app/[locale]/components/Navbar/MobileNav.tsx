@@ -40,7 +40,7 @@ export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -20, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="absolute top-20 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-t border-gray-200 dark:border-slate-700 z-50 md:hidden"
+            className="absolute top-14.5 right-0 w-full bg-white dark:bg-slate-900 shadow-lg border-b border-gray-200 dark:border-slate-700 z-50 md:hidden"
           >
             <div className="px-6 py-6 flex flex-col space-y-5">
               {/* Navigation Links */}
@@ -59,7 +59,7 @@ export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
               ))}
 
               {/* CTA Button */}
-              <motion.button
+              {/* <motion.button
                 onClick={() => goToAuth()}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -67,7 +67,7 @@ export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
                 className="mt-3 bg-indigo-300 dark:bg-indigo-600 text-slate-800 dark:text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-indigo-200 dark:hover:bg-indigo-500 transition"
               >
                 {tCTA("primary")}
-              </motion.button>
+              </motion.button> */}
             </div>
           </motion.nav>
         </>
