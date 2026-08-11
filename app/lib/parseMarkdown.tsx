@@ -2,6 +2,7 @@ import React from "react";
 import hljs from "highlight.js";
 import { Copy, Check } from "lucide-react";
 import { useCopyToClipboard } from "@/app/hooks/copyToClipboard/useCopyToClipboard";
+import sanitizeAsterisks from "@/app/lib/sanitizeMarkdown";
 
 type ParsedSegment =
   | { type: "code"; language: string; code: string }
@@ -12,60 +13,50 @@ type ParsedSegment =
   | { type: "table"; headers: string[]; rows: string[][] }
   | { type: "paragraph"; text: string };
 
+const INLINE_TOKEN =
+  /(`[^`]+`)|(\*\*(.+?)\*\*)|(\*([^*\n]+)\*)/g;
+
 function parseInline(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  let remaining = text;
+  let lastIndex = 0;
   let key = 0;
 
-  while (remaining.length > 0) {
-    // Inline code
-    const codeMatch = remaining.match(/^(.*?)`([^`]+)`/);
-    if (codeMatch) {
-      if (codeMatch[1]) parts.push(parseInline(codeMatch[1]));
-      parts.push(
-        <code
-          key={key++}
-          className="bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-sm"
-        >
-          {codeMatch[2]}
-        </code>,
-      );
-      remaining = remaining.slice(codeMatch[0].length);
-      continue;
+  const inlineCodeClass =
+    "bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-sm";
+
+  for (const match of text.matchAll(INLINE_TOKEN)) {
+    const index = match.index ?? 0;
+    const endIndex = index + match[0].length;
+    const code = match[1] !== undefined ? match[1].slice(1, -1) : undefined;
+    const bold = match[3];
+    const italic = match[5];
+
+    if (code !== undefined) {
+      if (index > lastIndex) parts.push(text.slice(lastIndex, index));
+      parts.push(<code key={key++} className={inlineCodeClass}>{code}</code>);
+    } else if (bold !== undefined && bold.trim() !== "") {
+      if (index > lastIndex) parts.push(text.slice(lastIndex, index));
+      parts.push(<strong key={key++} className="font-bold">{bold}</strong>);
+    } else if (italic !== undefined && italic.trim() !== "") {
+      if (index > lastIndex) parts.push(text.slice(lastIndex, index));
+      parts.push(<em key={key++} className="italic">{italic}</em>);
     }
 
-    // Bold
-    const boldMatch = remaining.match(/^(.*?)\*\*(.+?)\*\*/);
-    if (boldMatch) {
-      if (boldMatch[1]) parts.push(parseInline(boldMatch[1]));
-      parts.push(
-        <strong key={key++} className="font-bold">
-          {boldMatch[2]}
-        </strong>,
-      );
-      remaining = remaining.slice(boldMatch[0].length);
-      continue;
-    }
-
-    // Italic
-    const italicMatch = remaining.match(/^(.*?)\*([^*\n]+)\*/);
-    if (italicMatch) {
-      if (italicMatch[1]) parts.push(parseInline(italicMatch[1]));
-      parts.push(
-        <em key={key++} className="italic">
-          {italicMatch[2]}
-        </em>,
-      );
-      remaining = remaining.slice(italicMatch[0].length);
-      continue;
-    }
-
-    // No more patterns found, push remaining text (stripping residual markers)
-    parts.push(remaining.replace(/\*+/g, "").trim());
-    break;
+    lastIndex = endIndex;
   }
 
-  return parts;
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+
+  const out: React.ReactNode[] = [];
+  for (const part of parts) {
+    if (typeof part === "string") {
+      const clean = part.replace(/\*+/g, "").trim();
+      if (clean) out.push(clean);
+    } else {
+      out.push(part);
+    }
+  }
+  return out;
 }
 
 function splitIntoBlocks(text: string): string[] {
@@ -166,16 +157,6 @@ function parseBlock(block: string): ParsedSegment[] {
       continue;
     }
 
-    // Bold line (e.g. **Some Title**)
-    if (line.match(/^\*\*.+\*\*$/) && !line.match(/\*\*.*\*\*.*\*\*/)) {
-      segments.push({
-        type: "bold",
-        text: line.replace(/^\*\*(.+)\*\*$/, "$1"),
-      });
-      i++;
-      continue;
-    }
-
     // Plain paragraph (collect consecutive non-special lines)
     const paraLines: string[] = [];
     while (
@@ -253,12 +234,12 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
             } list-inside text-slate-800 dark:text-slate-200`}
           >
             {seg.items.map((item, i) => {
-              const defMatch = item.match(/^\*\*(.+?)\*\*\s*[:：\-–—]\s*(.+)$/);
+              const defMatch = item.match(/^\*\*(.+?)\*\*\s*([:：\-–—])\s*(.+)$/);
               if (defMatch) {
                 return (
                   <li key={i}>
                     <strong>{defMatch[1]}</strong>
-                    {defMatch[2] ? ` ${defMatch[2]}` : ""}
+                    {defMatch[2]} {defMatch[3]}
                   </li>
                 );
               }
@@ -387,7 +368,7 @@ export default function parseMarkdown(text: string): React.ReactNode[] {
       const trimmed = para.trim();
       if (!trimmed) continue;
 
-      const segments = parseBlock(trimmed);
+      const segments = parseBlock(sanitizeAsterisks(trimmed));
       elements.push(
         ...renderSegments(segments).map((el) =>
           React.cloneElement(el as React.ReactElement, { key: key++ }),

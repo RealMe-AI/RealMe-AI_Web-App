@@ -8,6 +8,7 @@ import { useShareConversation } from "@/app/hooks/chatModal/useShareConversation
 import { SocialButton } from "./SocialButton";
 import { authFetch } from "@/app/lib/apiClient";
 import { baseUrl } from "@/app/lib/baseUrl";
+import sanitizeAsterisks from "@/app/lib/sanitizeMarkdown";
 import { RawMessage } from "@/app/interface/type";
 
 interface ShareModalProps {
@@ -75,8 +76,8 @@ export function ShareModal({
           return sender === "assistant" || sender === "assistantMessage" || sender === "ai";
         });
 
-        setUserPreview(firstUser?.text || firstUser?.content || "");
-        setAiPreview(firstAi?.text || firstAi?.content || "");
+        setUserPreview(sanitizeAsterisks(firstUser?.text || firstUser?.content || ""));
+        setAiPreview(sanitizeAsterisks(firstAi?.text || firstAi?.content || ""));
       } catch {
         // preview falls back to title
       }
