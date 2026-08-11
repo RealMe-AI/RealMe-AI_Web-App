@@ -4,6 +4,7 @@ import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { parseSSEStream } from "@/app/lib/parseSSEStream";
 import { useTypewriter } from "./useTypewriter";
+import sanitizeAsterisks from "@/app/lib/sanitizeMarkdown";
 import { useCreateConversation } from "./useCreateConversation";
 import { useUpdateConversation } from "./useUpdateConversation";
 import { useNetworkStatus } from "@/app/hooks/useNetworkStatus";
@@ -51,7 +52,7 @@ export const useMessageStream = () => {
   const { updateConversation } = useUpdateConversation();
   const { isOnline } = useNetworkStatus();
   const t = useTranslations();
-  const typewriter = useTypewriter((text) => updateMessage("ai-temp", { text }));
+  const typewriter = useTypewriter((text) => updateMessage("ai-temp", { text: sanitizeAsterisks(text) }));
 
   const sendMessage = useCallback(
     async (content: string, attachmentIds?: string[], attachments?: Attachment[]) => {
@@ -144,7 +145,7 @@ export const useMessageStream = () => {
         // Finalize AI message with real ID
         updateMessage("ai-temp", {
           id: messageId,
-          text: typewriter.getShown(),
+          text: sanitizeAsterisks(typewriter.getShown()),
         });
         setIsLoading(false);
 
@@ -162,7 +163,7 @@ export const useMessageStream = () => {
         if (err instanceof Error && err.name === "AbortError") {
           updateMessage("ai-temp", {
             id: (Date.now() + 1).toString(),
-            text: typewriter.getShown(),
+            text: sanitizeAsterisks(typewriter.getShown()),
           });
           return;
         }
