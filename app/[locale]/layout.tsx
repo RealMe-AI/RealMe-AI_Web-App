@@ -18,6 +18,8 @@ const poppins = Poppins({
   weight: ["400", "600", "700"],
   variable: "--font-poppins",
 });
+const SITE_URL = "https://realme.com.ng";
+const GOOGLE_URL = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export function generateStaticParams(): { locale: Locale }[] {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -30,7 +32,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const pathname = locale === "en" ? "" : `/${locale}`;
   const canonical = new URL(`${SITE_URL}${pathname}/`);
 
@@ -43,7 +44,7 @@ export async function generateMetadata({
 
   const images = [
     {
-      url: `${SITE_URL}/logo2.jpeg`,
+      url: `${SITE_URL}/logo.png`,
       width: 1200,
       height: 630,
       alt: "RealMe AI",
@@ -61,11 +62,11 @@ export async function generateMetadata({
     title,
     description,
     icons: {
-      icon: "/logo2.jpeg",
-      apple: "/logo2.jpeg",
+      icon: "/logo.png",
+      apple: "/logo.png",
     },
     verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      google: GOOGLE_URL,
     },
 
     alternates: {
@@ -106,7 +107,6 @@ export default async function LocaleLayout({
     messages = {} as Messages;
   }
 
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const structuredData = getStructuredData(SITE_URL);
 
   return (
