@@ -4,6 +4,7 @@ import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { parseSSEStream } from "@/app/lib/parseSSEStream";
 import { useTypewriter } from "./useTypewriter";
+import sanitizeAsterisks from "@/app/lib/sanitizeMarkdown";
 import { Message } from "@/app/interface/type";
 
 function now() {
@@ -21,7 +22,7 @@ export const useEditMessage = () => {
     setIsLoading,
     setAbortController,
   } = useChatStore();
-  const typewriter = useTypewriter((text) => updateMessage("ai-temp", { text }));
+  const typewriter = useTypewriter((text) => updateMessage("ai-temp", { text: sanitizeAsterisks(text) }));
 
   const editMessage = useCallback(
     async (messageId: string, newContent: string) => {
@@ -85,7 +86,7 @@ export const useEditMessage = () => {
         // Finalize AI message with real ID
         updateMessage(tempId, {
           id: assistantMessageId,
-          text: typewriter.getShown(),
+          text: sanitizeAsterisks(typewriter.getShown()),
         });
         setIsLoading(false);
       } catch (err: unknown) {

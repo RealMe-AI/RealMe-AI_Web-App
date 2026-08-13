@@ -31,7 +31,7 @@ export function getStructuredData(SITE_URL: string) {
       "@type": "Organization",
       name: "RealMe AI",
       url: SITE_URL,
-      logo: `${SITE_URL}/logo2.jpeg`,
+      logo: `${SITE_URL}/logo.png`,
       image: `${SITE_URL}/agunwa.jpeg`,
       founder: [founder, coFounder],
     },

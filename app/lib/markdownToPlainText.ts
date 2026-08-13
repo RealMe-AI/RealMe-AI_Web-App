@@ -1,12 +1,36 @@
+const INLINE_TOKEN = /(`[^`]+`)|(\*\*(.+?)\*\*)|(\*([^*\n]+)\*)|(~~(.+?)~~)|\[([^\]]+)\]\([^)]*\)/g;
+
+function normalizeColonSpacing(text: string): string {
+  return text.replace(/([:：])(?=[\p{L}\p{N}])/gu, "$1 ");
+}
+
 function stripInline(text: string): string {
-  return text
-    .replace(/`([^`]+)`/g, "$1")
-    .replace(/\*\*([^*]+)\*\*/g, "$1")
-    .replace(/\*([^*\n]+)\*/g, "$1")
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
-    .replace(/\*\*/g, "")
-    .replace(/\*/g, "")
-    .replace(/~~([^~]+)~~/g, "$1")
+  const out: string[] = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(INLINE_TOKEN)) {
+    const index = match.index ?? 0;
+    const code = match[1] !== undefined ? match[1].slice(1, -1) : undefined;
+    const bold = match[3];
+    const italic = match[5];
+    const strike = match[7];
+    const link = match[8];
+
+    if (index > lastIndex) out.push(text.slice(lastIndex, index));
+    if (code !== undefined) out.push(code);
+    else if (bold !== undefined && bold.trim() !== "") out.push(bold);
+    else if (italic !== undefined && italic.trim() !== "") out.push(italic);
+    else if (strike !== undefined && strike.trim() !== "") out.push(strike);
+    else if (link !== undefined && link.trim() !== "") out.push(link);
+
+    lastIndex = index + match[0].length;
+  }
+
+  if (lastIndex < text.length) out.push(text.slice(lastIndex));
+
+  return out
+    .join("")
+    .replace(/\*+/g, "")
     .replace(/^\s*>\s?/gm, "");
 }
 
@@ -81,5 +105,7 @@ export default function markdownToPlainText(text: string): string {
     out.push(stripInline(line.trim()));
   }
 
-  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  return normalizeColonSpacing(
+    out.join("\n").replace(/\n{3,}/g, "\n\n").trim(),
+  );
 }
