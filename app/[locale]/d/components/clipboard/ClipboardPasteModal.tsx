@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -10,24 +10,43 @@ interface Props {
   onCancel: () => void;
 }
 
+const DISMISS_CLICK_DEBOUNCE = 250;
+
 export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) {
   const t = useTranslations("clipboard");
+  const pasteButtonRef = useRef<HTMLButtonElement | null>(null);
+  const openedAtRef = useRef(0);
+
+  useEffect(() => {
+    openedAtRef.current = Date.now();
+    pasteButtonRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Enter") onPaste();
+      const target = e.target as HTMLElement | null;
+      const onButton = target?.tagName === "BUTTON";
+      if (e.key === "Enter" && !onButton) onPaste();
       if (e.key === "Escape") onCancel();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onPaste, onCancel]);
 
+  const handleOverlayClick = () => {
+    if (Date.now() - openedAtRef.current < DISMISS_CLICK_DEBOUNCE) return;
+    onCancel();
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      onClick={onCancel}
+      onClick={handleOverlayClick}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t("title")}
       className="fixed inset-0 z-50 flex items-center justify-center
                  bg-black/20 dark:bg-black/50"
     >
@@ -51,7 +70,9 @@ export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) 
 
         <div className="flex gap-2">
           <button
+            ref={pasteButtonRef}
             onClick={onPaste}
+            onKeyDown={(e) => e.stopPropagation()}
             className="flex-1 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700
                        text-white text-sm font-medium transition"
           >
@@ -59,6 +80,7 @@ export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) 
           </button>
           <button
             onClick={onCancel}
+            onKeyDown={(e) => e.stopPropagation()}
             className="flex-1 py-2 rounded-lg bg-gray-100 dark:bg-slate-700
                        hover:bg-gray-200 dark:hover:bg-slate-600
                        text-gray-700 dark:text-gray-300 text-sm font-medium transition"
