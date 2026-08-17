@@ -6,6 +6,7 @@ import { Poppins } from "next/font/google";
 import { getStructuredData } from "../lib/structuredData";
 import type { Metadata } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
+import { PathHistoryRecorder } from "./components/PathHistoryRecorder";
 import { ToastProvider } from "@/app/lib/ToastProvider";
 import { AuthProvider } from "./components/AuthProvider";
 import StructuredData from "./components/StructuredData";
@@ -116,6 +117,7 @@ export default async function LocaleLayout({
         <AuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <StatusBarHandler />
+            <PathHistoryRecorder />
             <ToastProvider>{children}</ToastProvider>
           </NextIntlClientProvider>
         </AuthProvider>

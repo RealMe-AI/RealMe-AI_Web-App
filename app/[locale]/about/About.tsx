@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { TeamCard } from "./components/TeamCard";
+import { BackButton } from "../components/BackButton";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -66,8 +67,9 @@ export function About() {
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-9"
+            className="mt-9 flex items-center gap-8 sm:mt-12"
           >
+            <BackButton className="text-white/90 hover:text-white" />
             <Link
               href="/auth"
               className="group inline-flex items-center gap-2 rounded-md bg-indigo-400 px-5 py-3 lg:text-sm font-semibold text-white shadow-lg shadow-indigo-400/20 transition hover:bg-indigo-500 text-[11px]"

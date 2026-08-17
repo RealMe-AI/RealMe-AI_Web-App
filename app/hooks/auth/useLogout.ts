@@ -11,9 +11,11 @@ export default function useLogout() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
     try {
-      setIsLoggingOut(true);
-      const { accessToken, clearAuth } = useAuthStore.getState();
+      const { accessToken } = useAuthStore.getState();
 
       if (accessToken) {
         try {
@@ -25,15 +27,10 @@ export default function useLogout() {
           // Server-side logout is best-effort; local state is cleared regardless
         }
       }
-
-      clearAuth();
-      resetDashboardUi();
-      router.push("/auth");
-    } catch {
+    } finally {
       useAuthStore.getState().clearAuth();
       resetDashboardUi();
-      router.push("/auth");
-    } finally {
+      router.replace("/auth");
       setIsLoggingOut(false);
     }
   };
