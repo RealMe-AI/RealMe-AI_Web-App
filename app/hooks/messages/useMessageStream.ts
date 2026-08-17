@@ -10,6 +10,7 @@ import { useUpdateConversation } from "./useUpdateConversation";
 import { useNetworkStatus } from "@/app/hooks/useNetworkStatus";
 import { useTranslations } from "next-intl";
 import { Message, Attachment } from "@/app/interface/type";
+import { prefetchAudio } from "@/app/store/ttsPrefetch";
 
 function now() {
   return new Date().toLocaleTimeString([], {
@@ -148,6 +149,11 @@ export const useMessageStream = () => {
           text: sanitizeAsterisks(typewriter.getShown()),
         });
         setIsLoading(false);
+
+        // Prefetch TTS audio in the background so playback is instant later
+        if (messageId) {
+          prefetchAudio(messageId);
+        }
 
         // Update conversation
         if (currentConversationId) {
