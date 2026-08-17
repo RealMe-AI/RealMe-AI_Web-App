@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { BackButton } from "../../components/BackButton";
 
 export function HelpHero() {
   const t = useTranslations();
@@ -31,6 +32,7 @@ export function HelpHero() {
         <p className="mt-4 max-w-lg text-sm sm:text-base text-white/75 leading-relaxed">
           {t("help.hero.subtitle")}
         </p>
+        <BackButton className="mt-8 text-white/90 hover:text-white" />
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import OTPInput from "./OTPInput";
 import { useOTPVerification } from "./useOTPVerification";
 import { useSignUpStore } from "@/app/store/useSignUpStore";
+import { BackButton } from "../../components/BackButton";
 
 export default function VerifyPage() {
   const {
@@ -23,7 +24,8 @@ export default function VerifyPage() {
   const { contact, method } = useSignUpStore();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-200 to-indigo-100 px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
+    <div className="relative min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-200 to-indigo-100 px-4 dark:from-gray-900 dark:to-gray-800 transition-colors">
+      <BackButton className="absolute top-4 left-4 sm:top-6 sm:left-6 text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white" />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
