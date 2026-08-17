@@ -10,7 +10,11 @@ import { useAudioRecorder } from "@/app/hooks/useAudioRecorder";
 import { useUserStore } from "@/app/store/useUserStore";
 import type { Attachment } from "@/app/interface/type";
 import OfflineBanner from "./OfflineBanner";
-import ClipboardPasteModal from "./ClipboardPasteModal";
+import ClipboardPasteModal from "./clipboard/ClipboardPasteModal";
+import {
+  getDismissedClipboard,
+  dismissClipboard,
+} from "./clipboard/dismiss";
 import { ChatMessageList, ChatInput } from "./chat";
 import markdownToPlainText from "@/app/lib/markdownToPlainText";
 
@@ -23,7 +27,6 @@ export default function ChatWindow() {
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [clipboardText, setClipboardText] = useState<string | null>(null);
 
-  const dismissedTexts = useRef(new Set<string>());
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -161,19 +164,24 @@ export default function ChatWindow() {
   const checkClipboard = useCallback(async () => {
     try {
       const text = await navigator.clipboard.readText();
-      if (text.trim() && !dismissedTexts.current.has(text.trim())) {
-        setClipboardText(markdownToPlainText(text));
+      const plainText = markdownToPlainText(text);
+      const key = plainText.trim();
+      if (key && !getDismissedClipboard().has(key)) {
+        setClipboardText(plainText);
+        inputRef.current?.blur();
       }
     } catch {}
   }, []);
 
   useEffect(() => {
-  const handleFocus = () => checkClipboard();
-  inputRef.current?.addEventListener("focus", handleFocus);
-  return () => {
-    inputRef.current?.removeEventListener("focus", handleFocus);
-  };
-}, [checkClipboard]);
+    const el = inputRef.current;
+    if (!el) return;
+    const handleFocus = () => checkClipboard();
+    el.addEventListener("focus", handleFocus);
+    return () => {
+      el.removeEventListener("focus", handleFocus);
+    };
+  }, [checkClipboard]);
 
   useEffect(() => {
     document.body.style.overflow = clipboardText ? "hidden" : "";
@@ -202,7 +210,7 @@ export default function ChatWindow() {
         <ClipboardPasteModal
           text={clipboardText}
           onPaste={() => {
-            dismissedTexts.current.add(clipboardText.trim());
+            dismissClipboard(clipboardText.trim());
             setInput(clipboardText);
             if (inputRef.current) inputRef.current.textContent = clipboardText;
             setClipboardText(null);
@@ -213,7 +221,7 @@ export default function ChatWindow() {
             }
           }}
           onCancel={() => {
-            dismissedTexts.current.add(clipboardText.trim());
+            dismissClipboard(clipboardText.trim());
             setClipboardText(null);
           }}
         />
