@@ -352,7 +352,7 @@ const ha = {
       yoruba: "Yarbanci",
     },
     notifications: {
-      label: "Sanarwar Imel",
+      label: "Sanarwar",
     },
     voice: {
       label: "Murya",
