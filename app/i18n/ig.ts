@@ -350,7 +350,7 @@ const ig = {
       yoruba: "Yoruba",
     },
     notifications: {
-      label: "Mgbasa ozi Email",
+      label: "Mgbasa ozi",
     },
     voice: {
       label: "Olu",

@@ -349,7 +349,7 @@ const en = {
       yoruba: "Yoruba",
     },
     notifications: {
-      label: "Email Notifications",
+      label: "Notifications",
     },
     voice: {
       label: "Voice",
