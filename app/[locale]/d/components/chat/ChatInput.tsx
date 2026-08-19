@@ -257,7 +257,7 @@ export function ChatInput({
             <button
               onClick={isLoading ? onAbort : isOnline ? onSend : undefined}
               className={cn(
-                "mb-0.5 flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
+                "mb-0.5 flex items-center justify-center shrink-0 w-8 h-8 rounded-full transition-all duration-200",
                 !isOnline
                   ? "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
                   : isLoading || isAudioUploading
