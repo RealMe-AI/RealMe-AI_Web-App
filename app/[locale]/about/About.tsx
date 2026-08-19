@@ -115,6 +115,8 @@ export function About() {
             name="Agunwa Chidiebele Calistus"
             alt={`Agunwa Chidiebele Calistus — ${t("team.member1.role")}, RealMe AI`}
             role={t("team.member1.role")}
+            linkedin="https://www.linkedin.com/in/agunwa-chidiebele-17a09932a/"
+            x="https://x.com/OwenVisuals01"
           />
           <TeamCard
             quote={t("team.member2.quote")}
@@ -122,6 +124,8 @@ export function About() {
             name="Ezechukwu Chukwudubem Daniel"
             alt={`Ezechukwu Chukwudubem Daniel — ${t("team.member2.role")}, RealMe AI`}
             role={t("team.member2.role")}
+            linkedin="https://www.linkedin.com/in/daniel-ezechukwu-6950a3247"
+            x="https://x.com/DubemDaniel22"
           />
         </div>
       </section>
