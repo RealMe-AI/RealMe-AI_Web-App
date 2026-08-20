@@ -15,6 +15,41 @@ const formatFileSize = (bytes: number) => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
+const MIME_EXT: Record<string, string> = {
+  "image/png": "png",
+  "image/jpeg": "jpg",
+  "image/gif": "gif",
+  "image/webp": "webp",
+  "image/svg+xml": "svg",
+  "image/avif": "avif",
+  "application/pdf": "pdf",
+};
+
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
+
+function datePart() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+const pasteNameCounts = new Map<string, number>();
+
+function professionalName(file: File): File {
+  if (file.name) return file;
+  const isImage = file.type.startsWith("image/");
+  const label = isImage ? "Image" : "File";
+  const key = `${datePart()}-${label}`;
+  const count = (pasteNameCounts.get(key) ?? 0) + 1;
+  pasteNameCounts.set(key, count);
+  const suffix = count > 1 ? ` (${count - 1})` : "";
+  const ext = MIME_EXT[file.type] ?? (isImage ? "png" : "bin");
+  return new File([file], `${label} ${datePart()}${suffix}.${ext}`, {
+    type: file.type,
+  });
+}
+
 export function ChatInput({
   input,
   setInput,
@@ -47,6 +82,20 @@ export function ChatInput({
   const isAudioUploading = Array.from(uploadingFiles.values()).some(
     (e) => e.kind === "audio",
   );
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    const fromItems = Array.from(e.clipboardData?.items ?? [])
+      .filter((item) => item.kind === "file")
+      .map((item) => item.getAsFile())
+      .filter((f): f is File => f !== null);
+    const fromFiles = Array.from(e.clipboardData?.files ?? []);
+    const pasted = fromItems.length ? fromItems : fromFiles;
+    if (pasted.length === 0) return;
+    e.preventDefault();
+    for (const file of pasted) {
+      onFileSelected(professionalName(file));
+    }
+  };
 
   return (
     <div className="max-w-3xl mx-auto w-full">
@@ -109,7 +158,7 @@ export function ChatInput({
                   <button
                     onClick={() => onRemoveAttachment(att.id)}
                     className="absolute -top-2 -right-2 z-10 w-4 h-4 flex items-center 
-                             justify-center rounded-full bg-red-500 text-white text-sm 
+                             justify-center rounded-full bg-red-500 text-white text-lg lg:text-base
                              hover:bg-red-600 shadow"
                   >
                     ×
@@ -228,6 +277,7 @@ export function ChatInput({
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               onKeyDown={onKeyDown}
+              onPaste={handlePaste}
               className="w-full outline-none md:text-sm text-base text-slate-800 dark:text-slate-100 min-h-6 max-h-40 overflow-y-auto wrap-break-words [word-break:break-word] wrap-anywhere whitespace-pre-wrap leading-relaxed"
             />
           </div>
@@ -257,7 +307,7 @@ export function ChatInput({
             <button
               onClick={isLoading ? onAbort : isOnline ? onSend : undefined}
               className={cn(
-                "mb-0.5 flex items-center justify-center shrink-0 w-9 h-9 rounded-full transition-all duration-200",
+                "mb-0.5 flex items-center justify-center shrink-0 w-8 h-8 rounded-full transition-all duration-200",
                 !isOnline
                   ? "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
                   : isLoading || isAudioUploading

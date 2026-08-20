@@ -350,7 +350,7 @@ const yo = {
       yoruba: "Yoruba",
     },
     notifications: {
-      label: "Awọn Ifitonileti Imeeli",
+      label: "Awọn Ifitonileti",
     },
     voice: {
       label: "Ohùn",

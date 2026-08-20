@@ -4,12 +4,15 @@ import { motion } from "framer-motion";
 import { useTranslate } from "@/app/hooks/useTranslate";
 import Image from "next/image";
 import AuthForm from "../components/auth/AuthForm";
+import { BackButton } from "../components/BackButton";
 
 export default function AuthPage() {
   const { t } = useTranslate();
 
   return (
     <div className="relative min-h-dvh overflow-hidden flex items-center justify-center">
+      {/* Back Button */}
+      <BackButton className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 text-white/80 hover:text-white" />
       {/* ===== Background Images ===== */}
 
       {/* Mobile Background */}

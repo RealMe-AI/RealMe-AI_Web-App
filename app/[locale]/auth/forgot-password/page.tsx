@@ -10,6 +10,7 @@ import useResendResetOtp from "@/app/hooks/auth/useResendResetOtp";
 import ForgotPasswordEmail from "../../components/auth/ForgotPasswordEmail";
 import OTPVerification from "../../components/auth/OTPVerification";
 import NewPasswordForm from "../../components/auth/NewPasswordForm";
+import { BackButton } from "../../components/BackButton";
 
 type Step = "email" | "otp" | "reset";
 
@@ -108,7 +109,8 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 bg-linear-to-br from-indigo-200 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
+    <div className="relative flex min-h-screen items-center justify-center p-4 bg-linear-to-br from-indigo-200 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
+      <BackButton className="absolute top-4 left-4 sm:top-6 sm:left-6 text-slate-700 dark:text-gray-200 hover:text-slate-900 dark:hover:text-white" />
       <AnimatePresence mode="wait">
         {step === "email" && (
           <ForgotPasswordEmail

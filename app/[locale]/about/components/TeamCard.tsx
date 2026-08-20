@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { LinkedInIcon } from "../../components/icons/LinkedInIcon";
+import { TwitterIcon } from "../../components/icons/TwitterIcon";
+import Link from "next/link";
 
 
 export function TeamCard({
@@ -8,12 +11,16 @@ export function TeamCard({
   name,
   role,
   alt,
+  linkedin = "#",
+  x = "#",
 }: {
   quote: string;
   image: string;
   name: string;
   role: string;
   alt: string;
+  linkedin?: string;
+  x?: string;
 }) {
   return (
     <motion.div
@@ -40,6 +47,26 @@ export function TeamCard({
             {name}
           </p>
           <p className="text-sm text-slate-500 dark:text-slate-400">{role}</p>
+          <div className="mt-3 flex items-center gap-3">
+            <Link
+              href={linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on LinkedIn`}
+              className="text-slate-500 hover:text-indigo-500 dark:text-slate-400 dark:hover:text-indigo-400 transition"
+            >
+              <LinkedInIcon width={18} height={18} />
+            </Link>
+            <Link
+              href={x}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on X`}
+              className="text-slate-500 hover:text-indigo-500 dark:text-slate-400 dark:hover:text-indigo-400 transition"
+            >
+              <TwitterIcon width={18} height={18} />
+            </Link>
+          </div>
         </div>
       </div>
     </motion.div>
