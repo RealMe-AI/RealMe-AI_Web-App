@@ -20,7 +20,6 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 const SITE_URL = "https://realme.com.ng";
-const GOOGLE_URL = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export function generateStaticParams(): { locale: Locale }[] {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -65,9 +64,6 @@ export async function generateMetadata({
     icons: {
       icon: "/logo.png",
       apple: "/logo.png",
-    },
-    verification: {
-      google: GOOGLE_URL,
     },
 
     alternates: {
