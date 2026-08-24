@@ -46,6 +46,26 @@ export default function OTPInput({ otp, onChange, expired, isError }: Props) {
     }
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, otp.length);
+
+    if (!pastedData) return;
+
+    pastedData.split("").forEach((digit, i) => {
+      onChange(digit, i);
+    });
+
+    if (pastedData.length < otp.length) {
+      inputs.current[pastedData.length]?.focus();
+    } else {
+      inputs.current[otp.length - 1]?.focus();
+    }
+  };
+
   return (
     <div className="flex justify-center gap-2 sm:gap-3 mt-4">
       {otp.map((digit, i) => (
@@ -56,7 +76,10 @@ export default function OTPInput({ otp, onChange, expired, isError }: Props) {
           }}
           value={digit}
           maxLength={1}
+          inputMode="numeric"
+          autoComplete="one-time-code"
           onChange={(e) => handleInput(e.target.value, i)}
+          onPaste={handlePaste}
           onKeyDown={(e) => {
             if (e.key === "Backspace")
               handleBackspace((e.target as HTMLInputElement).value, i);
