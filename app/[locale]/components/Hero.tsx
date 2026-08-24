@@ -32,7 +32,7 @@ export default function Hero() {
             </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-600 dark:text-white/80 leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-600 dark:text-white/80 leading-tight">
             {t("title")}
           </h1>
 
