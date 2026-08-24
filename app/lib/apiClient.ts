@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/app/store/useAuthStore";
 import { baseUrl } from "./baseUrl";
+import { captureReturnTo } from "./returnTo";
 
 let isRefreshing = false;
 let refreshPromise: Promise<string | null> | null = null;
@@ -90,6 +91,7 @@ export async function ensureFreshToken(): Promise<string | null> {
 
 function redirectToAuth() {
   if (typeof window !== "undefined") {
+    captureReturnTo(window.location.pathname + window.location.search);
     window.location.href = "/auth";
   }
 }
