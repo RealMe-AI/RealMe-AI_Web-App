@@ -6,6 +6,7 @@ import { useRouter } from "@/i18n/routing";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
+import { consumeReturnTo } from "@/app/lib/returnTo";
 
 export default function useGoogleAuth() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function useGoogleAuth() {
       refreshToken: data.refreshToken,
     });
     resetDashboardUi();
-    router.replace("/d");
+    router.replace(consumeReturnTo() ?? "/d");
   };
 
   return { handleCredentialResponse, error, clearError: () => setError(null) };

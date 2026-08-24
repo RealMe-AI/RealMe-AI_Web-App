@@ -7,6 +7,7 @@ import { baseUrl } from "@/app/lib/baseUrl";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import { authFetch } from "@/app/lib/apiClient";
 import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
+import { consumeReturnTo } from "@/app/lib/returnTo";
 
 interface LoginErrorResponse {
   error?: string;
@@ -156,7 +157,7 @@ export default function useSignIn() {
       setFieldErrors({ identifier: null, password: null });
 
       resetDashboardUi();
-      router.push("/d");
+      router.push(consumeReturnTo() ?? "/d");
 
       setTimeout(() => setSuccess(false), 1500);
     } catch (err) {

@@ -6,6 +6,7 @@ import { useSignUpStore } from "@/app/store/useSignUpStore";
 import { useAuthStore } from "@/app/store/useAuthStore";
 import { resetDashboardUi } from "@/app/store/useResetDashboardUi";
 import { baseUrl } from "@/app/lib/baseUrl";
+import { consumeReturnTo } from "@/app/lib/returnTo";
 
 export function useOTPVerification() {
   const router = useRouter();
@@ -105,9 +106,8 @@ export function useOTPVerification() {
         refreshToken: data.refreshToken,
       });
 
-      //  REDIRECT ONLY AFTER TOKEN EXISTS
       resetDashboardUi();
-      router.push("/d");
+      router.push(consumeReturnTo() ?? "/d");
     } catch (err) {
       console.error("OTP verification error:", err);
       setInvalidCode(true);
