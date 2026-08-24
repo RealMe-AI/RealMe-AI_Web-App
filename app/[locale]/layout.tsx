@@ -44,9 +44,9 @@ export async function generateMetadata({
 
   const images = [
     {
-      url: `${SITE_URL}/logo.png`,
-      width: 1200,
-      height: 630,
+      url: `${SITE_URL}/og-logo.png`,
+      width: 600,
+      height: 600,
       alt: "RealMe AI",
     },
   ];

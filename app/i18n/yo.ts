@@ -93,7 +93,7 @@ const yo = {
       back_button: "Pada",
     },
     login: {
-      email_placeholder: "Adirẹsi imeeli tabi nọmba foonu...",
+      email_placeholder: "Adirẹsi imeeli...",
       password_placeholder: "Ọrọ aṣínà...",
       full_name_placeholder: "Orukọ kikun...",
     },
@@ -173,8 +173,8 @@ const yo = {
   error: {
     generic: "Aṣiṣe airotẹlẹ ṣẹlẹ.",
 
-    required_identifier: "Imeeli tabi foonu jẹ dandan.",
-    invalid_identifier: "Tẹ imeeli to wulo tabi nọmba foonu E.164.",
+    required_identifier: "A nílò ímeèlì.",
+    invalid_identifier: "Tẹ imeeli to wulo.",
 
     required_password: "Ọrọ aṣínà jẹ dandan.",
     short_password: "Ọrọ aṣínà gbọdọ jẹ o kere ju awọn ohun kikọ 6.",
@@ -183,7 +183,7 @@ const yo = {
     invalid_fullname: "Tẹ orukọ kikun to wulo.",
 
     sign_in: {
-      email_number: "Imeeli tabi foonu jẹ dandan.",
+      email_number: "Imeeli jẹ dandan.",
       password: {
         required: "Ọrọ aṣínà jẹ dandan.",
       },
@@ -191,7 +191,7 @@ const yo = {
 
     sign_up: {
       email_number:
-        "Tẹ imeeli to wulo tabi nọmba foonu E.164 (apẹẹrẹ +123456789).",
+        "Tẹ imeeli to wulo.",
       password: {
         min_length: "Ọrọ aṣínà gbọdọ jẹ o kere ju awọn ohun kikọ 6.",
       },
@@ -537,7 +537,7 @@ const yo = {
         gs_1: {
           question: "Báwo ni mo ṣe lè ṣẹ̀dá àkọọ́lẹ̀?",
           answer:
-            "O lè ṣẹ̀dá àkọọ́lẹ̀ pẹ̀lú ímeèlì rẹ, nọ́mbà fóònù rẹ tàbí àkọọ́lẹ̀ Google rẹ. Kan tẹ bọ́tìnì 'Bẹ̀rẹ̀' lórí ojú-ìwé àkọ́kọ́ kí o sì tẹ̀lé ìlànà ìforúkọsílẹ̀.",
+            "O lè ṣẹ̀dá àkọọ́lẹ̀ pẹ̀lú ímeèlì rẹ, tàbí àkọọ́lẹ̀ Google rẹ. Kan tẹ bọ́tìnì 'Bẹ̀rẹ̀' lórí ojú-ìwé àkọ́kọ́ kí o sì tẹ̀lé ìlànà ìforúkọsílẹ̀.",
         },
 
         gs_2: {

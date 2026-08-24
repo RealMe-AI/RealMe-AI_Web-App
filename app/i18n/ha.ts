@@ -93,7 +93,7 @@ const ha = {
       back_button: "Komawa",
     },
     login: {
-      email_placeholder: "Adireshin imel ko lambar waya...",
+      email_placeholder: "Adireshin imel...",
       password_placeholder: "Kalmar sirri...",
       full_name_placeholder: "Cikakken suna...",
     },
@@ -174,8 +174,8 @@ const ha = {
   error: {
     generic: "An sami kuskure ba zato ba tsammani.",
 
-    required_identifier: "Ana buƙatar imel ko lambar waya.",
-    invalid_identifier: "Shigar da ingantaccen imel ko lambar waya ta E.164.",
+    required_identifier: "Ana buƙatar imel.",
+    invalid_identifier: "Shigar da ingantaccen imel.",
 
     required_password: "Ana buƙatar kalmar sirri.",
     short_password: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
@@ -184,7 +184,7 @@ const ha = {
     invalid_fullname: "Shigar da cikakken suna mai inganci.",
 
     sign_in: {
-      email_number: "Ana buƙatar imel ko lambar waya.",
+      email_number: "Ana buƙatar imel.",
       password: {
         required: "Ana buƙatar kalmar sirri.",
       },
@@ -192,7 +192,7 @@ const ha = {
 
     sign_up: {
       email_number:
-        "Shigar da ingantaccen imel ko lambar waya ta E.164 (misali +123456789).",
+        "Shigar da ingantaccen imel.",
       password: {
         min_length: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
       },
@@ -539,7 +539,7 @@ const ha = {
         gs_1: {
           question: "Ta yaya zan ƙirƙiri asusu?",
           answer:
-            "Za ka iya ƙirƙirar asusu ta amfani da imel, lambar waya, ko asusun Google. Danna maɓallin 'Fara' a shafin farko sannan ka bi matakan rajista.",
+            "Za ka iya ƙirƙirar asusu ta amfani da imel, ko asusun Google. Danna maɓallin 'Fara' a shafin farko sannan ka bi matakan rajista.",
         },
 
         gs_2: {

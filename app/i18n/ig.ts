@@ -93,7 +93,7 @@ const ig = {
       back_button: "Laghachi",
     },
     login: {
-      email_placeholder: "Adreesị email ma ọ bụ nọmba ekwentị...",
+      email_placeholder: "Adreesị email...",
       password_placeholder: "Okwuntughe...",
       full_name_placeholder: "Aha zuru ezu...",
     },
@@ -172,8 +172,8 @@ const ig = {
   error: {
     generic: "Enweghi mmejọ a tụrụ anya ya.",
 
-    required_identifier: "Email ma ọ bụ ekwentị chọrọ.",
-    invalid_identifier: "Tinye email ziri ezi ma ọ bụ nọmba ekwentị E.164.",
+    required_identifier: "Achọrọ email.",
+    invalid_identifier: "Tinye email ziri ezi.",
 
     required_password: "Okwuntughe chọrọ.",
     short_password: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
@@ -182,7 +182,7 @@ const ig = {
     invalid_fullname: "Tinye aha zuru ezu ziri ezi.",
 
     sign_in: {
-      email_number: "Email ma ọ bụ ekwentị chọrọ.",
+      email_number: "A chọrọ email ziri ezi.",
       password: {
         required: "Okwuntughe chọrọ.",
       },
@@ -190,7 +190,7 @@ const ig = {
 
     sign_up: {
       email_number:
-        "Tinye email ziri ezi ma ọ bụ nọmba ekwentị E.164 (dịka +123456789).",
+        "Tinye email ziri ezi.",
       password: {
         min_length: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
       },
@@ -536,7 +536,7 @@ const ig = {
         gs_1: {
           question: "Kedu ka m ga-esi mepụta akaụntụ?",
           answer:
-            "Ị nwere ike ịmepụta akaụntụ site na email gị, nọmba ekwentị gị, ma ọ bụ akaụntụ Google gị. Pịa bọtịnụ 'Malite' dị na ibe mbụ ma soro usoro ndebanye aha.",
+            "Ị nwere ike ịmepụta akaụntụ site na email gị, ma ọ bụ akaụntụ Google gị. Pịa bọtịnụ 'Malite' dị na ibe mbụ ma soro usoro ndebanye aha.",
         },
 
         gs_2: {
