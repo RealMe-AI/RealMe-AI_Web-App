@@ -90,11 +90,20 @@ function parseBlock(block: string): ParsedSegment[] {
   const lines = block.split("\n");
   let i = 0;
 
+  // Horizontal-rule-only lines are dropped, never rendered
+  const hrLine = /^\s*(?:[-*_]\s*){3,}$/;
+
   while (i < lines.length) {
     const line = lines[i];
 
     // Code block (shouldn't happen here but handle gracefully)
     if (line.startsWith("```")) {
+      i++;
+      continue;
+    }
+
+    // Horizontal rule line
+    if (hrLine.test(line)) {
       i++;
       continue;
     }
@@ -170,7 +179,8 @@ function parseBlock(block: string): ParsedSegment[] {
       !lines[i].startsWith("|") &&
       !lines[i].match(/^\s*[-*+]\s+/) &&
       !lines[i].match(/^\s*\d+\.\s+/) &&
-      !lines[i].match(/^```/)
+      !lines[i].match(/^```/) &&
+      !hrLine.test(lines[i])
     ) {
       paraLines.push(lines[i]);
       i++;
