@@ -11,12 +11,10 @@ import { useUserStore } from "@/app/store/useUserStore";
 import type { Attachment } from "@/app/interface/type";
 import OfflineBanner from "./OfflineBanner";
 import ClipboardPasteModal from "./clipboard/ClipboardPasteModal";
-import {
-  getDismissedClipboard,
-  dismissClipboard,
-} from "./clipboard/dismiss";
+import { getDismissedClipboard, dismissClipboard } from "./clipboard/dismiss";
 import { ChatMessageList, ChatInput } from "./chat";
 import markdownToPlainText from "@/app/lib/markdownToPlainText";
+import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
@@ -45,12 +43,36 @@ export default function ChatWindow() {
 
   const focusedOnMountRef = useRef(false);
 
+  // Auto-focus on mount (desktop only)
   useEffect(() => {
     if (!focusedOnMountRef.current && window.innerWidth >= 1024) {
       focusedOnMountRef.current = true;
       triggerInputFocus();
     }
   }, [triggerInputFocus]);
+
+  // Mobile keyboard-aware layout
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const syncKeyboardHeight = () => {
+      const gap = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      document.documentElement.style.setProperty(
+        "--keyboard-height",
+        `${gap}px`,
+      );
+    };
+
+    syncKeyboardHeight();
+    vv.addEventListener("resize", syncKeyboardHeight);
+    vv.addEventListener("scroll", syncKeyboardHeight);
+    return () => {
+      vv.removeEventListener("resize", syncKeyboardHeight);
+      vv.removeEventListener("scroll", syncKeyboardHeight);
+      document.documentElement.style.setProperty("--keyboard-height", "0px");
+    };
+  }, []);
 
   useEffect(() => {
     if (inputFocusSignal > 0 && inputRef.current && window.innerWidth >= 1024) {
@@ -121,12 +143,15 @@ export default function ChatWindow() {
     resetRecording();
     setAttachments([]);
 
+    // Keep the input focused after send (desktop only)
+    if (window.innerWidth >= 768) {
+      placeCursorAtStart(inputRef.current);
+    }
+
     if (audioBlob) {
-      const audioFile = new File(
-        [audioBlob],
-        `Voice-Message.webm`,
-        { type: "audio/webm" },
-      );
+      const audioFile = new File([audioBlob], `Voice-Message.webm`, {
+        type: "audio/webm",
+      });
       const result = await uploadFile(audioFile, "audio");
       if (result) {
         attachmentIds.push(result.id);
@@ -135,7 +160,11 @@ export default function ChatWindow() {
     }
 
     // voice-only: clear any typed text so only the audio is sent
-    await sendMessage(audioBlob ? "" : textContent, attachmentIds, attachmentData);
+    await sendMessage(
+      audioBlob ? "" : textContent,
+      attachmentIds,
+      attachmentData,
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -194,6 +223,7 @@ export default function ChatWindow() {
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-4 max-w-full h-full min-h-0"
+      style={{ paddingBottom: "max(1rem, var(--keyboard-height, 0px))" }}
     >
       <OfflineBanner />
 
@@ -214,11 +244,7 @@ export default function ChatWindow() {
             setInput(clipboardText);
             if (inputRef.current) inputRef.current.textContent = clipboardText;
             setClipboardText(null);
-            if (inputFocusSignal > 0) {
-              inputRef.current?.focus();
-            } else {
-              triggerInputFocus();
-            }
+            requestAnimationFrame(() => placeCursorAtEnd(inputRef.current));
           }}
           onCancel={() => {
             dismissClipboard(clipboardText.trim());
