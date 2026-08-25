@@ -14,7 +14,7 @@ type ParsedSegment =
   | { type: "paragraph"; text: string };
 
 const INLINE_TOKEN =
-  /(`[^`]+`)|(\*\*(.+?)\*\*)|(\*([^*\n]+)\*)/g;
+  /(`[^`]+`)|(\*\*(.+?)\*\*)|(\*([^*\n]+)\*)|(<br\s*\/?>|&lt;br\s*\/?&gt;)/gi;
 
 function parseInline(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
@@ -30,6 +30,7 @@ function parseInline(text: string): React.ReactNode[] {
     const code = match[1] !== undefined ? match[1].slice(1, -1) : undefined;
     const bold = match[3];
     const italic = match[5];
+    const br = match[6];
 
     if (code !== undefined) {
       if (index > lastIndex) parts.push(text.slice(lastIndex, index));
@@ -40,6 +41,9 @@ function parseInline(text: string): React.ReactNode[] {
     } else if (italic !== undefined && italic.trim() !== "") {
       if (index > lastIndex) parts.push(text.slice(lastIndex, index));
       parts.push(<em key={key++} className="italic">{italic}</em>);
+    } else if (br !== undefined) {
+      if (index > lastIndex) parts.push(text.slice(lastIndex, index));
+      parts.push(<br key={key++} />);
     }
 
     lastIndex = endIndex;
@@ -86,11 +90,20 @@ function parseBlock(block: string): ParsedSegment[] {
   const lines = block.split("\n");
   let i = 0;
 
+  // Horizontal-rule-only lines are dropped, never rendered
+  const hrLine = /^\s*(?:[-*_]\s*){3,}$/;
+
   while (i < lines.length) {
     const line = lines[i];
 
     // Code block (shouldn't happen here but handle gracefully)
     if (line.startsWith("```")) {
+      i++;
+      continue;
+    }
+
+    // Horizontal rule line
+    if (hrLine.test(line)) {
       i++;
       continue;
     }
@@ -166,7 +179,8 @@ function parseBlock(block: string): ParsedSegment[] {
       !lines[i].startsWith("|") &&
       !lines[i].match(/^\s*[-*+]\s+/) &&
       !lines[i].match(/^\s*\d+\.\s+/) &&
-      !lines[i].match(/^```/)
+      !lines[i].match(/^```/) &&
+      !hrLine.test(lines[i])
     ) {
       paraLines.push(lines[i]);
       i++;
@@ -179,6 +193,28 @@ function parseBlock(block: string): ParsedSegment[] {
   }
 
   return segments;
+}
+
+function renderCell(text: string): React.ReactNode {
+  // Normalize <br> to \n locally to avoid breaking markdown table parsing
+  const normalizedText = text
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/&lt;br\s*\/?&gt;/gi, "\n");
+
+  const lines = normalizedText.split("\n").filter((l) => l.trim() !== "");
+  const listLines = lines.filter((l) => /^\s*[-*+]\s/.test(l));
+
+  if (listLines.length > 0 && listLines.length >= lines.length - 1) {
+    return (
+      <ul className="space-y-0.5 list-none p-0 m-0">
+        {lines.map((line, i) => (
+          <li key={i}>{parseInline(line.replace(/^\s*[-*+]\s+/, ""))}</li>
+        ))}
+      </ul>
+    );
+  }
+
+  return <>{parseInline(normalizedText)}</>;
 }
 
 function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
@@ -280,9 +316,9 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
                     {row.map((cell, ci) => (
                       <td
                         key={ci}
-                        className="px-3 py-2 text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-800 align-top"
+                        className="px-3 py-2 text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-800 align-top whitespace-pre-wrap"
                       >
-                        {parseInline(cell)}
+                        {renderCell(cell)}
                       </td>
                     ))}
                   </tr>

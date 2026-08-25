@@ -2,6 +2,12 @@
 
 @variant dark (&:is(.dark *));
 
+/* CSS variables  */
+
+:root {
+  --keyboard-height: 0px;
+}
+
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;

@@ -83,6 +83,7 @@ export function ConversationsModal({
                   key={chat.id}
                   chat={chat}
                   isActive={activeConversationId === chat.id}
+                  usePortal={true}
                   onClick={() => {
                     setActiveConversationId(chat.id);
                     fetchMessages(chat.id);

@@ -11,12 +11,10 @@ import { useUserStore } from "@/app/store/useUserStore";
 import type { Attachment } from "@/app/interface/type";
 import OfflineBanner from "./OfflineBanner";
 import ClipboardPasteModal from "./clipboard/ClipboardPasteModal";
-import {
-  getDismissedClipboard,
-  dismissClipboard,
-} from "./clipboard/dismiss";
+import { getDismissedClipboard, dismissClipboard } from "./clipboard/dismiss";
 import { ChatMessageList, ChatInput } from "./chat";
 import markdownToPlainText from "@/app/lib/markdownToPlainText";
+import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
@@ -30,6 +28,9 @@ export default function ChatWindow() {
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const isNearBottomRef = useRef(true);
+  const touchYRef = useRef<number | null>(null);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   const {
@@ -45,12 +46,36 @@ export default function ChatWindow() {
 
   const focusedOnMountRef = useRef(false);
 
+  // Auto-focus on mount (desktop only)
   useEffect(() => {
     if (!focusedOnMountRef.current && window.innerWidth >= 1024) {
       focusedOnMountRef.current = true;
       triggerInputFocus();
     }
   }, [triggerInputFocus]);
+
+  // Mobile keyboard-aware layout
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const syncKeyboardHeight = () => {
+      const gap = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      document.documentElement.style.setProperty(
+        "--keyboard-height",
+        `${gap}px`,
+      );
+    };
+
+    syncKeyboardHeight();
+    vv.addEventListener("resize", syncKeyboardHeight);
+    vv.addEventListener("scroll", syncKeyboardHeight);
+    return () => {
+      vv.removeEventListener("resize", syncKeyboardHeight);
+      vv.removeEventListener("scroll", syncKeyboardHeight);
+      document.documentElement.style.setProperty("--keyboard-height", "0px");
+    };
+  }, []);
 
   useEffect(() => {
     if (inputFocusSignal > 0 && inputRef.current && window.innerWidth >= 1024) {
@@ -121,12 +146,15 @@ export default function ChatWindow() {
     resetRecording();
     setAttachments([]);
 
+    // Keep the input focused after send (desktop only)
+    if (window.innerWidth >= 768) {
+      placeCursorAtStart(inputRef.current);
+    }
+
     if (audioBlob) {
-      const audioFile = new File(
-        [audioBlob],
-        `Voice-Message.webm`,
-        { type: "audio/webm" },
-      );
+      const audioFile = new File([audioBlob], `Voice-Message.webm`, {
+        type: "audio/webm",
+      });
       const result = await uploadFile(audioFile, "audio");
       if (result) {
         attachmentIds.push(result.id);
@@ -135,7 +163,12 @@ export default function ChatWindow() {
     }
 
     // voice-only: clear any typed text so only the audio is sent
-    await sendMessage(audioBlob ? "" : textContent, attachmentIds, attachmentData);
+    isNearBottomRef.current = true;
+    await sendMessage(
+      audioBlob ? "" : textContent,
+      attachmentIds,
+      attachmentData,
+    );
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -147,18 +180,97 @@ export default function ChatWindow() {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
-  }, [chatMessages.length]);
-
-  useEffect(() => {
     const el = scrollContainerRef.current;
-    if (!el) return;
+    const content = contentRef.current;
+    if (!el || !content) return;
+
+    let rafId: number | null = null;
+    let lastScrollTop = el.scrollTop;
+
+    const nearBottom = () => {
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      return scrollHeight - scrollTop - clientHeight <= 100;
+    };
+
+    const step = () => {
+      rafId = null;
+      if (!isNearBottomRef.current) return;
+      const diff = el.scrollHeight - el.scrollTop - el.clientHeight + 4;
+      if (diff <= 1) {
+        el.scrollTop = el.scrollHeight;
+        return;
+      }
+      el.scrollTop += diff * 0.35;
+      rafId = requestAnimationFrame(step);
+    };
+
+    const startFollow = () => {
+      if (rafId === null && isNearBottomRef.current) {
+        rafId = requestAnimationFrame(step);
+      }
+    };
+
+    const ro = new ResizeObserver(() => {
+      if (isNearBottomRef.current) startFollow();
+    });
+    ro.observe(content);
+
+    const resumeIfNearBottom = () => {
+      if (!isNearBottomRef.current && nearBottom()) {
+        isNearBottomRef.current = true;
+        startFollow();
+      } else if (isNearBottomRef.current) {
+        startFollow();
+      }
+    };
+
+    // Wheel up = user reading history → pause. Wheel down near bottom → resume.
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY < 0) {
+        isNearBottomRef.current = false;
+      } else {
+        resumeIfNearBottom();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchYRef.current = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0].clientY;
+      const dy = y - (touchYRef.current ?? y);
+      touchYRef.current = y;
+      if (dy > 0) {
+        isNearBottomRef.current = false;
+      } else if (dy < 0) {
+        resumeIfNearBottom();
+      }
+    };
+
     const onScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = el;
       setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
+      const goingUp = scrollTop < lastScrollTop;
+      lastScrollTop = scrollTop;
+      if (!goingUp && !isNearBottomRef.current && nearBottom()) {
+        isNearBottomRef.current = true;
+        startFollow();
+      }
     };
+
+    el.addEventListener("wheel", onWheel, { passive: true });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: true });
     el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+
+    return () => {
+      ro.disconnect();
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const checkClipboard = useCallback(async () => {
@@ -194,6 +306,7 @@ export default function ChatWindow() {
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-slate-800/40 
                  backdrop-blur-xl rounded-2xl shadow-xl p-3 sm:p-4 md:p-4 max-w-full h-full min-h-0"
+      style={{ paddingBottom: "max(1rem, var(--keyboard-height, 0px))" }}
     >
       <OfflineBanner />
 
@@ -204,6 +317,7 @@ export default function ChatWindow() {
         showScrollBtn={showScrollBtn}
         messagesEndRef={messagesEndRef}
         scrollContainerRef={scrollContainerRef}
+        contentRef={contentRef}
       />
 
       {clipboardText && (
@@ -214,11 +328,7 @@ export default function ChatWindow() {
             setInput(clipboardText);
             if (inputRef.current) inputRef.current.textContent = clipboardText;
             setClipboardText(null);
-            if (inputFocusSignal > 0) {
-              inputRef.current?.focus();
-            } else {
-              triggerInputFocus();
-            }
+            requestAnimationFrame(() => placeCursorAtEnd(inputRef.current));
           }}
           onCancel={() => {
             dismissClipboard(clipboardText.trim());

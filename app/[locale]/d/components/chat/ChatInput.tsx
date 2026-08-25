@@ -1,6 +1,15 @@
 "use client";
 
-import { Plus, Mic, FileIcon, FileText, ArrowUp, Square, Play, Trash2 } from "lucide-react";
+import {
+  Plus,
+  Mic,
+  FileIcon,
+  FileText,
+  ArrowUp,
+  Square,
+  Play,
+  Trash2,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { cn } from "@/app/lib/utils";
@@ -89,11 +98,21 @@ export function ChatInput({
       .map((item) => item.getAsFile())
       .filter((f): f is File => f !== null);
     const fromFiles = Array.from(e.clipboardData?.files ?? []);
-    const pasted = fromItems.length ? fromItems : fromFiles;
-    if (pasted.length === 0) return;
-    e.preventDefault();
-    for (const file of pasted) {
-      onFileSelected(professionalName(file));
+    const pastedFiles = fromItems.length ? fromItems : fromFiles;
+
+    if (pastedFiles.length > 0) {
+      e.preventDefault();
+      for (const file of pastedFiles) {
+        onFileSelected(professionalName(file));
+      }
+      return;
+    }
+
+    const plain = e.clipboardData?.getData("text/plain");
+    if (plain !== undefined && plain !== "") {
+      e.preventDefault();
+
+      document.execCommand("insertText", false, plain);
     }
   };
 
@@ -147,7 +166,9 @@ export function ChatInput({
 
             {attachments.map((att) => {
               const ext = att.fileName.split(".").pop()?.toLowerCase();
-              const isImage = ["png", "jpg", "jpeg", "webp"].includes(ext || "");
+              const isImage = ["png", "jpg", "jpeg", "webp"].includes(
+                ext || "",
+              );
               const isPdf = ext === "pdf";
               return (
                 <div
@@ -202,7 +223,11 @@ export function ChatInput({
                         <motion.div
                           key={i}
                           animate={{ height: [6, 16, 10, 20, 6][i % 5] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.1 }}
+                          transition={{
+                            duration: 0.6,
+                            repeat: Infinity,
+                            delay: i * 0.1,
+                          }}
                           className="w-0.5 bg-indigo-500 rounded-full"
                         />
                       ))}
@@ -218,9 +243,16 @@ export function ChatInput({
                       className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 dark:bg-slate-300/30 hover:bg-indigo-200 dark:hover:bg-indigo-800/50 transition shrink-0"
                     >
                       {isAudioPlaying ? (
-                        <Square size={10} fill="currentColor" className="text-indigo-600 dark:text-white" />
+                        <Square
+                          size={10}
+                          fill="currentColor"
+                          className="text-indigo-600 dark:text-white"
+                        />
                       ) : (
-                        <Play size={12} className="text-indigo-600 dark:text-white ml-0.5" />
+                        <Play
+                          size={12}
+                          className="text-indigo-600 dark:text-white ml-0.5"
+                        />
                       )}
                     </button>
                     <div className="flex items-center gap-0.5 h-6">
@@ -233,7 +265,9 @@ export function ChatInput({
                       ))}
                     </div>
                     <span className="text-xs font-medium text-slate-700 dark:text-slate-300 min-w-8 tabular-nums">
-                      {formatAudioTime(isAudioPlaying ? audioCurrentTime : audioDuration)}
+                      {formatAudioTime(
+                        isAudioPlaying ? audioCurrentTime : audioDuration,
+                      )}
                     </span>
                     <button
                       onClick={onDeleteAudio}
@@ -278,7 +312,12 @@ export function ChatInput({
               onBlur={() => setIsFocused(false)}
               onKeyDown={onKeyDown}
               onPaste={handlePaste}
-              className="w-full outline-none md:text-sm text-base text-slate-800 dark:text-slate-100 min-h-6 max-h-40 overflow-y-auto wrap-break-words [word-break:break-word] wrap-anywhere whitespace-pre-wrap leading-relaxed"
+              className="w-full outline-none md:text-sm text-base
+                         text-slate-800 dark:text-slate-100
+                         [caret-color:theme(colors.slate.800)] dark:[caret-color:theme(colors.slate.100)]
+                         min-h-6 max-h-40 overflow-y-auto
+                         wrap-break-words [word-break:break-word] wrap-anywhere
+                         whitespace-pre-wrap leading-relaxed"
             />
           </div>
 
@@ -292,16 +331,16 @@ export function ChatInput({
                 <Square size={16} fill="currentColor" />
               </div>
             </div>
-          ) : input.trim() === "" && !hasAttachmentsOrUploading && !audioUrl && !isLoading ? (
+          ) : input.trim() === "" &&
+            !hasAttachmentsOrUploading &&
+            !audioUrl &&
+            !isLoading ? (
             <div
               onClick={onMicClick}
               className="mb-0.5 rounded-full hover:bg-white/30 
                          dark:hover:bg-slate-600/30 relative cursor-pointer flex items-center justify-center shrink-0 w-8 h-8"
             >
-              <Mic
-                size={27}
-                className="text-indigo-500 dark:text-indigo-300"
-              />
+              <Mic size={27} className="text-indigo-500 dark:text-indigo-300" />
             </div>
           ) : (
             <button
