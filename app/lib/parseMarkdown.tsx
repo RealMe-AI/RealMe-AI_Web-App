@@ -181,6 +181,23 @@ function parseBlock(block: string): ParsedSegment[] {
   return segments;
 }
 
+function renderCell(text: string): React.ReactNode {
+  const lines = text.split("\n").filter((l) => l.trim() !== "");
+  const listLines = lines.filter((l) => /^\s*[-*+]\s/.test(l));
+
+  if (listLines.length > 0 && listLines.length >= lines.length - 1) {
+    return (
+      <ul className="space-y-0.5 list-none p-0 m-0">
+        {lines.map((line, i) => (
+          <li key={i}>{parseInline(line.replace(/^\s*[-*+]\s+/, ""))}</li>
+        ))}
+      </ul>
+    );
+  }
+
+  return <>{parseInline(text)}</>;
+}
+
 function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
   return segments.map((seg, idx) => {
     switch (seg.type) {
@@ -282,7 +299,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
                         key={ci}
                         className="px-3 py-2 text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-800 align-top"
                       >
-                        {parseInline(cell)}
+                        {renderCell(cell)}
                       </td>
                     ))}
                   </tr>
@@ -347,6 +364,11 @@ function CodeBlock({ language, code }: { language: string; code: string }) {
 
 export default function parseMarkdown(text: string): React.ReactNode[] {
   if (!text) return [];
+
+  text = text
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/&lt;br\s*\/?&gt;/gi, "\n")
+    .replace(/\n{3,}/g, "\n\n");
 
   const blocks = splitIntoBlocks(text);
   const elements: React.ReactNode[] = [];
