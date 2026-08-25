@@ -28,6 +28,9 @@ export default function ChatWindow() {
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const isNearBottomRef = useRef(true);
+  const touchYRef = useRef<number | null>(null);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
   const {
@@ -160,6 +163,7 @@ export default function ChatWindow() {
     }
 
     // voice-only: clear any typed text so only the audio is sent
+    isNearBottomRef.current = true;
     await sendMessage(
       audioBlob ? "" : textContent,
       attachmentIds,
@@ -176,18 +180,97 @@ export default function ChatWindow() {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
-  }, [chatMessages.length]);
-
-  useEffect(() => {
     const el = scrollContainerRef.current;
-    if (!el) return;
+    const content = contentRef.current;
+    if (!el || !content) return;
+
+    let rafId: number | null = null;
+    let lastScrollTop = el.scrollTop;
+
+    const nearBottom = () => {
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      return scrollHeight - scrollTop - clientHeight <= 100;
+    };
+
+    const step = () => {
+      rafId = null;
+      if (!isNearBottomRef.current) return;
+      const diff = el.scrollHeight - el.scrollTop - el.clientHeight + 4;
+      if (diff <= 1) {
+        el.scrollTop = el.scrollHeight;
+        return;
+      }
+      el.scrollTop += diff * 0.35;
+      rafId = requestAnimationFrame(step);
+    };
+
+    const startFollow = () => {
+      if (rafId === null && isNearBottomRef.current) {
+        rafId = requestAnimationFrame(step);
+      }
+    };
+
+    const ro = new ResizeObserver(() => {
+      if (isNearBottomRef.current) startFollow();
+    });
+    ro.observe(content);
+
+    const resumeIfNearBottom = () => {
+      if (!isNearBottomRef.current && nearBottom()) {
+        isNearBottomRef.current = true;
+        startFollow();
+      } else if (isNearBottomRef.current) {
+        startFollow();
+      }
+    };
+
+    // Wheel up = user reading history → pause. Wheel down near bottom → resume.
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY < 0) {
+        isNearBottomRef.current = false;
+      } else {
+        resumeIfNearBottom();
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      touchYRef.current = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0].clientY;
+      const dy = y - (touchYRef.current ?? y);
+      touchYRef.current = y;
+      if (dy > 0) {
+        isNearBottomRef.current = false;
+      } else if (dy < 0) {
+        resumeIfNearBottom();
+      }
+    };
+
     const onScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = el;
       setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
+      const goingUp = scrollTop < lastScrollTop;
+      lastScrollTop = scrollTop;
+      if (!goingUp && !isNearBottomRef.current && nearBottom()) {
+        isNearBottomRef.current = true;
+        startFollow();
+      }
     };
+
+    el.addEventListener("wheel", onWheel, { passive: true });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: true });
     el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+
+    return () => {
+      ro.disconnect();
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const checkClipboard = useCallback(async () => {
@@ -234,6 +317,7 @@ export default function ChatWindow() {
         showScrollBtn={showScrollBtn}
         messagesEndRef={messagesEndRef}
         scrollContainerRef={scrollContainerRef}
+        contentRef={contentRef}
       />
 
       {clipboardText && (

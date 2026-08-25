@@ -5,6 +5,7 @@ import { ArrowDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { Message } from "@/app/interface/type";
+import { cn } from "@/app/lib/utils";
 import ChatMessage from "../ChatMessage";
 
 interface ChatMessageListProps {
@@ -14,6 +15,7 @@ interface ChatMessageListProps {
   showScrollBtn: boolean;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export function ChatMessageList({
@@ -23,6 +25,7 @@ export function ChatMessageList({
   showScrollBtn,
   messagesEndRef,
   scrollContainerRef,
+  contentRef,
 }: ChatMessageListProps) {
   const t = useTranslations();
 
@@ -31,9 +34,15 @@ export function ChatMessageList({
       <div className="relative flex-1 min-h-0">
         <div
           ref={scrollContainerRef}
-          className="h-full pb-4 overflow-y-auto caret-transparent"
+          className="h-full pb-4 overflow-y-auto caret-transparent [overflow-anchor:none]"
         >
-          <div className="max-w-3xl mx-auto h-full">
+          <div
+            ref={contentRef}
+            className={cn(
+              "max-w-3xl mx-auto",
+              chatMessages.length === 0 && "h-full",
+            )}
+          >
             {chatMessages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
                 <motion.div
