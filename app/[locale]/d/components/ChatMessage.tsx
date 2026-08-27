@@ -26,7 +26,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   const hasAudio =
     message.type === "audio" ||
     message.attachments?.some((att) => att.type === "audio");
-  const isUserAudioOnly = isUser && hasAudio && !message.text;
+  const hasImage = message.attachments?.some((att) => att.type === "image");
+  const isUserMediaOnly = isUser && (hasAudio || hasImage) && !message.text;
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(message.text || "");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -325,7 +326,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               </div>
             </div>
 
-            {!isEditing && !isUserAudioOnly && (
+            {!isEditing && !isUserMediaOnly && (
               <div
                 className={cn(
                   "flex w-full text-[10px] opacity-60 px-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",

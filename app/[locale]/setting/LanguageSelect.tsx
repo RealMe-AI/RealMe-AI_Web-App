@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useLanguageStore, type Language } from "@/app/store/useLanguageStore";
 import { useChatStore } from "@/app/store/useChatStore";
+import { useSidebarStore } from "@/app/store/useSidebarStore";
 
 import CustomSelect from "./CustomSelect";
 
@@ -34,6 +35,10 @@ export default function LanguageSelect() {
     const query = searchParams.toString();
 
     router.push(query ? `${newPath}?${query}` : newPath);
+
+    if (typeof window !== "undefined" && window.innerWidth < 640) {
+      useSidebarStore.getState().close();
+    }
   };
 
   return (
