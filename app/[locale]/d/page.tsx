@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { PanelLeft } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
@@ -28,7 +28,18 @@ export default function Page() {
   const setActiveConversationId = useChatStore(
     (s) => s.setActiveConversationId,
   );
+  const activeConversationId = useChatStore((s) => s.activeConversationId);
   const { fetchMessages } = useFetchMessages();
+
+  // Restore the last active conversation after a refresh
+  const restoredRef = useRef(false);
+  useEffect(() => {
+    if (restoredRef.current) return;
+    if (accessToken && activeConversationId) {
+      restoredRef.current = true;
+      fetchMessages(activeConversationId);
+    }
+  }, [accessToken, activeConversationId, fetchMessages]);
   const [shareChat, setShareChat] = useState<{
     chatId: number;
     title: string;
