@@ -237,7 +237,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                     alt="RealMe AI"
                     width={32}
                     height={32}
-                    className="w-8 h-8 rounded-full border border-gray-300 dark:border-white/20"
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-gray-300 dark:border-white/20"
                   />
                 </div>
               )}
