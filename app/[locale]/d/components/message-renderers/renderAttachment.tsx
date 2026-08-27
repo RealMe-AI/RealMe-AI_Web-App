@@ -3,9 +3,11 @@ import { FileIcon, FileText } from "lucide-react";
 import { Attachment } from "@/app/interface/type";
 import { isAudioAttachment, formatFileSize } from "./utils";
 import { renderAudioBubble, AudioPlayerApi } from "./renderAudioBubble";
+import { useLightboxStore } from "@/app/store/useLightboxStore";
 
-export function renderAttachment(att: Attachment, api: AudioPlayerApi) {
+export function renderAttachment(att: Attachment, api?: AudioPlayerApi | null) {
   if (isAudioAttachment(att)) {
+    if (!api) return null;
     return renderAudioBubble(att.url, api);
   }
 
@@ -14,20 +16,22 @@ export function renderAttachment(att: Attachment, api: AudioPlayerApi) {
 
   if (isImage) {
     return (
-      <div
+      <button
+        type="button"
         key={att.id}
-        className="rounded-xl overflow-hidden mb-2 max-w-[280px]"
+        onClick={() => useLightboxStore.getState().open(att.url)}
+        className="group block rounded-xl overflow-hidden mb-2 cursor-zoom-in max-w-[320px]"
       >
         <Image
           src={att.url}
           alt={att.fileName}
           width={0}
           height={0}
-          sizes="100vw"
-          className="w-full h-auto rounded-xl"
+          sizes="(max-width: 768px) 70vw, 320px"
+          className="w-auto h-auto max-w-[100px] max-h-[100px] object-contain rounded-xl transition-transform group-hover:scale-[1.02]"
           unoptimized
         />
-      </div>
+      </button>
     );
   }
 

@@ -13,6 +13,7 @@ import OfflineBanner from "./OfflineBanner";
 import ClipboardPasteModal from "./clipboard/ClipboardPasteModal";
 import { getDismissedClipboard, dismissClipboard } from "./clipboard/dismiss";
 import { ChatMessageList, ChatInput } from "./chat";
+import Lightbox from "@/app/[locale]/components/Lightbox";
 import markdownToPlainText from "@/app/lib/markdownToPlainText";
 import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
 
@@ -364,6 +365,8 @@ export default function ChatWindow() {
         onSend={handleSend}
         onKeyDown={handleKeyDown}
       />
+
+      <Lightbox />
     </div>
   );
 }

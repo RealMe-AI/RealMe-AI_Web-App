@@ -28,6 +28,14 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     message.attachments?.some((att) => att.type === "audio");
   const hasImage = message.attachments?.some((att) => att.type === "image");
   const isUserMediaOnly = isUser && (hasAudio || hasImage) && !message.text;
+  const imageAttachments = (message.attachments ?? []).filter(
+    (a) => a.type === "image",
+  );
+  const otherAttachments = (message.attachments ?? []).filter(
+    (a) => a.type !== "image",
+  );
+  const hasBubbleContent =
+    !!message.text || otherAttachments.length > 0 || message.type === "audio";
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(message.text || "");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -221,7 +229,23 @@ export default function ChatMessage({ message }: ChatMessageProps) {
               isUser ? "items-end" : "items-start",
             )}
           >
+            {imageAttachments.length > 0 && (
+              <div
+                className={cn(
+                  "flex flex-col gap-1",
+                  isUser ? "items-end max-w-sm w-full" : "items-start w-full",
+                )}
+              >
+                {imageAttachments.map((att) => (
+                  <Fragment key={att.id}>
+                    {renderAttachment(att)}
+                  </Fragment>
+                ))}
+              </div>
+            )}
+
             {/* MESSAGE BUBBLE */}
+            {hasBubbleContent && (
             <div
               className={cn(
                 "flex gap-3 rounded-2xl min-w-0 select-text outline-none focus:ring-0 caret-transparent",
@@ -245,9 +269,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
 
               {/* message container */}
               <div className="min-w-0 w-full">
-                {message.attachments?.length
+                {otherAttachments.length > 0
                   ? // eslint-disable-next-line react-hooks/refs -- playback handler only fires on user click
-                    message.attachments.map((att) => (
+                    otherAttachments.map((att) => (
                       <Fragment key={att.id}>
                         {renderAttachment(att, audioPlayerApi)}
                       </Fragment>
@@ -316,8 +340,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                           {t("chat.show_less")}
                           <ChevronDown size={18} className="rotate-180" />
                         </button>
-                      )}
-                    </div>
+                  )}
+                  </div>
                   ) : (
                     <div className="text-sm leading-relaxed text-slate-800 dark:text-slate-200">
                       {parseMarkdown(message.text)}
@@ -325,6 +349,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                   ))}
               </div>
             </div>
+            )}
 
             {!isEditing && !isUserMediaOnly && (
               <div
