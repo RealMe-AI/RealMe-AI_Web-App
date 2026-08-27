@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useAuthStore } from "@/app/store/useAuthStore";
+import { showToast } from "@/app/lib/toast";
 import type { Attachment } from "@/app/interface/type";
 
 function xhrUpload(
@@ -48,6 +50,7 @@ function xhrUpload(
 }
 
 export function useAttachmentUpload() {
+  const t = useTranslations();
   const [uploadingFiles, setUploadingFiles] = useState<
     Map<string, { file: File; progress: number; kind: "file" | "audio" }>
   >(new Map());
@@ -56,6 +59,11 @@ export function useAttachmentUpload() {
     file: File,
     kind: "file" | "audio" = "file",
   ): Promise<Attachment | null> => {
+    if (file.type.startsWith("video/")) {
+      showToast.error(t("fileupload.unsupported_video"));
+      return null;
+    }
+
     const tempId = `upload-${Date.now()}-${file.name}`;
     setUploadingFiles((prev) =>
       new Map(prev).set(tempId, { file, progress: 0, kind }),

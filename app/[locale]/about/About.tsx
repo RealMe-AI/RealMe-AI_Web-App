@@ -29,7 +29,7 @@ export function About() {
           className="object-fill lg:hidden"
         />
         <Image
-          src="/realme-banner.png"
+          src="/realme-banner.webp"
           alt="RealMe AI"
           fill
           priority

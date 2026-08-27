@@ -39,16 +39,19 @@ export const useFetchMessages = () => {
 
         const mapRaw = (m: RawMessage): Message => {
           const audioAtt = m.attachments?.find((a) => a.type === "audio");
-          const isUserAudio = getSenderType(m) === "user" && audioAtt;
+          const imageAtt = m.attachments?.find((a) => a.type === "image");
+          const rawText = (m.text || m.content || "").trim();
+          const isUserMedia = getSenderType(m) === "user" && (audioAtt || imageAtt);
+          const isAutoCaption = rawText === "Please analyze the attached file(s).";
           return {
             id: m.id,
             sender: getSenderType(m),
             type: audioAtt ? "audio" : m.attachments?.length ? "file" : "text",
-            text: isUserAudio
+            text: isUserMedia && (audioAtt || isAutoCaption)
               ? ""
               : getSenderType(m) === "ai"
               ? m.content || m.text || ""
-              : m.text || m.content || "",
+              : rawText,
             time: m.createdAt
               ? new Date(m.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",

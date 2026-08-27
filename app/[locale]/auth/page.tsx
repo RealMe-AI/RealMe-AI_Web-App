@@ -17,7 +17,7 @@ export default function AuthPage() {
 
       {/* Mobile Background */}
       <Image
-        src="/auth-bg-mobile.png"
+        src="/auth-bg-mobile.webp"
         alt="Auth background mobile"
         fill
         priority
@@ -26,7 +26,7 @@ export default function AuthPage() {
 
       {/* Desktop / Tablet Background */}
       <Image
-        src="/auth-bg-desktop.png"
+        src="/auth-bg-desktop.webp"
         alt="Auth background desktop"
         fill
         priority

@@ -49,7 +49,7 @@ export default function GoogleAuthButton() {
       >
         {isLoading ? <SpinnerIcon /> : <GoogleIcon />}
         {isLoading
-          ? t("auth.button.redirecting")
+          ? ""
           : t("auth.button.continue_google")}
       </motion.button>
       {error && (

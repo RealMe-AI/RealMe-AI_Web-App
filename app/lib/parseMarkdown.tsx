@@ -234,7 +234,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
         return (
           <h2
             key={idx}
-            className="text-base font-semibold mt-3 mb-1 text-slate-900 dark:text-white"
+            className="text-base sm:text-lg font-semibold mt-3 mb-1 text-slate-900 dark:text-white"
           >
             {parseInline(seg.text)}
           </h2>
@@ -332,7 +332,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
         return (
           <p
             key={idx}
-            className="text-sm leading-relaxed whitespace-pre-wrap my-1 text-slate-800 dark:text-slate-200"
+            className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap my-1 text-slate-800 dark:text-slate-200"
           >
             {parseInline(seg.text)}
           </p>

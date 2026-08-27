@@ -75,6 +75,7 @@ export default function FileUploadPopup({ close, onFileSelected }: FileUploadPop
           type="file"
           ref={fileInputRef}
           onChange={handleFileSelect}
+          accept="image/*,application/pdf,audio/*"
           className="hidden"
         />
       </motion.div>

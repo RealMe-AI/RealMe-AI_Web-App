@@ -112,6 +112,12 @@ export const useMessageStream = () => {
         if (!res.ok) throw new Error(`Failed to send message: ${res.status}`);
         if (!res.body) throw new Error("No response body received");
 
+        const isMediaOnly =
+          !content.trim() &&
+          (attachments ?? []).some(
+            (a) => a.type === "image" || a.type === "audio",
+          );
+
         // Reset typewriter — ensures no leaked text from previous aborted stream
         typewriter.reset();
 
@@ -132,10 +138,11 @@ export const useMessageStream = () => {
           (chunk) => typewriter.push(chunk),
           (meta) => {
             if (meta.type === "message_created" && meta.userMessageId) {
-              const text = (meta.content || meta.text || meta.userMessageContent || "") as string;
+              const text = (meta.content || meta.userMessageContent || "") as string;
+              const displayText = text && !isMediaOnly ? text : "";
               updateMessage(userMsg.id, {
                 id: meta.userMessageId as string,
-                ...(text ? { text } : {}),
+                ...(displayText ? { text: displayText } : {}),
               });
             }
           },

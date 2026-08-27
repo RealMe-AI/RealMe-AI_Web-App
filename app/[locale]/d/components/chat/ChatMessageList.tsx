@@ -64,7 +64,7 @@ export function ChatMessageList({
                       {user?.fullName?.split(" ")[0]}
                     </h1>
                   </div>
-                  <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                  <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium">
                     {t("dashboard.greeting.subtitle")}
                   </p>
                 </motion.div>

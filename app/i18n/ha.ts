@@ -298,6 +298,7 @@ const ha = {
     upload_title: "Loda fayil",
     button_label: "Loda",
     limit_reached: "Haɓaka zuwa Pro",
+    unsupported_video: "Ba a yarda a loda bidiyo ba",
   },
 
   chat: {
