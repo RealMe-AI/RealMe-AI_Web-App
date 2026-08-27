@@ -296,6 +296,7 @@ const ig = {
     upload_title: "Bulite faịlụ",
     button_label: "Bulite",
     limit_reached: "Melite gaa Pro",
+    unsupported_video: "Anaghị anabata ibulite vidiyo",
   },
 
   chat: {

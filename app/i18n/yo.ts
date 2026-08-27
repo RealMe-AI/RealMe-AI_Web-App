@@ -293,9 +293,10 @@ const yo = {
   },
 
   fileupload: {
-    upload_title: "Ṣe àgbéyẹ̀wò fáìlì",
-    button_label: "Ṣe Àgbéyẹ̀wò",
-    limit_reached: "Ṣe ìgbéga sí Pro",
+    upload_title: "Gbé fáìlì sókè",
+    button_label: "Gbé sókè",
+    limit_reached: "Gbárúkọ sí Pro",
+    unsupported_video: "A kò gba ìgbésókè fídíò láyè",
   },
 
   chat: {
