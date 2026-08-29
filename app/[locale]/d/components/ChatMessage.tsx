@@ -338,7 +338,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                   )}
                   </div>
                   ) : (
-                    <div className="text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+                    <div className="text-sm leading-relaxed text-slate-800 dark:text-slate-200 min-w-0 wrap-break-words">
                       {parseMarkdown(message.text)}
                     </div>
                   ))}

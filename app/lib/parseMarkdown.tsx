@@ -22,7 +22,7 @@ function parseInline(text: string): React.ReactNode[] {
   let key = 0;
 
   const inlineCodeClass =
-    "bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-sm";
+    "bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-sm break-words whitespace-pre-wrap";
 
   for (const match of text.matchAll(INLINE_TOKEN)) {
     const index = match.index ?? 0;
@@ -254,7 +254,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
         return (
           <code
             key={idx}
-            className="bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-sm"
+            className="bg-gray-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono text-sm wrap-break-words whitespace-pre-wrap"
           >
             {seg.text}
           </code>
@@ -265,7 +265,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
         return (
           <ListTag
             key={idx}
-            className={`my-2 space-y-1 text-sm leading-relaxed ${
+            className={`my-2 space-y-1 text-sm leading-relaxed break-words ${
               seg.ordered ? "list-decimal" : "list-disc"
             } list-inside text-slate-800 dark:text-slate-200`}
           >
@@ -316,7 +316,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
                     {row.map((cell, ci) => (
                       <td
                         key={ci}
-                        className="px-3 py-2 text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-800 align-top whitespace-pre-wrap"
+                        className="px-3 py-2 text-slate-800 dark:text-slate-200 border-b border-slate-100 dark:border-slate-800 align-top whitespace-pre-wrap break-words"
                       >
                         {renderCell(cell)}
                       </td>
@@ -332,7 +332,7 @@ function renderSegments(segments: ParsedSegment[]): React.ReactNode[] {
         return (
           <p
             key={idx}
-            className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap my-1 text-slate-800 dark:text-slate-200"
+            className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap my-1 text-slate-800 dark:text-slate-200 break-words"
           >
             {parseInline(seg.text)}
           </p>
