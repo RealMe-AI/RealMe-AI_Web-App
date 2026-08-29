@@ -64,7 +64,7 @@ export function useAttachmentUpload() {
       return null;
     }
 
-    const tempId = `upload-${Date.now()}-${file.name}`;
+    const tempId = `upload-${Date.now()}-${Math.random().toString(36).slice(2, 9)}-${file.name}`;
     setUploadingFiles((prev) =>
       new Map(prev).set(tempId, { file, progress: 0, kind }),
     );

@@ -1,6 +1,6 @@
 import { SUPPORTED_LOCALES } from "@/app/lib/locales";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:41929";
 
 const PAGES = ["", "about", "p", "help"];
 
