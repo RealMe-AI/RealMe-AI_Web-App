@@ -31,7 +31,7 @@ export default function Lightbox() {
             type="button"
             onClick={close}
             aria-label="Close"
-            className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl leading-none transition"
+            className="absolute top-6 right-7 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl leading-none transition"
           >
             ×
           </button>
@@ -42,9 +42,10 @@ export default function Lightbox() {
             width={0}
             height={0}
             unoptimized
-            sizes="95vw"
+            objectFit="contain"
+            sizes="40vw"
             onClick={(e) => e.stopPropagation()}
-            className="max-w-[95vw] max-h-[95vh] w-auto h-auto object-contain rounded-xl cursor-auto"
+            className="max-w-[80vw] max-h-[80vh] sm:max-w-[40vw] sm:max-h-[50vh] w-auto h-auto rounded-xl cursor-auto"
           />
         </motion.div>
       )}

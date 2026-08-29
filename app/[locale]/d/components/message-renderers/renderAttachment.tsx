@@ -20,15 +20,14 @@ export function renderAttachment(att: Attachment, api?: AudioPlayerApi | null) {
         type="button"
         key={att.id}
         onClick={() => useLightboxStore.getState().open(att.url)}
-        className="group block rounded-xl overflow-hidden mb-2 cursor-zoom-in max-w-[320px]"
+        className="group relative block shrink-0 snap-start rounded-xl overflow-hidden cursor-zoom-in h-[70px] w-[70px] sm:h-[150px] sm:w-[150px]"
       >
         <Image
           src={att.url}
           alt={att.fileName}
-          width={0}
-          height={0}
-          sizes="(max-width: 768px) 70vw, 320px"
-          className="w-auto h-auto max-w-[100px] max-h-[100px] object-contain rounded-xl transition-transform group-hover:scale-[1.02]"
+          fill
+          sizes="100px"
+          className="object-cover rounded-xl transition-transform hover:scale-[1.05]"
           unoptimized
         />
       </button>

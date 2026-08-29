@@ -65,7 +65,7 @@ export const useMessageStream = () => {
       // Add user message optimistically — render immediately, before any API calls
       const audioAtt = attachments?.find((a) => a.type === "audio");
       const userMsg: Message = {
-        id: Date.now().toString(),
+        id: `u-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         sender: "user",
         type: audioAtt ? "audio" : attachments?.length ? "file" : "text",
         text: content,

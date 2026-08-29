@@ -230,12 +230,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             )}
           >
             {imageAttachments.length > 0 && (
-              <div
-                className={cn(
-                  "flex flex-col gap-1",
-                  isUser ? "items-end max-w-sm w-full" : "items-start w-full",
-                )}
-              >
+              <div className="flex flex-row gap-2 overflow-x-auto w-full max-w-[130px] sm:max-w-[300px] pb-1 justify-start snap-x snap-mandatory">
                 {imageAttachments.map((att) => (
                   <Fragment key={att.id}>
                     {renderAttachment(att)}
