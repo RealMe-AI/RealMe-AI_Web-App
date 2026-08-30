@@ -62,7 +62,7 @@ const ig = {
         "Nwee mkparịta ụka AI nke ọkachamara n'ime nkeji ole na ole, enweghị nhazi teknụzụ dị mkpa.",
       step1: {
         title: "Mepụta Akaụntụ Gị",
-        desc: "Debanye aha na email gị, ekwentị, ma ọ bụ akaụntụ Google. Ọ na-ewe obere karịa sekọnd 30, enweghị kaadị kredit achọrọ.",
+        desc: "Debanye aha na email gị, ma ọ bụ akaụntụ Google. Ọ na-ewe obere karịa sekọnd 30, enweghị kaadị kredit achọrọ.",
       },
       step2: {
         title: "Hazie Nhọrọ Gị",
@@ -189,8 +189,7 @@ const ig = {
     },
 
     sign_up: {
-      email_number:
-        "Tinye email ziri ezi.",
+      email_number: "Tinye email ziri ezi.",
       password: {
         min_length: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
       },
@@ -568,7 +567,7 @@ const ig = {
         vo_2: {
           question: "RealMe AI nwere ike ịgụ azịza n'olu?",
           answer:
-            "Ee. Pịa akara igwe okwu dị na azịza AI ọ bụla ka e gụọ ya n'olu. Ị nwekwara ike ịgbanye ọgụgụ-akpaghị aka na Ntọala Olu maka ahụmịhe na-enweghị aka.",
+            "Ee. Pịa akara igwe okwu n'azịza AI ọ bụla ka ọ gụọ ya n'olu. Mana buru ụzọ gaa na Ntọala \u2192 Olu iji kwe ka njirimara olu AI rụọ ọrụ.",
         },
 
         vo_3: {

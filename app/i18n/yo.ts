@@ -62,7 +62,7 @@ const yo = {
         "Ni iriri awọn ibaraẹnisọrọ AI amọdaju ni iṣẹju diẹ laisi eyikeyi eto imọ-ẹrọ ti o nilo.",
       step1: {
         title: "Ṣẹda Account Rẹ",
-        desc: "Forukọsilẹ pẹlu imeeli rẹ, foonu, tabi account Google. Gba kere ju aaya 30, laisi kaadi kirẹditi.",
+        desc: "Forukọsilẹ pẹlu imeeli rẹ, tabi account Google. Gba kere ju aaya 30, laisi kaadi kirẹditi.",
       },
       step2: {
         title: "Ṣe Atunṣe Awọn Ayanfẹ Rẹ",
@@ -569,7 +569,7 @@ const yo = {
         vo_2: {
           question: "Ṣé RealMe AI lè ka àwọn ìdáhùn sókè?",
           answer:
-            "Bẹ́ẹ̀ni. Tẹ ààmì agbọrọ̀sọ lórí ìdáhùn AI èyíkéyìí kí a lè ka á sókè. O tún lè tan ìkà àìfọwọ́ṣe nínú Ètò Ohùn.",
+            "Bẹ́ẹ̀ni. Tẹ àmì gbohùngbohùn lórí ìdáhùn AI kankan láti jẹ́ kí ó kà á sókè. Ṣùgbọ́n kọ́kọ́ lọ sí Ètò \u2192 Ohùn láti gba ẹ̀yà ohùn AI láyè.",
         },
 
         vo_3: {
