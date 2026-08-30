@@ -4,13 +4,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Upload, File } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/app/lib/utils";
+import { MAX_IMAGE_ATTACHMENTS } from "@/app/lib/constants";
 
 interface FileUploadPopupProps {
   close: () => void;
   onFileSelected: (file: File) => void;
+  imagesAtLimit?: boolean;
 }
 
-export default function FileUploadPopup({ close, onFileSelected }: FileUploadPopupProps) {
+export default function FileUploadPopup({
+  close,
+  onFileSelected,
+  imagesAtLimit = false,
+}: FileUploadPopupProps) {
   const t = useTranslations();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -65,7 +72,18 @@ export default function FileUploadPopup({ close, onFileSelected }: FileUploadPop
 
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="p-2 rounded-lg text-sm transition flex items-center justify-center mx-auto bg-indigo-500 hover:bg-indigo-600 text-white shadow"
+          disabled={imagesAtLimit}
+          title={
+            imagesAtLimit
+              ? t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS })
+              : undefined
+          }
+          className={cn(
+            "p-2 rounded-lg text-sm transition flex items-center justify-center mx-auto text-white shadow",
+            imagesAtLimit
+              ? "bg-gray-500/50 cursor-not-allowed"
+              : "bg-indigo-500 hover:bg-indigo-600",
+          )}
         >
           <Upload size={14} className="mr-1" />
           {t("fileupload.button_label")}

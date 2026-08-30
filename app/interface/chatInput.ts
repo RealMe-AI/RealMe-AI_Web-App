@@ -14,6 +14,7 @@ export interface ChatInputProps {
   setShowUploadPopup: (value: boolean) => void;
   onFileSelected: (file: File) => Promise<void>;
   onRemoveAttachment: (id: string) => Promise<void>;
+  imagesAtLimit?: boolean;
   onAbort: () => void;
   isRecording: boolean;
   isAudioRecorded: boolean;

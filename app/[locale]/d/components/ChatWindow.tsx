@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useStopMessageStream } from "@/app/hooks/messages/useStopMessageStream";
@@ -9,6 +10,8 @@ import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete
 import { useAudioRecorder } from "@/app/hooks/useAudioRecorder";
 import { useUserStore } from "@/app/store/useUserStore";
 import type { Attachment } from "@/app/interface/type";
+import { MAX_IMAGE_ATTACHMENTS } from "@/app/lib/constants";
+import { showToast } from "@/app/lib/toast";
 import OfflineBanner from "./OfflineBanner";
 import ClipboardPasteModal from "./clipboard/ClipboardPasteModal";
 import { getDismissedClipboard, dismissClipboard } from "./clipboard/dismiss";
@@ -19,6 +22,7 @@ import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
+  const t = useTranslations();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -118,12 +122,35 @@ export default function ChatWindow() {
     togglePlayback();
   };
 
+  const pendingImagesRef = useRef(0);
+
   const handleFileSelected = async (file: File) => {
+    const isImage = file.type.startsWith("image/");
+    const currentImages =
+      attachments.filter((a) => a.type === "image").length +
+      pendingImagesRef.current;
+    if (isImage && currentImages >= MAX_IMAGE_ATTACHMENTS) {
+      showToast.error(
+        t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }),
+      );
+      return;
+    }
+    if (isImage) pendingImagesRef.current += 1;
     const result = await uploadFile(file);
     if (result) {
+      if (isImage) pendingImagesRef.current -= 1; // now counted in `attachments`
       setAttachments((prev) => [...prev, result]);
+    } else if (isImage) {
+      pendingImagesRef.current -= 1; // upload failed
     }
   };
+
+  const imagesAtLimit =
+    attachments.filter((a) => a.type === "image").length +
+      Array.from(uploadingFiles.values()).filter(
+        (e) => e.kind === "file" && e.file.type.startsWith("image/"),
+      ).length >=
+    MAX_IMAGE_ATTACHMENTS;
 
   const handleRemoveAttachment = async (attachmentId: string) => {
     await deleteAttachment(attachmentId);
@@ -348,6 +375,7 @@ export default function ChatWindow() {
         isLoading={isLoading}
         attachments={attachments}
         uploadingFiles={uploadingFiles}
+        imagesAtLimit={imagesAtLimit}
         showUploadPopup={showUploadPopup}
         setShowUploadPopup={setShowUploadPopup}
         onFileSelected={handleFileSelected}

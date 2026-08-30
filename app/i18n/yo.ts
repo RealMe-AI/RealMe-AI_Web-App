@@ -297,6 +297,7 @@ const yo = {
     button_label: "Gbé sókè",
     limit_reached: "Gbárúkọ sí Pro",
     unsupported_video: "A kò gba ìgbésókè fídíò láyè",
+    max_images: "O lè so àwòrán {count} nìkan mọ́.",
   },
 
   chat: {

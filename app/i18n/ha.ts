@@ -299,6 +299,7 @@ const ha = {
     button_label: "Loda",
     limit_reached: "Haɓaka zuwa Pro",
     unsupported_video: "Ba a yarda a loda bidiyo ba",
+    max_images: "Za ka iya haɗa hotuna {count} kawai.",
   },
 
   chat: {

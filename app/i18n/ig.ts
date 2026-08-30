@@ -297,6 +297,7 @@ const ig = {
     button_label: "Bulite",
     limit_reached: "Melite gaa Pro",
     unsupported_video: "Anaghị anabata ibulite vidiyo",
+    max_images: "Ị nwere ike itinye naanị onyonyo {count}.",
   },
 
   chat: {

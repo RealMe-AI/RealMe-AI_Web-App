@@ -296,6 +296,7 @@ const en = {
     button_label: "Upload",
     limit_reached: "Upgrade to Pro",
     unsupported_video: "Video uploads are not allowed",
+    max_images: "You can only attach {count} images.",
   },
 
   chat: {

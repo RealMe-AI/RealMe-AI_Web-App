@@ -84,6 +84,7 @@ export function ChatInput({
   onAbort,
   onSend,
   onKeyDown,
+  imagesAtLimit,
 }: ChatInputProps) {
   const t = useTranslations();
   const isUploading = uploadingFiles.size > 0;
@@ -293,6 +294,7 @@ export function ChatInput({
               <FileUploadPopup
                 close={() => setShowUploadPopup(false)}
                 onFileSelected={onFileSelected}
+                imagesAtLimit={imagesAtLimit}
               />
             )}
           </div>
