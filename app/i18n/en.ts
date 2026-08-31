@@ -62,7 +62,7 @@ const en = {
         "Experience professional AI conversations in minutes no technical setup required.",
       step1: {
         title: "Create Your Account",
-        desc: "Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
+        desc: "Sign up with your email, or Google account. Takes less than 30 seconds with no credit card required.",
       },
       step2: {
         title: "Customize Your Preferences",
@@ -296,6 +296,9 @@ const en = {
     button_label: "Upload",
     limit_reached: "Upgrade to Pro",
     unsupported_video: "Video uploads are not allowed",
+    max_images: "You can only attach {count} images.",
+    hourly_reset: "You can upload up to {count} images per hour. Reset in {time}.",
+    reset_complete: "Image upload limit reset. You can upload up to {count} new images.",
   },
 
   chat: {
@@ -527,7 +530,7 @@ const en = {
         gs_2: {
           question: "Can I change my password?",
           answer:
-            "Yes. Go to Settings \u2192 Security to update your password. You'll need your current password to create a new one.",
+            "Yes. Go to Settings \u2192 Security to update your password. You'll need your current email to create a new one.",
         },
         gs_3: {
           question: "Is RealMe AI free to use?",
@@ -547,7 +550,7 @@ const en = {
         vo_2: {
           question: "Can RealMe AI read responses aloud?",
           answer:
-            "Yes. Tap the speaker icon on any AI response to have it read aloud. You can also enable auto-read in Voice Settings for a hands free experience.",
+            "Yes. Tap the speaker icon on any AI response to have it read aloud. But first go to Settings \u2192 Voice to allow AI voice feature.",
         },
         vo_3: {
           question: "Which languages are supported for voice?",

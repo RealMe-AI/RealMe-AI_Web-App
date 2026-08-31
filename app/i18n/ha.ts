@@ -62,7 +62,7 @@ const ha = {
         "Kware tattaunawar AI ta ƙwararru cikin mintuna ba tare da kowace matsalar saitawa ba.",
       step1: {
         title: "Ƙirƙiri Asusunka",
-        desc: "Yi rajista da imel, lamba, ko asusun Google. Yana ɗaukar ƙasa da dakika 30 ba tare da katin bashi ba.",
+        desc: "Yi rajista da imel, ko asusun Google. Yana ɗaukar ƙasa da dakika 30 ba tare da katin bashi ba.",
       },
       step2: {
         title: "Daidaici Zaɓinka",
@@ -299,6 +299,9 @@ const ha = {
     button_label: "Loda",
     limit_reached: "Haɓaka zuwa Pro",
     unsupported_video: "Ba a yarda a loda bidiyo ba",
+    max_images: "Za ka iya haɗa hotuna {count} kawai.",
+    hourly_reset: "Za ka iya loda hotuna har zuwa {count} a cikin awa guda. Za a sake saita iyakar cikin {time}.",
+    reset_complete: "Jiwa da aka imaha da aka samu hotuna.",
   },
 
   chat: {
@@ -570,7 +573,7 @@ const ha = {
         vo_2: {
           question: "Shin RealMe AI zai iya karanta amsoshi da murya?",
           answer:
-            "Eh. Danna alamar lasifika a kan kowace amsar AI domin a karanta ta da murya. Hakanan zaka iya kunna karantawa ta atomatik a Saitunan Murya.",
+            "Eh. Danna alamar lasifikar da ke kan kowace amsar AI domin a karanta ta da murya. Amma da farko je zuwa Saituna \u2192 Murya domin ba da damar fasalin muryar AI.",
         },
 
         vo_3: {

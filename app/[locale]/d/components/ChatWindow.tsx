@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
 import { useStopMessageStream } from "@/app/hooks/messages/useStopMessageStream";
@@ -9,6 +10,8 @@ import { useAttachmentDelete } from "@/app/hooks/attachments/useAttachmentDelete
 import { useAudioRecorder } from "@/app/hooks/useAudioRecorder";
 import { useUserStore } from "@/app/store/useUserStore";
 import type { Attachment } from "@/app/interface/type";
+import { IMAGE_RESET_HOURS, MAX_IMAGE_ATTACHMENTS } from "@/app/lib/constants";
+import { showToast } from "@/app/lib/toast";
 import OfflineBanner from "./OfflineBanner";
 import ClipboardPasteModal from "./clipboard/ClipboardPasteModal";
 import { getDismissedClipboard, dismissClipboard } from "./clipboard/dismiss";
@@ -19,12 +22,17 @@ import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
+  const t = useTranslations();
 
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [clipboardText, setClipboardText] = useState<string | null>(null);
+  const [imageUploadTimes, setImageUploadTimes] = useState<Map<string, number>>(
+    new Map(),
+  );
+  const [hoursRemaining, setHoursRemaining] = useState(0);
 
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +50,7 @@ export default function ChatWindow() {
   } = useChatStore();
   const { sendMessage, isOnline } = useMessageStream();
   const { stopStream } = useStopMessageStream();
-  const { uploadFile, uploadingFiles } = useAttachmentUpload();
+  const { uploadFile, uploadFiles, uploadingFiles } = useAttachmentUpload();
   const { deleteAttachment } = useAttachmentDelete();
 
   const focusedOnMountRef = useRef(false);
@@ -118,16 +126,129 @@ export default function ChatWindow() {
     togglePlayback();
   };
 
+  const pendingImagesRef = useRef(0);
+
+  const formatHours = (ms: number): string => {
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    if (h > 0) return `${h}h ${m}m`;
+    return `${m}m`;
+  };
+
+  const updateHoursRemaining = useCallback(() => {
+    const now = Date.now();
+    const pruned = new Map(imageUploadTimes);
+    let changed = false;
+    pruned.forEach((t, id) => {
+      if (now - t > IMAGE_RESET_HOURS * 3600 * 1000) {
+        pruned.delete(id);
+        changed = true;
+      }
+    });
+    if (changed) setImageUploadTimes(pruned);
+    if (pruned.size === 0) {
+      setHoursRemaining(0);
+      return;
+    }
+    const earliest = Math.min(...pruned.values());
+    const elapsed = Date.now() - earliest;
+    const totalLimit = IMAGE_RESET_HOURS * 3600 * 1000;
+    setHoursRemaining(Math.max(0, totalLimit - elapsed));
+  }, [imageUploadTimes]);
+
   const handleFileSelected = async (file: File) => {
+    const isImage = file.type.startsWith("image/");
+    const currentImages =
+      attachments.filter((a) => a.type === "image").length +
+      pendingImagesRef.current;
+    const isOverLimit = currentImages >= MAX_IMAGE_ATTACHMENTS;
+    const isWithinResetWindow = hoursRemaining > 0;
+    if (isImage && isOverLimit && isWithinResetWindow) {
+      const timeStr = formatHours(hoursRemaining);
+      showToast.error(
+        t("fileupload.hourly_reset", {
+          count: MAX_IMAGE_ATTACHMENTS,
+          time: timeStr,
+        }),
+      );
+      return;
+    }
+    if (isImage && isOverLimit) {
+      showToast.error(
+        t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }),
+      );
+      return;
+    }
+    if (isImage) pendingImagesRef.current += 1;
     const result = await uploadFile(file);
     if (result) {
+      if (isImage) pendingImagesRef.current -= 1;
       setAttachments((prev) => [...prev, result]);
+      if (result.type === "image") {
+        const now = Date.now();
+        setImageUploadTimes((prev) => {
+          const next = new Map(prev);
+          next.set(result.id, now);
+          return next;
+        });
+      }
+    } else if (isImage) {
+      pendingImagesRef.current -= 1;
     }
   };
+
+  const handleMultipleFilesSelected = async (files: File[]) => {
+    const imageFiles = files.filter((f) => f.type.startsWith("image/"));
+    const currentImages =
+      attachments.filter((a) => a.type === "image").length +
+      pendingImagesRef.current;
+    if (
+      imageFiles.length > 0 &&
+      currentImages + imageFiles.length > MAX_IMAGE_ATTACHMENTS
+    ) {
+      if (hoursRemaining > 0) {
+        showToast.error(
+          t("fileupload.hourly_reset", {
+            count: MAX_IMAGE_ATTACHMENTS,
+            time: formatHours(hoursRemaining),
+          }),
+        );
+      } else {
+        showToast.error(
+          t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }),
+        );
+      }
+      return;
+    }
+    if (imageFiles.length > 0) pendingImagesRef.current += imageFiles.length;
+    const result = await uploadFiles(files);
+    if (result) {
+      if (imageFiles.length > 0) pendingImagesRef.current -= imageFiles.length;
+      setAttachments((prev) => [...prev, ...result]);
+      const now = Date.now();
+      setImageUploadTimes((prev) => {
+        const next = new Map(prev);
+        result
+          .filter((a) => a.type === "image")
+          .forEach((a) => next.set(a.id, now));
+        return next;
+      });
+    } else {
+      if (imageFiles.length > 0) pendingImagesRef.current -= imageFiles.length;
+    }
+  };
+
+  const imageCount = imageUploadTimes.size;
+  const imagesAtLimit = imageCount >= MAX_IMAGE_ATTACHMENTS;
 
   const handleRemoveAttachment = async (attachmentId: string) => {
     await deleteAttachment(attachmentId);
     setAttachments((prev) => prev.filter((a) => a.id !== attachmentId));
+    setImageUploadTimes((prev) => {
+      const next = new Map(prev);
+      next.delete(attachmentId);
+      return next;
+    });
   };
 
   const handleAbort = () => {
@@ -303,6 +424,32 @@ export default function ChatWindow() {
     };
   }, [clipboardText]);
 
+  useEffect(() => {
+    if (attachments.length === 0) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setImageUploadTimes((prev) => {
+      const next = new Map(prev);
+      let changed = false;
+      attachments
+        .filter((a) => a.type === "image")
+        .forEach((a) => {
+          if (!next.has(a.id)) {
+            next.set(a.id, Date.now());
+            changed = true;
+          }
+        });
+      return changed ? next : prev;
+    });
+  }, [attachments]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    updateHoursRemaining();
+    if (imageUploadTimes.size === 0) return;
+    const id = setInterval(updateHoursRemaining, 60000);
+    return () => clearInterval(id);
+  }, [updateHoursRemaining]);
+
   return (
     <div
       className="relative flex flex-col flex-1 bg-white/30 dark:bg-black 
@@ -348,9 +495,13 @@ export default function ChatWindow() {
         isLoading={isLoading}
         attachments={attachments}
         uploadingFiles={uploadingFiles}
+        imageCount={imageCount}
+        imagesAtLimit={imagesAtLimit}
+        hoursRemaining={hoursRemaining}
         showUploadPopup={showUploadPopup}
         setShowUploadPopup={setShowUploadPopup}
         onFileSelected={handleFileSelected}
+        onMultipleFilesSelected={handleMultipleFilesSelected}
         onRemoveAttachment={handleRemoveAttachment}
         onAbort={handleAbort}
         isRecording={isRecording}

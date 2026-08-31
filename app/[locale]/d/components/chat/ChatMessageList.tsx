@@ -44,7 +44,7 @@ export function ChatMessageList({
             )}
           >
             {chatMessages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+              <div key="empty-state" className="flex flex-col items-center justify-center h-full min-h-[300px]">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -70,11 +70,11 @@ export function ChatMessageList({
                 </motion.div>
               </div>
             ) : (
-              chatMessages.map((msg) => (
-                <ChatMessage key={msg.id} message={msg} />
+              chatMessages.map((msg, idx) => (
+                <ChatMessage key={`${msg.id}-${idx}`} message={msg} />
               ))
             )}
-            <div ref={messagesEndRef} />
+            <div key="end-marker" ref={messagesEndRef} />
           </div>
         </div>
 

@@ -11,7 +11,7 @@ function xhrUpload(
   url: string,
   formData: FormData,
   onProgress: (pct: number) => void,
-): Promise<Attachment> {
+): Promise<Attachment | Attachment[]> {
   return new Promise((resolve, reject) => {
     const token = useAuthStore.getState().accessToken;
     if (!token) {
@@ -55,49 +55,64 @@ export function useAttachmentUpload() {
     Map<string, { file: File; progress: number; kind: "file" | "audio" }>
   >(new Map());
 
-  const uploadFile = async (
-    file: File,
-    kind: "file" | "audio" = "file",
-  ): Promise<Attachment | null> => {
-    if (file.type.startsWith("video/")) {
-      showToast.error(t("fileupload.unsupported_video"));
-      return null;
-    }
+  const UPLOAD_URL = `${baseUrl}/attachments/upload`;
 
-    const tempId = `upload-${Date.now()}-${Math.random().toString(36).slice(2, 9)}-${file.name}`;
-    setUploadingFiles((prev) =>
-      new Map(prev).set(tempId, { file, progress: 0, kind }),
-    );
-
+  async function doUpload(files: File[], kind: "file" | "audio"): Promise<Attachment[] | null> {
+    if (files.length === 0) return null;
+    const validFiles = files.filter((f) => {
+      if (f.type.startsWith("video/")) {
+        showToast.error(t("fileupload.unsupported_video"));
+        return false;
+      }
+      return true;
+    });
+    if (validFiles.length === 0) return null;
+    const tempIds = validFiles.map(() => `upload-${Date.now()}-${crypto.randomUUID()}`);
+    setUploadingFiles((prev) => {
+      const next = new Map(prev);
+      validFiles.forEach((f, i) => next.set(tempIds[i], { file: f, progress: 0, kind }));
+      return next;
+    });
     try {
       const formData = new FormData();
-      formData.append("file", file);
-
-      const attachment = await xhrUpload(
-        `${baseUrl}/attachments/upload`,
-        formData,
-        (pct) => {
-          setUploadingFiles((prev) => {
-            const next = new Map(prev);
-            const entry = next.get(tempId);
-            if (entry) next.set(tempId, { ...entry, progress: pct });
-            return next;
+      validFiles.forEach((f) => formData.append("file", f));
+      const result = await xhrUpload(UPLOAD_URL, formData, (pct) => {
+        setUploadingFiles((prev) => {
+          const next = new Map(prev);
+          tempIds.forEach((id) => {
+            const entry = next.get(id);
+            if (entry) next.set(id, { ...entry, progress: pct });
           });
-        },
-      );
-
-      return attachment;
+          return next;
+        });
+      });
+      const arr: Attachment[] = Array.isArray(result) ? result : [result as Attachment];
+      return arr;
     } catch (err) {
       console.error("Upload error:", err);
+      // showToast.error("Upload failed");
       return null;
     } finally {
       setUploadingFiles((prev) => {
         const next = new Map(prev);
-        next.delete(tempId);
+        tempIds.forEach((id) => next.delete(id));
         return next;
       });
     }
-  };
+  }
 
-  return { uploadFile, uploadingFiles };
+  async function upload(input: File | File[], kind: "file" | "audio" = "file"): Promise<Attachment | Attachment[] | null> {
+    const files = Array.isArray(input) ? input : [input];
+    const arr = await doUpload(files, kind);
+    if (!arr) return null;
+    return Array.isArray(input) ? arr : arr[0];
+  }
+
+  const uploadFile = async (file: File, kind: "file" | "audio" = "file"): Promise<Attachment | null> =>
+    (await upload(file, kind)) as Attachment | null;
+
+  const uploadFiles = async (files: File[], kind: "file" | "audio" = "file"): Promise<Attachment[] | null> =>
+    (await upload(files, kind)) as Attachment[] | null;
+
+  return { upload, uploadFile, uploadFiles, uploadingFiles };
 }
