@@ -29,7 +29,9 @@ export default function ChatWindow() {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [clipboardText, setClipboardText] = useState<string | null>(null);
-  const [imageUploadTimes, setImageUploadTimes] = useState<Map<string, number>>(new Map());
+  const [imageUploadTimes, setImageUploadTimes] = useState<Map<string, number>>(
+    new Map(),
+  );
   const [hoursRemaining, setHoursRemaining] = useState(0);
 
   const inputRef = useRef<HTMLDivElement | null>(null);
@@ -134,11 +136,21 @@ export default function ChatWindow() {
   };
 
   const updateHoursRemaining = useCallback(() => {
-    if (imageUploadTimes.size === 0) {
+    const now = Date.now();
+    const pruned = new Map(imageUploadTimes);
+    let changed = false;
+    pruned.forEach((t, id) => {
+      if (now - t > IMAGE_RESET_HOURS * 3600 * 1000) {
+        pruned.delete(id);
+        changed = true;
+      }
+    });
+    if (changed) setImageUploadTimes(pruned);
+    if (pruned.size === 0) {
       setHoursRemaining(0);
       return;
     }
-    const earliest = Math.min(...imageUploadTimes.values());
+    const earliest = Math.min(...pruned.values());
     const elapsed = Date.now() - earliest;
     const totalLimit = IMAGE_RESET_HOURS * 3600 * 1000;
     setHoursRemaining(Math.max(0, totalLimit - elapsed));
@@ -147,16 +159,24 @@ export default function ChatWindow() {
   const handleFileSelected = async (file: File) => {
     const isImage = file.type.startsWith("image/");
     const currentImages =
-      attachments.filter((a) => a.type === "image").length + pendingImagesRef.current;
+      attachments.filter((a) => a.type === "image").length +
+      pendingImagesRef.current;
     const isOverLimit = currentImages >= MAX_IMAGE_ATTACHMENTS;
     const isWithinResetWindow = hoursRemaining > 0;
     if (isImage && isOverLimit && isWithinResetWindow) {
       const timeStr = formatHours(hoursRemaining);
-      showToast.error(t("fileupload.hourly_reset", { count: MAX_IMAGE_ATTACHMENTS, time: timeStr }));
+      showToast.error(
+        t("fileupload.hourly_reset", {
+          count: MAX_IMAGE_ATTACHMENTS,
+          time: timeStr,
+        }),
+      );
       return;
     }
     if (isImage && isOverLimit) {
-      showToast.error(t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }));
+      showToast.error(
+        t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }),
+      );
       return;
     }
     if (isImage) pendingImagesRef.current += 1;
@@ -179,12 +199,24 @@ export default function ChatWindow() {
 
   const handleMultipleFilesSelected = async (files: File[]) => {
     const imageFiles = files.filter((f) => f.type.startsWith("image/"));
-    const currentImages = attachments.filter((a) => a.type === "image").length + pendingImagesRef.current;
-    if (imageFiles.length > 0 && currentImages + imageFiles.length > MAX_IMAGE_ATTACHMENTS) {
+    const currentImages =
+      attachments.filter((a) => a.type === "image").length +
+      pendingImagesRef.current;
+    if (
+      imageFiles.length > 0 &&
+      currentImages + imageFiles.length > MAX_IMAGE_ATTACHMENTS
+    ) {
       if (hoursRemaining > 0) {
-        showToast.error(t("fileupload.hourly_reset", { count: MAX_IMAGE_ATTACHMENTS, time: formatHours(hoursRemaining) }));
+        showToast.error(
+          t("fileupload.hourly_reset", {
+            count: MAX_IMAGE_ATTACHMENTS,
+            time: formatHours(hoursRemaining),
+          }),
+        );
       } else {
-        showToast.error(t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }));
+        showToast.error(
+          t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS }),
+        );
       }
       return;
     }
@@ -196,7 +228,9 @@ export default function ChatWindow() {
       const now = Date.now();
       setImageUploadTimes((prev) => {
         const next = new Map(prev);
-        result.filter((a) => a.type === "image").forEach((a) => next.set(a.id, now));
+        result
+          .filter((a) => a.type === "image")
+          .forEach((a) => next.set(a.id, now));
         return next;
       });
     } else {
@@ -204,11 +238,7 @@ export default function ChatWindow() {
     }
   };
 
-  const imageCount =
-    attachments.filter((a) => a.type === "image").length +
-    Array.from(uploadingFiles.values()).filter(
-      (e) => e.kind === "file" && e.file.type.startsWith("image/"),
-    ).length;
+  const imageCount = imageUploadTimes.size;
   const imagesAtLimit = imageCount >= MAX_IMAGE_ATTACHMENTS;
 
   const handleRemoveAttachment = async (attachmentId: string) => {
@@ -400,12 +430,14 @@ export default function ChatWindow() {
     setImageUploadTimes((prev) => {
       const next = new Map(prev);
       let changed = false;
-      attachments.filter((a) => a.type === "image").forEach((a) => {
-        if (!next.has(a.id)) {
-          next.set(a.id, Date.now());
-          changed = true;
-        }
-      });
+      attachments
+        .filter((a) => a.type === "image")
+        .forEach((a) => {
+          if (!next.has(a.id)) {
+            next.set(a.id, Date.now());
+            changed = true;
+          }
+        });
       return changed ? next : prev;
     });
   }, [attachments]);

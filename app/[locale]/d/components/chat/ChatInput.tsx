@@ -359,12 +359,12 @@ export function ChatInput({
                 "mb-0.5 flex items-center justify-center shrink-0 w-8 h-8 rounded-full transition-all duration-200",
                 !isOnline
                   ? "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
-                  : isLoading || isAudioUploading
+                  : isLoading || isAudioUploading || isUploading
                     ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md scale-95"
                     : "bg-indigo-500 hover:bg-indigo-600 text-white",
               )}
             >
-              {isLoading || isAudioUploading ? (
+              {isLoading || isAudioUploading || isUploading ? (
                 <Square size={16} fill="currentColor" />
               ) : (
                 <ArrowUp size={28} />
