@@ -297,6 +297,8 @@ const ig = {
     limit_reached: "Melite gaa Pro",
     unsupported_video: "Anaghị anabata ibulite vidiyo",
     max_images: "Ị nwere ike itinye naanị onyonyo {count}.",
+    hourly_reset: "Ị nwere ike ibulite naanị onyonyo {count} n'ime otu awa. A ga-emegharị ya n'ime {time}.",
+    reset_complete: "Ji na-eme aka imoha ike. Kpọ́rọ́ ike ụ̀bọ̀rụ ụ̀bụ ịkpérụ nwere {count} anyị ike.",
   },
 
   chat: {

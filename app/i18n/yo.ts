@@ -298,6 +298,8 @@ const yo = {
     limit_reached: "Gbárúkọ sí Pro",
     unsupported_video: "A kò gba ìgbésókè fídíò láyè",
     max_images: "O lè so àwòrán {count} nìkan mọ́.",
+    hourly_reset: "O lè gbé àwòrán tó tó {count} sókè nínú wákàtí kan. A ó tún ṣe àtúnṣe rẹ̀ ní {time}.",
+    reset_complete: "Kíkọ́ aka imọ̀ra ike kọ́́. Kó lè ṣe ọ̀rọ̀ kan {count} nìkan pọ̀ rẹ̀.",
   },
 
   chat: {

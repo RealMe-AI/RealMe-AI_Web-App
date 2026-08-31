@@ -11,12 +11,16 @@ interface FileUploadPopupProps {
   close: () => void;
   onFileSelected: (file: File) => void;
   imagesAtLimit?: boolean;
+  imageCount?: number;
+  hoursRemaining?: number;
 }
 
 export default function FileUploadPopup({
   close,
   onFileSelected,
   imagesAtLimit = false,
+  imageCount = 0,
+  hoursRemaining = 0,
 }: FileUploadPopupProps) {
   const t = useTranslations();
 
@@ -46,6 +50,15 @@ export default function FileUploadPopup({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [close]);
 
+  const TIME_DOWN =
+    hoursRemaining > 0 && imagesAtLimit
+      ? ` • ${(() => {
+          const h = Math.floor(hoursRemaining / 3600000);
+          const m = Math.floor((hoursRemaining % 3600000) / 60000);
+          return h > 0 ? `${h}h ${m}m` : `${m}m`;
+        })()}`
+      : "";
+
   return (
     <AnimatePresence>
       <motion.div
@@ -66,9 +79,13 @@ export default function FileUploadPopup({
 
         <File size={36} className="mx-auto text-indigo-500 mb-2" />
 
-        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+        <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1">
           {t("fileupload.upload_title")}
         </h3>
+        <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+          {imageCount}/{MAX_IMAGE_ATTACHMENTS}
+          {TIME_DOWN}
+        </div>
 
         <button
           onClick={() => fileInputRef.current?.click()}

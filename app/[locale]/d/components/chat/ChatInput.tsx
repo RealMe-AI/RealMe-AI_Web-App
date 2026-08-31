@@ -72,7 +72,10 @@ export function ChatInput({
   showUploadPopup,
   setShowUploadPopup,
   onFileSelected,
+  onMultipleFilesSelected,
   onRemoveAttachment,
+  imageCount = 0,
+  hoursRemaining = 0,
   isRecording,
   audioDuration,
   audioCurrentTime,
@@ -103,8 +106,11 @@ export function ChatInput({
 
     if (pastedFiles.length > 0) {
       e.preventDefault();
-      for (const file of pastedFiles) {
-        onFileSelected(professionalName(file));
+      const named = pastedFiles.map((f) => professionalName(f));
+      if (named.length > 1 && onMultipleFilesSelected) {
+        onMultipleFilesSelected(named);
+      } else {
+        for (const file of named) onFileSelected(file);
       }
       return;
     }
@@ -295,6 +301,8 @@ export function ChatInput({
                 close={() => setShowUploadPopup(false)}
                 onFileSelected={onFileSelected}
                 imagesAtLimit={imagesAtLimit}
+                imageCount={imageCount}
+                hoursRemaining={hoursRemaining}
               />
             )}
           </div>

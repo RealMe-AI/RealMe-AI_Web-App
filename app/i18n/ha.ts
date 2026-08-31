@@ -300,6 +300,8 @@ const ha = {
     limit_reached: "Haɓaka zuwa Pro",
     unsupported_video: "Ba a yarda a loda bidiyo ba",
     max_images: "Za ka iya haɗa hotuna {count} kawai.",
+    hourly_reset: "Za ka iya loda hotuna har zuwa {count} a cikin awa guda. Za a sake saita iyakar cikin {time}.",
+    reset_complete: "Jiwa da aka imaha da aka samu hotuna.",
   },
 
   chat: {

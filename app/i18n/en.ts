@@ -297,6 +297,8 @@ const en = {
     limit_reached: "Upgrade to Pro",
     unsupported_video: "Video uploads are not allowed",
     max_images: "You can only attach {count} images.",
+    hourly_reset: "You can upload up to {count} images per hour. Reset in {time}.",
+    reset_complete: "Image upload limit reset. You can upload up to {count} new images.",
   },
 
   chat: {
