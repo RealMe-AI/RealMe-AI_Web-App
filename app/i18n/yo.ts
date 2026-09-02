@@ -630,7 +630,7 @@ const yo = {
         ac_1: {
           question: "Báwo ni mo ṣe lè ṣe àtúnṣe profaili mi?",
           answer:
-            "Tẹ àwòrán profaili rẹ tàbí lọ sí Alaye Àkọọ́lẹ̀ láti sidebar láti ṣe àtúnṣe orúkọ rẹ, ímeèlì rẹ, àti àwòrán profaili rẹ.",
+            "Tẹ àwòrán profaili rẹ tàbí lọ sí Alaye Àkọọ́lẹ̀ láti sidebar láti ṣe àtúnṣe orúkọ rẹ, àti àwòrán profaili rẹ.",
         },
 
         ac_2: {

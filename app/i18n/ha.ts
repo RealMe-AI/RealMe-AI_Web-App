@@ -632,7 +632,7 @@ const ha = {
         ac_1: {
           question: "Ta yaya zan sabunta bayanan martabata?",
           answer:
-            "Danna hoton bayananka ko je zuwa Bayanin Asusu daga sidebar domin sabunta sunanka, imel ɗinka, da hoton bayananka.",
+            "Danna hoton bayananka ko je zuwa Bayanin Asusu daga sidebar domin sabunta sunanka, da hoton bayananka.",
         },
 
         ac_2: {

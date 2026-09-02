@@ -601,7 +601,7 @@ const en = {
         ac_1: {
           question: "How do I update my profile?",
           answer:
-            "Click on your avatar or go to Account Info from the sidebar to update your name, email, and profile picture.",
+            "Click on your avatar or go to Account Info from the sidebar to update your name, and profile picture.",
         },
         ac_2: {
           question: "Can I change my email address?",

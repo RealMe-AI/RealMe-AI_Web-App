@@ -628,7 +628,7 @@ const ig = {
         ac_1: {
           question: "Kedu ka m ga-esi melite profaịlụ m?",
           answer:
-            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, email gị, na foto profaịlụ gị.",
+            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, na foto profaịlụ gị.",
         },
 
         ac_2: {
