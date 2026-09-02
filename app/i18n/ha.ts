@@ -302,6 +302,7 @@ const ha = {
     max_images: "Za ka iya haɗa hotuna {count} kawai.",
     hourly_reset: "Za ka iya loda hotuna har zuwa {count} a cikin awa guda. Za a sake saita iyakar cikin {time}.",
     reset_complete: "Jiwa da aka imaha da aka samu hotuna.",
+    single_attachment_only: "Ana iya haɗa fayil ɗaya kawai a lokaci guda.",
   },
 
   chat: {

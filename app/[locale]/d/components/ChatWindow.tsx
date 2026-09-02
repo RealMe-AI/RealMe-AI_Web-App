@@ -20,6 +20,7 @@ import Lightbox from "@/app/[locale]/components/Lightbox";
 import markdownToPlainText from "@/app/lib/markdownToPlainText";
 import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
 import { useImageLimitStore } from "@/app/store/useImageLimitStore";
+import { useSingleAttachmentGuard } from "@/app/hooks/attachments/useSingleAttachmentGuard";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
@@ -211,6 +212,14 @@ export default function ChatWindow() {
       if (imageFiles.length > 0) pendingImagesRef.current -= imageFiles.length;
     }
   };
+
+  // TEMP: 1-attachment guard — remove when backend supports multi-attachment
+  const { guardedFileSelected, guardedMultipleSelected } =
+    useSingleAttachmentGuard({
+      attachmentsLength: attachments.length,
+      onFileSelected: handleFileSelected,
+      onMultipleFilesSelected: handleMultipleFilesSelected,
+    });
 
   const imageCount = imageUploadTimes.size;
   const imagesAtLimit = imageCount >= MAX_IMAGE_ATTACHMENTS;
@@ -451,10 +460,11 @@ export default function ChatWindow() {
         imageCount={imageCount}
         imagesAtLimit={imagesAtLimit}
         hoursRemaining={hoursRemaining}
+        attachmentCount={attachments.length}
         showUploadPopup={showUploadPopup}
         setShowUploadPopup={setShowUploadPopup}
-        onFileSelected={handleFileSelected}
-        onMultipleFilesSelected={handleMultipleFilesSelected}
+        onFileSelected={guardedFileSelected}
+        onMultipleFilesSelected={guardedMultipleSelected}
         onRemoveAttachment={handleRemoveAttachment}
         onAbort={handleAbort}
         isRecording={isRecording}

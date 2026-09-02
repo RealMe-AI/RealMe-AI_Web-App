@@ -13,6 +13,8 @@ interface FileUploadPopupProps {
   imagesAtLimit?: boolean;
   imageCount?: number;
   hoursRemaining?: number;
+  // TEMP: remove with useSingleAttachmentGuard
+  attachmentCount?: number;
 }
 
 export default function FileUploadPopup({
@@ -21,6 +23,7 @@ export default function FileUploadPopup({
   imagesAtLimit = false,
   imageCount = 0,
   hoursRemaining = 0,
+  attachmentCount = 0,
 }: FileUploadPopupProps) {
   const t = useTranslations();
 
@@ -50,14 +53,18 @@ export default function FileUploadPopup({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [close]);
 
+  const isSingleBlocked = attachmentCount > 0;
+
   const TIME_DOWN =
-    hoursRemaining > 0 && imagesAtLimit
+    !isSingleBlocked && hoursRemaining > 0 && imagesAtLimit
       ? ` • ${(() => {
           const h = Math.floor(hoursRemaining / 3600000);
           const m = Math.floor((hoursRemaining % 3600000) / 60000);
           return h > 0 ? `${h}h ${m}m` : `${m}m`;
         })()}`
       : "";
+
+  const isDisabled = isSingleBlocked || imagesAtLimit;
 
   return (
     <AnimatePresence>
@@ -83,21 +90,29 @@ export default function FileUploadPopup({
           {t("fileupload.upload_title")}
         </h3>
         <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">
-          {imageCount}/{MAX_IMAGE_ATTACHMENTS}
-          {TIME_DOWN}
+          {isSingleBlocked ? (
+            t("fileupload.single_attachment_only")
+          ) : (
+            <>
+              {imageCount}/{MAX_IMAGE_ATTACHMENTS}
+              {TIME_DOWN}
+            </>
+          )}
         </div>
 
         <button
           onClick={() => fileInputRef.current?.click()}
-          disabled={imagesAtLimit}
+          disabled={isDisabled}
           title={
-            imagesAtLimit
-              ? t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS })
-              : undefined
+            isSingleBlocked
+              ? t("fileupload.single_attachment_only")
+              : imagesAtLimit
+                ? t("fileupload.max_images", { count: MAX_IMAGE_ATTACHMENTS })
+                : undefined
           }
           className={cn(
             "p-2 rounded-lg text-sm transition flex items-center justify-center mx-auto text-white shadow",
-            imagesAtLimit
+            isDisabled
               ? "bg-gray-500/50 cursor-not-allowed"
               : "bg-indigo-500 hover:bg-indigo-600",
           )}
