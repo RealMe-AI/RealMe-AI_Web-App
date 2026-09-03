@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
@@ -12,10 +11,14 @@ export default function GoogleAuthButton() {
   const t = useTranslations();
   const { handleCredentialResponse, error, clearError } = useGoogleAuth();
   const [isLoading, setIsLoading] = useState(false);
+  // remount trigger
+  const [googleKey, setGoogleKey] = useState(0); 
+  const popupOpenedRef = useRef(false);
 
   const onGoogleSuccess = async (response: CredentialResponse) => {
+    popupOpenedRef.current = false;
     setIsLoading(true);
-    clearError()
+    clearError();
     try {
       await handleCredentialResponse(response);
     } finally {
@@ -23,15 +26,36 @@ export default function GoogleAuthButton() {
     }
   };
 
-  const onGoogleError = () => setIsLoading(false);
+  const onGoogleError = () => {
+    popupOpenedRef.current = false;
+    setIsLoading(false);
+    // force fresh button on real errors too
+    setGoogleKey((k) => k + 1); 
+  };
+
+  useEffect(() => {
+    const handleFocus = () => {
+      // If the popup was opened and we regain focus without success/error firing,
+      // the user closed it manually — remount the button so it works next click.
+      if (popupOpenedRef.current) {
+        popupOpenedRef.current = false;
+        setGoogleKey((k) => k + 1);
+      }
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, []);
 
   return (
     <div className="relative">
       <div
         className="absolute inset-0 z-10 opacity-0"
-        // onPointerDown={() => { console.log("pointerdown fired"); clearError(); setIsLoading(true); }}
+        onPointerDown={() => {
+          popupOpenedRef.current = true;
+        }}
       >
         <GoogleLogin
+          key={googleKey}
           onSuccess={onGoogleSuccess}
           onError={onGoogleError}
           size="large"
@@ -51,9 +75,7 @@ export default function GoogleAuthButton() {
                  disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {isLoading ? <SpinnerIcon /> : <GoogleIcon />}
-        {isLoading
-          ? ""
-          : t("auth.button.continue_google")}
+        {isLoading ? "" : t("auth.button.continue_google")}
       </motion.button>
       {error && (
         <p className="text-red-500 text-sm text-center mt-2">{error}</p>
