@@ -28,18 +28,18 @@ export default function Page() {
   const setActiveConversationId = useChatStore(
     (s) => s.setActiveConversationId,
   );
-  const activeConversationId = useChatStore((s) => s.activeConversationId);
   const { fetchMessages } = useFetchMessages();
 
-  // Restore the last active conversation after a refresh
   const restoredRef = useRef(false);
   useEffect(() => {
     if (restoredRef.current) return;
-    if (accessToken && activeConversationId) {
-      restoredRef.current = true;
-      fetchMessages(activeConversationId);
+    if (!accessToken) return;
+    const persistedId = useChatStore.getState().activeConversationId;
+    restoredRef.current = true;
+    if (persistedId) {
+      fetchMessages(persistedId);
     }
-  }, [accessToken, activeConversationId, fetchMessages]);
+  }, [accessToken, fetchMessages]);
   const [shareChat, setShareChat] = useState<{
     chatId: number;
     title: string;
@@ -69,7 +69,9 @@ export default function Page() {
       {/* Mini Sidebar */}
       {!isSidebarOpen && (
         <MiniSidebar
-          onShareChat={(chatId, title, preview) => setShareChat({ chatId, title, preview })}
+          onShareChat={(chatId, title, preview) =>
+            setShareChat({ chatId, title, preview })
+          }
         />
       )}
 
@@ -93,7 +95,9 @@ export default function Page() {
           setActiveConversationId(chat.id);
           fetchMessages(chat.id);
         }}
-        onShareChat={(chatId, title, preview) => setShareChat({ chatId, title, preview })}
+        onShareChat={(chatId, title, preview) =>
+          setShareChat({ chatId, title, preview })
+        }
       />
 
       {/* Settings Modal */}
