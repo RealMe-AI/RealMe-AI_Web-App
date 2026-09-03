@@ -18,6 +18,7 @@ export interface ChatInputProps {
   imageCount?: number;
   imagesAtLimit?: boolean;
   hoursRemaining?: number;
+  attachmentCount?: number;
   onAbort: () => void;
   isRecording: boolean;
   isAudioRecorded: boolean;

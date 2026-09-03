@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { useMessageStream } from "@/app/hooks/messages/useMessageStream";
@@ -19,6 +19,8 @@ import { ChatMessageList, ChatInput } from "./chat";
 import Lightbox from "@/app/[locale]/components/Lightbox";
 import markdownToPlainText from "@/app/lib/markdownToPlainText";
 import { placeCursorAtEnd, placeCursorAtStart } from "./chat/cursorUtils";
+import { useImageLimitStore } from "@/app/store/useImageLimitStore";
+import { useSingleAttachmentGuard } from "@/app/hooks/attachments/useSingleAttachmentGuard";
 
 export default function ChatWindow() {
   const { user } = useUserStore();
@@ -29,10 +31,8 @@ export default function ChatWindow() {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [clipboardText, setClipboardText] = useState<string | null>(null);
-  const [imageUploadTimes, setImageUploadTimes] = useState<Map<string, number>>(
-    new Map(),
-  );
-  const [hoursRemaining, setHoursRemaining] = useState(0);
+  const { imageUploadTimes, addImage, addImages, removeImage, pruneExpired } = useImageLimitStore();
+  const [tick, setTick] = useState(0);
 
   const inputRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -135,26 +135,14 @@ export default function ChatWindow() {
     return `${m}m`;
   };
 
-  const updateHoursRemaining = useCallback(() => {
-    const now = Date.now();
-    const pruned = new Map(imageUploadTimes);
-    let changed = false;
-    pruned.forEach((t, id) => {
-      if (now - t > IMAGE_RESET_HOURS * 3600 * 1000) {
-        pruned.delete(id);
-        changed = true;
-      }
-    });
-    if (changed) setImageUploadTimes(pruned);
-    if (pruned.size === 0) {
-      setHoursRemaining(0);
-      return;
-    }
-    const earliest = Math.min(...pruned.values());
+  const hoursRemaining = useMemo(() => {
+    if (imageUploadTimes.size === 0) return 0;
+    const earliest = Math.min(...imageUploadTimes.values());
+    // eslint-disable-next-line react-hooks/purity
     const elapsed = Date.now() - earliest;
     const totalLimit = IMAGE_RESET_HOURS * 3600 * 1000;
-    setHoursRemaining(Math.max(0, totalLimit - elapsed));
-  }, [imageUploadTimes]);
+    return Math.max(0, totalLimit - elapsed);
+  }, [imageUploadTimes, tick]);
 
   const handleFileSelected = async (file: File) => {
     const isImage = file.type.startsWith("image/");
@@ -184,14 +172,7 @@ export default function ChatWindow() {
     if (result) {
       if (isImage) pendingImagesRef.current -= 1;
       setAttachments((prev) => [...prev, result]);
-      if (result.type === "image") {
-        const now = Date.now();
-        setImageUploadTimes((prev) => {
-          const next = new Map(prev);
-          next.set(result.id, now);
-          return next;
-        });
-      }
+      if (result.type === "image") addImage(result.id);
     } else if (isImage) {
       pendingImagesRef.current -= 1;
     }
@@ -225,18 +206,20 @@ export default function ChatWindow() {
     if (result) {
       if (imageFiles.length > 0) pendingImagesRef.current -= imageFiles.length;
       setAttachments((prev) => [...prev, ...result]);
-      const now = Date.now();
-      setImageUploadTimes((prev) => {
-        const next = new Map(prev);
-        result
-          .filter((a) => a.type === "image")
-          .forEach((a) => next.set(a.id, now));
-        return next;
-      });
+      const imageIds = result.filter((a) => a.type === "image").map((a) => a.id);
+      if (imageIds.length > 0) addImages(imageIds);
     } else {
       if (imageFiles.length > 0) pendingImagesRef.current -= imageFiles.length;
     }
   };
+
+  // TEMP: 1-attachment guard — remove when backend supports multi-attachment
+  const { guardedFileSelected, guardedMultipleSelected } =
+    useSingleAttachmentGuard({
+      attachmentsLength: attachments.length,
+      onFileSelected: handleFileSelected,
+      onMultipleFilesSelected: handleMultipleFilesSelected,
+    });
 
   const imageCount = imageUploadTimes.size;
   const imagesAtLimit = imageCount >= MAX_IMAGE_ATTACHMENTS;
@@ -244,11 +227,7 @@ export default function ChatWindow() {
   const handleRemoveAttachment = async (attachmentId: string) => {
     await deleteAttachment(attachmentId);
     setAttachments((prev) => prev.filter((a) => a.id !== attachmentId));
-    setImageUploadTimes((prev) => {
-      const next = new Map(prev);
-      next.delete(attachmentId);
-      return next;
-    });
+    removeImage(attachmentId);
   };
 
   const handleAbort = () => {
@@ -425,30 +404,13 @@ export default function ChatWindow() {
   }, [clipboardText]);
 
   useEffect(() => {
-    if (attachments.length === 0) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setImageUploadTimes((prev) => {
-      const next = new Map(prev);
-      let changed = false;
-      attachments
-        .filter((a) => a.type === "image")
-        .forEach((a) => {
-          if (!next.has(a.id)) {
-            next.set(a.id, Date.now());
-            changed = true;
-          }
-        });
-      return changed ? next : prev;
-    });
-  }, [attachments]);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    updateHoursRemaining();
     if (imageUploadTimes.size === 0) return;
-    const id = setInterval(updateHoursRemaining, 60000);
+    const id = setInterval(() => {
+      pruneExpired();
+      setTick((t) => t + 1);
+    }, 60000);
     return () => clearInterval(id);
-  }, [updateHoursRemaining]);
+  }, [imageUploadTimes.size, pruneExpired]);
 
   return (
     <div
@@ -498,10 +460,11 @@ export default function ChatWindow() {
         imageCount={imageCount}
         imagesAtLimit={imagesAtLimit}
         hoursRemaining={hoursRemaining}
+        attachmentCount={attachments.length}
         showUploadPopup={showUploadPopup}
         setShowUploadPopup={setShowUploadPopup}
-        onFileSelected={handleFileSelected}
-        onMultipleFilesSelected={handleMultipleFilesSelected}
+        onFileSelected={guardedFileSelected}
+        onMultipleFilesSelected={guardedMultipleSelected}
         onRemoveAttachment={handleRemoveAttachment}
         onAbort={handleAbort}
         isRecording={isRecording}

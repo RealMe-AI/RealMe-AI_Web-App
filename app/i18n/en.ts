@@ -299,6 +299,7 @@ const en = {
     max_images: "You can only attach {count} images.",
     hourly_reset: "You can upload up to {count} images per hour. Reset in {time}.",
     reset_complete: "Image upload limit reset. You can upload up to {count} new images.",
+    single_attachment_only: "Only 1 attachment at a time",
   },
 
   chat: {
@@ -600,7 +601,7 @@ const en = {
         ac_1: {
           question: "How do I update my profile?",
           answer:
-            "Click on your avatar or go to Account Info from the sidebar to update your name, email, and profile picture.",
+            "Click on your avatar or go to Account Info from the sidebar to update your name, and profile picture.",
         },
         ac_2: {
           question: "Can I change my email address?",

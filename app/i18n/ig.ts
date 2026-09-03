@@ -299,6 +299,7 @@ const ig = {
     max_images: "Ị nwere ike itinye naanị onyonyo {count}.",
     hourly_reset: "Ị nwere ike ibulite naanị onyonyo {count} n'ime otu awa. A ga-emegharị ya n'ime {time}.",
     reset_complete: "Ji na-eme aka imoha ike. Kpọ́rọ́ ike ụ̀bọ̀rụ ụ̀bụ ịkpérụ nwere {count} anyị ike.",
+    single_attachment_only: "Naanị otu faịlụ ka enwere ike itinye n'otu oge.",
   },
 
   chat: {
@@ -627,7 +628,7 @@ const ig = {
         ac_1: {
           question: "Kedu ka m ga-esi melite profaịlụ m?",
           answer:
-            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, email gị, na foto profaịlụ gị.",
+            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, na foto profaịlụ gị.",
         },
 
         ac_2: {

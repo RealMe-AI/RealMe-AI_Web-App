@@ -300,6 +300,7 @@ const yo = {
     max_images: "O lè so àwòrán {count} nìkan mọ́.",
     hourly_reset: "O lè gbé àwòrán tó tó {count} sókè nínú wákàtí kan. A ó tún ṣe àtúnṣe rẹ̀ ní {time}.",
     reset_complete: "Kíkọ́ aka imọ̀ra ike kọ́́. Kó lè ṣe ọ̀rọ̀ kan {count} nìkan pọ̀ rẹ̀.",
+    single_attachment_only: "Àfikún kan ṣoṣo ni a lè so mọ́ ní ẹ̀ẹ̀kan.",
   },
 
   chat: {
@@ -629,7 +630,7 @@ const yo = {
         ac_1: {
           question: "Báwo ni mo ṣe lè ṣe àtúnṣe profaili mi?",
           answer:
-            "Tẹ àwòrán profaili rẹ tàbí lọ sí Alaye Àkọọ́lẹ̀ láti sidebar láti ṣe àtúnṣe orúkọ rẹ, ímeèlì rẹ, àti àwòrán profaili rẹ.",
+            "Tẹ àwòrán profaili rẹ tàbí lọ sí Alaye Àkọọ́lẹ̀ láti sidebar láti ṣe àtúnṣe orúkọ rẹ, àti àwòrán profaili rẹ.",
         },
 
         ac_2: {

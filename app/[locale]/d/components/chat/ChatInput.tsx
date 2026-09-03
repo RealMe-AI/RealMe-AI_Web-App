@@ -76,6 +76,7 @@ export function ChatInput({
   onRemoveAttachment,
   imageCount = 0,
   hoursRemaining = 0,
+  attachmentCount = 0,
   isRecording,
   audioDuration,
   audioCurrentTime,
@@ -303,6 +304,7 @@ export function ChatInput({
                 imagesAtLimit={imagesAtLimit}
                 imageCount={imageCount}
                 hoursRemaining={hoursRemaining}
+                attachmentCount={attachmentCount}
               />
             )}
           </div>
