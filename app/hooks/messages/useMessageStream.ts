@@ -39,7 +39,6 @@ function getConversationLabel(
 
 export const useMessageStream = () => {
   const {
-    activeConversationId,
     setActiveConversationId,
     addMessage,
     updateMessage,
@@ -60,7 +59,7 @@ export const useMessageStream = () => {
       if (!isOnline) return;
       if (!content.trim() && (!attachmentIds || attachmentIds.length === 0)) return;
 
-      let currentConversationId = activeConversationId;
+      let currentConversationId = useChatStore.getState().activeConversationId;
 
       // Add user message optimistically — render immediately, before any API calls
       const audioAtt = attachments?.find((a) => a.type === "audio");
@@ -150,9 +149,9 @@ export const useMessageStream = () => {
         typewriter.flush();
         typewriter.stop();
 
-        // Finalize AI message with real ID
+        // Finalize AI message with real ID (fallback keeps a stable id)
         updateMessage("ai-temp", {
-          id: messageId,
+          id: messageId ?? `ai-${Date.now()}`,
           text: sanitizeAsterisks(typewriter.getShown()),
         });
         setIsLoading(false);
@@ -195,7 +194,6 @@ export const useMessageStream = () => {
       }
     },
     [
-      activeConversationId,
       setActiveConversationId,
       addMessage,
       removeMessage,

@@ -10,6 +10,37 @@ export async function parseSSEStream(
 ): Promise<SSEStreamResult> {
   const decoder = new TextDecoder();
   let buffer = "";
+  let messageId: string | undefined;
+  let stopped = false;
+
+  const handleData = (data: string): boolean => {
+    if (data === "[DONE]") return true;
+    try {
+      const parsed = JSON.parse(data);
+      const seenId =
+        (parsed.messageId ??
+          parsed.aiMessageId ??
+          parsed.assistantMessageId) as string | undefined;
+      if (seenId) messageId = seenId;
+      if (parsed.stopped === true) stopped = true;
+      if (parsed.type) {
+        onMeta?.(parsed);
+      } else {
+        const chunk =
+          parsed.content || parsed.text || parsed.delta?.content || "";
+        if (chunk) {
+          onChunk(chunk);
+        }
+      }
+      if (parsed.done === true) {
+        if (parsed.messageId) messageId = parsed.messageId;
+        return true;
+      }
+    } catch {
+      onChunk(data);
+    }
+    return false;
+  };
 
   while (true) {
     const { done, value } = await reader.read();
@@ -23,34 +54,16 @@ export async function parseSSEStream(
     for (const line of lines) {
       const trimmed = line.trim();
       if (!trimmed || !trimmed.startsWith("data: ")) continue;
-
-      const data = trimmed.slice(6);
-
-      if (data === "[DONE]") break;
-
-      try {
-        const parsed = JSON.parse(data);
-
-        if (parsed.type) {
-          onMeta?.(parsed);
-        } else {
-          const chunk =
-            parsed.content || parsed.text || parsed.delta?.content || "";
-          if (chunk) {
-            onChunk(chunk);
-          }
-        }
-        if (parsed.done === true) {
-          return {
-            stopped: parsed.stopped === true,
-            messageId: parsed.messageId as string | undefined,
-          };
-        }
-      } catch {
-        onChunk(data);
+      if (handleData(trimmed.slice(6))) {
+        return { stopped, messageId };
       }
     }
   }
 
-  return { stopped: false };
+  const tail = buffer.trim();
+  if (tail.startsWith("data: ")) {
+    handleData(tail.slice(6));
+  }
+
+  return { stopped, messageId };
 }

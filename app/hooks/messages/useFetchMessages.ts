@@ -9,6 +9,8 @@ export const useFetchMessages = () => {
 
   const fetchMessages = useCallback(
     async (conversationId: number) => {
+      // Don't clobber an in-flight AI stream for a newly created conversation.
+      if (useChatStore.getState().abortController) return;
       setIsLoading(true);
       useChatStore.setState({ activeConversationId: conversationId });
 
@@ -88,11 +90,19 @@ export const useFetchMessages = () => {
           messages = sortRawMessages(data.items).map(mapRaw);
         }
 
+        if (useChatStore.getState().activeConversationId !== conversationId) return;
+        if (messages.length === 0) {
+          const current = useChatStore.getState().messages;
+          const hasOptimistic = current.some(
+            (m) => m.id === "ai-temp" || m.id.startsWith("u-"),
+          );
+          if (hasOptimistic) return;
+        }
         setMessages(messages);
       } catch (err) {
         console.error("Error fetching messages:", err);
       } finally {
-        setIsLoading(false);
+        if (!useChatStore.getState().abortController) setIsLoading(false);
       }
     },
     [setMessages, setIsLoading],
