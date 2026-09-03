@@ -11,12 +11,19 @@ export default function GoogleAuthButton() {
   const t = useTranslations();
   const { handleCredentialResponse, error, clearError } = useGoogleAuth();
   const [isLoading, setIsLoading] = useState(false);
-  // remount trigger
-  const [googleKey, setGoogleKey] = useState(0); 
+  const [googleKey, setGoogleKey] = useState(0);
   const popupOpenedRef = useRef(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const remount = () => {
+    popupOpenedRef.current = false;
+    setGoogleKey((k) => k + 1);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
 
   const onGoogleSuccess = async (response: CredentialResponse) => {
     popupOpenedRef.current = false;
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setIsLoading(true);
     clearError();
     try {
@@ -27,23 +34,35 @@ export default function GoogleAuthButton() {
   };
 
   const onGoogleError = () => {
-    popupOpenedRef.current = false;
     setIsLoading(false);
-    // force fresh button on real errors too
-    setGoogleKey((k) => k + 1); 
+    remount();
   };
 
   useEffect(() => {
-    const handleFocus = () => {
-      // If the popup was opened and we regain focus without success/error firing,
-      // the user closed it manually — remount the button so it works next click.
-      if (popupOpenedRef.current) {
-        popupOpenedRef.current = false;
-        setGoogleKey((k) => k + 1);
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible" && popupOpenedRef.current) {
+        // give onSuccess/onError a brief window to win the race first
+        timeoutRef.current = setTimeout(() => {
+          if (popupOpenedRef.current) remount();
+        }, 300);
       }
     };
+
+    const handleFocus = () => {
+      if (popupOpenedRef.current) {
+        timeoutRef.current = setTimeout(() => {
+          if (popupOpenedRef.current) remount();
+        }, 300);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
     window.addEventListener("focus", handleFocus);
-    return () => window.removeEventListener("focus", handleFocus);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("focus", handleFocus);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   return (
