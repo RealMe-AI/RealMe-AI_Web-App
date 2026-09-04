@@ -177,6 +177,7 @@ export const useMessageStream = () => {
             id: (Date.now() + 1).toString(),
             text: sanitizeAsterisks(typewriter.getShown()),
           });
+          setIsLoading(false);
           return;
         }
 

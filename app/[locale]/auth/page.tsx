@@ -18,7 +18,8 @@ export default function AuthPage() {
       {/* Mobile Background */}
       <Image
         src="/auth-bg-mobile.webp"
-        alt="Auth background mobile"
+        alt=""
+        aria-hidden
         fill
         priority
         className="object-cover md:hidden"
@@ -27,7 +28,8 @@ export default function AuthPage() {
       {/* Desktop / Tablet Background */}
       <Image
         src="/auth-bg-desktop.webp"
-        alt="Auth background desktop"
+        alt=""
+        aria-hidden
         fill
         priority
         className="hidden md:block object-cover"

@@ -16,6 +16,7 @@ import {
 } from "./message-renderers";
 import MessageActions from "../components/MessageActions";
 import parseMarkdown from "@/app/lib/parseMarkdown";
+import { useChatStore } from "@/app/store/useChatStore";
 import { useEditMessage } from "@/app/hooks/messages/useEditMessage";
 import { useTtsStore } from "@/app/store/useTtsStore";
 import { useTtsSpeak } from "@/app/hooks/tts/useTtsSpeak";
@@ -43,6 +44,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [overflows, setOverflows] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
+  const isStreaming = useChatStore((s) => s.isLoading && s.abortController !== null);
+  const isStreamingBubble =
+    !isUser && (message.id === "ai-temp" || !message.text?.trim());
 
   // AUDIO PLAYER
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -346,7 +350,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
             </div>
             )}
 
-            {!isEditing && !isUserMediaOnly && (
+            {!isEditing && !isUserMediaOnly && !isStreamingBubble && (
               <div
                 className={cn(
                   "flex w-full text-[10px] opacity-60 px-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity",
@@ -358,6 +362,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                   text={message.text}
                   onEdit={handleEditStart}
                   message={message}
+                  hideEdit={isUser && isStreaming}
                 />
               </div>
             )}

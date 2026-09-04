@@ -45,9 +45,11 @@ export default function ChatWindow() {
   const {
     messages: chatMessages,
     isLoading,
+    abortController,
     inputFocusSignal,
     triggerInputFocus,
   } = useChatStore();
+  const isStreaming = isLoading && abortController !== null;
   const { sendMessage, isOnline } = useMessageStream();
   const { stopStream } = useStopMessageStream();
   const { uploadFile, uploadFiles, uploadingFiles } = useAttachmentUpload();
@@ -423,7 +425,7 @@ export default function ChatWindow() {
       <ChatMessageList
         chatMessages={chatMessages}
         user={user}
-        isLoading={isLoading}
+        isLoading={isStreaming}
         showScrollBtn={showScrollBtn}
         messagesEndRef={messagesEndRef}
         scrollContainerRef={scrollContainerRef}
@@ -454,7 +456,7 @@ export default function ChatWindow() {
         isFocused={isFocused}
         setIsFocused={setIsFocused}
         isOnline={isOnline}
-        isLoading={isLoading}
+        isLoading={isStreaming}
         attachments={attachments}
         uploadingFiles={uploadingFiles}
         imageCount={imageCount}

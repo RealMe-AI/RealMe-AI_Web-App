@@ -13,6 +13,7 @@ import StructuredData from "./components/StructuredData";
 import "../globals.css";
 import "highlight.js/styles/atom-one-dark.css";
 import { SUPPORTED_LOCALES, type Locale } from "@/app/lib/locales";
+import { Analytics } from "@vercel/analytics/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -115,6 +116,7 @@ export default async function LocaleLayout({
             <StatusBarHandler />
             <PathHistoryRecorder />
             <ToastProvider>{children}</ToastProvider>
+            <Analytics />
           </NextIntlClientProvider>
         </AuthProvider>
       </body>

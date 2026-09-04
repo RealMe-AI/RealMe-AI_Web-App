@@ -10,7 +10,7 @@ export function HelpHero() {
     <section className="relative flex min-h-[55svh] lg:h-screen w-full items-center overflow-hidden">
       <Image
         src="/Realme-mobile-banner.jpeg"
-        alt="RealMe AI"
+        alt="RealMe AI help center support banner"
         fill
         sizes="100vw"
         priority
@@ -18,7 +18,7 @@ export function HelpHero() {
       />
       <Image
         src="/realme-banner.webp"
-        alt="RealMe AI"
+        alt="RealMe AI help center support banner"
         fill
         priority
         className="object-cover hidden md:block"

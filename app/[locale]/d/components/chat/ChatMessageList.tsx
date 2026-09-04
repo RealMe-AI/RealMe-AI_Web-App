@@ -94,7 +94,7 @@ export function ChatMessageList({
         )}
       </div>
 
-      {isLoading && (
+      {isLoading && chatMessages.some((m) => m.id === "ai-temp") && (
         <motion.div
           animate={{ opacity: [1, 0.4, 1] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
