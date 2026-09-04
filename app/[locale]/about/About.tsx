@@ -22,7 +22,7 @@ export function About() {
       <section className="relative flex min-h-[55vh] lg:h-screen w-full items-center overflow-hidden">
         <Image
           src="/Realme-mobile-banner.jpeg"
-          alt="RealMe AI"
+          alt="RealMe AI multilingual assistant mission banner"
           fill
           sizes="100vw"
           priority
@@ -30,7 +30,7 @@ export function About() {
         />
         <Image
           src="/realme-banner.webp"
-          alt="RealMe AI"
+          alt="RealMe AI multilingual assistant mission banner"
           fill
           priority
           className="object-cover hidden lg:block"

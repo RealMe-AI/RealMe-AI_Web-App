@@ -56,5 +56,41 @@ export function getStructuredData(SITE_URL: string) {
     },
     founder,
     coFounder,
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      name: "RealMe AI multilingual assistant interface",
+      caption:
+        "RealMe AI multilingual assistant interface in English, Hausa, Igbo and Yoruba",
+      contentUrl: `${SITE_URL}/realme-ai-assistant.webp`,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      name: "RealMe AI chatbot supporting English, Hausa, Igbo and Yoruba",
+      caption: "RealMe AI chatbot supporting English, Hausa, Igbo and Yoruba",
+      contentUrl: `${SITE_URL}/realme-ai-chatbot.webp`,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      name: "RealMe AI multilingual assistant mission banner",
+      caption: "RealMe AI multilingual assistant mission banner",
+      contentUrl: `${SITE_URL}/realme-banner.webp`,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      name: "RealMe AI multilingual assistant mission banner mobile",
+      caption: "RealMe AI multilingual assistant mission banner mobile",
+      contentUrl: `${SITE_URL}/Realme-mobile-banner.jpeg`,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      name: "RealMe AI logo",
+      caption: "RealMe AI logo",
+      contentUrl: `${SITE_URL}/logo.png`,
+    },
   ];
 }
