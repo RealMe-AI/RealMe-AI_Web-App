@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
@@ -6,11 +6,13 @@ import { RawMessage, Message, MessageResponse } from "@/app/interface/type";
 
 export const useFetchMessages = () => {
   const { setMessages, setIsLoading } = useChatStore();
+  const seqRef = useRef(0);
 
   const fetchMessages = useCallback(
     async (conversationId: number) => {
       // Don't clobber an in-flight AI stream for a newly created conversation.
       if (useChatStore.getState().abortController) return;
+      const mySeq = ++seqRef.current;
       setIsLoading(true);
       useChatStore.setState({ activeConversationId: conversationId });
 
@@ -90,14 +92,14 @@ export const useFetchMessages = () => {
           messages = sortRawMessages(data.items).map(mapRaw);
         }
 
+        if (mySeq !== seqRef.current) return;
+        if (useChatStore.getState().abortController) return;
         if (useChatStore.getState().activeConversationId !== conversationId) return;
-        if (messages.length === 0) {
-          const current = useChatStore.getState().messages;
-          const hasOptimistic = current.some(
-            (m) => m.id === "ai-temp" || m.id.startsWith("u-"),
-          );
-          if (hasOptimistic) return;
-        }
+        const current = useChatStore.getState().messages;
+        if (
+          current.some((m) => m.id === "ai-temp" || m.id.startsWith("u-"))
+        )
+          return;
         setMessages(messages);
       } catch (err) {
         console.error("Error fetching messages:", err);
