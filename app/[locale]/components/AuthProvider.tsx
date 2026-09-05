@@ -12,6 +12,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const init = async () => {
+      if (!useAuthStore.persist.hasHydrated()) {
+        await new Promise<void>((resolve) => {
+          const unsub = useAuthStore.persist.onFinishHydration(() => {
+            unsub();
+            resolve();
+          });
+        });
+      }
+
       const { accessToken, isTokenExpired } = useAuthStore.getState();
 
       if (accessToken && !isTokenExpired()) {
