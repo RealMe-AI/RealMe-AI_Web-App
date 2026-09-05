@@ -4,9 +4,14 @@ import { fetchConversations } from "@/app/lib/conversations";
 import type { PaginatedMeta } from "@/app/interface/type";
 import { useDebounce } from "../useDebounce";
 
+interface FetchResult {
+  meta: PaginatedMeta | null;
+  errorMsg: string | null;
+}
+
 // Shared in-flight guard so identical initial fetches (Sidebar +
 // ConversationsModal, StrictMode remounts) share ONE request.
-const inFlightFetch = new Map<string, Promise<PaginatedMeta | null>>();
+const inFlightFetch = new Map<string, Promise<FetchResult>>();
 
 export function useChats() {
   const { chats, setConversations } = useChatStore();
@@ -23,7 +28,7 @@ export function useChats() {
   const [hasMore, setHasMore] = useState(false);
 
   const runFetch = useCallback(
-    async (page: number, append: boolean, q: string) => {
+    async (page: number, append: boolean, q: string): Promise<FetchResult> => {
       try {
         if (append) {
           setIsLoadingMore(true);
@@ -52,13 +57,13 @@ export function useChats() {
         }
 
         setError(null);
-        return meta ?? null;
+        return { meta: meta ?? null, errorMsg: null };
       } catch (err) {
         console.error("Error fetching chats:", err);
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch chats",
-        );
-        return null;
+        const errorMsg =
+          err instanceof Error ? err.message : "Failed to fetch chats";
+        setError(errorMsg);
+        return { meta: null, errorMsg };
       } finally {
         setIsLoading(false);
         setIsLoadingMore(false);
@@ -77,13 +82,19 @@ export function useChats() {
       const key = `${page}:${q}`;
       const existing = inFlightFetch.get(key);
       if (existing) {
-        const meta = await existing;
-        if (meta) {
-          totalPagesRef.current = meta.totalPages;
-          pageRef.current = meta.page;
-          setHasMore(meta.page < meta.totalPages);
-        } else {
-          setHasMore(false);
+        setIsLoading(true);
+        try {
+          const { meta, errorMsg } = await existing;
+          if (meta) {
+            totalPagesRef.current = meta.totalPages;
+            pageRef.current = meta.page;
+            setHasMore(meta.page < meta.totalPages);
+          } else {
+            setHasMore(false);
+          }
+          setError(errorMsg);
+        } finally {
+          setIsLoading(false);
         }
         return;
       }
