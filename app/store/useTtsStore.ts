@@ -15,7 +15,7 @@ interface TtsState {
 export const useTtsStore = create<TtsState>()(
   persist(
     (set) => ({
-      enabled: false,
+      enabled: true,
       speed: 5,
       autoRead: false,
       setEnabled: (v) => set({ enabled: v }),
