@@ -15,13 +15,17 @@ export default function useLogout() {
 
     setIsLoggingOut(true);
     try {
-      const { accessToken } = useAuthStore.getState();
+      const { accessToken, refreshToken } = useAuthStore.getState();
 
-      if (accessToken) {
+      if (accessToken || refreshToken) {
         try {
           await fetch(`${baseUrl}/auth/logout`, {
             method: "POST",
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: {
+              "Content-Type": "application/json",
+              ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+            },
+            body: JSON.stringify({ refreshToken }),
           });
         } catch {
           // Server-side logout is best-effort; local state is cleared regardless

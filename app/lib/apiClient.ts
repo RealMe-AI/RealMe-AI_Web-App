@@ -47,7 +47,9 @@ export async function doRefresh(): Promise<string | null> {
     });
 
     if (!res.ok) {
-      if (res.status >= 400 && res.status < 500) {
+      // Only clear auth on 401 Unauthorized (invalid/expired refresh token).
+      // Do NOT clear auth on 429 (rate-limited) or transient 5xx/network errors.
+      if (res.status === 401) {
         clearAuth();
       }
       return null;
@@ -83,6 +85,7 @@ export async function ensureFreshToken(): Promise<string | null> {
     isRefreshing = true;
     refreshPromise = doRefresh().finally(() => {
       isRefreshing = false;
+      refreshPromise = null;
     });
   }
 
