@@ -245,7 +245,7 @@ export default function ChatWindow() {
     const attachmentData = [...attachments];
 
     setInput("");
-    if (inputRef.current) inputRef.current.textContent = "";
+    if (inputRef.current) inputRef.current.innerHTML = "";
     resetRecording();
     setAttachments([]);
 
@@ -438,7 +438,7 @@ export default function ChatWindow() {
           onPaste={() => {
             dismissClipboard(clipboardText.trim());
             setInput(clipboardText);
-            if (inputRef.current) inputRef.current.textContent = clipboardText;
+            if (inputRef.current) inputRef.current.innerText = clipboardText;
             setClipboardText(null);
             requestAnimationFrame(() => placeCursorAtEnd(inputRef.current));
           }}
