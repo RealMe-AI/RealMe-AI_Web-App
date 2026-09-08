@@ -310,7 +310,7 @@ export function ChatInput({
           </div>
 
           <div className="flex-1 relative">
-            {!input && (
+            {input.trim() === "" && (
               <div className="absolute top-0 left-0 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 md:text-sm text-base">
                 {t("chat.input.placeholder")}
               </div>
@@ -319,7 +319,9 @@ export function ChatInput({
               ref={inputRef}
               contentEditable
               suppressContentEditableWarning
-              onInput={(e) => setInput(e.currentTarget.textContent ?? "")}
+              onInput={(e) =>
+                setInput(e.currentTarget.innerText ?? e.currentTarget.textContent ?? "")
+              }
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               onKeyDown={onKeyDown}
