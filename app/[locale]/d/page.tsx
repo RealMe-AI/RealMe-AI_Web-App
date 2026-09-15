@@ -21,6 +21,7 @@ export default function Page() {
   const router = useRouter();
   const hydrated = useAuthHydrated();
   const accessToken = useAuthStore((s) => s.accessToken);
+  const refreshToken = useAuthStore((s) => s.refreshToken);
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
   const isSettingsOpen = useModalStore((s) => s.isSettingsOpen);
@@ -47,12 +48,21 @@ export default function Page() {
   } | null>(null);
 
   useEffect(() => {
-    if (hydrated && !accessToken) {
+    if (hydrated && !accessToken && !refreshToken) {
       router.push("/auth");
     }
-  }, [hydrated, accessToken, router]);
+  }, [hydrated, accessToken, refreshToken, router]);
 
-  if (!hydrated || !accessToken) return null;
+  if (!hydrated) return null;
+
+  if (!accessToken) {
+    if (!refreshToken) return null;
+    return (
+      <div className="h-dvh w-full flex items-center justify-center bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="h-dvh w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
