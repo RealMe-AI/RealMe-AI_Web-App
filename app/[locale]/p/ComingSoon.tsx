@@ -7,7 +7,7 @@ export function ComingSoon() {
   const t = useTranslations("plans");
 
   return (
-    <section className="flex min-h-screen w-full items-center justify-center bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
+    <section className="flex h-dvh w-full items-center justify-center px-4 bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
       <div className="mx-auto max-w-md text-center">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/50">
           <Clock className="h-8 w-8 text-indigo-400 dark:text-indigo-600" />

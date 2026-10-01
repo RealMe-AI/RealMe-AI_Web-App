@@ -12,6 +12,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const init = async () => {
+      if (!useAuthStore.persist.hasHydrated()) {
+        await new Promise<void>((resolve) => {
+          const unsub = useAuthStore.persist.onFinishHydration(() => {
+            unsub();
+            resolve();
+          });
+        });
+      }
+
       const { accessToken, isTokenExpired } = useAuthStore.getState();
 
       if (accessToken && !isTokenExpired()) {
@@ -48,7 +57,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      {isReady ? children : null}
+      {isReady ? (
+        children
+      ) : (
+        <div className="h-dvh w-full flex items-center justify-center bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
     </GoogleOAuthProvider>
   );
 }

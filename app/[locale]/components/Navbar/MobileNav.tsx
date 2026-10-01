@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { navItems } from "../../../constants/NavData";
@@ -18,6 +20,22 @@ export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
   const tCTA = useTranslations("landing.cta");
   const goToAuth = useNavigateToAuth();
 
+  // Ref to the mobile menu element for hit-testing
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close sidebar when clicking outside the menu
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const menu = menuRef.current;
+      if (!menu) return;
+      // If click is inside the menu, do nothing; otherwise close
+      if (menu.contains(e.target as Node)) return;
+      setIsOpen(false);
+    };
+    document.body.addEventListener("click", handler);
+    return () => document.body.removeEventListener("click", handler);
+  }, [isOpen, setIsOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -29,12 +47,13 @@ export default function MobileNav({ isOpen, setIsOpen }: MobileNavProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
+            className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
 
           {/* Mobile Menu */}
           <motion.nav
+            ref={menuRef}
             key="mobile-menu"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

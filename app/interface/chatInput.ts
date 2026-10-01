@@ -13,7 +13,12 @@ export interface ChatInputProps {
   showUploadPopup: boolean;
   setShowUploadPopup: (value: boolean) => void;
   onFileSelected: (file: File) => Promise<void>;
+  onMultipleFilesSelected?: (files: File[]) => Promise<void>;
   onRemoveAttachment: (id: string) => Promise<void>;
+  imageCount?: number;
+  imagesAtLimit?: boolean;
+  hoursRemaining?: number;
+  attachmentCount?: number;
   onAbort: () => void;
   isRecording: boolean;
   isAudioRecorded: boolean;

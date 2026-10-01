@@ -62,7 +62,7 @@ const yo = {
         "Ni iriri awọn ibaraẹnisọrọ AI amọdaju ni iṣẹju diẹ laisi eyikeyi eto imọ-ẹrọ ti o nilo.",
       step1: {
         title: "Ṣẹda Account Rẹ",
-        desc: "Forukọsilẹ pẹlu imeeli rẹ, foonu, tabi account Google. Gba kere ju aaya 30, laisi kaadi kirẹditi.",
+        desc: "Forukọsilẹ pẹlu imeeli rẹ, tabi account Google. Gba kere ju aaya 30, laisi kaadi kirẹditi.",
       },
       step2: {
         title: "Ṣe Atunṣe Awọn Ayanfẹ Rẹ",
@@ -93,7 +93,7 @@ const yo = {
       back_button: "Pada",
     },
     login: {
-      email_placeholder: "Adirẹsi imeeli tabi nọmba foonu...",
+      email_placeholder: "Adirẹsi imeeli...",
       password_placeholder: "Ọrọ aṣínà...",
       full_name_placeholder: "Orukọ kikun...",
     },
@@ -173,8 +173,8 @@ const yo = {
   error: {
     generic: "Aṣiṣe airotẹlẹ ṣẹlẹ.",
 
-    required_identifier: "Imeeli tabi foonu jẹ dandan.",
-    invalid_identifier: "Tẹ imeeli to wulo tabi nọmba foonu E.164.",
+    required_identifier: "A nílò ímeèlì.",
+    invalid_identifier: "Tẹ imeeli to wulo.",
 
     required_password: "Ọrọ aṣínà jẹ dandan.",
     short_password: "Ọrọ aṣínà gbọdọ jẹ o kere ju awọn ohun kikọ 6.",
@@ -183,7 +183,7 @@ const yo = {
     invalid_fullname: "Tẹ orukọ kikun to wulo.",
 
     sign_in: {
-      email_number: "Imeeli tabi foonu jẹ dandan.",
+      email_number: "Imeeli jẹ dandan.",
       password: {
         required: "Ọrọ aṣínà jẹ dandan.",
       },
@@ -191,7 +191,7 @@ const yo = {
 
     sign_up: {
       email_number:
-        "Tẹ imeeli to wulo tabi nọmba foonu E.164 (apẹẹrẹ +123456789).",
+        "Tẹ imeeli to wulo.",
       password: {
         min_length: "Ọrọ aṣínà gbọdọ jẹ o kere ju awọn ohun kikọ 6.",
       },
@@ -293,9 +293,14 @@ const yo = {
   },
 
   fileupload: {
-    upload_title: "Ṣe àgbéyẹ̀wò fáìlì",
-    button_label: "Ṣe Àgbéyẹ̀wò",
-    limit_reached: "Ṣe ìgbéga sí Pro",
+    upload_title: "Gbé fáìlì sókè",
+    button_label: "Gbé sókè",
+    limit_reached: "Gbárúkọ sí Pro",
+    unsupported_video: "A kò gba ìgbésókè fídíò láyè",
+    max_images: "O lè so àwòrán {count} nìkan mọ́.",
+    hourly_reset: "O lè gbé àwòrán tó tó {count} sókè nínú wákàtí kan. A ó tún ṣe àtúnṣe rẹ̀ ní {time}.",
+    reset_complete: "Kíkọ́ aka imọ̀ra ike kọ́́. Kó lè ṣe ọ̀rọ̀ kan {count} nìkan pọ̀ rẹ̀.",
+    single_attachment_only: "Àfikún kan ṣoṣo ni a lè so mọ́ ní ẹ̀ẹ̀kan.",
   },
 
   chat: {
@@ -537,7 +542,7 @@ const yo = {
         gs_1: {
           question: "Báwo ni mo ṣe lè ṣẹ̀dá àkọọ́lẹ̀?",
           answer:
-            "O lè ṣẹ̀dá àkọọ́lẹ̀ pẹ̀lú ímeèlì rẹ, nọ́mbà fóònù rẹ tàbí àkọọ́lẹ̀ Google rẹ. Kan tẹ bọ́tìnì 'Bẹ̀rẹ̀' lórí ojú-ìwé àkọ́kọ́ kí o sì tẹ̀lé ìlànà ìforúkọsílẹ̀.",
+            "O lè ṣẹ̀dá àkọọ́lẹ̀ pẹ̀lú ímeèlì rẹ, tàbí àkọọ́lẹ̀ Google rẹ. Kan tẹ bọ́tìnì 'Bẹ̀rẹ̀' lórí ojú-ìwé àkọ́kọ́ kí o sì tẹ̀lé ìlànà ìforúkọsílẹ̀.",
         },
 
         gs_2: {
@@ -567,7 +572,7 @@ const yo = {
         vo_2: {
           question: "Ṣé RealMe AI lè ka àwọn ìdáhùn sókè?",
           answer:
-            "Bẹ́ẹ̀ni. Tẹ ààmì agbọrọ̀sọ lórí ìdáhùn AI èyíkéyìí kí a lè ka á sókè. O tún lè tan ìkà àìfọwọ́ṣe nínú Ètò Ohùn.",
+            "Bẹ́ẹ̀ni. Tẹ àmì gbohùngbohùn lórí ìdáhùn AI kankan láti jẹ́ kí ó kà á sókè. Ṣùgbọ́n kọ́kọ́ lọ sí Ètò \u2192 Ohùn láti gba ẹ̀yà ohùn AI láyè.",
         },
 
         vo_3: {
@@ -625,7 +630,7 @@ const yo = {
         ac_1: {
           question: "Báwo ni mo ṣe lè ṣe àtúnṣe profaili mi?",
           answer:
-            "Tẹ àwòrán profaili rẹ tàbí lọ sí Alaye Àkọọ́lẹ̀ láti sidebar láti ṣe àtúnṣe orúkọ rẹ, ímeèlì rẹ, àti àwòrán profaili rẹ.",
+            "Tẹ àwòrán profaili rẹ tàbí lọ sí Alaye Àkọọ́lẹ̀ láti sidebar láti ṣe àtúnṣe orúkọ rẹ, àti àwòrán profaili rẹ.",
         },
 
         ac_2: {

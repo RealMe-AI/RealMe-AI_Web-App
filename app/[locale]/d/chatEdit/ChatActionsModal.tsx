@@ -4,6 +4,7 @@ import { Share, Pencil, Pin, Trash2 } from "lucide-react";
 import { useDeleteConversation } from "@/app/hooks/chatModal/useDeleteConversation";
 
 import { useRenameConversation } from "@/app/hooks/chatModal/useRenameConversation";
+import { createPortal } from "react-dom";
 
 interface ChatActionsModalProps {
   isOpen: boolean;
@@ -15,6 +16,9 @@ interface ChatActionsModalProps {
   onPin?: () => void;
   onDelete?: () => void;
   isPinned?: boolean;
+  usePortal?: boolean;
+  anchorRect?: DOMRect | null;
+  openUpwards?: boolean;
 }
 
 const ChatActionsModal = ({
@@ -27,6 +31,9 @@ const ChatActionsModal = ({
   onDelete,
   chatId,
   isPinned,
+  usePortal,
+  anchorRect,
+  openUpwards,
 }: ChatActionsModalProps) => {
   const t = useTranslations();
   const { deleteConversation: defaultDelete } = useDeleteConversation();
@@ -44,7 +51,24 @@ const ChatActionsModal = ({
     onClose();
   };
 
-  return (
+  let modalStyle: React.CSSProperties = {};
+  if (usePortal && anchorRect) {
+    if (openUpwards) {
+      modalStyle = {
+        position: "fixed",
+        bottom: window.innerHeight - anchorRect.top + 8,
+        right: window.innerWidth - anchorRect.right,
+      };
+    } else {
+      modalStyle = {
+        position: "fixed",
+        top: anchorRect.bottom + 8,
+        right: window.innerWidth - anchorRect.right,
+      };
+    }
+  }
+
+  const content = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -54,7 +78,7 @@ const ChatActionsModal = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/10 dark:bg-black/30"
+            className={`fixed inset-0 bg-black/10 dark:bg-black/30 ${usePortal ? "z-[100]" : "z-40"}`}
           />
 
           {/* Modal */}
@@ -63,9 +87,10 @@ const ChatActionsModal = ({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`z-50 w-40 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden ${
-              className || ""
-            }`}
+            style={modalStyle}
+            className={`w-40 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden ${
+              usePortal ? "z-[101]" : "z-50"
+            } ${className || ""}`}
           >
             <ul className="flex flex-col">
               {/* Share */}
@@ -109,6 +134,12 @@ const ChatActionsModal = ({
       )}
     </AnimatePresence>
   );
+
+  if (usePortal && typeof document !== "undefined") {
+    return createPortal(content, document.body);
+  }
+
+  return content;
 };
 
 export default ChatActionsModal;

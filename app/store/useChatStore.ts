@@ -1,7 +1,10 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { ChatState } from "../interface/type";
 
-export const useChatStore = create<ChatState>((set) => ({
+export const useChatStore = create<ChatState>()(
+  persist(
+    (set) => ({
   messages: [],
   chats: [],
   isLoading: false,
@@ -67,4 +70,14 @@ export const useChatStore = create<ChatState>((set) => ({
       }
       return { isLoading: false, abortController: null };
     }),
-}));
+    }),
+    {
+      name: "rm_chat_v1",
+      storage: createJSONStorage(() => localStorage),
+      partialize: (s) => ({
+        activeConversationId: s.activeConversationId,
+        messages: s.messages,
+      }),
+    },
+  ),
+);

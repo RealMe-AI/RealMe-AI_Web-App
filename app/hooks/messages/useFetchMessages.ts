@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { baseUrl } from "@/app/lib/baseUrl";
 import { useChatStore } from "@/app/store/useChatStore";
 import { authFetch } from "@/app/lib/apiClient";
@@ -6,9 +6,13 @@ import { RawMessage, Message, MessageResponse } from "@/app/interface/type";
 
 export const useFetchMessages = () => {
   const { setMessages, setIsLoading } = useChatStore();
+  const seqRef = useRef(0);
 
   const fetchMessages = useCallback(
     async (conversationId: number) => {
+      // Don't clobber an in-flight AI stream for a newly created conversation.
+      if (useChatStore.getState().abortController) return;
+      const mySeq = ++seqRef.current;
       setIsLoading(true);
       useChatStore.setState({ activeConversationId: conversationId });
 
@@ -39,16 +43,19 @@ export const useFetchMessages = () => {
 
         const mapRaw = (m: RawMessage): Message => {
           const audioAtt = m.attachments?.find((a) => a.type === "audio");
-          const isUserAudio = getSenderType(m) === "user" && audioAtt;
+          const imageAtt = m.attachments?.find((a) => a.type === "image");
+          const rawText = (m.text || m.content || "").trim();
+          const isUserMedia = getSenderType(m) === "user" && (audioAtt || imageAtt);
+          const isAutoCaption = rawText === "Please analyze the attached file(s).";
           return {
             id: m.id,
             sender: getSenderType(m),
             type: audioAtt ? "audio" : m.attachments?.length ? "file" : "text",
-            text: isUserAudio
+            text: isUserMedia && (audioAtt || isAutoCaption)
               ? ""
               : getSenderType(m) === "ai"
               ? m.content || m.text || ""
-              : m.text || m.content || "",
+              : rawText,
             time: m.createdAt
               ? new Date(m.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",
@@ -85,11 +92,19 @@ export const useFetchMessages = () => {
           messages = sortRawMessages(data.items).map(mapRaw);
         }
 
+        if (mySeq !== seqRef.current) return;
+        if (useChatStore.getState().abortController) return;
+        if (useChatStore.getState().activeConversationId !== conversationId) return;
+        const current = useChatStore.getState().messages;
+        if (
+          current.some((m) => m.id === "ai-temp" || m.id.startsWith("u-"))
+        )
+          return;
         setMessages(messages);
       } catch (err) {
         console.error("Error fetching messages:", err);
       } finally {
-        setIsLoading(false);
+        if (!useChatStore.getState().abortController) setIsLoading(false);
       }
     },
     [setMessages, setIsLoading],

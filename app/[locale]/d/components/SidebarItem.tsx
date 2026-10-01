@@ -20,6 +20,7 @@ interface SidebarItemProps {
   isActive: boolean;
   onClick: () => void;
   onShareChat?: (chatId: number, title: string, preview?: string) => void;
+  usePortal?: boolean;
 }
 
 export default function SidebarItem({
@@ -27,9 +28,11 @@ export default function SidebarItem({
   isActive,
   onClick,
   onShareChat,
+  usePortal,
 }: SidebarItemProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openUpwards, setOpenUpwards] = useState(false);
+  const [menuRect, setMenuRect] = useState<DOMRect | null>(null);
 
   // Rename state
   const [isRenaming, setIsRenaming] = useState(false);
@@ -124,6 +127,7 @@ export default function SidebarItem({
               e.stopPropagation();
               const rect = buttonRef.current?.getBoundingClientRect();
               if (rect) {
+                setMenuRect(rect);
                 const spaceBelow = window.innerHeight - rect.bottom;
                 setOpenUpwards(spaceBelow < 280);
               }
@@ -150,9 +154,16 @@ export default function SidebarItem({
               onShare={() => onShareChat?.(chat.id, chat.title, chat.lastMessage)}
               onDelete={() => setIsDeleteModalOpen(true)}
               onPin={() => pinConversation(chat.id)}
-              className={`absolute right-8 z-50 w-40 shadow-xl border border-slate-200 dark:border-slate-700 ${
-                openUpwards ? "bottom-8" : "top-8"
-              }`}
+              usePortal={usePortal}
+              anchorRect={menuRect}
+              openUpwards={openUpwards}
+              className={
+                usePortal
+                  ? ""
+                  : `absolute right-8 z-50 w-40 shadow-xl border border-slate-200 dark:border-slate-700 ${
+                      openUpwards ? "bottom-8" : "top-8"
+                    }`
+              }
             />
           </div>
         )}

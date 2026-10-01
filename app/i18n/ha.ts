@@ -62,7 +62,7 @@ const ha = {
         "Kware tattaunawar AI ta ƙwararru cikin mintuna ba tare da kowace matsalar saitawa ba.",
       step1: {
         title: "Ƙirƙiri Asusunka",
-        desc: "Yi rajista da imel, lamba, ko asusun Google. Yana ɗaukar ƙasa da dakika 30 ba tare da katin bashi ba.",
+        desc: "Yi rajista da imel, ko asusun Google. Yana ɗaukar ƙasa da dakika 30 ba tare da katin bashi ba.",
       },
       step2: {
         title: "Daidaici Zaɓinka",
@@ -93,7 +93,7 @@ const ha = {
       back_button: "Komawa",
     },
     login: {
-      email_placeholder: "Adireshin imel ko lambar waya...",
+      email_placeholder: "Adireshin imel...",
       password_placeholder: "Kalmar sirri...",
       full_name_placeholder: "Cikakken suna...",
     },
@@ -174,8 +174,8 @@ const ha = {
   error: {
     generic: "An sami kuskure ba zato ba tsammani.",
 
-    required_identifier: "Ana buƙatar imel ko lambar waya.",
-    invalid_identifier: "Shigar da ingantaccen imel ko lambar waya ta E.164.",
+    required_identifier: "Ana buƙatar imel.",
+    invalid_identifier: "Shigar da ingantaccen imel.",
 
     required_password: "Ana buƙatar kalmar sirri.",
     short_password: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
@@ -184,7 +184,7 @@ const ha = {
     invalid_fullname: "Shigar da cikakken suna mai inganci.",
 
     sign_in: {
-      email_number: "Ana buƙatar imel ko lambar waya.",
+      email_number: "Ana buƙatar imel.",
       password: {
         required: "Ana buƙatar kalmar sirri.",
       },
@@ -192,7 +192,7 @@ const ha = {
 
     sign_up: {
       email_number:
-        "Shigar da ingantaccen imel ko lambar waya ta E.164 (misali +123456789).",
+        "Shigar da ingantaccen imel.",
       password: {
         min_length: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
       },
@@ -298,6 +298,11 @@ const ha = {
     upload_title: "Loda fayil",
     button_label: "Loda",
     limit_reached: "Haɓaka zuwa Pro",
+    unsupported_video: "Ba a yarda a loda bidiyo ba",
+    max_images: "Za ka iya haɗa hotuna {count} kawai.",
+    hourly_reset: "Za ka iya loda hotuna har zuwa {count} a cikin awa guda. Za a sake saita iyakar cikin {time}.",
+    reset_complete: "Jiwa da aka imaha da aka samu hotuna.",
+    single_attachment_only: "Ana iya haɗa fayil ɗaya kawai a lokaci guda.",
   },
 
   chat: {
@@ -539,7 +544,7 @@ const ha = {
         gs_1: {
           question: "Ta yaya zan ƙirƙiri asusu?",
           answer:
-            "Za ka iya ƙirƙirar asusu ta amfani da imel, lambar waya, ko asusun Google. Danna maɓallin 'Fara' a shafin farko sannan ka bi matakan rajista.",
+            "Za ka iya ƙirƙirar asusu ta amfani da imel, ko asusun Google. Danna maɓallin 'Fara' a shafin farko sannan ka bi matakan rajista.",
         },
 
         gs_2: {
@@ -569,7 +574,7 @@ const ha = {
         vo_2: {
           question: "Shin RealMe AI zai iya karanta amsoshi da murya?",
           answer:
-            "Eh. Danna alamar lasifika a kan kowace amsar AI domin a karanta ta da murya. Hakanan zaka iya kunna karantawa ta atomatik a Saitunan Murya.",
+            "Eh. Danna alamar lasifikar da ke kan kowace amsar AI domin a karanta ta da murya. Amma da farko je zuwa Saituna \u2192 Murya domin ba da damar fasalin muryar AI.",
         },
 
         vo_3: {
@@ -627,7 +632,7 @@ const ha = {
         ac_1: {
           question: "Ta yaya zan sabunta bayanan martabata?",
           answer:
-            "Danna hoton bayananka ko je zuwa Bayanin Asusu daga sidebar domin sabunta sunanka, imel ɗinka, da hoton bayananka.",
+            "Danna hoton bayananka ko je zuwa Bayanin Asusu daga sidebar domin sabunta sunanka, da hoton bayananka.",
         },
 
         ac_2: {

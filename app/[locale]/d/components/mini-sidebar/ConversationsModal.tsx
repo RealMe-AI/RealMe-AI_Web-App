@@ -77,12 +77,13 @@ export function ConversationsModal({
               </button>
             </div>
 
-            <div className="max-h-[475px] overflow-y-hidden p-2 space-y-0.5">
+            <div className="max-h-[468px] overflow-y-hidden p-2 space-y-0.5">
               {recentChats.map((chat) => (
                 <SidebarItem
                   key={chat.id}
                   chat={chat}
                   isActive={activeConversationId === chat.id}
+                  usePortal={true}
                   onClick={() => {
                     setActiveConversationId(chat.id);
                     fetchMessages(chat.id);

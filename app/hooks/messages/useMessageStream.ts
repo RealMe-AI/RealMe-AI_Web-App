@@ -39,7 +39,6 @@ function getConversationLabel(
 
 export const useMessageStream = () => {
   const {
-    activeConversationId,
     setActiveConversationId,
     addMessage,
     updateMessage,
@@ -60,12 +59,12 @@ export const useMessageStream = () => {
       if (!isOnline) return;
       if (!content.trim() && (!attachmentIds || attachmentIds.length === 0)) return;
 
-      let currentConversationId = activeConversationId;
+      let currentConversationId = useChatStore.getState().activeConversationId;
 
       // Add user message optimistically — render immediately, before any API calls
       const audioAtt = attachments?.find((a) => a.type === "audio");
       const userMsg: Message = {
-        id: Date.now().toString(),
+        id: `u-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         sender: "user",
         type: audioAtt ? "audio" : attachments?.length ? "file" : "text",
         text: content,
@@ -112,6 +111,12 @@ export const useMessageStream = () => {
         if (!res.ok) throw new Error(`Failed to send message: ${res.status}`);
         if (!res.body) throw new Error("No response body received");
 
+        const isMediaOnly =
+          !content.trim() &&
+          (attachments ?? []).some(
+            (a) => a.type === "image" || a.type === "audio",
+          );
+
         // Reset typewriter — ensures no leaked text from previous aborted stream
         typewriter.reset();
 
@@ -132,10 +137,11 @@ export const useMessageStream = () => {
           (chunk) => typewriter.push(chunk),
           (meta) => {
             if (meta.type === "message_created" && meta.userMessageId) {
-              const text = (meta.content || meta.text || meta.userMessageContent || "") as string;
+              const text = (meta.content || meta.userMessageContent || "") as string;
+              const displayText = text && !isMediaOnly ? text : "";
               updateMessage(userMsg.id, {
                 id: meta.userMessageId as string,
-                ...(text ? { text } : {}),
+                ...(displayText ? { text: displayText } : {}),
               });
             }
           },
@@ -143,9 +149,9 @@ export const useMessageStream = () => {
         typewriter.flush();
         typewriter.stop();
 
-        // Finalize AI message with real ID
+        // Finalize AI message with real ID (fallback keeps a stable id)
         updateMessage("ai-temp", {
-          id: messageId,
+          id: messageId ?? `ai-${Date.now()}`,
           text: sanitizeAsterisks(typewriter.getShown()),
         });
         setIsLoading(false);
@@ -171,6 +177,7 @@ export const useMessageStream = () => {
             id: (Date.now() + 1).toString(),
             text: sanitizeAsterisks(typewriter.getShown()),
           });
+          setIsLoading(false);
           return;
         }
 
@@ -188,7 +195,6 @@ export const useMessageStream = () => {
       }
     },
     [
-      activeConversationId,
       setActiveConversationId,
       addMessage,
       removeMessage,

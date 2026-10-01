@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { PanelLeft } from "lucide-react";
 import { useRouter } from "@/i18n/routing";
@@ -21,6 +21,7 @@ export default function Page() {
   const router = useRouter();
   const hydrated = useAuthHydrated();
   const accessToken = useAuthStore((s) => s.accessToken);
+  const refreshToken = useAuthStore((s) => s.refreshToken);
   const isSidebarOpen = useSidebarStore((s) => s.isOpen);
   const setIsSidebarOpen = useSidebarStore((s) => s.setIsOpen);
   const isSettingsOpen = useModalStore((s) => s.isSettingsOpen);
@@ -29,6 +30,17 @@ export default function Page() {
     (s) => s.setActiveConversationId,
   );
   const { fetchMessages } = useFetchMessages();
+
+  const restoredRef = useRef(false);
+  useEffect(() => {
+    if (restoredRef.current) return;
+    if (!accessToken) return;
+    const persistedId = useChatStore.getState().activeConversationId;
+    restoredRef.current = true;
+    if (persistedId) {
+      fetchMessages(persistedId);
+    }
+  }, [accessToken, fetchMessages]);
   const [shareChat, setShareChat] = useState<{
     chatId: number;
     title: string;
@@ -36,12 +48,21 @@ export default function Page() {
   } | null>(null);
 
   useEffect(() => {
-    if (hydrated && !accessToken) {
+    if (hydrated && !accessToken && !refreshToken) {
       router.push("/auth");
     }
-  }, [hydrated, accessToken, router]);
+  }, [hydrated, accessToken, refreshToken, router]);
 
-  if (!hydrated || !accessToken) return null;
+  if (!hydrated) return null;
+
+  if (!accessToken) {
+    if (!refreshToken) return null;
+    return (
+      <div className="h-dvh w-full flex items-center justify-center bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="h-dvh w-full flex bg-linear-to-br from-indigo-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden relative">
@@ -58,7 +79,9 @@ export default function Page() {
       {/* Mini Sidebar */}
       {!isSidebarOpen && (
         <MiniSidebar
-          onShareChat={(chatId, title, preview) => setShareChat({ chatId, title, preview })}
+          onShareChat={(chatId, title, preview) =>
+            setShareChat({ chatId, title, preview })
+          }
         />
       )}
 
@@ -69,7 +92,7 @@ export default function Page() {
         transition={{ duration: 0.4 }}
         className={`flex-1 flex flex-col h-full min-h-0 transition-all duration-500 ${
           isSidebarOpen ? "mr-0 sm:mr-[360px]" : "mx-auto max-w-4xl w-full"
-        } p-2 md:p-6`}
+        } p-2 md:p-0`}
       >
         <ChatWindow />
       </motion.div>
@@ -82,7 +105,9 @@ export default function Page() {
           setActiveConversationId(chat.id);
           fetchMessages(chat.id);
         }}
-        onShareChat={(chatId, title, preview) => setShareChat({ chatId, title, preview })}
+        onShareChat={(chatId, title, preview) =>
+          setShareChat({ chatId, title, preview })
+        }
       />
 
       {/* Settings Modal */}

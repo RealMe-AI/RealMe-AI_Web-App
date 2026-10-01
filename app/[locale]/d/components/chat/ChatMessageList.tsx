@@ -5,6 +5,7 @@ import { ArrowDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { Message } from "@/app/interface/type";
+import { cn } from "@/app/lib/utils";
 import ChatMessage from "../ChatMessage";
 
 interface ChatMessageListProps {
@@ -14,6 +15,7 @@ interface ChatMessageListProps {
   showScrollBtn: boolean;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export function ChatMessageList({
@@ -23,6 +25,7 @@ export function ChatMessageList({
   showScrollBtn,
   messagesEndRef,
   scrollContainerRef,
+  contentRef,
 }: ChatMessageListProps) {
   const t = useTranslations();
 
@@ -31,11 +34,17 @@ export function ChatMessageList({
       <div className="relative flex-1 min-h-0">
         <div
           ref={scrollContainerRef}
-          className="h-full pb-4 overflow-y-auto caret-transparent"
+          className="h-full pb-4 overflow-y-auto caret-transparent [overflow-anchor:none]"
         >
-          <div className="max-w-3xl mx-auto h-full">
+          <div
+            ref={contentRef}
+            className={cn(
+              "max-w-3xl mx-auto",
+              chatMessages.length === 0 && "h-full",
+            )}
+          >
             {chatMessages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+              <div key="empty-state" className="flex flex-col items-center justify-center h-full min-h-[300px]">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -55,17 +64,17 @@ export function ChatMessageList({
                       {user?.fullName?.split(" ")[0]}
                     </h1>
                   </div>
-                  <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+                  <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium">
                     {t("dashboard.greeting.subtitle")}
                   </p>
                 </motion.div>
               </div>
             ) : (
-              chatMessages.map((msg) => (
-                <ChatMessage key={msg.id} message={msg} />
+              chatMessages.map((msg, idx) => (
+                <ChatMessage key={`${msg.id}-${idx}`} message={msg} />
               ))
             )}
-            <div ref={messagesEndRef} />
+            <div key="end-marker" ref={messagesEndRef} />
           </div>
         </div>
 
@@ -85,7 +94,7 @@ export function ChatMessageList({
         )}
       </div>
 
-      {isLoading && (
+      {isLoading && chatMessages.some((m) => m.id === "ai-temp") && (
         <motion.div
           animate={{ opacity: [1, 0.4, 1] }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}

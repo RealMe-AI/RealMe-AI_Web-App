@@ -62,7 +62,7 @@ const ig = {
         "Nwee mkparịta ụka AI nke ọkachamara n'ime nkeji ole na ole, enweghị nhazi teknụzụ dị mkpa.",
       step1: {
         title: "Mepụta Akaụntụ Gị",
-        desc: "Debanye aha na email gị, ekwentị, ma ọ bụ akaụntụ Google. Ọ na-ewe obere karịa sekọnd 30, enweghị kaadị kredit achọrọ.",
+        desc: "Debanye aha na email gị, ma ọ bụ akaụntụ Google. Ọ na-ewe obere karịa sekọnd 30, enweghị kaadị kredit achọrọ.",
       },
       step2: {
         title: "Hazie Nhọrọ Gị",
@@ -93,7 +93,7 @@ const ig = {
       back_button: "Laghachi",
     },
     login: {
-      email_placeholder: "Adreesị email ma ọ bụ nọmba ekwentị...",
+      email_placeholder: "Adreesị email...",
       password_placeholder: "Okwuntughe...",
       full_name_placeholder: "Aha zuru ezu...",
     },
@@ -172,8 +172,8 @@ const ig = {
   error: {
     generic: "Enweghi mmejọ a tụrụ anya ya.",
 
-    required_identifier: "Email ma ọ bụ ekwentị chọrọ.",
-    invalid_identifier: "Tinye email ziri ezi ma ọ bụ nọmba ekwentị E.164.",
+    required_identifier: "Achọrọ email.",
+    invalid_identifier: "Tinye email ziri ezi.",
 
     required_password: "Okwuntughe chọrọ.",
     short_password: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
@@ -182,15 +182,14 @@ const ig = {
     invalid_fullname: "Tinye aha zuru ezu ziri ezi.",
 
     sign_in: {
-      email_number: "Email ma ọ bụ ekwentị chọrọ.",
+      email_number: "A chọrọ email ziri ezi.",
       password: {
         required: "Okwuntughe chọrọ.",
       },
     },
 
     sign_up: {
-      email_number:
-        "Tinye email ziri ezi ma ọ bụ nọmba ekwentị E.164 (dịka +123456789).",
+      email_number: "Tinye email ziri ezi.",
       password: {
         min_length: "Okwuntughe ga-adịkarịkarịa mkpụrụedemede 6.",
       },
@@ -296,6 +295,11 @@ const ig = {
     upload_title: "Bulite faịlụ",
     button_label: "Bulite",
     limit_reached: "Melite gaa Pro",
+    unsupported_video: "Anaghị anabata ibulite vidiyo",
+    max_images: "Ị nwere ike itinye naanị onyonyo {count}.",
+    hourly_reset: "Ị nwere ike ibulite naanị onyonyo {count} n'ime otu awa. A ga-emegharị ya n'ime {time}.",
+    reset_complete: "Ji na-eme aka imoha ike. Kpọ́rọ́ ike ụ̀bọ̀rụ ụ̀bụ ịkpérụ nwere {count} anyị ike.",
+    single_attachment_only: "Naanị otu faịlụ ka enwere ike itinye n'otu oge.",
   },
 
   chat: {
@@ -536,7 +540,7 @@ const ig = {
         gs_1: {
           question: "Kedu ka m ga-esi mepụta akaụntụ?",
           answer:
-            "Ị nwere ike ịmepụta akaụntụ site na email gị, nọmba ekwentị gị, ma ọ bụ akaụntụ Google gị. Pịa bọtịnụ 'Malite' dị na ibe mbụ ma soro usoro ndebanye aha.",
+            "Ị nwere ike ịmepụta akaụntụ site na email gị, ma ọ bụ akaụntụ Google gị. Pịa bọtịnụ 'Malite' dị na ibe mbụ ma soro usoro ndebanye aha.",
         },
 
         gs_2: {
@@ -566,7 +570,7 @@ const ig = {
         vo_2: {
           question: "RealMe AI nwere ike ịgụ azịza n'olu?",
           answer:
-            "Ee. Pịa akara igwe okwu dị na azịza AI ọ bụla ka e gụọ ya n'olu. Ị nwekwara ike ịgbanye ọgụgụ-akpaghị aka na Ntọala Olu maka ahụmịhe na-enweghị aka.",
+            "Ee. Pịa akara igwe okwu n'azịza AI ọ bụla ka ọ gụọ ya n'olu. Mana buru ụzọ gaa na Ntọala \u2192 Olu iji kwe ka njirimara olu AI rụọ ọrụ.",
         },
 
         vo_3: {
@@ -624,7 +628,7 @@ const ig = {
         ac_1: {
           question: "Kedu ka m ga-esi melite profaịlụ m?",
           answer:
-            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, email gị, na foto profaịlụ gị.",
+            "Pịa onyonyo profaịlụ gị ma ọ bụ gaa na Ozi Akaụntụ site na sidebar iji melite aha gị, na foto profaịlụ gị.",
         },
 
         ac_2: {

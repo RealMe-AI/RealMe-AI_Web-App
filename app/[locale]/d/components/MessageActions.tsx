@@ -14,11 +14,13 @@ export default function MessageActions({
   text,
   onEdit,
   message,
+  hideEdit,
 }: {
   sender: "user" | "ai";
   text?: string;
   onEdit?: () => void;
   message: Message;
+  hideEdit?: boolean;
 }) {
   const t = useTranslations();
   const { copied, copy } = useCopyToClipboard();
@@ -39,8 +41,9 @@ export default function MessageActions({
     <div className="flex flex-row gap-1 bg-white/70 dark:bg-slate-800/80 backdrop-blur-md rounded-lg p-1 shadow-md border border-white/20">
       <Tooltip content={t("message_actions.copy")}>
         <button
-          onClick={() => text && copy(markdownToPlainText(text))}
-          className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"
+          onClick={() => text?.trim() && copy(markdownToPlainText(text))}
+          disabled={!text?.trim()}
+          className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition disabled:opacity-40"
         >
           {copied ? (
             <Check size={14} className="text-slate-700 dark:text-slate-200" />
@@ -60,7 +63,8 @@ export default function MessageActions({
         >
           <button
             onClick={handleReadAloud}
-            className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition"
+            disabled={!message.text?.trim()}
+            className="p-1.5 rounded-md hover:bg-indigo-100 dark:hover:bg-slate-700 transition disabled:opacity-40"
           >
             {isLoading && currentMessageId === message.id ? (
               <Loader2
@@ -76,7 +80,7 @@ export default function MessageActions({
         </Tooltip>
       )}
 
-      {sender === "user" && (
+      {sender === "user" && !hideEdit && (
         <Tooltip content={t("message_actions.edit")}>
           <button
             onClick={onEdit}

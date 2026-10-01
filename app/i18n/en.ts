@@ -62,7 +62,7 @@ const en = {
         "Experience professional AI conversations in minutes no technical setup required.",
       step1: {
         title: "Create Your Account",
-        desc: "Sign up with your email, phone, or Google account. Takes less than 30 seconds with no credit card required.",
+        desc: "Sign up with your email, or Google account. Takes less than 30 seconds with no credit card required.",
       },
       step2: {
         title: "Customize Your Preferences",
@@ -93,7 +93,7 @@ const en = {
       back_button: "Back",
     },
     login: {
-      email_placeholder: "Email address or phone number...",
+      email_placeholder: "Email address...",
       password_placeholder: "Password...",
       full_name_placeholder: "Full name...",
     },
@@ -171,8 +171,8 @@ const en = {
   error: {
     generic: "An unexpected error occurred.",
 
-    required_identifier: "Email or phone is required.",
-    invalid_identifier: "Enter a valid email or E.164 phone number.",
+    required_identifier: "Email is required.",
+    invalid_identifier: "Enter a valid email.",
 
     required_password: "Password is required.",
     short_password: "Password must be at least 6 characters.",
@@ -181,7 +181,7 @@ const en = {
     invalid_fullname: "Enter a valid full name.",
 
     sign_in: {
-      email_number: "Email or phone is required.",
+      email_number: "Email is required.",
       password: {
         required: "Password is required.",
       },
@@ -189,7 +189,7 @@ const en = {
 
     sign_up: {
       email_number:
-        "Enter a valid email or E.164 phone number (e.g. +123456789).",
+        "Enter a valid email.",
       password: {
         min_length: "Password must be at least 6 characters.",
       },
@@ -295,6 +295,11 @@ const en = {
     upload_title: "Upload a file",
     button_label: "Upload",
     limit_reached: "Upgrade to Pro",
+    unsupported_video: "Video uploads are not allowed",
+    max_images: "You can only attach {count} images.",
+    hourly_reset: "You can upload up to {count} images per hour. Reset in {time}.",
+    reset_complete: "Image upload limit reset. You can upload up to {count} new images.",
+    single_attachment_only: "Only 1 attachment at a time",
   },
 
   chat: {
@@ -521,12 +526,12 @@ const en = {
         gs_1: {
           question: "How do I create an account?",
           answer:
-            "You can create an account using your email, phone number, or Google account. Simply click the 'Get Started' button on the homepage and follow the registration process.",
+            "You can create an account using your email, or Google account. Simply click the 'Get Started' button on the homepage and follow the registration process.",
         },
         gs_2: {
           question: "Can I change my password?",
           answer:
-            "Yes. Go to Settings \u2192 Security to update your password. You'll need your current password to create a new one.",
+            "Yes. Go to Settings \u2192 Security to update your password. You'll need your current email to create a new one.",
         },
         gs_3: {
           question: "Is RealMe AI free to use?",
@@ -546,7 +551,7 @@ const en = {
         vo_2: {
           question: "Can RealMe AI read responses aloud?",
           answer:
-            "Yes. Tap the speaker icon on any AI response to have it read aloud. You can also enable auto-read in Voice Settings for a hands free experience.",
+            "Yes. Tap the speaker icon on any AI response to have it read aloud. But first go to Settings \u2192 Voice to allow AI voice feature.",
         },
         vo_3: {
           question: "Which languages are supported for voice?",
@@ -596,7 +601,7 @@ const en = {
         ac_1: {
           question: "How do I update my profile?",
           answer:
-            "Click on your avatar or go to Account Info from the sidebar to update your name, email, and profile picture.",
+            "Click on your avatar or go to Account Info from the sidebar to update your name, and profile picture.",
         },
         ac_2: {
           question: "Can I change my email address?",

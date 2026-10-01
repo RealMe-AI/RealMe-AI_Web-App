@@ -26,7 +26,7 @@ export const faqCategories: FaqCategory[] = [
       { id: "vo-1" },
       { id: "vo-2" },
       { id: "vo-3" },
-      { id: "vo-4" },
+      // { id: "vo-4" },
     ],
   },
   {
@@ -53,7 +53,7 @@ export const faqCategories: FaqCategory[] = [
     icon: "account",
     items: [
       { id: "ac-1" },
-      { id: "ac-2" },
+      // { id: "ac-2" },
       { id: "ac-3" },
     ],
   },

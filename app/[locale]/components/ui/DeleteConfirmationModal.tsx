@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
+import SpinnerIcon from "../icons/SpinnerIcon";
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
@@ -78,7 +79,7 @@ const DeleteConfirmationModal = ({
                     disabled={isLoading}
                     className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition shadow-sm disabled:opacity-50 flex items-center justify-center min-w-[80px]"
                   >
-                    {isLoading ? "..." : t("dashboard.delete_modal.confirm")}
+                    {isLoading ? <SpinnerIcon /> : t("clipboard.yes")}
                   </button>
                 </div>
               </div>
