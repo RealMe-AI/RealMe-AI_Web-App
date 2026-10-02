@@ -8,7 +8,7 @@ const en = {
 
   landing: {
     hero: {
-      first: "Powered by GPT-5",
+      first: "",
       title: "Converse with AI That Understands Your Professional Needs",
       subtitle:
         "Get instant, intelligent responses with multilingual support. RealMe AI adapts to your communication style for truly professional conversations in English, Hausa, Igbo, and Yoruba.",
@@ -30,8 +30,8 @@ const en = {
         "Experience professional AI conversations with features designed for excellence",
       items: {
         intelligence: {
-          title: "GPT-5 Intelligence",
-          desc: "Powered by OpenAI's latest GPT-5 model for unmatched accuracy, context understanding, and professional responses.",
+          title: "REM-1.0 Intelligence",
+          desc: "Latest REM-1.0 model for unmatched accuracy, context understanding, and professional responses.",
         },
         languages: {
           title: "Multilingual Support",
@@ -408,7 +408,7 @@ const en = {
       subtitle: "Perfect for getting started",
       price: "month",
       features1: "10 prompts per day",
-      features2: "GPT-5 access",
+      features2: "REM-1.0 access",
       features3: "Voice input",
       features4: "4 language support",
       features5: "Chat history",
@@ -421,7 +421,7 @@ const en = {
       price_yearly: "year",
       features1: "Unlimited prompts per day",
       features2: "Advanced voice features",
-      features3: "Faster GPT-5 Turbo responses",
+      features3: "Faster REM-1.0 Turbo responses",
       features4: "Custom themes",
       features5: "Priority support",
       features6: "Export conversations",

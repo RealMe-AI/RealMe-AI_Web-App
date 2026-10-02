@@ -30,8 +30,8 @@ const ig = {
         "Nwee mkparịta ụka AI nke ọkachamara na atụmatụ e mere maka ịdị mma",
       items: {
         intelligence: {
-          title: "Amamihe GPT-5",
-          desc: "Dị ike site na ụdị GPT-5 ọhụrụ nke OpenAI maka izi ezi kachasị elu, nghọta nke ọnọdụ, na azịza ọkachamara.",
+          title: "Amamihe REM-1.0",
+          desc: "Ụdị REM-1.0 kacha ọhụrụ maka izi ezi na-enweghị atụ, nghọta ọnọdụ, na azịza ọkachamara.",
         },
         languages: {
           title: "Nkwado ọtụtụ asụsụ",

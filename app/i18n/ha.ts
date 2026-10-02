@@ -30,8 +30,8 @@ const ha = {
         "Gajiya da tattaunawar AI mai matuƙar ƙwarewa da fasaloli da aka tsara don haɓaka inganci",
       items: {
         intelligence: {
-          title: "Basirar GPT-5",
-          desc: "Ɗauke da sabon samfurin GPT-5 na OpenAI don madaidaicin amsawa, fahimtar mahallin magana, da martanin ƙwararru.",
+          title: "Basirar REM-1.0",
+          desc: "Sabon samfurin REM-1.0 don ingantaccen daidaito, fahimtar mahallin magana, da amsoshi na ƙwarewa.",
         },
         languages: {
           title: "Tallafin Harsuna da Dama",

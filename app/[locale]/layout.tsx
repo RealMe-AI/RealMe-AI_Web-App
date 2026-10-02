@@ -41,7 +41,7 @@ export async function generateMetadata({
     template: "%s | RealMe AI",
   };
   const description =
-    "RealMe AI is a multilingual AI assistant powered by GPT-5 that helps you chat, write, translate, learn, create, and communicate naturally with voice and text in English, Hausa, Igbo, and Yoruba.";
+    "RealMe AI is a multilingual AI assistant that helps you chat, write, translate, learn, create, and communicate naturally with voice and text in English, Hausa, Igbo, and Yoruba.";
 
   const images = [
     {

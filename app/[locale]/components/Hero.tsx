@@ -11,9 +11,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-linear-to-br from-indigo-100 via-white to-indigo-100 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 transition-colors duration-900">
-
       <div className="max-w-7xl mx-auto min-h-screen px-6 py-15 grid lg:grid-cols-2 gap-12 items-center">
-
         {/* LEFT SECTION */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -23,13 +21,12 @@ export default function Hero() {
           className="text-center lg:text-left space-y-8"
         >
           {/* Badge */}
-            <div className="py-2 px-4 rounded-full bg-indigo-100 dark:bg-gray-900/50 max-w-max mx-auto lg:mx-0 mb-4">
-          <div className="flex items-center justify-center md:justify-start gap-2 text-sm font-semibold text-indigo-400">
-
-            <Brain className="w-5 h-5" />
-            <span>{t("first")}</span>
-          </div>
+          <div className="py-2 px-4 rounded-full bg-indigo-100 dark:bg-gray-900/50 max-w-max mx-auto lg:mx-0 mb-4">
+            <div className="flex items-center justify-center md:justify-start gap-2 text-sm font-semibold text-indigo-400">
+              {/* <Brain className="w-5 h-5" /> */}
+              {/* <span>{t("first")}</span> */}
             </div>
+          </div>
 
           {/* Title */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-600 dark:text-white/80 leading-tight">
@@ -94,7 +91,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* "GPT-5 AI Model" badge */}
+          {/* "REM-1.0 AI Model" badge */}
           <motion.div
             whileHover={{ scale: 1.08, y: -4 }}
             transition={{ type: "spring", stiffness: 250 }}
@@ -104,7 +101,7 @@ export default function Hero() {
               <Brain className="max-sm:w-4 w-6 h-6 text-indigo-400" />
               <div className="flex flex-col leading-tight">
                 <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                  GPT-5
+                  REM-1.0
                 </span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
                   {t("badge1")}
