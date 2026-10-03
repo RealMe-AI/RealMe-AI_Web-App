@@ -30,8 +30,8 @@ const yo = {
         "Ni iriri awọn ibaraẹnisọrọ AI amọdaju pẹlu awọn ẹya ti a ṣe apẹrẹ fun iyasọtọ",
       items: {
         intelligence: {
-          title: "Ọgbọn GPT-5",
-          desc: "Agbara nipasẹ awoṣe GPT-5 tuntun ti OpenAI fun deede ti ko ni afiwe, oye ipo, ati awọn idahun amọdaju.",
+          title: "Ọgbọn REM-1.0",
+          desc: "Àwòṣe REM-1.0 tuntun fún ìpéye tí kò lẹ́gbẹ́, òye àyíká, àti àwọn ìdáhùn amọ̀ja.",
         },
         languages: {
           title: "Atilẹyin Ede pupọ",
