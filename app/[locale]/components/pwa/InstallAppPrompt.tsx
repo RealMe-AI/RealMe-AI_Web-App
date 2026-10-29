@@ -25,7 +25,7 @@ export default function InstallAppPrompt() {
       ref={cardRef}
       role="dialog"
       aria-labelledby="pwa-install-title"
-      className={`fixed z-50 touch-none select-none rounded-2xl border border-slate-200 bg-white/95 py-3 px-2 shadow-xl backdrop-blur-md dark:border-slate-700 dark:bg-slate-800/95 ${
+      className={`fixed z-50 touch-none select-none w-[20rem] max-w-[calc(100vw-2rem)] rounded-2xl border border-slate-200 bg-white/95 py-3 px-2 shadow-xl backdrop-blur-md dark:border-slate-700 dark:bg-slate-800/95 ${
         isDragging ? "cursor-grabbing" : "cursor-grab"
       }`}
       style={positionStyle}
