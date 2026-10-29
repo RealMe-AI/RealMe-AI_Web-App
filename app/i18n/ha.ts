@@ -191,8 +191,7 @@ const ha = {
     },
 
     sign_up: {
-      email_number:
-        "Shigar da ingantaccen imel.",
+      email_number: "Shigar da ingantaccen imel.",
       password: {
         min_length: "Kalmar sirri dole ta kasance aƙalla haruffa 6.",
       },
@@ -300,7 +299,8 @@ const ha = {
     limit_reached: "Haɓaka zuwa Pro",
     unsupported_video: "Ba a yarda a loda bidiyo ba",
     max_images: "Za ka iya haɗa hotuna {count} kawai.",
-    hourly_reset: "Za ka iya loda hotuna har zuwa {count} a cikin awa guda. Za a sake saita iyakar cikin {time}.",
+    hourly_reset:
+      "Za ka iya loda hotuna har zuwa {count} a cikin awa guda. Za a sake saita iyakar cikin {time}.",
     reset_complete: "Jiwa da aka imaha da aka samu hotuna.",
     single_attachment_only: "Ana iya haɗa fayil ɗaya kawai a lokaci guda.",
   },
@@ -756,6 +756,32 @@ const ha = {
           "Manyan kayayyaki suna rayuwa ne a inda ƙira da injiniya suka haɗu. A nan ne aka gina RealMe AI da gangan.",
         role: "Wanda Ya Taimaka Wajen Kafa RealMe AI",
       },
+    },
+  },
+
+  pwa: {
+    install: {
+      title: "",
+      description: "Ƙara RealMe AI a na'urarka.",
+      cta: "Sanya manhaja",
+      how_to: "Yadda ake sanyawa",
+      hide_steps: "Ɓoye matakan",
+      ios_hint: "Ƙara RealMe AI zuwa allon farko na wayarka.",
+      ios_steps:
+        "Danna maɓallin Share a Safari, sannan zaɓi “Add to Home Screen”.",
+      dismiss: "Rufe saƙon sanyawa",
+    },
+    update: {
+      title: "Akwai sabon sigar RealMe AI.",
+      action: "Sake Loda",
+      dismiss: "Rufe sanarwar sabuntawa",
+    },
+    offline: {
+      title: "Ba ka da haɗin intanet",
+      description:
+        "RealMe AI yana buƙatar haɗin intanet domin yin tattaunawa. Duba haɗin intanet ɗinka sannan ka sake gwadawa.",
+      retry: "Sake gwadawa",
+      back_home: "Koma shafin farko",
     },
   },
 

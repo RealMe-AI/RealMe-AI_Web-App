@@ -711,6 +711,34 @@ const en = {
     },
   },
 
+  pwa: {
+    install: {
+      title: "",
+      description:
+        "Add RealMe AI to your device.",
+      cta: "Install app",
+      how_to: "How to install",
+      hide_steps: "Hide steps",
+      ios_hint:
+        "Add RealMe AI to your Home Screen.",
+      ios_steps:
+        "Tap the Share button in Safari, then choose \u201cAdd to Home Screen\u201d.",
+      dismiss: "Dismiss install prompt",
+    },
+    update: {
+      title: "A new version of RealMe AI is available.",
+      action: "Reload",
+      dismiss: "Dismiss update notice",
+    },
+    offline: {
+      title: "You're offline",
+      description:
+        "RealMe AI needs an internet connection to chat. Check your connection and try again.",
+      retry: "Try again",
+      back_home: "Back to home",
+    },
+  },
+
   shared: {
     not_found_title: "Conversation not found",
     error_title: "Something went wrong",

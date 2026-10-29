@@ -297,8 +297,10 @@ const ig = {
     limit_reached: "Melite gaa Pro",
     unsupported_video: "Anaghị anabata ibulite vidiyo",
     max_images: "Ị nwere ike itinye naanị onyonyo {count}.",
-    hourly_reset: "Ị nwere ike ibulite naanị onyonyo {count} n'ime otu awa. A ga-emegharị ya n'ime {time}.",
-    reset_complete: "Ji na-eme aka imoha ike. Kpọ́rọ́ ike ụ̀bọ̀rụ ụ̀bụ ịkpérụ nwere {count} anyị ike.",
+    hourly_reset:
+      "Ị nwere ike ibulite naanị onyonyo {count} n'ime otu awa. A ga-emegharị ya n'ime {time}.",
+    reset_complete:
+      "Ji na-eme aka imoha ike. Kpọ́rọ́ ike ụ̀bọ̀rụ ụ̀bụ ịkpérụ nwere {count} anyị ike.",
     single_attachment_only: "Naanị otu faịlụ ka enwere ike itinye n'otu oge.",
   },
 
@@ -752,6 +754,31 @@ const ig = {
           "Ngwaahịa kacha mma na-apụta ebe imewe na injinia na-ezukọta. Ọ bụ ebe ahụ ka e jiri nlezianya wuo RealMe AI.",
         role: "Onye Mmekọ Guzobere RealMe AI",
       },
+    },
+  },
+
+  pwa: {
+    install: {
+      title: "",
+      description: "Tinye RealMe AI na ngwaọrụ gị.",
+      cta: "Wụnye ngwa",
+      how_to: "Otu esi etinye ya",
+      hide_steps: "Zoo usoro ndị a",
+      ios_hint: "Tinye RealMe AI na ihuenyo mbụ gị.",
+      ios_steps: "Pịa bọtịnụ Share na Safari, wee họrọ “Add to Home Screen”.",
+      dismiss: "Mechie ozi nrụnye",
+    },
+    update: {
+      title: "Ụdị RealMe AI ọhụrụ dị ugbu a.",
+      action: "Bugharia Ibe Ọzọ",
+      dismiss: "Mechie ọkwa mmelite",
+    },
+    offline: {
+      title: "Ị nọghị na ịntanetị",
+      description:
+        "RealMe AI chọrọ njikọ ịntanetị iji kparịta ụka. Lelee njikọ gị ma nwaa ọzọ.",
+      retry: "Nwaa ọzọ",
+      back_home: "Laghachi na ibe mbụ",
     },
   },
 
