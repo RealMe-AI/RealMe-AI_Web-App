@@ -12,7 +12,11 @@ interface Props {
 
 const DISMISS_CLICK_DEBOUNCE = 250;
 
-export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) {
+export default function ClipboardPasteModal({
+  text,
+  onPaste,
+  onCancel,
+}: Props) {
   const t = useTranslations("clipboard");
   const pasteButtonRef = useRef<HTMLButtonElement | null>(null);
   const openedAtRef = useRef(0);
@@ -62,9 +66,11 @@ export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) 
           {t("title")}
         </p>
 
-        <div className="max-h-40 overflow-y-auto text-sm text-gray-800 dark:text-gray-200
+        <div
+          className="max-h-40 overflow-y-auto text-sm text-gray-800 dark:text-gray-200
                         bg-gray-50 dark:bg-slate-900/50 rounded-lg p-3 my-4
-                        border border-gray-100 dark:border-slate-700/50 whitespace-pre-wrap wrap-break-word">
+                        border border-gray-100 dark:border-slate-700/50 whitespace-pre-wrap wrap-break-word"
+        >
           {text}
         </div>
 
@@ -73,8 +79,8 @@ export default function ClipboardPasteModal({ text, onPaste, onCancel }: Props) 
             ref={pasteButtonRef}
             onClick={onPaste}
             onKeyDown={(e) => e.stopPropagation()}
-            className="flex-1 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700
-                       text-white text-sm font-medium transition"
+            className="flex-1 py-2 rounded-lg bg-indigo-300 text-slate-800 dark:bg-indigo-500
+                       dark:text-white text-sm font-medium transition"
           >
             {t("yes")}
           </button>
