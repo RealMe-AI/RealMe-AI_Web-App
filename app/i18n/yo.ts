@@ -190,8 +190,7 @@ const yo = {
     },
 
     sign_up: {
-      email_number:
-        "Tẹ imeeli to wulo.",
+      email_number: "Tẹ imeeli to wulo.",
       password: {
         min_length: "Ọrọ aṣínà gbọdọ jẹ o kere ju awọn ohun kikọ 6.",
       },
@@ -298,8 +297,10 @@ const yo = {
     limit_reached: "Gbárúkọ sí Pro",
     unsupported_video: "A kò gba ìgbésókè fídíò láyè",
     max_images: "O lè so àwòrán {count} nìkan mọ́.",
-    hourly_reset: "O lè gbé àwòrán tó tó {count} sókè nínú wákàtí kan. A ó tún ṣe àtúnṣe rẹ̀ ní {time}.",
-    reset_complete: "Kíkọ́ aka imọ̀ra ike kọ́́. Kó lè ṣe ọ̀rọ̀ kan {count} nìkan pọ̀ rẹ̀.",
+    hourly_reset:
+      "O lè gbé àwòrán tó tó {count} sókè nínú wákàtí kan. A ó tún ṣe àtúnṣe rẹ̀ ní {time}.",
+    reset_complete:
+      "Kíkọ́ aka imọ̀ra ike kọ́́. Kó lè ṣe ọ̀rọ̀ kan {count} nìkan pọ̀ rẹ̀.",
     single_attachment_only: "Àfikún kan ṣoṣo ni a lè so mọ́ ní ẹ̀ẹ̀kan.",
   },
 
@@ -754,6 +755,32 @@ const yo = {
           "Àwọn ọja tó dára jù lọ máa ń wà ní ibi tí ìṣètò àti ẹ̀rọ pàdé. Níbẹ̀ gan-an ni a fi ìfẹ́ kọ RealMe AI.",
         role: "Alájọṣepọ̀ Olùdásílẹ̀ RealMe AI",
       },
+    },
+  },
+
+  pwa: {
+    install: {
+      title: "",
+      description: "Fi RealMe AI kún ẹ̀rọ rẹ.",
+      cta: "Fi ohun èlò náà sí ẹ̀rọ",
+      how_to: "Bí a ṣe lè fi sí ẹ̀rọ",
+      hide_steps: "Fi àwọn ìgbésẹ̀ pamọ́",
+      ios_hint: "Fi RealMe AI kún Ojú Ìbẹ̀rẹ̀ rẹ.",
+      ios_steps:
+        "Tẹ bọ́tìnì Share nínú Safari, lẹ́yìn náà yan “Add to Home Screen”.",
+      dismiss: "Pa ìfitónilétí fífi sí ẹ̀rọ",
+    },
+    update: {
+      title: "Ẹ̀dà tuntun ti RealMe AI wà.",
+      action: "Tún Gbéra",
+      dismiss: "Pa ìfitónilétí àtúnṣe",
+    },
+    offline: {
+      title: "O kò sí lórí ayélujára",
+      description:
+        "RealMe AI nílò ìsopọ̀ ayélujára láti bá ọ sọ̀rọ̀. Ṣàyẹ̀wò ìsopọ̀ rẹ kí o sì tún gbìyànjú.",
+      retry: "Tún gbìyànjú",
+      back_home: "Padà sí ojú ìbẹ̀rẹ̀",
     },
   },
 

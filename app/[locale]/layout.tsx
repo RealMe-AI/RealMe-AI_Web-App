@@ -4,12 +4,14 @@ import type { Messages } from "../i18n/en";
 import { Poppins } from "next/font/google";
 
 import { getStructuredData } from "../lib/structuredData";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { StatusBarHandler } from "./components/StatusBarHandler";
 import { PathHistoryRecorder } from "./components/PathHistoryRecorder";
 import { ToastProvider } from "@/app/lib/ToastProvider";
 import { AuthProvider } from "./components/AuthProvider";
 import StructuredData from "./components/StructuredData";
+import PwaRegister from "./components/pwa/PwaRegister";
+import InstallAppPrompt from "./components/pwa/InstallAppPrompt";
 import "../globals.css";
 import "highlight.js/styles/atom-one-dark.css";
 import { SUPPORTED_LOCALES, type Locale } from "@/app/lib/locales";
@@ -25,6 +27,16 @@ const SITE_URL = "https://realme.com.ng";
 export function generateStaticParams(): { locale: Locale }[] {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
+};
 
 export async function generateMetadata({
   params,
@@ -62,9 +74,41 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
+    applicationName: "RealMe AI",
+    manifest: "/manifest.webmanifest",
+    formatDetection: {
+      telephone: false,
+      email: false,
+      address: false,
+    },
+    appleWebApp: {
+      capable: true,
+      title: "RealMe AI",
+      statusBarStyle: "default",
+    },
+    other: {
+      "apple-mobile-web-app-capable": "yes",
+    },
     icons: {
-      icon: "/logo.png",
-      apple: "/logo.png",
+      icon: [
+        {
+          url: "/icons/icon-192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          url: "/icons/icon-512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ],
+      apple: [
+        {
+          url: "/icons/apple-touch-icon.png",
+          sizes: "180x180",
+          type: "image/png",
+        },
+      ],
     },
 
     alternates: {
@@ -116,6 +160,8 @@ export default async function LocaleLayout({
             <StatusBarHandler />
             <PathHistoryRecorder />
             <ToastProvider>{children}</ToastProvider>
+            <PwaRegister />
+            <InstallAppPrompt />
             <Analytics />
           </NextIntlClientProvider>
         </AuthProvider>
